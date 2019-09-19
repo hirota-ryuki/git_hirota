@@ -7,6 +7,7 @@ Player::Player()
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/unityChan.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
+	
 	//キャラコンの初期化
 	/*m_charaCon.Init(
 		100.f,

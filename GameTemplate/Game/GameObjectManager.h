@@ -47,3 +47,12 @@ private:
 //外部からアクセスするので、extern宣言も必要。
 extern GameObjectManager g_goMgr;
 
+template <class T>
+static inline T* NewGO()
+{
+	return g_goMgr.NewGO<T>();
+}
+static inline void DeleteGO(IGameObject* go)
+{
+	return g_goMgr.DeleteGO(go);
+}

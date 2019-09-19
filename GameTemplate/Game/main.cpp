@@ -20,7 +20,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D.SetFar(10000.0f);
 	
 	//Gameクラス
-	//g_goMgr.NewGO<Game>();
+	NewGO<Game>();
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
@@ -34,12 +34,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//物理エンジンの更新。
 		g_physics.Update();
 
-
 		//GameObjectManagerの更新
 		g_goMgr.Update();
 		
-		//カメラの更新。
-		g_camera3D.Update();
 		//描画終了。
 		g_graphicsEngine->EndRender();
 	}

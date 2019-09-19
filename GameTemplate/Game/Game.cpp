@@ -6,14 +6,20 @@
 
 
 //静的メンバ変数を定義する。
-//Game* Game::m_game = nullptr;
+Game* Game::m_game = nullptr;
 
 Game::Game()
 {
-	m_player = g_goMgr.NewGO<Player>();
-	m_gamecamera = g_goMgr.NewGO<GameCamera>();
+	if (m_game == nullptr) 
+	{
+		m_game = this;
+	}
+	else{
+		abort();
+	}
+	m_player = NewGO<Player>();
+	m_gamecamera = NewGO<GameCamera>();
 }
-
 
 Game::~Game()
 {

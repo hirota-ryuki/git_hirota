@@ -31,10 +31,9 @@ public:
 	{
 		return m_rotation;
 	}
-
-	
 private:
 	SkinModel m_model;									//スキンモデル。
+	Sprite m_sprite;
 	CVector3 m_position = CVector3::Zero();				//座標。
 	//CharacterController m_charaCon;					//キャラクターコントローラー。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。

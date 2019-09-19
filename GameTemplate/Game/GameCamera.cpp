@@ -6,8 +6,7 @@
 
 GameCamera::GameCamera()
 {
-	m_game = &Game::GetInstance();
-	m_player = m_game->GetPlayer();
+
 }
 
 
@@ -17,10 +16,15 @@ GameCamera::~GameCamera()
 
 void GameCamera::Update()
 {
+	//ゲームのインスタンスを取得。
+	m_game = GetGame();
+	//プレイヤーのインスタンスを取得。
+	m_player = m_game->GetPlayer();
+	
 	//カメラに現在地をセット。
 	CVector3 l_setpos = m_player->GetPos();
 	l_setpos.y += 100.0f;
-	m_camera.SetPosition(l_setpos);
+	g_camera3D.SetPosition(l_setpos);
 
 	// 限界を決める
 	float toCameraPosRotAngleold = toCameraPosRotAngle;
@@ -76,12 +80,20 @@ void GameCamera::Update()
 	//視点を計算する。
 	m_pos = m_target + l_toCameraPos;
 
-	//バネカメラに注視点と視点を設定する。
-	m_camera.SetTarget(m_target);
-	m_camera.SetPosition(m_pos);
+	//
+	/*CVector3 l_target = m_target;
+	l_target.y = 0.f;
+	CVector3 l_pos = m_pos;
+	l_pos.y = 0.f;
+	m_forward = l_target - l_pos;
+	m_forward.Normalize();*/
 
-	//バネカメラの更新。
-	m_camera.Update();
+	//注視点と視点を設定する。
+	g_camera3D.SetTarget(m_target);
+	g_camera3D.SetPosition(m_pos);
+
+	//更新。
+	g_camera3D.Update();
 }
 
 void GameCamera::Draw()
