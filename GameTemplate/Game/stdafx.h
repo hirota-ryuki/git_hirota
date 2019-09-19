@@ -36,6 +36,7 @@
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/AnimationClip.h"
 #include "graphics/Camera.h"
+#include "graphics/Sprite.h"
 
 #include "IGameObject.h"
 
