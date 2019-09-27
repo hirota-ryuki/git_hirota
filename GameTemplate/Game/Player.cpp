@@ -1,12 +1,17 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "GameCamera.h"
 
 
 Player::Player()
 {
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/unityChan.cmo");
+	m_model.Init(L"modelData/unitychan/unityChan.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
+	
+	//スプライト
+	m_sprite.Init(L"sprite/moca.dds",1334,750);
+	
 	
 	//キャラコンの初期化
 	/*m_charaCon.Init(
@@ -43,8 +48,11 @@ void Player::Move()
 
 void Player::Update()
 {
+	m_game->GetGame();
+	
 	Move();
 	Rotation();
+	
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 
@@ -62,8 +70,11 @@ void Player::Rotation()
 
 void Player::Draw()
 {
+	//モデル
 	m_model.Draw(
 		g_camera3D.GetViewMatrix(), 
 		g_camera3D.GetProjectionMatrix()
 	);
+
+	
 }

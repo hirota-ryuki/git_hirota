@@ -58,8 +58,8 @@ void Sprite::Init(const wchar_t* textureFilePath, float w, float h)
 void Sprite::LoadShader()
 {
 	//シェーダーをロードする。
-	m_ps.Load("Assets/shader/sprite.fx", "PSMain", Shader::EnType::PS);
-	m_vs.Load("Assets/shader/sprite.fx", "VSMain", Shader::EnType::VS);
+	m_ps.Load("shader/sprite.fx", "PSMain", Shader::EnType::PS);
+	m_vs.Load("shader/sprite.fx", "VSMain", Shader::EnType::VS);
 }
 void Sprite::CreateConstantBuffer()
 {

@@ -174,7 +174,10 @@ bool ShaderResources::Load(
 		HRESULT hr = S_OK;
 
 		DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_OPTIMIZATION_LEVEL3;
-		/*if (strcmp(filePath, "Assets/shader/bloom.fx") == 0
+		/*if (strcmp(filePath, "
+		
+		
+		/shader/bloom.fx") == 0
 		|| strcmp(filePath, "Assets/shader/model.fx") == 0) {
 		dwShaderFlags |= D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
 		}*/

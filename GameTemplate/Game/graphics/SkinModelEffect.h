@@ -18,7 +18,7 @@ protected:
 public:
 	ModelEffect()
 	{
-		m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
+		m_psShader.Load("shader/model.fx", "PSMain", Shader::EnType::PS);
 		
 		m_pPSShader = &m_psShader;
 	}
@@ -58,7 +58,7 @@ class NonSkinModelEffect : public ModelEffect {
 public:
 	NonSkinModelEffect()
 	{
-		m_vsShader.Load("Assets/shader/model.fx", "VSMain", Shader::EnType::VS);
+		m_vsShader.Load("shader/model.fx", "VSMain", Shader::EnType::VS);
 		m_pVSShader = &m_vsShader;
 		isSkining = false;
 	}
@@ -73,7 +73,7 @@ public:
 	{
 		wchar_t hoge[256];
 		GetCurrentDirectoryW(256, hoge);
-		m_vsShader.Load("Assets/shader/model.fx", "VSMainSkin", Shader::EnType::VS);
+		m_vsShader.Load("shader/model.fx", "VSMainSkin", Shader::EnType::VS);
 		
 		m_pVSShader = &m_vsShader;
 		isSkining = true;

@@ -30,7 +30,20 @@ DirectX::Model* SkinModelDataManager::Load(const wchar_t* filePath, const Skelet
 		//エフェクトファクトリ。
 		SkinModelEffectFactory effectFactory(g_graphicsEngine->GetD3DDevice());
 		//テクスチャがあるフォルダを設定する。
-		effectFactory.SetDirectory(L"Assets/modelData");
+		//effectFactory.SetDirectory(L"modelData");
+		wchar_t textureDir[256];
+		wcsncpy_s(textureDir, filePath, 256);
+		auto p = wcsrchr(textureDir, L'/');
+		if (p == nullptr) {
+			//\マークを試す。
+			p = wcsrchr(textureDir, L'\\');
+			if (p == nullptr) {
+				//ファイルパスおかしくね？
+				return false;
+			}
+		}
+		*p = '\0';
+		effectFactory.SetDirectory(textureDir);
 		//CMOファイルのロード。
 		auto model = DirectX::Model::CreateFromCMO(	//CMOファイルからモデルを作成する関数の、CreateFromCMOを実行する。
 			g_graphicsEngine->GetD3DDevice(),			//第一引数はD3Dデバイス。

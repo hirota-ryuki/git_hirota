@@ -2,6 +2,8 @@
 
 #include "Skeleton.h"
 
+const int NUM_DIRECTION_LIG = 1;
+
 /*!
 *@brief	FBXの上方向。
 */
@@ -9,6 +11,9 @@ enum EnFbxUpAxis {
 	enFbxUpAxisY,		//Y-up
 	enFbxUpAxisZ,		//Z-up
 };
+
+
+
 /*!
 *@brief	スキンモデルクラス。
 */
@@ -88,6 +93,10 @@ private:
 	*@brief	定数バッファの作成。
 	*/
 	void InitConstantBuffer();
+	/// <summary>
+	/// ディレクションライトの初期化。
+	/// </summary>
+	void InitDirectionLight();
 	/*!
 	*@brief	スケルトンの初期化。
 	*@param[in]	filePath		ロードするcmoファイルのファイルパス。
@@ -101,11 +110,22 @@ private:
 		CMatrix mView;
 		CMatrix mProj;
 	};
+	/*!
+	*@brief	ディレクションライト。
+	*/
+	struct SDirectionLight {
+		CVector4 direction[NUM_DIRECTION_LIG];		//ライトの方向。
+		CVector4 color[NUM_DIRECTION_LIG];			//ライトのカラー。
+	};
+	
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
 	Skeleton			m_skeleton;						//!<スケルトン。
 	CMatrix				m_worldMatrix;					//!<ワールド行列。
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
+	ID3D11Buffer*		m_lightCb = nullptr;			//!<ライト用の定数バッファ。
+	SDirectionLight		m_dirLight;						//!<ディレクションライト。
+
 };
 

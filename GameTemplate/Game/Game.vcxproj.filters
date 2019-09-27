@@ -117,6 +117,7 @@
     <ClCompile Include="graphics\Sprite.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -209,15 +210,16 @@
     <ClInclude Include="graphics\Sprite.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteRender.h" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\unityChan.fbx">
+    <ImageContentTask Include="Assets\sprite\moca.PNG">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\unitychan\unityChan.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\sprite\moca.PNG">
-      <Filter>Assets\sprite</Filter>
-    </Image>
   </ItemGroup>
 </Project>

@@ -2,19 +2,20 @@
 #include "Game.h"
 #include "Player.h"
 #include "GameCamera.h"
-#include "GameObjectManager.h"
-
 
 //静的メンバ変数を定義する。
 Game* Game::m_game = nullptr;
 
 Game::Game()
 {
+	//インスタンスを一つだけにする。
 	if (m_game == nullptr) 
 	{
+		//インスタンスの登録。
 		m_game = this;
 	}
 	else{
+		//警告。
 		abort();
 	}
 	m_player = NewGO<Player>();
@@ -23,8 +24,8 @@ Game::Game()
 
 Game::~Game()
 {
-	g_goMgr.DeleteGO(m_player);
-	g_goMgr.DeleteGO(m_gamecamera);
+	DeleteGO(m_player);
+	DeleteGO(m_gamecamera);
 }
 
 void Game::Update()

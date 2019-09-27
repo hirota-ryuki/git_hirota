@@ -21,6 +21,9 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 	//定数バッファの作成。
 	InitConstantBuffer();
 
+	//ディレクションライトの初期化。
+	InitDirectionLight();
+
 	//サンプラステートの初期化。
 	InitSamplerState();
 
@@ -29,6 +32,14 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 
 	m_enFbxUpAxis = enFbxUpAxis;
 }
+
+//ディレクションライトの初期化。
+void SkinModel::InitDirectionLight()
+{
+	m_dirLight.direction[0] = { 1.f, 0.f, 0.f, 0.f };
+	m_dirLight.color[0] = { 1.f, 1.f, 1.f, 1.f };
+}
+
 void SkinModel::InitSkeleton(const wchar_t* filePath)
 {
 	//スケルトンのデータを読み込む。
@@ -67,6 +78,11 @@ void SkinModel::InitConstantBuffer()
 																//CPUアクセスが不要な場合は0。
 	//作成。
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_cb);
+
+	//続いて、ライト用の定数バッファを作成。
+	//作成するバッファのサイズを変更するだけ。
+	bufferDesc.ByteWidth = sizeof(SDirectionLight);				//SDirectionLightは16byteの倍数になっているので、切り上げはやらない。
+	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_lightCb);
 }
 void SkinModel::InitSamplerState()
 {
@@ -106,6 +122,14 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 }
 void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 {
+	//ライトを回す。
+	CQuaternion qRot;
+	qRot.SetRotationDeg(CVector3::AxisY(), 2.0f);
+	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
+		qRot.Multiply(m_dirLight.direction[i]);
+	}
+
+
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
 	ID3D11DeviceContext* d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
@@ -116,9 +140,12 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
+	//ライト用の定数バッファを更新。
+	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_dirLight, 0, 0);
 	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
+	//d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
+	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。

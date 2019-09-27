@@ -2,10 +2,15 @@
 #include "GameCamera.h"
 #include "Game.h"
 #include "Player.h"
+#include "SpriteRender.h"
 
 
 GameCamera::GameCamera()
 {
+	//スプライト
+	m_sprite = NewGO<SpriteRender>();
+	m_sprite->Init(L"sprite/moca.dds", 100, 50);
+	//m_sprite.Init(L"sprite/moca.dds", 1334, 750);
 
 }
 
@@ -94,6 +99,12 @@ void GameCamera::Update()
 
 	//更新。
 	g_camera3D.Update();
+	
+	m_sprite->SetData(
+		CVector3::Zero(),
+		CQuaternion::SpriteRot(),
+		CVector3::One()
+	);
 }
 
 void GameCamera::Draw()

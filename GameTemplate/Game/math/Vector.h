@@ -582,6 +582,16 @@ public:
 		static const CQuaternion identity = { 0.0f,  0.0f, 0.0f, 1.0f };
 		return identity;
 	}
+	/// <summary>
+	/// スプライト用に画像をあらかじめ回転させておく関数。
+	/// </summary>
+	/// <returns></returns>
+	static CQuaternion SpriteRot()
+	{
+		static CQuaternion rot = CQuaternion::Identity();
+		rot.SetRotationDeg(CVector3::AxisY(), 180.f);
+		return rot;
+	}
 };
 //整数型のベクトルクラス。
 __declspec(align(16)) class CVector4i {
