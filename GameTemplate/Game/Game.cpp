@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Player.h"
 #include "GameCamera.h"
+#include "BackGround.h"
 
 //静的メンバ変数を定義する。
 Game* Game::m_game = nullptr;
@@ -20,12 +21,14 @@ Game::Game()
 	}
 	m_player = NewGO<Player>();
 	m_gamecamera = NewGO<GameCamera>();
+	m_background = NewGO<BackGround>();
 }
 
 Game::~Game()
 {
 	DeleteGO(m_player);
 	DeleteGO(m_gamecamera);
+	DeleteGO(m_background);
 }
 
 void Game::Update()

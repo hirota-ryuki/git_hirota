@@ -99,6 +99,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="system\system.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackGround.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
@@ -176,6 +178,8 @@
     <ImageContentTask Include="Assets\sprite\moca.PNG" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\battlefield\battlefield.FBX" />
+    <MeshContentTask Include="Assets\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Assets\modelData\unitychan\unityChan.fbx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

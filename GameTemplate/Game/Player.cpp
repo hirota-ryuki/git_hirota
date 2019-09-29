@@ -8,6 +8,9 @@ Player::Player()
 	//cmoファイルの読み込み。
 	m_model.Init(L"modelData/unitychan/unityChan.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
+	m_position.y += 200.f;
+	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+
 	
 	//スプライト
 	m_sprite.Init(L"sprite/moca.dds",1334,750);
@@ -75,6 +78,4 @@ void Player::Draw()
 		g_camera3D.GetViewMatrix(), 
 		g_camera3D.GetProjectionMatrix()
 	);
-
-	
 }

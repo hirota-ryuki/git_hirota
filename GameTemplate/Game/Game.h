@@ -2,6 +2,7 @@
 
 class Player;
 class GameCamera;
+class BackGround;
 
 class Game :
 	public IGameObject
@@ -35,10 +36,19 @@ public:
 	{
 		return m_gamecamera;
 	}
+	/// <summary>
+	/// 背景のインスタンスを取得。
+	/// </summary>
+	/// <returns>背景のインスタンス</returns>
+	BackGround* GetBackGround()
+	{
+		return m_background;
+	}
 private:
 	static Game* m_game;
-	Player* m_player = nullptr;			//プレイヤークラスのポインタ
-	GameCamera* m_gamecamera = nullptr;	//ゲームカメラクラスのポインタ
+	Player* m_player = nullptr;			//Playerクラスのポインタ
+	GameCamera* m_gamecamera = nullptr;	//GameCameraクラスのポインタ
+	BackGround* m_background = nullptr;	//BackGroundクラスのポインタ
 };
 
 static inline Game* GetGame()

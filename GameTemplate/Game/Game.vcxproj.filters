@@ -118,6 +118,7 @@
       <Filter>graphics</Filter>
     </ClCompile>
     <ClCompile Include="SpriteRender.cpp" />
+    <ClCompile Include="BackGround.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -211,6 +212,7 @@
       <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="SpriteRender.h" />
+    <ClInclude Include="BackGround.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
@@ -219,6 +221,12 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unitychan\unityChan.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\enemy\enemy.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\battlefield\battlefield.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
