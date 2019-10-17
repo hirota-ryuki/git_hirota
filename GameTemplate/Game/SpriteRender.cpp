@@ -23,14 +23,14 @@ void SpriteRender::Update()
 void SpriteRender::Draw()
 {
 	//スプライト
-	CMatrix mView;
+	CMatrix mView;//= CMatrix::Identity();
 	CMatrix mProj;
 	mView.MakeLookAt(
 		{ 0, 0, 1 },
 		{ 0, 0, 0 },
-		{ 0,1,0 }
+		{ 0, 1, 0 }
 	);
-	mProj.MakeOrthoProjectionMatrix(1280, 720, 0.1, 100);
+	mProj.MakeOrthoProjectionMatrix(1280, 720, 0, 1.f);
 	m_sprite.Draw(mView, mProj);
 }
 

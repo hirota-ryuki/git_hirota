@@ -2,7 +2,6 @@
 
 class Game;
 class Player;
-class SpriteRender;
 
 class GameCamera : public IGameObject
 {
@@ -36,8 +35,6 @@ private:
 	CVector3 m_pos = CVector3::Zero();				//視点。
 	float toCameraPosRotAngle = 0.f;				//視点の角度
 	float toCameraTargetRotAngle = 0.f;				//注視点の角度
-	//Sprite m_sprite;
 	SpriteRender* m_sprite = nullptr;
 	CQuaternion m_rot = CQuaternion::SpriteRot();
-
 };

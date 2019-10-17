@@ -36,8 +36,9 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 //ディレクションライトの初期化。
 void SkinModel::InitDirectionLight()
 {
-	m_dirLight.direction[0] = { 1.f, 0.f, 0.f, 0.f };
-	m_dirLight.color[0] = { 1.f, 1.f, 1.f, 1.f };
+	m_light.directionLight.direction[0] = { 1.f, 0.f, 0.f, 0.f };
+	m_light.directionLight.color[0] = { 1.f, 1.f, 1.f, 1.f };
+	m_light.specPow = 10.0f;
 }
 
 void SkinModel::InitSkeleton(const wchar_t* filePath)
@@ -81,7 +82,8 @@ void SkinModel::InitConstantBuffer()
 
 	//続いて、ライト用の定数バッファを作成。
 	//作成するバッファのサイズを変更するだけ。
-	bufferDesc.ByteWidth = sizeof(SDirectionLight);				//SDirectionLightは16byteの倍数になっているので、切り上げはやらない。
+	bufferSize = sizeof(SLight);
+	bufferDesc.ByteWidth = (((bufferSize - 1) / 16) + 1) * 16;	//バッファは16バイトアライメントになっている必要がある。
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_lightCb);
 }
 void SkinModel::InitSamplerState()
@@ -126,9 +128,27 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	CQuaternion qRot;
 	qRot.SetRotationDeg(CVector3::AxisY(), 2.0f);
 	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
-		qRot.Multiply(m_dirLight.direction[i]);
+		qRot.Multiply(m_light.directionLight.direction[i]);
+	}
+	
+	//視点を設定。
+	m_light.eyePos = g_camera3D.GetPosition();
+
+	////ライトを回す。
+	//CQuaternion qRot2;
+	//qRot2.SetRotationDeg(CVector3::AxisY(), g_pad[0].GetLStickXF());
+	//qRot2.Multiply(m_light.directionLight.direction);
+	
+	//スペキュラの絞り。
+	if (g_pad[0].IsPress(enButtonLeft)) {
+		m_light.specPow = max(0.0f, m_light.specPow - 0.5f);
+	}
+	if (g_pad[0].IsPress(enButtonRight)) {
+		m_light.specPow = min(100.0f, m_light.specPow + 0.5f);
 	}
 
+	//環境光
+	m_light.ambientLight = { 0.4f,0.4f,0.4f };
 
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
@@ -141,11 +161,10 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	vsCb.mView = viewMatrix;
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 	//ライト用の定数バッファを更新。
-	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_dirLight, 0, 0);
+	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
 	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	//d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
-	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
+	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_lightCb);
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。

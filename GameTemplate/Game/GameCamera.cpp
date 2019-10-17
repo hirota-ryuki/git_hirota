@@ -2,7 +2,6 @@
 #include "GameCamera.h"
 #include "Game.h"
 #include "Player.h"
-#include "SpriteRender.h"
 
 
 GameCamera::GameCamera()
@@ -17,6 +16,7 @@ GameCamera::GameCamera()
 
 GameCamera::~GameCamera()
 {
+	DeleteGO(m_sprite);
 }
 
 void GameCamera::Update()

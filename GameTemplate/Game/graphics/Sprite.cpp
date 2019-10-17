@@ -86,19 +86,19 @@ void Sprite::CreateVertexBuffer( float w, float h)
 	//引数で指定された縦、横のサイズの板ポリ。
 	Vertex vertices[] = {
 		{
-			CVector4(-halfW, -halfH, 0.0f, 1.0f),
+			CVector4(-halfW, -halfH, 0, 1.0f),
 			CVector2(0.0f, 1.0f),
 		},
 		{
-			CVector4(halfW, -halfH, 0.0f, 1.0f),
+			CVector4(halfW, -halfH, 0, 1.0f),
 			CVector2(1.0f, 1.0f),
 		},
 		{
-			CVector4(-halfW, halfH, 0.0f, 1.0f),
+			CVector4(-halfW, halfH, 0, 1.0f),
 			CVector2(0.0f, 0.0f)
 		},
 		{
-			CVector4(halfW, halfH, 0.0f, 1.0f),
+			CVector4(halfW, halfH, 0, 1.0f),
 			CVector2(1.0f, 0.0f)
 		}
 	};

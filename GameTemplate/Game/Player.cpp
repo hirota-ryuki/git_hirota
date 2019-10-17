@@ -6,22 +6,18 @@
 Player::Player()
 {
 	//cmoファイルの読み込み。
-	m_model.Init(L"modelData/unitychan/unityChan.cmo");
+	m_model = NewGO<SkinModelRender>();
+	m_model->Init(L"modelData/unitychan/unityChan.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
 	m_position.y += 200.f;
-	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	m_model->SetData(m_position, m_rotation, m_scale);
 
-	
-	//スプライト
-	m_sprite.Init(L"sprite/moca.dds",1334,750);
-	
-	
 	//キャラコンの初期化
-	/*m_charaCon.Init(
+	m_charaCon.Init(
 		100.f,
 		800.f,
 		m_position
-	);*/
+	);
 }
 
 
@@ -36,28 +32,39 @@ void Player::Move()
 	float lStick_x = g_pad[0].GetLStickXF();
 	float lStick_y = g_pad[0].GetLStickYF();
 
+	//カメラの前方方向と右方向を取得。
+	CVector3 cameraForward = g_camera3D.GetForward();
+	CVector3 cameraRight = g_camera3D.GetRight();
+
+	//XZ平面での前方方向、右方向に変換する。
+	cameraForward.y = 0.0f;
+	cameraForward.Normalize();
+	cameraRight.y = 0.0f;
+	cameraRight.Normalize();
+
 	//XZ成分の移動速度をクリア。
 	m_moveSpeed.x = 0.f;
 	m_moveSpeed.z = 0.f;
-	m_moveSpeed.y = 0.f;// * GameTime().GetFrameDeltaTime();
+	m_moveSpeed.y -= 10.f;// * GameTime().GetFrameDeltaTime();
 
-	m_moveSpeed.z +=  -lStick_y * m_speed;	//奥方向への移動速度を代入。
-	m_moveSpeed.x +=  -lStick_x * m_speed;		//右方向への移動速度を加算。
-	m_position += m_moveSpeed;
+	m_moveSpeed += cameraForward * lStick_y * m_speed;	//奥方向への移動速度を代入。
+	m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。
+	//m_position += m_moveSpeed;
 
 	//キャラクターコントローラーを使用して、座標を更新。
-	//m_position = m_charaCon.Execute(1.f/60.f,m_moveSpeed);
+	m_position = m_charaCon.Execute(1.f/60.f,m_moveSpeed);
 }
 
 void Player::Update()
 {
+	//Gameクラスの取得
 	m_game->GetGame();
 	
 	Move();
 	Rotation();
 	
 	//ワールド行列の更新。
-	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	m_model->SetData(m_position, m_rotation, m_scale);
 
 }
 
@@ -68,14 +75,8 @@ void Player::Rotation()
 	CQuaternion qAddRot;
 	qAddRot.SetRotationDeg(CVector3::AxisY(), 4.f * g_pad[0].GetRStickXF());
 	m_rotation.Multiply(qAddRot, m_rotation);
-
 }
 
 void Player::Draw()
 {
-	//モデル
-	m_model.Draw(
-		g_camera3D.GetViewMatrix(), 
-		g_camera3D.GetProjectionMatrix()
-	);
 }

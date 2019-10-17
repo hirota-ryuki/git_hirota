@@ -118,6 +118,16 @@ private:
 		CVector4 color[NUM_DIRECTION_LIG];			//ライトのカラー。
 	};
 	
+	/// <summary>
+	/// ライト構造体。
+	/// </summary>
+	struct SLight {
+		SDirectionLight		directionLight;		//ディレクションライト
+		CVector3			eyePos;				//視点の座標。
+		float				specPow;			//鏡面反射の絞り。
+		CVector3			ambientLight;		//環境光。
+	};
+
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
 	Skeleton			m_skeleton;						//!<スケルトン。
@@ -125,7 +135,6 @@ private:
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
 	ID3D11Buffer*		m_lightCb = nullptr;			//!<ライト用の定数バッファ。
-	SDirectionLight		m_dirLight;						//!<ディレクションライト。
-
+	SLight				m_light;						//!<ライトクラス。
 };
 

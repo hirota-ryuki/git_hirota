@@ -32,9 +32,12 @@ static const int NUM_DIRECTION_LIG = 1;
 /*!
  *@brief	ライト用の定数バッファ。
  */
-cbuffer LightCb : register(b1) {
+cbuffer LightCb : register(b0) {
 	float3 dligDirection[NUM_DIRECTION_LIG];
 	float4 dligColor[NUM_DIRECTION_LIG];
+	float3 eyePos;									//カメラの視点。
+	float  specPow;									//スペキュラライトの絞り。
+	float3 ambientLight;
 };
 
 
@@ -72,6 +75,7 @@ struct PSInput{
 	float3 Normal		: NORMAL;
 	float3 Tangent		: TANGENT;
 	float2 TexCoord 	: TEXCOORD0;
+	float3 worldPos		: TEXCOORD1;	//ワールド座標。
 };
 /*!
  *@brief	スキン行列を計算。
@@ -97,6 +101,8 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 {
 	PSInput psInput = (PSInput)0;
 	float4 pos = mul(mWorld, In.Position);
+	//鏡面反射の計算のために、ワールド座標をピクセルシェーダーに渡す。
+	psInput.worldPos = pos;
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
@@ -154,10 +160,33 @@ float4 PSMain( PSInput In ) : SV_Target0
 	//albedoテクスチャからカラーをフェッチする。
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
 	//ディレクションライトの拡散反射光を計算する。
-	float3 lig = 0.0f;
+	float3 lig = 0.f;
 	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
-		lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) * dligColor[i];
-	}		
+		lig += max(0.f, dot(In.Normal * -1.f, dligDirection[i])) * dligColor[i];
+	}	
+
+	////鏡面反射////
+	//1 反射ベクトルRを求める。
+	float3 R = 0.f;
+	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
+		R += dligDirection[i] + -2 * dot(In.Normal, -dligDirection[i]) * In.Normal;
+	}
+
+	//2 視点からライトを当てる物体に伸びるVectorEを求める
+	float3 E = normalize(In.worldPos - eyePos);
+
+	//1と2で求まったVectorのない席を計算する。
+	//スペキュラ反射の強さを求める。
+	float specPower = max(0, dot(R, -E));
+	
+	//3 スペキュラ反射をライトに加算する。
+	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
+		lig += dligColor[i].xyz * pow(specPower, specPow);
+	}
+
+	//環境光。
+	lig += ambientLight;
+
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 	finalColor.xyz = albedoColor.xyz * lig;
 	return finalColor;

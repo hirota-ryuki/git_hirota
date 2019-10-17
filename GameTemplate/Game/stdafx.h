@@ -41,6 +41,8 @@
 #include "IGameObject.h"
 #include "GameObjectManager.h"
 #include "Game.h"
+#include "SpriteRender.h"
+#include "SkinModelRender.h"
 
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
