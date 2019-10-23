@@ -1,0 +1,45 @@
+#pragma once
+#include "bulletPhysics/src/LinearMath/btIDebugDraw.h"
+class DebugWireframe :
+	public btIDebugDraw
+{
+public:
+	DebugWireframe();
+	~DebugWireframe();
+	/// <summary>
+	/// 設定の準備
+	/// </summary>
+	void Prepare();
+	/// <summary>
+	/// デバイスコンテキストに設定
+	/// 1フレーム内に一回
+	/// </summary>
+	void Context();
+	//必須
+	/// <summary>
+	/// 線ごとに一回ずつ呼ばれる
+	/// </summary>
+	/// <param name="from"></param>
+	/// <param name="to"></param>
+	/// <param name="color"></param>
+	void    drawLine(const btVector3& from, const btVector3& to, const btVector3& color) override;
+	void    setDebugMode(int debugMode) override;
+	int     getDebugMode() const override;
+
+	//何もしなくても問題なし {}　必要であれば定義
+	void    drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color) override;
+	void    reportErrorWarning(const char* warningString) override;
+	void    draw3dText(const btVector3& location, const char* textString) override;
+private:
+	struct Vertex 
+	{
+		CVector3 pos;
+		CVector3 color;
+	};
+	CMatrix mVP;		//ビュー行列とプロジェクション行列
+	ID3D11Buffer*		m_vertexBuffer = nullptr;			//頂点バッファ。
+	ID3D11Buffer*		m_constantBuffer = nullptr;			//定数バッファ。
+	Shader m_Vshader;	//頂点シェーダー
+	Shader m_Pshader;	//ピクセルシェーダー
+};
+

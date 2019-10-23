@@ -128,13 +128,13 @@ private:
 		CVector3			ambientLight;		//環境光。
 	};
 
-	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
-	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
-	Skeleton			m_skeleton;						//!<スケルトン。
-	CMatrix				m_worldMatrix;					//!<ワールド行列。
-	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
-	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
-	ID3D11Buffer*		m_lightCb = nullptr;			//!<ライト用の定数バッファ。
-	SLight				m_light;						//!<ライトクラス。
+	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//FBXの上方向。
+	ID3D11Buffer*		m_cb = nullptr;					//定数バッファ。
+	Skeleton			m_skeleton;						//スケルトン。
+	CMatrix				m_worldMatrix;					//ワールド行列。
+	DirectX::Model*		m_modelDx;						//DirectXTKが提供するモデルクラス。
+	ID3D11SamplerState* m_samplerState = nullptr;		//サンプラステート。
+	ID3D11Buffer*		m_lightCb = nullptr;			//ライト用の定数バッファ。
+	SLight				m_light;						//ライトクラス。
 };
 

@@ -5,19 +5,21 @@
 
 Player::Player()
 {
+	m_position.y += 500.f;
+	//キャラコンの初期化
+	m_charaCon.Init(
+		10.f,
+		80.f,
+		m_position
+	);
+
 	//cmoファイルの読み込み。
 	m_model = NewGO<SkinModelRender>();
 	m_model->Init(L"modelData/unitychan/unityChan.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
-	m_position.y += 200.f;
+	//m_position.y += 200.f;
 	m_model->SetData(m_position, m_rotation, m_scale);
 
-	//キャラコンの初期化
-	m_charaCon.Init(
-		100.f,
-		800.f,
-		m_position
-	);
 }
 
 
@@ -45,14 +47,14 @@ void Player::Move()
 	//XZ成分の移動速度をクリア。
 	m_moveSpeed.x = 0.f;
 	m_moveSpeed.z = 0.f;
-	m_moveSpeed.y -= 10.f;// * GameTime().GetFrameDeltaTime();
+	m_moveSpeed.y -= 60.f * 1.f / 60.f;
 
 	m_moveSpeed += cameraForward * lStick_y * m_speed;	//奥方向への移動速度を代入。
 	m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。
 	//m_position += m_moveSpeed;
 
 	//キャラクターコントローラーを使用して、座標を更新。
-	m_position = m_charaCon.Execute(1.f/60.f,m_moveSpeed);
+	m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
 }
 
 void Player::Update()

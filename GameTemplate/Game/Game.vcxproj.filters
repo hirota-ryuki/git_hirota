@@ -120,6 +120,7 @@
     <ClCompile Include="SpriteRender.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="SkinModelRender.cpp" />
+    <ClCompile Include="DebugWireframe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -215,6 +216,7 @@
     <ClInclude Include="SpriteRender.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="SkinModelRender.h" />
+    <ClInclude Include="DebugWireframe.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
