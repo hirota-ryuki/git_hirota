@@ -36,7 +36,6 @@ private:
 		CVector3 pos;
 		CVector3 color;
 	};
-	CMatrix mVP;		//ビュー行列とプロジェクション行列
 	ID3D11Buffer*		m_vertexBuffer = nullptr;			//頂点バッファ。
 	ID3D11Buffer*		m_constantBuffer = nullptr;			//定数バッファ。
 	Shader m_Vshader;	//頂点シェーダー
