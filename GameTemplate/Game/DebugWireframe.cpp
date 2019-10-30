@@ -19,6 +19,7 @@ void DebugWireframe::Prepare()
 	D3D11_BUFFER_DESC desc{};
 	//使い方　読み方:ゆぅさぁじ
 	desc.Usage = D3D11_USAGE_DEFAULT;
+	
 	//サイズ 読み方:バイトウィズ
 	desc.ByteWidth = sizeof(Vertex) * 2;
 	//頂点用にする
@@ -47,12 +48,22 @@ void DebugWireframe::Prepare()
 }
 
 
-
+bool hoge = false;
 void DebugWireframe::Context()
 {
-	//デバイスコンテキストにモデルクラス等の時の設定が
+	//デバイスコンテキストにモデルクラス等の設定が
 	//残っているため上書きする（更新）
+	hoge = true;
+	
+}
 
+//1フレーム内にdrawLineは線の数だけ行う
+void DebugWireframe::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & color)
+{
+	if (hoge == false) {
+		return;
+	}
+//	hoge = false;
 	//デバイスコンテキストを取得
 	ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
 	
@@ -70,7 +81,9 @@ void DebugWireframe::Context()
 	//mVPの更新
 	CMatrix VP;		//ビュー行列とプロジェクション行列
 	//ビューとプロジェクションの掛け算
-	VP.Mul(g_camera3D.GetViewMatrix(), g_camera3D.GetProjectionMatrix());
+	auto v = g_camera3D.GetViewMatrix();
+	auto p = g_camera3D.GetProjectionMatrix();
+	VP.Mul(v, p);
 	//定数バッファに渡したい変数を格納(m_constantBufferの内容を上書き)
 	dc->UpdateSubresource(m_constantBuffer, 0, nullptr, &VP, 0, 0);
 	//定数バッファをデバイスコンテキストに設定
@@ -100,25 +113,18 @@ void DebugWireframe::Context()
 	//頂点をどんな感じに描画するのか
 	//今回は頂点二つの間に線を描く設定
 	dc->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
-}
-
-//1フレーム内にdrawLineは線の数だけ行う
-void DebugWireframe::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & color)
-{
-	//デバイスコンテキストを取得
-	ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
 
 	//頂点を書き換えてドローする関数
-	Vertex ver[2];
-	ver[0].pos = from;
-	ver[0].color = color;
-	ver[1].pos = to;
-	ver[1].color = color;
+	Vertex vers[2];
+	vers[0].pos = from;
+	vers[0].color = color;
+	vers[1].pos = to;
+	vers[1].color = color;
 
 	//引数verはver[0]のアドレス
 	//Prepare関数のByteWidthでサイズを*2にすることで
 	//verの要素数が二つであることがわかる
-	dc->UpdateSubresource(m_vertexBuffer, 0, nullptr, ver, 0, 0);
+	dc->UpdateSubresource(m_vertexBuffer, 0, nullptr, vers, 0, 0);
 
 	//描画
 	//2は頂点数、0はオフセット

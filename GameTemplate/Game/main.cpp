@@ -36,9 +36,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		}
 		//物理エンジンの更新。
 		g_physics.Update();
-
+					
 		//GameObjectManagerの更新
 		g_goMgr.Update();
+
+		//デバッグモード
+		g_physics.DebugDraw();
 		
 		//描画終了。
 		g_graphicsEngine->EndRender();

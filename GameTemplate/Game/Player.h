@@ -43,6 +43,6 @@ private:
 	GameCamera* m_gamecamera = nullptr;					//GameCameraのインスタンス。
 	bool isRun;											//走っているかどうか
 	float RunParam = 2.f;								//走るときの倍率 走ると2倍になる。
-	float m_speed = 10.f;								//キャラが歩くスピード。
+	float m_speed = 1000.f;								//キャラが歩くスピード。
 	
 };

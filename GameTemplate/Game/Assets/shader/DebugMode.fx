@@ -10,7 +10,7 @@
  * @brief	頂点シェーダー用の定数バッファ。
  */
 cbuffer VSCb : register(b0){
-	float4x4 mWVP;
+	float4x4 mVP;
 };
 
 /*!
@@ -38,7 +38,8 @@ struct PSInput
 PSInput VSMain(VSInput input)
 {
 	PSInput output;
-	output.position = mul(input.position, mVP);
+	output.position = mul(float4(input.position, 1.0f), mVP);
+	//output.position = mul(mVP,input.position);
 	output.color = input.color;
 	return output;
 }

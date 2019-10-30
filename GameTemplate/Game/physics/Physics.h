@@ -1,5 +1,5 @@
 #pragma once
-
+#include "DebugWireframe.h"
 
 class RigidBody;
 
@@ -47,6 +47,14 @@ public:
 	{
 		dynamicWorld->contactTest(colObj, resultCallback);
 	}
+
+	/// <summary>
+	/// デバッグワイヤーフレームを描画する関数
+	/// たかPに名前をパクられました。＿|￣|○
+	/// </summary>
+	void DebugDraw();
+private:
+	DebugWireframe dw;
 };
 
 extern PhysicsWorld g_physics;

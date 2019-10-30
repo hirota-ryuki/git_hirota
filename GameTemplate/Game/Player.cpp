@@ -47,7 +47,7 @@ void Player::Move()
 	//XZ成分の移動速度をクリア。
 	m_moveSpeed.x = 0.f;
 	m_moveSpeed.z = 0.f;
-	m_moveSpeed.y -= 60.f * 1.f / 60.f;
+	m_moveSpeed.y -= 120.f * 1.f / 60.f;
 
 	m_moveSpeed += cameraForward * lStick_y * m_speed;	//奥方向への移動速度を代入。
 	m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。

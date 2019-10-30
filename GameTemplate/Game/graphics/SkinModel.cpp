@@ -148,7 +148,7 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	}
 
 	//ŠÂ‹«Œõ
-	m_light.ambientLight = { 0.4f,0.4f,0.4f };
+	m_light.ambientLight = CVector3{ 0.4f,0.4f,0.4f };
 
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
