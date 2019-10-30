@@ -38,7 +38,7 @@ struct PSInput
 PSInput VSMain(VSInput input)
 {
 	PSInput output;
-	output.position = mul(float4(input.position, 1.0f), mVP);
+	output.position = mul(mVP, float4(input.position, 1.0f));
 	//output.position = mul(mVP,input.position);
 	output.color = input.color;
 	return output;
