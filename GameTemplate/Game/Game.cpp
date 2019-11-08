@@ -19,9 +19,9 @@ Game::Game()
 		//åxçêÅB
 		abort();
 	}
-	m_player = NewGO<Player>();
-	m_gamecamera = NewGO<GameCamera>();
-	m_background = NewGO<BackGround>();
+	m_gamecamera = NewGO<GameCamera>(GOPrio_Defalt);
+	m_player = NewGO<Player>(GOPrio_Defalt);
+	m_background = NewGO<BackGround>(GOPrio_Defalt);
 }
 
 Game::~Game()

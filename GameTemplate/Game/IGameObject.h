@@ -2,18 +2,19 @@
 class IGameObject
 {
 public:
+	//基底クラスには仮想デストラクタが必要
+	//クソ
+	virtual ~IGameObject(){}
 	/// <summary>
 	/// 更新関数。
 	/// </summary>
 	virtual void Update() = 0;
+
 	/// <summary>
-	/// 描画関数。
-	/// </summary>
-	//virtual void Render() = 0;
-	/// <summary>/// 
-	/// /// 描画関数。
+	///  描画関数。
 	/// </summary>
 	virtual void Draw() = 0;
+
 	/// <summary>
 	/// 削除リクエストを行う。
 	/// </summary>
@@ -21,6 +22,7 @@ public:
 	{
 		isRequestDelete = true;
 	}
+
 	/// <summary>
 	/// 削除リクエストを受けているか調べる。
 	/// </summary>

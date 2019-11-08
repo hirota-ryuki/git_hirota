@@ -17,7 +17,7 @@ public:
 	/// プレイヤーの回転。
 	/// </summary>
 	void Rotation();
-	void Draw() override;
+	void Draw() override {};
 	/// <summary>
 	/// プレイヤーのポジションを取得。
 	/// </summary>

@@ -34,6 +34,33 @@
     <Filter Include="Assets\sprite">
       <UniqueIdentifier>{65207ce4-f7c2-4100-933f-2b5d633c116a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sprite">
+      <UniqueIdentifier>{870d025f-6008-4837-812c-4396bc1af47f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BackGround">
+      <UniqueIdentifier>{bcde93f3-6348-4dc4-9ce5-1e2cf954cfd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DebugWireframe">
+      <UniqueIdentifier>{9a74b2a5-ecf6-4a3b-a80c-8bfdae491b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Title">
+      <UniqueIdentifier>{3160188e-dd70-4f51-9cf4-d4606a998613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCamera">
+      <UniqueIdentifier>{3bc132de-25ab-496d-b3a5-216adeb3c59e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{6749290a-8668-422e-bab7-2aca61452668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Navimesh">
+      <UniqueIdentifier>{401a9ca0-5080-4020-87ef-a4c6550598cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{e6069f4e-0819-43e1-8657-55347c8ff83d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainCore">
+      <UniqueIdentifier>{63dcc52c-71f9-4936-976c-6d5b45135ccf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -108,19 +135,45 @@
     <ClCompile Include="level\MapChip.cpp">
       <Filter>level</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="GameCamera.cpp" />
-    <ClCompile Include="GameObjectManager.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="graphics\Sprite.cpp">
+      <Filter>Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRender.cpp">
+      <Filter>Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinModelRender.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteRender.cpp" />
-    <ClCompile Include="BackGround.cpp" />
-    <ClCompile Include="SkinModelRender.cpp" />
-    <ClCompile Include="DebugWireframe.cpp" />
+    <ClCompile Include="BackGround.cpp">
+      <Filter>BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugWireframe.cpp">
+      <Filter>DebugWireframe</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>Title</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCamera.cpp">
+      <Filter>GameCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Navimesh.cpp">
+      <Filter>Navimesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>MainCore</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>MainCore</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>MainCore</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -204,22 +257,51 @@
     <ClInclude Include="level\MapChip.h">
       <Filter>level</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="GameCamera.h" />
-    <ClInclude Include="GameObjectManager.h" />
-    <ClInclude Include="IGameObject.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="graphics\Sprite.h">
+      <Filter>Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRender.h">
+      <Filter>Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinModelRender.h">
       <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteRender.h" />
-    <ClInclude Include="BackGround.h" />
-    <ClInclude Include="SkinModelRender.h" />
-    <ClInclude Include="DebugWireframe.h" />
+    <ClInclude Include="BackGround.h">
+      <Filter>BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugWireframe.h">
+      <Filter>DebugWireframe</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>Title</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCamera.h">
+      <Filter>GameCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Navimesh.h">
+      <Filter>Navimesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>MainCore</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>MainCore</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\title.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
   </ItemGroup>

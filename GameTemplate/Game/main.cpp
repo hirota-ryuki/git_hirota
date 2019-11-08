@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "system/system.h"
-#include "Game.h"
-#include "level/Level.h"
-#include "GameObjectManager.h"
+#include "Title.h"
 
 //class Player;
 
@@ -22,8 +20,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D.SetTarget({ 0.0f, 100.0f, 0.0f });
 	g_camera3D.SetFar(10000.0f);
 	
-	//Gameクラス
-	NewGO<Game>();
+	//Titleクラス
+	NewGO<Title>(GOPrio_Defalt);
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)

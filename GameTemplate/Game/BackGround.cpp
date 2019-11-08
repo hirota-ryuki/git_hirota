@@ -6,7 +6,7 @@
 BackGround::BackGround()
 {
 	//cmoファイルの読み込み。
-	m_model = NewGO<SkinModelRender>();
+	m_model = NewGO<SkinModelRender>(GOPrio_Defalt);
 	m_model->Init(L"modelData/battlefield/battlefield.cmo");	
 	m_model->SetData(m_position, m_rotation, m_scale/* * 50.f*/);
 	//当たり判定。

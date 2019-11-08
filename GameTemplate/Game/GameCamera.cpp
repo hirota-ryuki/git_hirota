@@ -7,10 +7,8 @@
 GameCamera::GameCamera()
 {
 	//スプライト
-	m_sprite = NewGO<SpriteRender>();
+	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
 	m_sprite->Init(L"sprite/moca.dds", 100, 50);
-	//m_sprite.Init(L"sprite/moca.dds", 1334, 750);
-
 }
 
 
