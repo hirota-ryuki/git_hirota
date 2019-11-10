@@ -187,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\battlefield\battlefield.FBX" />
+    <MeshContentTask Include="Assets\modelData\battlefield\floor.FBX" />
     <MeshContentTask Include="Assets\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Assets\modelData\unitychan\unityChan.fbx" />
   </ItemGroup>

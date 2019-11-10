@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "GameCamera.h"
 #include "BackGround.h"
+#include "Navimesh.h"
+
 
 //静的メンバ変数を定義する。
 Game* Game::m_game = nullptr;
@@ -19,9 +21,11 @@ Game::Game()
 		//警告。
 		abort();
 	}
-	m_gamecamera = NewGO<GameCamera>(GOPrio_Defalt);
-	m_player = NewGO<Player>(GOPrio_Defalt);
-	m_background = NewGO<BackGround>(GOPrio_Defalt);
+	m_gamecamera = NewGO<GameCamera>(GOPrio_Defalut);
+	m_player = NewGO<Player>(GOPrio_Defalut);
+	m_background = NewGO<BackGround>(GOPrio_Defalut);
+	m_navimesh = NewGO<Navimesh>(GOPrio_Defalut);
+	
 }
 
 Game::~Game()

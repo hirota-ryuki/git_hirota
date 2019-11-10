@@ -315,5 +315,8 @@
     <MeshContentTask Include="Assets\modelData\battlefield\battlefield.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\battlefield\floor.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
 </Project>

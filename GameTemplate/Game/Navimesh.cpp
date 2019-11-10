@@ -1,9 +1,14 @@
 #include "stdafx.h"
 #include "Navimesh.h"
-#include "Physics/MeshCollider.h"
 
 Navimesh::Navimesh()
 {
+	//cmoファイルの読み込み。
+	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
+	m_model->Init(L"modelData/battlefield/floor.cmo");
+	m_model->SetData(m_position, m_rotation, m_scale);
+	m_physicsStaticObject.CreateMeshObject(m_model->GetModel(), m_position, m_rotation);
+	Create(m_model->GetModel());
 }
 
 
@@ -69,9 +74,29 @@ void Navimesh::Create(SkinModel& model)
 	);
 	//インデックスの数だけ回す
 	for (int i = 0; i < m_indexBufferArray.size(); i++) {
+		//インデックスバッファの配列
+		//頂点の場所
+		auto& indexBuffer = m_indexBufferArray[i];
+		//頂点バッファの配列
+		//一つの頂点バッファにつき1パーツ
+		auto& vertexBuffer = m_vertexBufferArray[i];
+		//セルの生成
 		Cell* cell = new Cell;
-		//cell->vertexPos[0] = m_indexBufferArray.at(i)->at(i);
-		cell->vertexPos[1] = m_vertexBufferArray.at(i + 1)->at(i + 1);
-		cell->vertexPos[2] = m_vertexBufferArray.at(i + 2)->at(i + 2);
+
+		//ポリゴンの数
+		//ポリゴンは頂点3つで形成されるので3で割っている
+		int numPoly = indexBuffer->size() / 3;
+		//頂点の数だけ回す
+		for(int polyNo = 0; polyNo < numPoly; polyNo++){
+			//ポリゴン一個に対する3か所の頂点の場所を割り出す
+			int vertNo_0 = indexBuffer->at(polyNo * 3);
+			int vertNo_1 = indexBuffer->at(polyNo * 3 + 1);
+			int vertNo_2 = indexBuffer->at(polyNo * 3 + 2);
+			//セルに頂点の場所を格納
+			cell->vertexPos[0] = vertexBuffer->at(vertNo_0);
+			cell->vertexPos[1] = vertexBuffer->at(vertNo_1);
+			cell->vertexPos[2] = vertexBuffer->at(vertNo_2);
+		
+		}
 	}
 }

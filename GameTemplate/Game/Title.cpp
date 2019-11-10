@@ -17,7 +17,7 @@ void Title::Update()
 {
 	if (g_pad[0].IsTrigger(enButtonA))
 	{
-		NewGO<Game>(GOPrio_Defalt);
+		NewGO<Game>(GOPrio_Defalut);
 		DeleteGO(this);
 	}
 }

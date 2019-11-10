@@ -21,7 +21,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D.SetFar(10000.0f);
 	
 	//Titleクラス
-	NewGO<Title>(GOPrio_Defalt);
+	NewGO<Title>(GOPrio_Defalut);
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)

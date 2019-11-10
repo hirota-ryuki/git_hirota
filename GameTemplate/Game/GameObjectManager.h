@@ -4,7 +4,7 @@
 
 //NewGO‚Ì—Dæ‡ˆÊ
 enum prio {
-	GOPrio_Defalt = 2,
+	GOPrio_Defalut = 2,
 	GOPrio_Sprite,
 	GOPrio_num = 5,
 };

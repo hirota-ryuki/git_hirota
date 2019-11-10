@@ -5,6 +5,7 @@
 
 Player::Player()
 {
+	m_position.y += 1000.f;
 	//キャラコンの初期化
 	m_charaCon.Init(
 		50.f,
@@ -15,7 +16,7 @@ Player::Player()
 		m_position
 	);
 	//cmoファイルの読み込み。
-	m_model = NewGO<SkinModelRender>(GOPrio_Defalt);
+	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
 	m_model->Init(L"modelData/unitychan/unityChan.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
 	//m_position.y += 200.f;
