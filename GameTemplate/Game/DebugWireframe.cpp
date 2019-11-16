@@ -19,7 +19,6 @@ void DebugWireframe::Prepare()
 	D3D11_BUFFER_DESC desc{};
 	//使い方　読み方:ゆぅさぁじ
 	desc.Usage = D3D11_USAGE_DEFAULT;
-	
 	//サイズ 読み方:バイトウィズ
 	desc.ByteWidth = sizeof(Vertex) * 2;
 	//頂点用にする
@@ -52,18 +51,12 @@ bool hoge = false;
 void DebugWireframe::Context()
 {
 	//デバイスコンテキストにモデルクラス等の設定が
-	//残っているため上書きする（更新）
-	hoge = true;
-	
+	//残っているため上書きする（更新）	
 }
 
 //1フレーム内にdrawLineは線の数だけ行う
 void DebugWireframe::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & color)
 {
-	if (hoge == false) {
-		return;
-	}
-//	hoge = false;
 	//デバイスコンテキストを取得
 	ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
 	

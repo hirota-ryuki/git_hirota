@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "GameCamera.h"
-#include "Game.h"
 #include "Player.h"
 
 

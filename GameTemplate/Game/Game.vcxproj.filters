@@ -52,14 +52,14 @@
     <Filter Include="GameObject">
       <UniqueIdentifier>{6749290a-8668-422e-bab7-2aca61452668}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Navimesh">
-      <UniqueIdentifier>{401a9ca0-5080-4020-87ef-a4c6550598cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Player">
       <UniqueIdentifier>{e6069f4e-0819-43e1-8657-55347c8ff83d}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainCore">
       <UniqueIdentifier>{63dcc52c-71f9-4936-976c-6d5b45135ccf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Navmesh">
+      <UniqueIdentifier>{401a9ca0-5080-4020-87ef-a4c6550598cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -160,7 +160,7 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Navimesh.cpp">
-      <Filter>Navimesh</Filter>
+      <Filter>Navmesh</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Player</Filter>
@@ -285,7 +285,7 @@
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Navimesh.h">
-      <Filter>Navimesh</Filter>
+      <Filter>Navmesh</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Player</Filter>

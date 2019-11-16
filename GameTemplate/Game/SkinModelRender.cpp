@@ -13,17 +13,21 @@ SkinModelRender::~SkinModelRender()
 
 void SkinModelRender::Update()
 {
-	//ワールド行列の更新。
-	m_model.UpdateWorldMatrix(m_pos, m_rot, m_scale);
+	
+		//ワールド行列の更新。
+		m_model.UpdateWorldMatrix(m_pos, m_rot, m_scale);
+	
 }
 
 void SkinModelRender::Draw()
 {
-	//モデル
-	m_model.Draw(
-		g_camera3D.GetViewMatrix(),
-		g_camera3D.GetProjectionMatrix()
-	);
+	if (isNotModel) {
+		//モデル
+		m_model.Draw(
+			g_camera3D.GetViewMatrix(),
+			g_camera3D.GetProjectionMatrix()
+		);
+	}
 }
 
 void SkinModelRender::Init(const wchar_t * texFilePath)

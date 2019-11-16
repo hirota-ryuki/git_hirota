@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "GameCamera.h"
-
+#include "Navimesh.h"
 
 Player::Player()
 {
@@ -61,11 +61,19 @@ void Player::Move()
 void Player::Update()
 {
 	//Gameクラスの取得
-	m_game->GetGame();
+	//m_game->GetGame();
 	
 	Move();
 	Rotation();
-	
+	//if (m_game->GetGame() != nullptr) {
+	//	//Gameクラスの取得
+	//	m_game->GetGame();
+	//	if (m_game->GetNavi() != nullptr) {
+	//		m_nav = m_game->GetNavi();
+	//		auto cell = m_nav->GetCell();
+	//		m_position = cell[0]->centerPos;
+	//	}
+	//}
 	//ワールド行列の更新。
 	m_model->SetData(m_position, m_rotation, m_scale);
 }

@@ -20,11 +20,11 @@ Game::Game()
 	else{
 		//åxçêÅB
 		abort();
-	}
+	}	
+	m_navimesh = NewGO<Navimesh>(GOPrio_Defalut);
 	m_gamecamera = NewGO<GameCamera>(GOPrio_Defalut);
 	m_player = NewGO<Player>(GOPrio_Defalut);
 	m_background = NewGO<BackGround>(GOPrio_Defalut);
-	m_navimesh = NewGO<Navimesh>(GOPrio_Defalut);
 	
 }
 
@@ -33,12 +33,5 @@ Game::~Game()
 	DeleteGO(m_player);
 	DeleteGO(m_gamecamera);
 	DeleteGO(m_background);
-}
-
-void Game::Update()
-{
-}
-
-void Game::Draw()
-{
+	DeleteGO(m_navimesh);
 }

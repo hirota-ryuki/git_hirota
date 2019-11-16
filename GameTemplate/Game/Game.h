@@ -11,8 +11,8 @@ class Game :
 public:
 	Game();
 	~Game();
-	void Update() override;
-	void Draw() override;
+	void Update() override {};
+	void Draw() override {};
 	/// <summary>
 	/// ゲームのインスタンスを取得。
 	/// </summary>
@@ -45,6 +45,10 @@ public:
 	{
 		return m_background;
 	}
+	/*Navimesh* GetNavi()
+	{
+		return m_navimesh;
+	}*/
 private:
 	static Game* m_game;
 	Player* m_player = nullptr;			//Playerクラスのポインタ

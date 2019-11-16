@@ -2,6 +2,7 @@
 #include "character/CharacterController.h"
 
 class GameCamera;
+class Navimesh;
 
 class Player : public IGameObject
 {
@@ -26,6 +27,14 @@ public:
 		return m_position;
 	}
 	/// <summary>
+	/// プレイヤーのポジションをセット。
+	/// </summary>
+	/// <param name="pos">座標</param>
+	void SetPos(CVector3 pos)
+	{
+		m_position = pos;
+	}
+	/// <summary>
 	/// プレイヤーの回転を取得。
 	/// </summary>
 	CQuaternion GetRot()
@@ -45,4 +54,5 @@ private:
 	float RunParam = 2.f;								//走るときの倍率 走ると2倍になる。
 	float m_speed = 1000.f;								//キャラが歩くスピード。
 	
+	Navimesh* m_nav;
 };

@@ -2,13 +2,16 @@
 #include "system/system.h"
 #include "Title.h"
 
-//class Player;
-
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
+	//メモ
+	//シャドウマップはいつも一つ！シングルトン
+	//順番↓
+	//Update->シャドウマップのDraw->Draw
+
 	//カレントディレクトリをAssetsに。
 	SetCurrentDirectory("Assets");
 
@@ -23,6 +26,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//Titleクラス
 	NewGO<Title>(GOPrio_Defalut);
 
+	//デバッグモードのオンオフ
+	bool m_isDebug = false;
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
@@ -38,9 +43,17 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//GameObjectManagerの更新
 		g_goMgr.Update();
 
-		//デバッグモード
-		g_physics.DebugDraw();
 		
+		if (g_pad[0].IsTrigger(enButtonSelect))
+		{
+			m_isDebug = !m_isDebug;
+		}
+		if (m_isDebug)
+		{
+			//デバッグモード
+			g_physics.DebugDraw();
+		}
+
 		//描画終了。
 		g_graphicsEngine->EndRender();
 	}

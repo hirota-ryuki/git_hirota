@@ -1,11 +1,12 @@
 #pragma once
 #include "Physics/ICollider.h"
 #include "physics/PhysicsStaticObject.h"
+#include "physics/CapsuleCollider.h"
 
 //セルクラス
 struct Cell {
 	CVector3 vertexPos[3];	//セルの頂点のポジション
-	Cell* linkCell[3];		//セルに隣接しているセル
+	//Cell* linkCell[3];		//セルに隣接しているセル
 	CVector3 centerPos;		//セルの真ん中のポジション
 };
 
@@ -18,6 +19,10 @@ public:
 	void Create(SkinModel& model);
 	void Update() override {};
 	void Draw() override {};
+	std::vector<Cell*> GetCell()
+	{
+		return m_cells;
+	}
 private:
 	//typedefは既存の型名に新しい名前を付ける
 	typedef std::vector<CVector3>					VertexBuffer;			//頂点バッファ。
@@ -29,8 +34,7 @@ private:
 	std::vector<IndexBufferPtr>						m_indexBufferArray;		//インデックスバッファの配列。
 	
 	SkinModelRender* m_model = nullptr;					//スキンモデル。
-	CVector3 m_position = CVector3::Zero();				//座標。
-	CQuaternion m_rotation = CQuaternion::SpriteRot();	//回転。
-	CVector3 m_scale = CVector3::One();					//大きさ。
-	PhysicsStaticObject m_physicsStaticObject;
+	SkinModelRender* m_skin = nullptr;					//スキンモデル。
+	CapsuleCollider m_collider;							//セル用のカプセルコライダー
+	std::vector<Cell*>					m_cells;		//セルの配列。
 };

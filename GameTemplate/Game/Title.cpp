@@ -15,9 +15,12 @@ Title::~Title()
 
 void Title::Update()
 {
+	//Aボタンを押したら
 	if (g_pad[0].IsTrigger(enButtonA))
 	{
+		//Gameクラスを生成
 		NewGO<Game>(GOPrio_Defalut);
+		//タイトルクラスを消去
 		DeleteGO(this);
 	}
 }
