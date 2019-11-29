@@ -6,7 +6,11 @@ public:
 	SpriteRender();
 	~SpriteRender();
 	void Update() override;
-	void Draw() override;
+	void Draw() override
+	{
+
+	}
+	void DrawHUD() override;
 	void SetData(CVector3 pos, CQuaternion rot, CVector3 scale)
 	{
 		m_pos = pos;

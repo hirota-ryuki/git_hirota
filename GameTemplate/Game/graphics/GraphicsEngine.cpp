@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GraphicsEngine.h"
-
+#include "RenderState.h"
 
 GraphicsEngine::GraphicsEngine()
 {
@@ -151,4 +151,7 @@ void GraphicsEngine::Init(HWND hWnd)
 	viewport.MaxDepth = 1.0f;
 	m_pd3dDeviceContext->RSSetViewports(1, &viewport);
 	m_pd3dDeviceContext->RSSetState(m_rasterizerState);
+
+	//各種レンダリングステートを初期化する。
+	DepthStencilState::Init(*this);
 }

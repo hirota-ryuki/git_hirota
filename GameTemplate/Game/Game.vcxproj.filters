@@ -55,11 +55,50 @@
     <Filter Include="Player">
       <UniqueIdentifier>{e6069f4e-0819-43e1-8657-55347c8ff83d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainCore">
-      <UniqueIdentifier>{63dcc52c-71f9-4936-976c-6d5b45135ccf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Navmesh">
       <UniqueIdentifier>{401a9ca0-5080-4020-87ef-a4c6550598cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main&amp;Game">
+      <UniqueIdentifier>{63dcc52c-71f9-4936-976c-6d5b45135ccf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{b0089d51-9d89-49d0-a822-cc357445b98f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\RenderState">
+      <UniqueIdentifier>{078e97f7-7a70-42b9-a835-7064c319ea01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\RenderTarget">
+      <UniqueIdentifier>{a470e91e-1171-4041-9bc7-dc795ba22612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\Camera">
+      <UniqueIdentifier>{29e91e11-6e71-469f-b5fd-9eec3aeafee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\GraphicsEngine">
+      <UniqueIdentifier>{aa57afd4-e7ab-4cfb-be2c-2ad5200437a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\Shader">
+      <UniqueIdentifier>{50404ec3-2a06-49e5-8de2-10823a236d9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\Skeleton">
+      <UniqueIdentifier>{299e5eb2-3291-4b36-9dc1-98abb2085921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\SkinModel">
+      <UniqueIdentifier>{290bb6f3-adc4-450d-8379-76021beeed51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\SkinModel\SkinModel">
+      <UniqueIdentifier>{1fd76b8e-43d5-49b1-b9e4-21cdac30250a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\SkinModel\SkinModelDataManager">
+      <UniqueIdentifier>{8d889623-597c-49bd-b33f-6f6138b86b10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\SkinModel\SkinModelEffect">
+      <UniqueIdentifier>{f8bc32ee-5f0f-46d0-9647-5a9bc79ce919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\SkinModel\SkinModelRender">
+      <UniqueIdentifier>{4d568310-b5dd-4f21-89a2-5a92a89db297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\SkinModel\SkinModelShaderConst">
+      <UniqueIdentifier>{5d23801b-7af8-4eeb-8a71-21a8fbc996da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -71,27 +110,6 @@
     </ClCompile>
     <ClCompile Include="math\Matrix.cpp">
       <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\GraphicsEngine.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModel.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModelDataManager.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\Skeleton.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModelEffect.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\Shader.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\ShaderResources.cpp">
-      <Filter>graphics</Filter>
     </ClCompile>
     <ClCompile Include="graphics\animation\Animation.cpp">
       <Filter>graphics\animation</Filter>
@@ -107,9 +125,6 @@
     </ClCompile>
     <ClCompile Include="system\system.cpp">
       <Filter>system</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\Camera.cpp">
-      <Filter>graphics</Filter>
     </ClCompile>
     <ClCompile Include="physics\RigidBody.cpp">
       <Filter>physics</Filter>
@@ -141,9 +156,6 @@
     <ClCompile Include="SpriteRender.cpp">
       <Filter>Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="SkinModelRender.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
     <ClCompile Include="BackGround.cpp">
       <Filter>BackGround</Filter>
     </ClCompile>
@@ -166,13 +178,46 @@
       <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>MainCore</Filter>
+      <Filter>Main&amp;Game</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>MainCore</Filter>
+      <Filter>Main&amp;Game</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
-      <Filter>MainCore</Filter>
+      <Filter>Main&amp;Game</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderState.cpp">
+      <Filter>Render\RenderState</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTarget.cpp">
+      <Filter>Render\RenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Camera.cpp">
+      <Filter>graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\GraphicsEngine.cpp">
+      <Filter>graphics\GraphicsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Shader.cpp">
+      <Filter>graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\ShaderResources.cpp">
+      <Filter>graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Skeleton.cpp">
+      <Filter>graphics\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\SkinModel.cpp">
+      <Filter>graphics\SkinModel\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\SkinModelDataManager.cpp">
+      <Filter>graphics\SkinModel\SkinModelDataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\SkinModelEffect.cpp">
+      <Filter>graphics\SkinModel\SkinModelEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinModelRender.cpp">
+      <Filter>graphics\SkinModel\SkinModelRender</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,30 +229,6 @@
     </ClInclude>
     <ClInclude Include="math\Matrix.h">
       <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\GraphicsEngine.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModel.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelDataManager.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\Skeleton.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelEffect.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\Shader.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelShaderConst.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\ShaderResources.h">
-      <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="graphics\animation\Animation.h">
       <Filter>graphics\animation</Filter>
@@ -223,9 +244,6 @@
     </ClInclude>
     <ClInclude Include="system\system.h">
       <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\Camera.h">
-      <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="physics\RigidBody.h">
       <Filter>physics</Filter>
@@ -263,9 +281,6 @@
     <ClInclude Include="SpriteRender.h">
       <Filter>Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="SkinModelRender.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>BackGround</Filter>
     </ClInclude>
@@ -291,10 +306,46 @@
       <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>MainCore</Filter>
+      <Filter>Main&amp;Game</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>MainCore</Filter>
+      <Filter>Main&amp;Game</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderState.h">
+      <Filter>Render\RenderState</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTarget.h">
+      <Filter>Render\RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Camera.h">
+      <Filter>graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GraphicsEngine.h">
+      <Filter>graphics\GraphicsEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Shader.h">
+      <Filter>graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\ShaderResources.h">
+      <Filter>graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Skeleton.h">
+      <Filter>graphics\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModel.h">
+      <Filter>graphics\SkinModel\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelDataManager.h">
+      <Filter>graphics\SkinModel\SkinModelDataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelEffect.h">
+      <Filter>graphics\SkinModel\SkinModelEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinModelRender.h">
+      <Filter>graphics\SkinModel\SkinModelRender</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelShaderConst.h">
+      <Filter>graphics\SkinModel\SkinModelShaderConst</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -312,10 +363,13 @@
     <MeshContentTask Include="Assets\modelData\enemy\enemy.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\battlefield\floor.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\battlefield\battlefield.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\battlefield\floor.FBX">
+    <MeshContentTask Include="Assets\modelData\enemy\boss.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>

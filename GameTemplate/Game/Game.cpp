@@ -21,11 +21,12 @@ Game::Game()
 		//åxçêÅB
 		abort();
 	}	
-	m_navimesh = NewGO<Navimesh>(GOPrio_Defalut);
+
 	m_gamecamera = NewGO<GameCamera>(GOPrio_Defalut);
 	m_player = NewGO<Player>(GOPrio_Defalut);
 	m_background = NewGO<BackGround>(GOPrio_Defalut);
-	
+	m_navimesh = NewGO<Navimesh>(GOPrio_Defalut);
+
 }
 
 Game::~Game()

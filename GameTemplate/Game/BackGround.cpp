@@ -9,16 +9,17 @@ BackGround::BackGround()
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
 	m_model->Init(L"modelData/battlefield/battlefield.cmo");	
 	m_model->SetData(m_position, m_rotation, m_scale);
+//	m_model->NotModelMode();
 	//ìñÇΩÇËîªíËÅB
 	m_physicsStaticObject.CreateMeshObject(m_model->GetModel(), m_position, m_rotation);
 
 	//è∞
-	//m_floorModel = NewGO<SkinModelRender>(GOPrio_Defalut);
-	////m_floorModel->Init(L"modelData/battlefield/floor.cmo");
-	//m_floorModel->Init(L"modelData/enemy/enemy.cmo");
-	//m_floorModel->SetData(m_position, m_rotation, m_scale);
-	////Ç†ÇΩÇËîªíËÅB
-	//m_floorPhysicsStaticObject.CreateMeshObject(m_floorModel->GetModel(), m_position, m_rotation);
+	m_floorModel = NewGO<SkinModelRender>(GOPrio_Defalut);
+	m_floorModel->Init(L"modelData/battlefield/floor.cmo");
+	m_floorModel->SetData(m_position, m_rotation, m_scale);
+//	m_floorModel->NotModelMode();
+	//Ç†ÇΩÇËîªíËÅB
+	m_floorPhysicsStaticObject.CreateMeshObject(m_floorModel->GetModel(), m_position, m_rotation);
 
 }
 

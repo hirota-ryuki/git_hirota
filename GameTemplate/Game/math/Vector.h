@@ -71,10 +71,10 @@ public:
 	}
 	
 	/// <summary>
-	/// 
+	/// btVector3‚©‚çCVector3‚Ö‚ÌˆÃ–Ù‚Ì•ÏŠ·
 	/// </summary>
-	/// <param name="_v"></param>
-	/// <returns></returns>
+	/// <param name="_v">•ÏŠ·‘O‚ÌbtVector3‚Ì’l</param>
+	/// <returns>•ÏŠ·Œã‚ÌCVector3‚Ì’l</returns>
 	CVector3& operator=(const btVector3& _v)
 	{
 		x = _v.x();

@@ -14,7 +14,10 @@ public:
 	///  描画関数。
 	/// </summary>
 	virtual void Draw() = 0;
-
+	/// <summary>
+	/// HUD描画時に呼ばれる処理。
+	/// </summary>
+	virtual void DrawHUD() {}
 	/// <summary>
 	/// 削除リクエストを行う。
 	/// </summary>

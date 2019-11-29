@@ -1,42 +1,33 @@
 #include "stdafx.h"
 #include "Navimesh.h"
 
-struct CallBack : public btCollisionWorld::ContactResultCallback
+struct CallBack : public btCollisionWorld::ConvexResultCallback
 {
-	//CallBackクラスのコンストラクタ
-	CallBack()
+	/// <summary>
+	/// 備考
+		//CallBackクラスのコンストラクタ
+		//CallBack()
 		//初期化リスト
 		//{}の前に初期化を行う
 		//namespace　btCollisionWorld
 		//構造体　ClosestConvexResultCallback
 		//ClosestConvexResultCallbackはコンストラクタに引数があるので
 		//初期化しなくてはならない
-	{}
+		//{}
+	/// </summary>
+	
 	//障害物があるかないか判定
 	bool isHit = false;
 	//衝突したら勝手に呼んでくれる
-	//virtual  btScalar addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace)
-	//{
-	//	//当たった
-	//	isHit = true;
-	//	return 0;
-	//}
-	virtual  btScalar addSingleResult(btManifoldPoint& cp,
-		const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0,
-		const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1)
+	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
-		//btManifoldPoint& cp　接触情報
-		//btCollisionObjectWrapper　コリジョンオブジェクトの情報
-
-		btScalar dist = cp.getDistance();
-		// dist > 0の場合接触していない　最短距離
-		// dist < 0なら重なっている　侵入距離
-
-		//接触情報使った判定処理や情報収集
-
-		return 0;//戻り値に意味なし　呼ぶ側が使っていない
+		//当たった
+		isHit = true;
+		return 0;
 	}
 };
+
+
 
 Navimesh::Navimesh()
 {
@@ -152,65 +143,125 @@ void Navimesh::Create(SkinModel& model)
 
 			//カプセルコライダーの半径を
 			//三角形の一番長い重心頂点間の長さに拡大
+			
+			//重心から頂点までの長さを求める
+			//これがカプセルコライダーの半径になる
+			CVector3 radius[3];
+			for (int i = 0; i < 3; i++)
 			{
-				//重心から頂点までの長さを求める
-				//これがカプセルコライダーの半径になる
-				CVector3 radius[3];
-				for (int i = 0; i < 3; i++)
-				{
-					radius[i] = cell->centerPos - cell->vertexPos[i];
-				}
-				//1番長い距離を比較で求める
-				CVector3 maxLength;
-				maxLength = radius[0];
-				for (int i = 1; i < 3; i++)
-				{
-					if (maxLength.Length() < radius[i].Length())
-					{
-						maxLength = radius[i];
-					}
-				}
-				//カプセルコライダーの半径を拡大
-				m_collider.GetBody()->setLocalScaling(btVector3(maxLength.Length(), 1.0f, maxLength.Length()));
+				radius[i] = cell->centerPos - cell->vertexPos[i];
 			}
+			//1番長い距離を比較で求める
+			CVector3 maxLength;
+			maxLength = radius[0];
+			for (int i = 1; i < 3; i++)
 			{
-				//コリジョンの移動の始点と終点の設定
-				//btTransformは座標、回転の情報を持っている
-				//情報の初期化を行わなければならない
-				btTransform start, end;
+				if (maxLength.Length() < radius[i].Length())
 				{
-					//回転の設定
-					start.setIdentity();
-					end.setIdentity();
-					//座標の設定
-					//Origin 意味：原点
-					start.setOrigin(btVector3(cell->centerPos.x, cell->centerPos.y, cell->centerPos.z));
-					end.setOrigin(btVector3(cell->centerPos.x, cell->centerPos.y + 10.f, cell->centerPos.z));
+					maxLength = radius[i];
 				}
-				CallBack callback;
-				//startからendまでコリジョンを移動させて当たり判定を取る
-				g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
 			}
-			//if (callback.isHit == false) {
-			//オブジェクトが上にあったら消えているかどうかの確認用。
-			//ポリゴンの上に出現
-			/*m_skin = NewGO<SkinModelRender>(GOPrio_Defalut);
-			m_skin->Init(L"modelData/enemy/enemy.cmo");
-			m_skin->SetPos(cell->centerPos);
-*/
-			//セルに登録
-			m_cells.push_back(cell);
-			//}
+			//カプセルコライダーの半径を拡大
+			m_collider.Create(maxLength.Length(), 30.f);
+
+			//コリジョンの移動の始点と終点の設定
+			//btTransformは座標、回転の情報を持っている
+			//情報の初期化を行わなければならない
+			btTransform start, end;
+			{
+				//回転の設定
+				start.setIdentity();
+				end.setIdentity();
+				//座標の設定
+				//Origin 意味：原点
+				start.setOrigin(btVector3(cell->centerPos.x, cell->centerPos.y + 20.f, cell->centerPos.z));
+				end.setOrigin(btVector3(cell->centerPos.x, cell->centerPos.y + 30.f, cell->centerPos.z));
+			}
+
+			CallBack callback;
+			//startからendまでコリジョンを移動させて当たり判定を取る
+			g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
+			
+			if (callback.isHit == false) {
+				
+				//セルに登録
+				m_cells.push_back(cell);
+			}
 		}
 	}
 
 	//登録されたセルの数だけ回す
 	for (auto &all : m_cells) 
 	{		
-		//オブジェクトが上にあったら消えているかどうかの確認用。
-		//ポリゴンの上に出現
-		m_skin = NewGO<SkinModelRender>(GOPrio_Defalut);
-		m_skin->Init(L"modelData/enemy/enemy.cmo");
-		m_skin->SetPos(all->centerPos);
+		//同じセルと比較しないようにするためのループ
+		for (auto &currentCell : m_cells)
+		{
+			//同じセルなら処理を除外する
+			if (all != currentCell)
+			{
+				//allの頂点の要素を進める
+				for (int i = 0; i < 3; i++)
+				{
+					//allの頂点を格納
+					CVector3 allVPos;
+					allVPos = all->vertexPos[i];
+
+					//座標が一致した頂点をカウント
+					int countSameVertex = 0;
+
+					//一辺に存在する頂点二つを登録するための配列
+					int sameVertexNo[2] = { 0,0 };
+
+					//currentCellの頂点の要素を進める
+					for (int j = 0; j < 3; j++)
+					{
+						//allVPosとcurrentVPosの距離
+						float diff;
+						diff = allVPos.Length() - currentCell->vertexPos[j].Length();
+						//もし頂点どうしがほぼ同じ距離にいたら
+						if (diff <= 0.01f)
+						{
+							//一致した頂点を登録
+							sameVertexNo[countSameVertex] = i;
+							//一致した頂点数をカウント
+							countSameVertex++;
+							//一致した頂点が2個あったら
+							if (countSameVertex == 2) {
+								//セルが隣接しているので
+								//一致した頂点の場所によって登録する番号を変える
+								if (sameVertexNo[0] == 0 && sameVertexNo[1] == 1
+									|| sameVertexNo[0] == 1 && sameVertexNo[1] == 0) 
+								{
+									all->linkCells[0] = currentCell;
+									all->linkMax++;
+								}
+								else if (sameVertexNo[0] == 1 && sameVertexNo[1] == 2 
+									|| sameVertexNo[0] == 2 && sameVertexNo[1] == 1) 
+								{
+									all->linkCells[1] = currentCell;
+									all->linkMax++;
+								}
+								else if (sameVertexNo[0] == 2 && sameVertexNo[1] == 0 
+									|| sameVertexNo[0] == 0 && sameVertexNo[1] == 2) 
+								{
+									all->linkCells[2] = currentCell;
+									all->linkMax++;
+								}
+								break;
+							}
+						}
+					}
+				}
+				
+			}
+		}
+	}
+
+	for (auto &all : m_cells)
+	{
+		m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
+		m_model->Init(L"modelData/enemy/enemy.cmo");
+		m_model->SetPos(all->centerPos);
+		
 	}
 }

@@ -20,7 +20,7 @@ void SpriteRender::Update()
 	);
 }
 
-void SpriteRender::Draw()
+void SpriteRender::DrawHUD()
 {
 	//スプライト
 	CMatrix mView;

@@ -54,7 +54,7 @@ private:
 	Player* m_player = nullptr;			//Playerクラスのポインタ
 	GameCamera* m_gamecamera = nullptr;	//GameCameraクラスのポインタ
 	BackGround* m_background = nullptr;	//BackGroundクラスのポインタ
-	Navimesh* m_navimesh = nullptr;	//Navimeshクラスのポインタ
+	Navimesh* m_navimesh = nullptr;		//Navimeshクラスのポインタ
 };
 
 static inline Game* GetGame()

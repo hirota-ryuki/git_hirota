@@ -9,10 +9,7 @@ Player::Player()
 	//キャラコンの初期化
 	m_charaCon.Init(
 		50.f,
-		//高さは2倍にしている
-		//階段とかに行くと足元の下にあたり判定が
-		//出ると思うけど頑張って(　´∀｀)bｸﾞｯ!
-		80.f * 2.0f,
+		80.f,
 		m_position
 	);
 	//cmoファイルの読み込み。
@@ -53,6 +50,12 @@ void Player::Move()
 
 	m_moveSpeed += cameraForward * lStick_y * m_speed;	//奥方向への移動速度を代入。
 	m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。
+
+	/*if (g_pad[0].IsTrigger(enButtonB))
+	{
+		m_moveSpeed.y += 200.0f;
+	}*/
+
 	//m_position += m_moveSpeed;
 	//キャラクターコントローラーを使用して、座標を更新。
 	m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
@@ -65,15 +68,10 @@ void Player::Update()
 	
 	Move();
 	Rotation();
-	//if (m_game->GetGame() != nullptr) {
-	//	//Gameクラスの取得
-	//	m_game->GetGame();
-	//	if (m_game->GetNavi() != nullptr) {
-	//		m_nav = m_game->GetNavi();
-	//		auto cell = m_nav->GetCell();
-	//		m_position = cell[0]->centerPos;
-	//	}
-	//}
+	if (g_pad[0].IsTrigger(enButtonB))
+	{
+		
+	}
 	//ワールド行列の更新。
 	m_model->SetData(m_position, m_rotation, m_scale);
 }

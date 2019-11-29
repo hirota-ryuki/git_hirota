@@ -6,8 +6,9 @@
 //セルクラス
 struct Cell {
 	CVector3 vertexPos[3];	//セルの頂点のポジション
-	//Cell* linkCell[3];		//セルに隣接しているセル
+	Cell* linkCells[3];		//セルに隣接しているセル
 	CVector3 centerPos;		//セルの真ん中のポジション
+	int linkMax = 0;		//隣接しているセルの個数
 };
 
 class Navimesh :

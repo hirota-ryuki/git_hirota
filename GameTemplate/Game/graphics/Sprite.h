@@ -2,6 +2,11 @@
 
 #include "graphics/shader.h"
 
+struct SVertex {
+	float position[4];		//頂点座標。4要素なのは今は気にしない。
+	float uv[2];			//UV座標。これがテクスチャ座標
+};
+
 class Sprite {
 public:
 	/// <summary>
@@ -17,6 +22,10 @@ public:
 	/// </summary>
 	/// <param name="textureFilePath">テクスチャのファイルパス。</param>
 	void Init( const wchar_t* textureFilePath, float w, float h );
+	void Init(ID3D11ShaderResourceView * srv, float w, float h);
+	void InitCommon(float w, float h);
+	void InitVertexBuffer(float w, float h);
+	void InitIndexBuffer();
 	/// <summary>
 	/// ワールド行列を更新。
 	/// </summary>
@@ -30,6 +39,9 @@ public:
 	/// <param name="mView">カメラ行列</param>
 	/// /// <param name="mView">プロジェクション行列</param>
 	void Draw( CMatrix mView, CMatrix mProj );
+	void Draw();
+	void InitSamplerState();
+	void InitConstantBuffer();
 private:
 	/// <summary>
 	/// シェーダーをロード。
@@ -57,7 +69,10 @@ private:
 	/// <param name="textureFIlePath">ロードするテクスチャのファイルパス。</param>
 	void LoadTexture(const wchar_t* textureFIlePath);
 private:
-
+	struct ConstantBuffer {
+		CMatrix WVP;		//ワールドビュープロジェクション行列。
+		float alpha;		//α値。
+	};
 	Shader	m_vs;											//頂点シェーダー。
 	Shader	m_ps;											//ピクセルシェーダー。
 	ID3D11Buffer*	m_vertexBuffer = nullptr;	//VRAM上の頂点バッファにアクセスするためのインターフェース。
@@ -66,4 +81,8 @@ private:
 	ID3D11ShaderResourceView* m_texture = nullptr;	//テクスチャにアクセスするためのインターフェース。
 	ID3D11SamplerState* m_samplerState = nullptr;	//サンプラステート。
 	CMatrix m_world = CMatrix::Identity();					//ワールド行列。
+
+	CVector2					m_size = CVector2::Zero();				//画像のサイズ。
+	ID3D11Buffer*				m_cb = nullptr;							//定数バッファ。
+	float						m_alpha = 1.0f;							//スプライトのα値。
 };

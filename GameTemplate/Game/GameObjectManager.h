@@ -1,6 +1,5 @@
 #pragma once
-
-#include "IGameObject.h"
+#include "RenderTarget.h"
 
 //NewGOの優先順位
 enum prio {
@@ -12,10 +11,52 @@ enum prio {
 class GameObjectManager
 {
 public:
+	GameObjectManager();
+	~GameObjectManager();
+	/// <summary>
+	/// 初期化。
+	/// </summary>
+	void Init();
 	/// <summary>
 	/// 更新。
 	/// </summary>
 	void Update();
+	/// <summary>
+	/// 描画。
+	/// </summary>
+	void Render();
+	/// <summary>
+	/// カメラの初期化。
+	/// </summary>
+	void InitCamera();
+	/// <summary>
+	/// レンダリングターゲットの切り替え。
+	/// </summary>
+	/// <param name="d3dDeviceContext">デバイスコンテキスト</param>
+	/// <param name="renderTarget">レンダーターゲット</param>
+	/// <param name="viewport">ビューポート</param>
+	void ChangeRenderTarget(ID3D11DeviceContext * d3dDeviceContext, RenderTarget * renderTarget, D3D11_VIEWPORT * viewport);
+	/// <summary>
+	/// レンダリングターゲットの切り替え。
+	/// </summary>
+	/// <param name="d3dDeviceContext">デバイスコンテキスト</param>
+	/// <param name="renderTarget">レンダーターゲット</param>
+	/// <param name="depthStensil">デプスステンシル</param>
+	/// <param name="viewport">ビューポート</param>
+	void ChangeRenderTarget(ID3D11DeviceContext * d3dDeviceContext, ID3D11RenderTargetView * renderTarget, ID3D11DepthStencilView * depthStensil, D3D11_VIEWPORT * viewport);
+	/// <summary>
+	/// フォワードレンダリング(通常の描画だと考えてOK)
+	/// </summary>
+	void ForwordRender();
+	/// <summary>
+	/// ポストエフェクト用のレンダー
+	/// </summary>
+	void PostRender();
+	/// <summary>
+	/// HUD描画。
+	/// </summary>
+	void HudRender();
+
 	/// <summary>
 	/// ゲームオブジェクトを追加。
 	/// </summary>
@@ -50,18 +91,25 @@ public:
 		}
 	}
 private:
-	std::vector< IGameObject* > m_goList[5];		//ゲームオブジェクトのリスト。
+	RenderTarget m_mainRenderTarget;				//メインレンダリングターゲット。
+	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
+	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
+	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
+	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
+
+	std::vector< IGameObject* > m_goList[GOPrio_num];		//ゲームオブジェクトのリスト。
+
 };
 
 //外部からアクセスするので、extern宣言も必要。
-extern GameObjectManager g_goMgr;
+extern GameObjectManager* g_goMgr;
 
 template <class T>
 static inline T* NewGO(int prio)
 {
-	return g_goMgr.NewGO<T>(prio);
+	return g_goMgr->NewGO<T>(prio);
 }
 static inline void DeleteGO(IGameObject* go)
 {
-	return g_goMgr.DeleteGO(go);
+	return g_goMgr->DeleteGO(go);
 }
