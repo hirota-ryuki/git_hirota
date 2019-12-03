@@ -10,9 +10,16 @@ enum prio {
 
 class GameObjectManager
 {
-public:
+private:
 	GameObjectManager();
 	~GameObjectManager();
+public:
+	//シングルトン
+	static GameObjectManager& GetInstance()
+	{
+		static GameObjectManager instance;
+		return instance;
+	}
 	/// <summary>
 	/// 初期化。
 	/// </summary>
@@ -91,6 +98,7 @@ public:
 		}
 	}
 private:
+
 	RenderTarget m_mainRenderTarget;				//メインレンダリングターゲット。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
@@ -102,14 +110,14 @@ private:
 };
 
 //外部からアクセスするので、extern宣言も必要。
-extern GameObjectManager* g_goMgr;
+//extern GameObjectManager* g_goMgr;
 
 template <class T>
 static inline T* NewGO(int prio)
 {
-	return g_goMgr->NewGO<T>(prio);
+	return GameObjectManager::GetInstance().NewGO<T>(prio);
 }
 static inline void DeleteGO(IGameObject* go)
 {
-	return g_goMgr->DeleteGO(go);
+	return GameObjectManager::GetInstance().DeleteGO(go);
 }

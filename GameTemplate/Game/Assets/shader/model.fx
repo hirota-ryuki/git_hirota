@@ -165,6 +165,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 		lig += max(0.f, dot(In.Normal * -1.f, dligDirection[i])) * dligColor[i];
 	}	
 
+	/*
 	////鏡面反射////
 	//1 反射ベクトルRを求める。
 	float3 R = 0.f;
@@ -183,6 +184,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
 		lig += dligColor[i].xyz * pow(specPower, specPow);
 	}
+	*/
 
 	//環境光。
 	lig += ambientLight;

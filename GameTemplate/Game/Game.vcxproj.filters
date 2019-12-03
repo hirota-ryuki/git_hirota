@@ -7,9 +7,6 @@
     <Filter Include="Assets\modelData">
       <UniqueIdentifier>{a27dfd5d-af93-4623-b084-aad00b7739c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="character">
-      <UniqueIdentifier>{c57b7107-f9f3-4b72-8f3e-8644593ed533}</UniqueIdentifier>
-    </Filter>
     <Filter Include="graphics">
       <UniqueIdentifier>{b7a9a0ab-a792-43fe-a5a7-760b8c976aca}</UniqueIdentifier>
     </Filter>
@@ -100,6 +97,9 @@
     <Filter Include="graphics\SkinModel\SkinModelShaderConst">
       <UniqueIdentifier>{5d23801b-7af8-4eeb-8a71-21a8fbc996da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Character">
+      <UniqueIdentifier>{c57b7107-f9f3-4b72-8f3e-8644593ed533}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -142,7 +142,7 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="character\CharacterController.cpp">
-      <Filter>character</Filter>
+      <Filter>Character</Filter>
     </ClCompile>
     <ClCompile Include="level\Level.cpp">
       <Filter>level</Filter>
@@ -219,6 +219,7 @@
     <ClCompile Include="SkinModelRender.cpp">
       <Filter>graphics\SkinModel\SkinModelRender</Filter>
     </ClCompile>
+    <ClCompile Include="AStar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -267,7 +268,7 @@
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="character\CharacterController.h">
-      <Filter>character</Filter>
+      <Filter>Character</Filter>
     </ClInclude>
     <ClInclude Include="level\Level.h">
       <Filter>level</Filter>
@@ -347,6 +348,7 @@
     <ClInclude Include="graphics\SkinModelShaderConst.h">
       <Filter>graphics\SkinModel\SkinModelShaderConst</Filter>
     </ClInclude>
+    <ClInclude Include="AStar.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

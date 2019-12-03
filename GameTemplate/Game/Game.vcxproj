@@ -99,6 +99,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AStar.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="DebugWireframe.cpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AStar.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="DebugWireframe.h" />

@@ -16,7 +16,6 @@ Player::Player()
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
 	m_model->Init(L"modelData/unitychan/unityChan.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
-	//m_position.y += 200.f;
 	m_model->SetData(m_position, m_rotation, m_scale);
 
 }
@@ -62,16 +61,10 @@ void Player::Move()
 }
 
 void Player::Update()
-{
-	//Gameクラスの取得
-	//m_game->GetGame();
-	
+{	
 	Move();
 	Rotation();
-	if (g_pad[0].IsTrigger(enButtonB))
-	{
-		
-	}
+	
 	//ワールド行列の更新。
 	m_model->SetData(m_position, m_rotation, m_scale);
 }

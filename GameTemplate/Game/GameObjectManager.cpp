@@ -3,7 +3,7 @@
 #include "RenderState.h"
 
 //GameObjectManagerクラスのインスタンス。
-GameObjectManager* g_goMgr = nullptr;
+//GameObjectManager* g_goMgr = nullptr;
 
 GameObjectManager::GameObjectManager()
 {
@@ -49,7 +49,6 @@ void GameObjectManager::Update()
 		}
 	}
 
-	//ここにrender
 	Render();
 
 	//全てのゲームオブジェクトの1フレーム分の処理が終わってから、削除する。

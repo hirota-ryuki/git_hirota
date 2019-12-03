@@ -18,9 +18,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 
-	//ゲームオブジェクトマネージャーの初期化。
-	//g_goMgr.Init();
-
 	//カメラを初期化。
 	g_camera3D.SetPosition({ 0.0f, 100.0f, 300.0f });
 	g_camera3D.SetTarget({ 0.0f, 100.0f, 0.0f });
@@ -44,7 +41,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		g_physics.Update();
 					
 		//GameObjectManagerの更新
-		g_goMgr->Update();
+		GameObjectManager::GetInstance().Update();
 
 		
 		if (g_pad[0].IsTrigger(enButtonSelect))

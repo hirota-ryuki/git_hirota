@@ -90,7 +90,7 @@ void InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 	g_graphicsEngine->Init(g_hWnd);
 
 	//ゲームオブジェクトマネージャーの生成。
-	g_goMgr = new GameObjectManager;
+	GameObjectManager::GetInstance();
 
 	//ゲームパッドの初期化。
 	//最大４つのコントローラーを接続できるようにしましょう。
