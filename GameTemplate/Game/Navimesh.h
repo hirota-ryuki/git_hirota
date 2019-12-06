@@ -9,6 +9,9 @@ struct Cell {
 	Cell* linkCells[3];		//セルに隣接しているセル
 	CVector3 centerPos;		//セルの真ん中のポジション
 	int linkMax = 0;		//隣接しているセルの個数
+	float costFromStart;
+	float costToGoal;
+	Cell* parentCell;
 };
 
 class Navimesh :

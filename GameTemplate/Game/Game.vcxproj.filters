@@ -100,6 +100,9 @@
     <Filter Include="Character">
       <UniqueIdentifier>{c57b7107-f9f3-4b72-8f3e-8644593ed533}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AStar">
+      <UniqueIdentifier>{683f2e8b-9ce1-4e8a-8a39-a39d527afaac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -219,7 +222,10 @@
     <ClCompile Include="SkinModelRender.cpp">
       <Filter>graphics\SkinModel\SkinModelRender</Filter>
     </ClCompile>
-    <ClCompile Include="AStar.cpp" />
+    <ClCompile Include="ShadowMap.cpp" />
+    <ClCompile Include="AStar.cpp">
+      <Filter>AStar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -348,7 +354,10 @@
     <ClInclude Include="graphics\SkinModelShaderConst.h">
       <Filter>graphics\SkinModel\SkinModelShaderConst</Filter>
     </ClInclude>
-    <ClInclude Include="AStar.h" />
+    <ClInclude Include="ShadowMap.h" />
+    <ClInclude Include="AStar.h">
+      <Filter>AStar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

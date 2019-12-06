@@ -134,6 +134,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderState.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
+    <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="SkinModelRender.cpp" />
     <ClCompile Include="SpriteRender.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -182,6 +183,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderState.h" />
     <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="SkinModelRender.h" />
     <ClInclude Include="SpriteRender.h" />
     <ClInclude Include="stdafx.h" />

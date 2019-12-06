@@ -41,7 +41,7 @@ public:
 	/// レンダリングターゲットビューを取得。
 	/// </summary>
 	/// <returns>レンダリングターゲットビュー</returns>
-	ID3D11RenderTargetView* GetRenderTargetView()
+	ID3D11RenderTargetView* GetRenderTargetView() 
 	{
 		return m_renderTargetView;
 	}
@@ -50,7 +50,7 @@ public:
 	/// デプスステンシルビューを取得。
 	/// </summary>
 	/// <returns>デプスステンシルビュー</returns>
-	ID3D11DepthStencilView* GetDepthStensilView()
+	ID3D11DepthStencilView* GetDepthStensilView() 
 	{
 		return m_depthStencilView;
 	}
@@ -59,16 +59,24 @@ public:
 	/// レンダリングターゲットのSRVを取得。
 	/// </summary>
 	/// <returns>レンダリングターゲットのSRV</returns>
-	ID3D11ShaderResourceView* GetRenderTargetSRV()
+	ID3D11ShaderResourceView* GetRenderTargetSRV() 
 	{
 		return m_renderTargetSRV;
 	}
-
+	/// <summary>
+	/// ビューポートの取得。
+	/// </summary>
+	/// <returns>ビューポート</returns>
+	D3D11_VIEWPORT* GetViewport() 
+	{
+		return &m_viewport;
+	}
 private:
 	ID3D11Texture2D*			m_renderTargetTex = nullptr;		//!<レンダリングターゲットとなるテクスチャ。
 	ID3D11RenderTargetView*		m_renderTargetView = nullptr;		//!<レンダーターゲットビュー。
 	ID3D11ShaderResourceView*	m_renderTargetSRV = nullptr;		//!<レンダリングターゲットのSRV
 	ID3D11Texture2D*			m_depthStencilTex = nullptr;		//!<デプスステンシルとなるテクスチャ。
 	ID3D11DepthStencilView*		m_depthStencilView = nullptr;		//!<デプスステンシルビュー。
+	D3D11_VIEWPORT				m_viewport;							//!<ビューポート。
 };
 

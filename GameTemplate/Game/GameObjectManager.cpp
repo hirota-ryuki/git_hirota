@@ -128,7 +128,6 @@ void GameObjectManager::PostRender()
 }
 void GameObjectManager::HudRender()
 {
-
 	for (int i = 0; i < GOPrio_num; i++) {
 		for (auto go : m_goList[i]) {
 			go->DrawHUD();

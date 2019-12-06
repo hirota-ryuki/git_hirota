@@ -190,6 +190,14 @@ void Navimesh::Create(SkinModel& model)
 		}
 	}
 
+	for (auto &all : m_cells)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			all->linkCells[i] = nullptr;
+		}
+	}
+
 	//ìoò^Ç≥ÇÍÇΩÉZÉãÇÃêîÇæÇØâÒÇ∑
 	for (auto &all : m_cells) 
 	{		
@@ -222,7 +230,7 @@ void Navimesh::Create(SkinModel& model)
 						if (diff <= 0.01f)
 						{
 							//àÍívÇµÇΩí∏ì_Çìoò^
-							sameVertexNo[countSameVertex] = i;
+							sameVertexNo[countSameVertex] = j;
 							//àÍívÇµÇΩí∏ì_êîÇÉJÉEÉìÉg
 							countSameVertex++;
 							//àÍívÇµÇΩí∏ì_Ç™2å¬Ç†Ç¡ÇΩÇÁ
@@ -257,11 +265,23 @@ void Navimesh::Create(SkinModel& model)
 		}
 	}
 
-	for (auto &all : m_cells)
-	{
-		m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
-		m_model->Init(L"modelData/enemy/enemy.cmo");
-		m_model->SetPos(all->centerPos);
-		
-	}
+	//for (auto &all : m_cells)
+	//{
+	//	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
+	//	m_model->Init(L"modelData/enemy/enemy.cmo");
+	//	m_model->SetPos(all->centerPos);
+	//	int No = 0;
+	//	if (all->linkCells[No] != NULL)
+	//	{
+	//		//float dot = all->centerPos.Dot(all->linkCells[2]->centerPos);
+	//		float dot = all->centerPos.x*all->linkCells[No]->centerPos.x +
+	//			all->centerPos.y*all->linkCells[No]->centerPos.y +
+	//			all->centerPos.z*all->linkCells[No]->centerPos.z;
+	//		float k = atan(dot);
+	//		CQuaternion g;
+	//		//g.SetRotationDeg(CVector3::AxisX(), 45.f);
+	//		g.SetRotation(CVector3::AxisY(), k);
+	//		m_model->SetRot(g);
+	//	}
+	//}
 }

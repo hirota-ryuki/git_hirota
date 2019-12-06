@@ -63,7 +63,6 @@ public:
 	/// HUD描画。
 	/// </summary>
 	void HudRender();
-
 	/// <summary>
 	/// ゲームオブジェクトを追加。
 	/// </summary>
