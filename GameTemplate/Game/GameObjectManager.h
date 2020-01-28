@@ -1,6 +1,7 @@
 #pragma once
 #include "RenderTarget.h"
 #include "util/Util.h"
+#include <list>
 
 class GameObjectManager
 {
@@ -158,7 +159,7 @@ private:
 	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
 	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
 
-	std::vector< IGameObject* > m_goList[GOPrio_num];		//ゲームオブジェクトのリスト。
+	std::list< IGameObject* > m_goList[GOPrio_num];		//ゲームオブジェクトのリスト。
 	std::vector< IGameObject* > m_DeleteGOList;		//削除予定のゲームオブジェクトのリスト。
 };
 
