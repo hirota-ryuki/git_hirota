@@ -13,6 +13,11 @@ Title::~Title()
 	DeleteGO(m_sprite);
 }
 
+bool Title::Start()
+{
+	return true;
+}
+
 void Title::Update()
 {
 	//Aƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½‚ç

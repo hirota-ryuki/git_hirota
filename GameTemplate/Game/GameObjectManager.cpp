@@ -2,9 +2,6 @@
 #include "GameObjectManager.h"
 #include "RenderState.h"
 
-//GameObjectManagerクラスのインスタンス。
-//GameObjectManager* g_goMgr = nullptr;
-
 GameObjectManager::GameObjectManager()
 {
 	InitCamera();
@@ -42,29 +39,59 @@ void GameObjectManager::Init()
 
 void GameObjectManager::Update()
 {
-	//登録されているゲームオブジェクトの更新処理を呼ぶ。
-	for (int i = 0; i < GOPrio_num; i++) {
-		for (auto go : m_goList[i]) {
-			go->Update();
-		}
-	}
+	StartAndUpdate();
 
 	Render();
 
-	//全てのゲームオブジェクトの1フレーム分の処理が終わってから、削除する。
+	Delete();
+}
+
+void GameObjectManager::StartAndUpdate()
+{
+	//登録されているゲームオブジェクトの更新処理を呼ぶ。
 	for (int i = 0; i < GOPrio_num; i++) {
-		for (auto it = m_goList[i].begin(); it != m_goList[i].end();) {
-			if ((*it)->IsRequestDelete()) {
-				//削除リクエストを受けているので削除。
-				delete* it;
-				it = m_goList[i].erase(it);
+		int j = 1;
+		for (auto go : m_goList[i]) {
+			if (!go->IsStart()) {
+				if (go->Start()) {
+					go->StartEnd();
+				}
 			}
 			else {
-				//リクエストを受けていないので。
-				it++;
+				go->Update();
 			}
+			j++;
 		}
 	}
+}
+
+void GameObjectManager::Delete()
+{
+	//削除
+	for (auto* GO : m_DeleteGOList) {
+		auto& goExecList = m_goList[GO->prio];
+		//ゲームオブジェクトリストから該当のオブジェクトの箇所を探して
+		auto it = std::find(goExecList.begin(), goExecList.end(), GO);
+		//削除
+		delete (*it);
+		//ゲームオブジェクトリストから削除
+		goExecList.erase(it);
+	}
+	m_DeleteGOList.clear();
+	////全てのゲームオブジェクトの1フレーム分の処理が終わってから、削除する。
+	//for (int i = 0; i < GOPrio_num; i++) {
+	//	for (auto it = m_goList[i].begin(); it != m_goList[i].end();) {
+	//		if ((*it)->IsRequestDelete()) {
+	//			//削除リクエストを受けているので削除。
+	//			delete* it;
+	//			it = m_goList[i].erase(it);
+	//		}
+	//		else {
+	//			//リクエストを受けていないので。
+	//			it++;
+	//		}
+	//	}
+	//}
 }
 
 void GameObjectManager::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, RenderTarget* renderTarget, D3D11_VIEWPORT* viewport)
@@ -76,6 +103,7 @@ void GameObjectManager::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext
 		viewport
 	);
 }
+
 void GameObjectManager::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStensil, D3D11_VIEWPORT* viewport)
 {
 	ID3D11RenderTargetView* rtTbl[] = {
@@ -95,10 +123,10 @@ void GameObjectManager::ForwordRender()
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget, &m_frameBufferViewports);
 	//メインレンダリングターゲットをクリアする。
-	float clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float clearColor[] = { 0.0f, 0.0f, 255.0f, 1.0f };
 	m_mainRenderTarget.ClearRenderTarget(clearColor);
 	
-	//
+	//ドロー
 	for (int i = 0; i < GOPrio_num; i++) {
 		for (auto go : m_goList[i]) {
 			go->Draw();
@@ -126,6 +154,7 @@ void GameObjectManager::PostRender()
 	m_frameBufferRenderTargetView->Release();
 	m_frameBufferDepthStencilView->Release();
 }
+
 void GameObjectManager::HudRender()
 {
 	for (int i = 0; i < GOPrio_num; i++) {
@@ -134,6 +163,7 @@ void GameObjectManager::HudRender()
 		}
 	}
 }
+
 void GameObjectManager::Render()
 {
 	//フレームバッファのレンダリングターゲットをバックアップしておく。
@@ -153,6 +183,7 @@ void GameObjectManager::Render()
 	
 	HudRender();
 }
+
 void GameObjectManager::InitCamera()
 {
 	g_camera3D.SetPosition({ 0.0f, 1000.0f, 2200.0f });

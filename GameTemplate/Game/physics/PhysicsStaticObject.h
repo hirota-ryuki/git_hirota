@@ -28,7 +28,13 @@ public:
 		*@param[in]	rot			回転。
 		*/
 	void CreateMeshObject(SkinModel& skinModel, CVector3 pos, CQuaternion rot);
-	
+	/// <summary>
+	/// ユーザーインデックスを設定。
+	/// </summary>
+	/// <param name="index">ユーザーインデックス</param>
+	void SetUserIndex(int index){
+		m_rigidBody.GetBody()->setUserIndex(index);
+	}
 private:
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。
 	RigidBody m_rigidBody;				//!<剛体。

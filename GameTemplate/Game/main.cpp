@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "system/system.h"
 #include "Title.h"
+#include "Game.h"
 
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
@@ -24,7 +25,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D.SetFar(10000.0f);
 	
 	//Titleクラス
-	NewGO<Title>(GOPrio_Defalut);
+	//NewGO<Title>(GOPrio_Defalut);
+	NewGO<Game>(GOPrio_Defalut);
 
 	//デバッグモードのオンオフ
 	bool m_isDebug = false;

@@ -5,8 +5,8 @@ class Title :
 public:
 	Title();
 	~Title();
+	bool Start() override;
 	void Update() override;
-	void Draw() override {};
 private:
 	SpriteRender* m_sprite;		//‰æ‘œ
 };

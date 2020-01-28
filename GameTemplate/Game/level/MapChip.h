@@ -18,9 +18,10 @@ public:
 	/*!
 	* @brief	描画。
 	*/
-	void Draw();
+	void Draw() {};
 private:
-	SkinModel m_model;		//!<モデル。
+	//SkinModel m_model;		//!<モデル。
+	SkinModelRender* m_model;
 	PhysicsStaticObject m_physicsStaticObject;	//!<静的物理オブジェクト。
 	
 };

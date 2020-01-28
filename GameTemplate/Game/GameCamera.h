@@ -9,7 +9,7 @@ public:
 	GameCamera();
 	~GameCamera();
 	void Update() override;
-	void Draw() override;
+	bool Start() override;
 	/// <summary>
 	/// ‹“_‚ğæ“¾B
 	/// </summary>

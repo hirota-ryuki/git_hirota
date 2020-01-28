@@ -1,18 +1,27 @@
 #pragma once
 #include "RenderTarget.h"
-
-//NewGOの優先順位
-enum prio {
-	GOPrio_Defalut = 2,
-	GOPrio_Sprite,
-	GOPrio_num = 5,
-};
+#include "util/Util.h"
 
 class GameObjectManager
 {
 private:
 	GameObjectManager();
 	~GameObjectManager();
+	/*!
+	*@brief	ゲームオブジェクトの名前キーを作成。
+	*/
+	static unsigned int MakeGameObjectNameKey(const char* objectName)
+	{
+		static const unsigned int defaultNameKey = Util::MakeHash("Undefined");	//名前キー。
+		unsigned int hash;
+		if (objectName == nullptr) {
+			hash = defaultNameKey;
+		}
+		else {
+			hash = Util::MakeHash(objectName);
+		}
+		return hash;
+	}
 public:
 	//シングルトン
 	static GameObjectManager& GetInstance()
@@ -28,6 +37,14 @@ public:
 	/// 更新。
 	/// </summary>
 	void Update();
+	/// <summary>
+	/// GameObjectの開始関数と更新関数。
+	/// </summary>
+	void StartAndUpdate();
+	/// <summary>
+	/// GameObjectを消去する関数。
+	/// </summary>
+	void Delete();
 	/// <summary>
 	/// 描画。
 	/// </summary>
@@ -67,10 +84,14 @@ public:
 	/// ゲームオブジェクトを追加。
 	/// </summary>
 	template <class T>
-	T* NewGO(int prio)
+	T* NewGO(int prio, const char* objectName)
 	{
+		(void*)objectName;
 		T* newObj = new T;
 		m_goList[prio].push_back(newObj);
+		unsigned int hash = MakeGameObjectNameKey(objectName);
+		newObj->SetNameKey(hash);
+		newObj->prio = prio;
 		return newObj;
 	}
 
@@ -78,26 +99,59 @@ public:
 	/// ゲームオブジェクトをリストから削除する。
 	/// </summary>
 	/// <param name="go">削除するゲームオブジェクト</param>
+	
 	void DeleteGO(IGameObject* go)
 	{
 		for (int i = 0; i < GOPrio_num; i++) {
 			//リストから検索して、見つかったら削除する。
-			for (auto it = m_goList[i].begin();
-				it != m_goList[i].end();
-				it++
-				) {
+			for (auto it = m_goList[i].begin(); it != m_goList[i].end(); it++) {
 				if ((*it) == go) {
 					//見つかった。
 					//削除リクエストを送る。
-					go->RequestDelete();
+					m_DeleteGOList.emplace_back(go);
+					go->OnDestroy();
 					//削除できたので終わり。
 					return;
 				}
 			}
 		}
 	}
-private:
+	//void DeleteGO(IGameObject* go)
+	//{
+	//	for (int i = 0; i < GOPrio_num; i++) {
+	//		//リストから検索して、見つかったら削除する。
+	//		for (auto it = m_goList[i].begin(); it != m_goList[i].end(); it++) {
+	//			if ((*it) == go) {
+	//				//見つかった。
+	//				//削除リクエストを送る。
+	//				go->RequestDelete();
+	//				//削除できたので終わり。
+	//				return;
+	//			}
+	//		}
+	//	}
+	//}
+	template<class T>
+	void FindGameObjects(const char* objectName, std::function<bool(T* go)> func)
+	{
+		unsigned int nameKey = Util::MakeHash(objectName);
+		for (int i = 0; i < GOPrio_num; i++) {
+			for (auto go : m_goList[i]) {
+				if (go->GetNameKey() == nameKey) {
+					//見つけた。
+					T* p = dynamic_cast<T*>(go);
+					if (p != nullptr) {
+						if (func(p) == false) {
+							//クエリ中断。
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
 
+private:
 	RenderTarget m_mainRenderTarget;				//メインレンダリングターゲット。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
@@ -105,18 +159,45 @@ private:
 	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
 
 	std::vector< IGameObject* > m_goList[GOPrio_num];		//ゲームオブジェクトのリスト。
-
+	std::vector< IGameObject* > m_DeleteGOList;		//削除予定のゲームオブジェクトのリスト。
 };
 
 //外部からアクセスするので、extern宣言も必要。
 //extern GameObjectManager* g_goMgr;
 
 template <class T>
-static inline T* NewGO(int prio)
+static inline T* NewGO(int prio, const char* objectName = nullptr)
 {
-	return GameObjectManager::GetInstance().NewGO<T>(prio);
+	return GameObjectManager::GetInstance().NewGO<T>(prio, objectName);
 }
 static inline void DeleteGO(IGameObject* go)
 {
 	return GameObjectManager::GetInstance().DeleteGO(go);
+}
+
+/*!
+	*@brief	ゲームオブジェクトの検索のヘルパー関数。
+	*@details
+	* 同名のゲームオブジェクトに全てに対して、クエリを行いたい場合に使用してください。
+	*@param[in]	objectName	ゲームオブジェクトの名前。
+	*@param[in]	func		ゲームオブジェクトが見つかったときに呼ばれるコールバック関数。
+	*/
+template<class T>
+static inline void QueryGOs(const char* objectName, std::function<bool(T* go)> func)
+{
+	return GameObjectManager::GetInstance().FindGameObjects<T>(objectName, func);
+}
+
+/*!
+	*@brief	ゲームオブジェクトを名前指定で削除。
+	*@details
+	* 名前検索が行われるため遅いです。
+	*@param[in]	objectName		削除するゲームオブジェクトの名前。
+	*/
+static inline void DeleteGOs(const char* objectName)
+{
+	QueryGOs<IGameObject>(objectName, [](auto go) {
+		DeleteGO(go);
+		return true;
+		});
 }

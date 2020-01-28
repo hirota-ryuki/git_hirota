@@ -85,7 +85,14 @@ private:
 		* @brief	グローバルポーズの更新。
 		*/
 	void UpdateGlobalPose();
-		
+public:
+	/// <summary>
+	/// アニメーションの総フレーム数を返す関数。
+	/// </summary>
+	/// <returns>アニメーションの総フレーム数。</returns>
+	int GetLastAnimationControllerIndexInPublic() {
+		return GetLastAnimationControllerIndex();
+	}
 private:
 		
 	/*!

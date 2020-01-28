@@ -6,10 +6,7 @@ public:
 	SpriteRender();
 	~SpriteRender();
 	void Update() override;
-	void Draw() override
-	{
-
-	}
+	bool Start() override;
 	void DrawHUD() override;
 	void SetData(CVector3 pos, CQuaternion rot, CVector3 scale)
 	{

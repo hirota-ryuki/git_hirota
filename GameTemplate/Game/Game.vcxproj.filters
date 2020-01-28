@@ -34,9 +34,6 @@
     <Filter Include="Sprite">
       <UniqueIdentifier>{870d025f-6008-4837-812c-4396bc1af47f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BackGround">
-      <UniqueIdentifier>{bcde93f3-6348-4dc4-9ce5-1e2cf954cfd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DebugWireframe">
       <UniqueIdentifier>{9a74b2a5-ecf6-4a3b-a80c-8bfdae491b6c}</UniqueIdentifier>
     </Filter>
@@ -103,6 +100,18 @@
     <Filter Include="AStar">
       <UniqueIdentifier>{683f2e8b-9ce1-4e8a-8a39-a39d527afaac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{522a7a12-684b-4846-b9e4-f8b74728c655}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShadowMap">
+      <UniqueIdentifier>{0fc2f8c5-3229-4c4e-b59a-dd6a6a45b2fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LoadLevel">
+      <UniqueIdentifier>{8d26bc9f-47c1-4178-a3f4-a9b9588637dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Floor">
+      <UniqueIdentifier>{bcde93f3-6348-4dc4-9ce5-1e2cf954cfd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -159,17 +168,11 @@
     <ClCompile Include="SpriteRender.cpp">
       <Filter>Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="BackGround.cpp">
-      <Filter>BackGround</Filter>
-    </ClCompile>
     <ClCompile Include="DebugWireframe.cpp">
       <Filter>DebugWireframe</Filter>
     </ClCompile>
     <ClCompile Include="Title.cpp">
       <Filter>Title</Filter>
-    </ClCompile>
-    <ClCompile Include="GameCamera.cpp">
-      <Filter>GameCamera</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectManager.cpp">
       <Filter>GameObject</Filter>
@@ -222,10 +225,32 @@
     <ClCompile Include="SkinModelRender.cpp">
       <Filter>graphics\SkinModel\SkinModelRender</Filter>
     </ClCompile>
-    <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="AStar.cpp">
       <Filter>AStar</Filter>
     </ClCompile>
+    <ClCompile Include="ShadowMap.cpp">
+      <Filter>ShadowMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadLevel.cpp">
+      <Filter>LoadLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\BoxCollider.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="GameCamera.cpp">
+      <Filter>GameCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Result.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -287,9 +312,6 @@
     </ClInclude>
     <ClInclude Include="SpriteRender.h">
       <Filter>Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="BackGround.h">
-      <Filter>BackGround</Filter>
     </ClInclude>
     <ClInclude Include="DebugWireframe.h">
       <Filter>DebugWireframe</Filter>
@@ -354,10 +376,29 @@
     <ClInclude Include="graphics\SkinModelShaderConst.h">
       <Filter>graphics\SkinModel\SkinModelShaderConst</Filter>
     </ClInclude>
-    <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="AStar.h">
       <Filter>AStar</Filter>
     </ClInclude>
+    <ClInclude Include="ShadowMap.h">
+      <Filter>ShadowMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadLevel.h">
+      <Filter>LoadLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\BoxCollider.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal.h" />
+    <ClInclude Include="Result.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
@@ -366,22 +407,36 @@
     <ImageContentTask Include="Assets\sprite\title.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\aim.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\unitychan\unityChan.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\enemy\enemy.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\battlefield\floor.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\battlefield\battlefield.FBX">
+    <MeshContentTask Include="Assets\modelData\player\player.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\enemy\boss.FBX">
+    <MeshContentTask Include="Assets\modelData\zombie\zombie.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\mapChip\stage.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\debug\debugbox.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\goal\goal.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\bullet\bullet2.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\modelData\bullet\bullet.FBX">
+      <Filter>Assets\modelData</Filter>
+    </None>
   </ItemGroup>
 </Project>

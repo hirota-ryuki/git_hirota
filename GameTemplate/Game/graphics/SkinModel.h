@@ -84,6 +84,10 @@ public:
 		enSkinModelSRVReg_DiffuseTexture = 0,		//!<ディフューズテクスチャ。
 		enSkinModelSRVReg_BoneMatrix,				//!<ボーン行列。
 	};
+	CMatrix& GetWorldMatrix()
+	{
+		return m_worldMatrix;
+	}
 private:
 	/*!
 	*@brief	サンプラステートの初期化。
@@ -134,7 +138,8 @@ private:
 	CMatrix				m_worldMatrix;					//ワールド行列。
 	DirectX::Model*		m_modelDx;						//DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;		//サンプラステート。
+
+	//ライト
 	ID3D11Buffer*		m_lightCb = nullptr;			//ライト用の定数バッファ。
 	SLight				m_light;						//ライトクラス。
 };
-

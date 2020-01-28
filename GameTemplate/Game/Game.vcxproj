@@ -100,9 +100,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AStar.cpp" />
-    <ClCompile Include="BackGround.cpp" />
-    <ClCompile Include="character\CharacterController.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="character\CharacterController.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
+    </ClCompile>
     <ClCompile Include="DebugWireframe.cpp" />
+    <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="physics\BoxCollider.cpp" />
+    <ClCompile Include="Result.cpp" />
+    <ClCompile Include="Zombie.cpp" />
+    <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
@@ -121,11 +128,16 @@
     <ClCompile Include="HID\Pad.cpp" />
     <ClCompile Include="level\Level.cpp" />
     <ClCompile Include="level\MapChip.cpp" />
+    <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\kMath.cpp" />
     <ClCompile Include="math\Matrix.cpp" />
     <ClCompile Include="math\Vector.cpp" />
-    <ClCompile Include="Navimesh.cpp" />
+    <ClCompile Include="Navimesh.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">OnlyExplicitInline</InlineFunctionExpansion>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
     <ClCompile Include="physics\MeshCollider.cpp" />
     <ClCompile Include="physics\Physics.cpp" />
     <ClCompile Include="physics\RigidBody.cpp" />
@@ -146,9 +158,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AStar.h" />
-    <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="DebugWireframe.h" />
+    <ClInclude Include="Goal.h" />
+    <ClInclude Include="physics\BoxCollider.h" />
+    <ClInclude Include="Result.h" />
+    <ClInclude Include="Zombie.h" />
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameObjectManager.h" />
@@ -169,6 +186,7 @@
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\MapChip.h" />
+    <ClInclude Include="LoadLevel.h" />
     <ClInclude Include="math\kMath.h" />
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Vector.h" />
@@ -194,14 +212,22 @@
     <ImageContentTask Include="Assets\sprite\moca.PNG" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\battlefield\battlefield.FBX" />
     <MeshContentTask Include="Assets\modelData\battlefield\floor.FBX" />
-    <MeshContentTask Include="Assets\modelData\enemy\boss.FBX" />
-    <MeshContentTask Include="Assets\modelData\enemy\enemy.FBX" />
-    <MeshContentTask Include="Assets\modelData\unitychan\unityChan.fbx" />
+    <None Include="Assets\modelData\bullet\bullet.FBX">
+      <FileType>Document</FileType>
+    </None>
+    <MeshContentTask Include="Assets\modelData\bullet\bullet2.fbx" />
+    <MeshContentTask Include="Assets\modelData\debug\debugbox.fbx" />
+    <MeshContentTask Include="Assets\modelData\goal\goal.fbx" />
+    <MeshContentTask Include="Assets\modelData\mapChip\stage.fbx" />
+    <MeshContentTask Include="Assets\modelData\player\player.fbx" />
+    <MeshContentTask Include="Assets\modelData\zombie\zombie.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\aim.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

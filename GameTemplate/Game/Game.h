@@ -1,18 +1,21 @@
 #pragma once
+#include "level/Level.h"
 
-class Player;
 class GameCamera;
-class BackGround;
-class Navimesh;
+class Floor;
+class Player;
+class Goal;
+class Zombie;
 
 class Game :
 	public IGameObject
 {
 public:
 	Game();
-	~Game();
-	void Update() override {};
-	void Draw() override {};
+	~Game();	
+	void OnDestroy() override;
+	bool Start() override;
+	void Update() override ;
 	/// <summary>
 	/// ゲームのインスタンスを取得。
 	/// </summary>
@@ -38,23 +41,28 @@ public:
 		return m_gamecamera;
 	}
 	/// <summary>
-	/// 背景のインスタンスを取得。
+	/// 床のインスタンスを取得。
 	/// </summary>
-	/// <returns>背景のインスタンス</returns>
-	BackGround* GetBackGround()
+	/// <returns>床のインスタンス</returns>
+	Floor* GetFloor()
 	{
-		return m_background;
+		return m_floor;
 	}
-	/*Navimesh* GetNavi()
-	{
-		return m_navimesh;
-	}*/
+	/// <summary>
+	/// クリアしたときに呼び出す関数。
+	/// </summary>
+	void Clear(){
+		m_isClear = true;
+	}
 private:
 	static Game* m_game;
-	Player* m_player = nullptr;			//Playerクラスのポインタ
-	GameCamera* m_gamecamera = nullptr;	//GameCameraクラスのポインタ
-	BackGround* m_background = nullptr;	//BackGroundクラスのポインタ
-	Navimesh* m_navimesh = nullptr;		//Navimeshクラスのポインタ
+	GameCamera* m_gamecamera = nullptr;	//GameCameraクラスのポインタ。
+	Level m_level;						//レベル。
+	Floor* m_floor = nullptr;			//Floorクラスのポインタ。
+	Player* m_player = nullptr;			//Playerクラスのポインタ。
+	Goal* m_goal = nullptr;				//Goalクラスのポインタ。
+	Zombie* m_zombie = nullptr;			//Zombieクラスのポインタ。
+	bool m_isClear = false;				//クリアしたかどうか。
 };
 
 static inline Game* GetGame()

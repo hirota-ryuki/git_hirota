@@ -1,23 +1,43 @@
 #pragma once
+//NewGOの優先順位
+enum Prio {
+	GOPrio_Defalut = 2,
+	GOPrio_Sprite,
+	GOPrio_num = 5,
+};
+
 class IGameObject
 {
 public:
 	//基底クラスには仮想デストラクタが必要
 	//クソ
-	virtual ~IGameObject(){}
+	virtual ~IGameObject() {}
+
+	/// <summary>
+	/// 開始関数。
+	/// </summary>
+	virtual bool Start() = 0;
+
 	/// <summary>
 	/// 更新関数。
 	/// </summary>
 	virtual void Update() = 0;
 
 	/// <summary>
+	/// 削除の直前に呼ばれる関数。
+	/// </summary>
+	virtual void OnDestroy() {}
+
+	/// <summary>
 	///  描画関数。
 	/// </summary>
-	virtual void Draw() = 0;
+	virtual void Draw() {}
+
 	/// <summary>
 	/// HUD描画時に呼ばれる処理。
 	/// </summary>
 	virtual void DrawHUD() {}
+
 	/// <summary>
 	/// 削除リクエストを行う。
 	/// </summary>
@@ -36,7 +56,44 @@ public:
 	{
 		return isRequestDelete;
 	}
+	/// <summary>
+	/// 開始関数を呼んだか調べる。
+	/// </summary>
+	/// <returns>
+	/// trueが返ってきたら、開始関数を呼んでいる。
+	/// </returns>
+	bool IsStart()
+	{
+		return m_isStart;
+	}
+	/// <summary>
+	/// 開始関数を処理したら呼ぶ関数。
+	/// </summary>
+	void StartEnd()
+	{
+		m_isStart = true;
+	}
+	/// <summary>
+	/// ネームキーをセットする関数。
+	/// </summary>
+	void SetNameKey(unsigned int namekey)
+	{
+		m_nameKey = namekey;
+	}
+	/// <summary>
+	/// ネームキーを返す関数。
+	/// </summary>
+	/// <returns>ネームキー。</returns>
+	unsigned int GetNameKey()
+	{
+		return m_nameKey;
+	}
+	//friend宣言、フレンドクラスは指定されたクラスのprivateやprotectedメンバにアクセスすることができる。
+	friend class GameObjectManager;
 private:
-	bool isRequestDelete = false;		//削除フラグ
+	bool isRequestDelete = false;		//削除フラグ。
+	bool m_isStart = false; //開始関数が呼ばれたかどうか。
+	unsigned int m_nameKey = 0;			//名前キー。
+	int prio;//優先順位。
+protected:
 };
-

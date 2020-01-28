@@ -20,6 +20,11 @@ void SpriteRender::Update()
 	);
 }
 
+bool SpriteRender::Start()
+{
+	return true;
+}
+
 void SpriteRender::DrawHUD()
 {
 	//スプライト

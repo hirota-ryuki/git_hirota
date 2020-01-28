@@ -47,9 +47,9 @@ void Level::Init(const wchar_t* levelDataFilePath, Level::HookWhenBuildObjectFun
 		}
 	}
 }
-void Level::Draw()
-{
-	for (auto& mapChip : m_mapChipArray) {
-		mapChip->Draw();
-	}
-}
+//void Level::Draw()
+//{
+//	for (auto& mapChip : m_mapChipArray) {
+//		mapChip->Draw();
+//	}
+//}
