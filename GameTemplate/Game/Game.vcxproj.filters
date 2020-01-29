@@ -112,6 +112,12 @@
     <Filter Include="Floor">
       <UniqueIdentifier>{bcde93f3-6348-4dc4-9ce5-1e2cf954cfd1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Goal">
+      <UniqueIdentifier>{8f4fb70b-55af-4cfd-8726-500a494773c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Result">
+      <UniqueIdentifier>{1780fc67-dfc4-4595-ae52-c11e75df0a32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -246,11 +252,15 @@
     <ClCompile Include="physics\BoxCollider.cpp">
       <Filter>physics</Filter>
     </ClCompile>
-    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GameCamera.cpp">
       <Filter>GameCamera</Filter>
     </ClCompile>
-    <ClCompile Include="Result.cpp" />
+    <ClCompile Include="Goal.cpp">
+      <Filter>Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="Result.cpp">
+      <Filter>Result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -397,8 +407,12 @@
     <ClInclude Include="physics\BoxCollider.h">
       <Filter>physics</Filter>
     </ClInclude>
-    <ClInclude Include="Goal.h" />
-    <ClInclude Include="Result.h" />
+    <ClInclude Include="Goal.h">
+      <Filter>Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
+      <Filter>Result</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

@@ -25,8 +25,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D.SetFar(10000.0f);
 	
 	//Titleクラス
-	//NewGO<Title>(GOPrio_Defalut);
-	NewGO<Game>(GOPrio_Defalut);
+	NewGO<Title>(GOPrio_Defalut);
+	//NewGO<Game>(GOPrio_Defalut);
 
 	//デバッグモードのオンオフ
 	bool m_isDebug = false;
@@ -45,7 +45,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//GameObjectManagerの更新
 		GameObjectManager::GetInstance().Update();
 
-		
+		//ボタンで切り替え
 		if (g_pad[0].IsTrigger(enButtonSelect))
 		{
 			m_isDebug = !m_isDebug;

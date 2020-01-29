@@ -8,6 +8,10 @@ Goal::Goal()
 
 Goal::~Goal()
 {
+}
+
+void Goal::OnDestroy()
+{
 	DeleteGO(m_model);
 }
 

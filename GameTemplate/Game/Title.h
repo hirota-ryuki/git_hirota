@@ -5,6 +5,7 @@ class Title :
 public:
 	Title();
 	~Title();
+	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
 private:

@@ -4,17 +4,21 @@
 
 Title::Title()
 {
-	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
-	m_sprite->Init(L"sprite/title.dds", 1280.f, 720.f);
 }
 
 Title::~Title()
+{
+}
+
+void Title::OnDestroy()
 {
 	DeleteGO(m_sprite);
 }
 
 bool Title::Start()
 {
+	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
+	m_sprite->Init(L"sprite/title.dds", 1280.f, 720.f);
 	return true;
 }
 

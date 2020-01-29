@@ -6,6 +6,7 @@ class Result :
 public:
 	Result();
 	~Result();
+	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
 	/// <summary>

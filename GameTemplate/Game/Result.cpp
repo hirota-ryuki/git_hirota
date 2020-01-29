@@ -9,6 +9,10 @@ Result::Result()
 
 Result::~Result()
 {
+}
+
+void Result::OnDestroy()
+{
 	DeleteGO(m_sprite);
 }
 

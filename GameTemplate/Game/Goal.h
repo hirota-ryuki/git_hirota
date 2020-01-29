@@ -7,6 +7,7 @@ class Goal :
 public:
 	Goal();
 	~Goal();
+	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
 	/// <summary>

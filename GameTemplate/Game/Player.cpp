@@ -5,6 +5,20 @@
 #include "Zombie.h"
 
 Player::Player()
+{	
+}
+
+Player::~Player()
+{
+}
+
+void Player::OnDestroy()
+{
+	DeleteGO(m_model);
+	DeleteGOs("bullet");
+}
+
+bool Player::Start()
 {
 	//キャラコンの初期化
 	m_charaCon.Init(
@@ -44,20 +58,7 @@ Player::Player()
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
-}
 
-Player::~Player()
-{
-}
-
-void Player::OnDestroy()
-{
-	DeleteGO(m_model);
-	DeleteGOs("bullet");
-}
-
-bool Player::Start()
-{
 	return true;
 }
 
