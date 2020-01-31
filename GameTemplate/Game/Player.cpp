@@ -111,9 +111,16 @@ void Player::Move()
 	m_moveSpeed.z = 0.f;
 	m_moveSpeed.y -= 240.f * 1.f / 60.f;
 
-	m_moveSpeed += cameraForward * lStick_y * m_speed;	//奥方向への移動速度を代入。
-	m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。
-
+	//走っているかどうか判定。
+	if (m_isRun) {
+		m_moveSpeed += cameraForward * lStick_y * m_runSpeed;		//奥方向への移動速度を代入。
+		m_moveSpeed += cameraRight * lStick_x * m_runSpeed;			//右方向への移動速度を加算。
+	}
+	else {
+		m_moveSpeed += cameraForward * lStick_y * m_speed;		//奥方向への移動速度を代入。
+		m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。
+	}
+	
 	//キャラクターコントローラーを使用して、座標を更新。
 	m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
 }
@@ -125,9 +132,9 @@ void Player::Update()
 	case enState_idle:
 
 		//アニメーションの再生。
-		if (m_animation.IsPlaying()) {
-			m_animation.Play(enAnimationClip_idle, 0.2f);
-		}
+		//if (m_animation.IsPlaying()) {
+			m_animation.Play(enAnimationClip_idle, 0.4f);
+		//}
 
 		Move();
 		Rotation();
@@ -136,28 +143,28 @@ void Player::Update()
 		break;
 	case enState_walk:
 		//アニメーションの再生。
-		if (m_animation.IsPlaying()) {
+		//if (m_animation.IsPlaying()) {
 			//完全に横移動だったら。
 			if (g_pad[0].GetLStickYF() == 0.0f) {
 				//左。
 				if (g_pad[0].GetLStickXF() > 0.0f) {
-					m_animation.Play(enAnimationClip_walk_left, 0.2f);
+					m_animation.Play(enAnimationClip_walk_left, 0.4f);
 				}
 				//右。
 				if (g_pad[0].GetLStickXF() < 0.0f) {
-					m_animation.Play(enAnimationClip_walk_right, 0.2f);
+					m_animation.Play(enAnimationClip_walk_right, 0.4f);
 				}
 			}
 
 			//前。
 			if (g_pad[0].GetLStickYF() > 0.0f) {
-				m_animation.Play(enAnimationClip_walk, 0.2f);
+				m_animation.Play(enAnimationClip_walk, 0.4f);
 			}
 			//バック。
 			if (g_pad[0].GetLStickYF() < 0.0f) {
-				m_animation.Play(enAnimationClip_back, 0.2f);
+				m_animation.Play(enAnimationClip_back, 0.4f);
 			}
-		}
+		//}
 		
 		Move();
 		Rotation();
@@ -166,26 +173,25 @@ void Player::Update()
 		break;
 	case enState_run:
 		//アニメーションの再生。
-		if (m_animation.IsPlaying()) {
-			m_animation.Play(enAnimationClip_run, 0.2f);			
-		}
+		//if (m_animation.IsPlaying()) {
+			m_animation.Play(enAnimationClip_run, 0.4f);			
+		//}
 		
 		Move();
 		Rotation();
 		ChangeState();
-		
 		break;
 	case enState_aim:
 		//アニメーションの再生。
-		if (m_animation.IsPlaying()) {
-			m_animation.Play(enAnimationClip_aim, 0.2f);
-		}
+		//if (m_animation.IsPlaying()) {
+			m_animation.Play(enAnimationClip_aim, 0.4f);
+		//}
 		
 		Move();
 		Rotation();
 		ChangeState();
 		//R2を押したら撃つ。
-		if (g_pad[0].IsTrigger(enButtonRB2)) {
+		if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
 			m_timer = 0;
 			m_state = enState_shot;
 		
@@ -193,9 +199,9 @@ void Player::Update()
 		break;
 	case enState_shot:
 		//アニメーションの再生。
-		if (m_animation.IsPlaying()) {
-			m_animation.Play(enAnimationClip_shot, 0.2f);
-		}
+		//if (m_animation.IsPlaying()) {
+			m_animation.Play(enAnimationClip_shot, 0.4f);
+		//}
 		
 		if (!m_isBullet) {
 			//弾丸の生成。
@@ -207,8 +213,15 @@ void Player::Update()
 		Move();
 		Rotation();
 
+		//R2を押したら撃つ。
+		if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
+			ChangeState();
+			m_isBullet = false;
+		}
+
 		//アニメーションのフレーム数経ったら。
-		if (m_timer > m_animation.GetLastAnimationControllerIndexInPublic()) {
+		//if (m_timer > m_animation.GetLastAnimationControllerIndexInPublic()) {
+		if (!m_animation.IsPlaying()) {
 			ChangeState();
 			m_isBullet = false;
 		}

@@ -42,6 +42,14 @@ public:
 	void Draw();
 	void InitSamplerState();
 	void InitConstantBuffer();
+	/// <summary>
+	/// アルファ値をセット。
+	/// </summary>
+	/// <param name="m_alpha">アルファ値</param>
+	void SetAlpha(float alpha)
+	{
+		m_alpha = alpha;
+	}
 private:
 	/// <summary>
 	/// シェーダーをロード。

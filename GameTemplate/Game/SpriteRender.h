@@ -14,6 +14,14 @@ public:
 		m_rot = rot;
 		m_scale = scale;
 	}
+	/// <summary>
+	/// アルファ値をセット。
+	/// </summary>
+	/// <param name="m_alpha">アルファ値</param>
+	void SetAlpha(float alpha)
+	{
+		m_sprite.SetAlpha(alpha);
+	}
 	void Init(const wchar_t* texFilePath, float w, float h);
 private:
 	Sprite m_sprite;

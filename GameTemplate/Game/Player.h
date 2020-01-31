@@ -68,10 +68,12 @@ private:
 	CharacterController m_charaCon;						//キャラクターコントローラー。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
-	Game* m_game = nullptr;								//Gameのインスタンス。
+	Game* m_game = nullptr;								//Gameのポインタ。
 	//bool isRun;										//走っているかどうか。
 	//float RunParam = 2.0f;							//走るときの倍率 走ると2倍になる。
-	float m_speed = 1000.0f;							//キャラが歩くスピード。
+	float m_speed = 300.0f;								//キャラが歩くスピード。
+	float m_runSpeed = 500.0f;							//キャラが走るスピード。
+	
 	//アニメーション関係。
 	enum {
 		enAnimationClip_idle,
@@ -96,8 +98,8 @@ private:
 		enState_num,
 	};
 	State m_state = enState_idle;
-	bool m_isRun = false;			//走っているかどうか
-	bool m_isShot = false;			//撃っているかどうか
+	bool m_isRun = false;			//走っているかどうか。
+	bool m_isShot = false;			//撃っているかどうか。
 	//Shot関係。
 	Bullet* m_bullet;//Bulletクラスのポインタ。
 	int m_timer = 0;//タイマー。

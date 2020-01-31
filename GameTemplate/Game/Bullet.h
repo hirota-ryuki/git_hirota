@@ -43,15 +43,14 @@ public:
 		m_rotation = rot;
 	}
 private:
-	SkinModelRender* m_model = nullptr;			//スキンモデルレンダー	
-	CVector3 m_position = CVector3::Zero();		//座標。
-	CVector3 m_moveSpeed = CVector3::Zero();	//移動速度。
-	float m_speed = 20.0f;						//速度を上げる。
-	CVector3 m_bulletpos = CVector3::Zero();
-	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
-	int m_timer = 0;
+	SkinModelRender*	m_model = nullptr;						//スキンモデルレンダー	
+	CVector3			m_position = CVector3::Zero();			//座標。
+	CVector3			m_moveSpeed = CVector3::Zero();			//移動速度。
+	float				m_speed = 30.0f;						//速度を上げる。
+	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
+	int					m_deleteTimer = 0;						//弾丸を消すためのタイマー。
 	//インスタンス関係。
-	Game* m_game = nullptr;							//ゲームのポインタ。
-	Player*	m_player = nullptr;						//プレイヤーのポインタ。
-	GameCamera* m_gamecamera = nullptr;				//GameCameraのポインタ。
+	Game*				m_game = nullptr;						//ゲームのポインタ。
+	Player*				m_player = nullptr;						//プレイヤーのポインタ。
+	GameCamera*			m_gamecamera = nullptr;					//GameCameraのポインタ。
 };

@@ -323,7 +323,7 @@ void Zombie::Damage()
 {
 	QueryGOs<Bullet>("bullet", [&](Bullet * bullet)->bool {
 		CVector3 pos = m_position;
-		pos.y += 200.0f;
+		pos.y += 100.0f;
 		CVector3 diff = bullet->GetPos() - pos;
 		if (diff.Length() < 100.0f) {
 			m_hp--;

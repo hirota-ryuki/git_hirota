@@ -126,12 +126,12 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix)
 {
 	//ライトを回す。
-	CQuaternion qRot;
+	/*CQuaternion qRot;
 	qRot.SetRotationDeg(CVector3::AxisY(), 2.0f);
 	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
 		qRot.Multiply(m_light.directionLight.direction[i]);
 	}
-	
+	*/
 	//視点を設定。
 	m_light.eyePos = g_camera3D.GetPosition();
 

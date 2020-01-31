@@ -46,8 +46,8 @@ void Bullet::Update()
 	//スキンモデルレンダーに座標を伝える。
 	m_model->SetData(m_position, m_rotation);
 	//タイマーを加算する。
-	m_timer++;
-	if (m_timer == 50) {
+	m_deleteTimer++;
+	if (m_deleteTimer == 50) {
 		//タイマーが50になったらインスタンスを削除する。
 		DeleteGO(this);
 	}

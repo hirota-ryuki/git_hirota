@@ -50,7 +50,6 @@ void GameObjectManager::StartAndUpdate()
 {
 	//登録されているゲームオブジェクトの更新処理を呼ぶ。
 	for (int i = 0; i < GOPrio_num; i++) {
-		int j = 1;
 		for (auto go : m_goList[i]) {
 			if (!go->IsStart()) {
 				if (go->Start()) {
@@ -60,7 +59,6 @@ void GameObjectManager::StartAndUpdate()
 			else {
 				go->Update();
 			}
-			j++;
 		}
 	}
 }
