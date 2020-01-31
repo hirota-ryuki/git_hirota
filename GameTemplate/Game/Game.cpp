@@ -12,10 +12,21 @@ Game* Game::m_game = nullptr;
 
 Game::Game()
 {
+	//インスタンスを一つだけにする。
+	if (m_game == nullptr)
+	{
+		//インスタンスの登録。
+		m_game = this;
+	}
+	else {
+		//警告。
+		abort();
+	}
 }
 
 Game::~Game()
 {	
+	m_game = nullptr;
 }
 
 void Game::OnDestroy()
@@ -29,17 +40,6 @@ void Game::OnDestroy()
 
 bool Game::Start()
 {
-	//インスタンスを一つだけにする。
-	if (m_game == nullptr)
-	{
-		//インスタンスの登録。
-		m_game = this;
-	}
-	else {
-		//警告。
-		abort();
-	}
-
 	//床の番号。
 	wchar_t floor[50];
 	swprintf_s(floor, L"floor");
@@ -84,15 +84,14 @@ bool Game::Start()
 	m_floor->SetPos(floorObjData.position);
 	m_floor->SetRot(floorObjData.rotation);
 
-	//カメラを構築。
-	m_gamecamera = NewGO<GameCamera>(GOPrio_Defalut);
-
 	//プレイヤーを構築。
 	m_player = NewGO<Player>(GOPrio_Defalut);
 	//配置情報から座標と回転をステージに渡す。
 	m_player->SetPos(playerObjData.position);
 	m_player->SetRot(playerObjData.rotation);
 
+	//カメラを構築。
+	m_gamecamera = NewGO<GameCamera>(GOPrio_Defalut);
 
 	//ゴールを構築。
 	m_goal = NewGO<Goal>(GOPrio_Defalut);

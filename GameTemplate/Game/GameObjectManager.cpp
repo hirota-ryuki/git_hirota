@@ -78,20 +78,6 @@ void GameObjectManager::Delete()
 		goExecList.erase(it);
 	}
 	m_DeleteGOList.clear();
-	////全てのゲームオブジェクトの1フレーム分の処理が終わってから、削除する。
-	//for (int i = 0; i < GOPrio_num; i++) {
-	//	for (auto it = m_goList[i].begin(); it != m_goList[i].end();) {
-	//		if ((*it)->IsRequestDelete()) {
-	//			//削除リクエストを受けているので削除。
-	//			delete* it;
-	//			it = m_goList[i].erase(it);
-	//		}
-	//		else {
-	//			//リクエストを受けていないので。
-	//			it++;
-	//		}
-	//	}
-	//}
 }
 
 void GameObjectManager::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, RenderTarget* renderTarget, D3D11_VIEWPORT* viewport)

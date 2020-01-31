@@ -31,12 +31,12 @@ bool Result::Start()
 
 void Result::Update()
 {
-	////Aボタンを押したら
-	//if (g_pad[0].IsTrigger(enButtonA))
-	//{
-	//	//Titleクラスを生成
-	//	NewGO<Title>(GOPrio_Defalut);
-	//	//Resultクラスを消去
-	//	DeleteGO(this);
-	//}
+	//Aボタンを押したら
+	if (g_pad[0].IsTrigger(enButtonA))
+	{
+		//Titleクラスを生成
+		NewGO<Title>(GOPrio_Defalut);
+		//Resultクラスを消去
+		DeleteGO(this);
+	}
 }

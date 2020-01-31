@@ -9,6 +9,19 @@
 
 Zombie::Zombie()
 {
+}
+
+Zombie::~Zombie()
+{
+}
+
+void Zombie::OnDestroy()
+{
+	DeleteGO(m_model);
+}
+
+bool Zombie::Start()
+{
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。
@@ -46,19 +59,6 @@ Zombie::Zombie()
 
 	//コライダーの設定。
 	m_collider.Create(m_boxSize);
-}
-
-Zombie::~Zombie()
-{
-}
-
-void Zombie::OnDestroy()
-{
-	DeleteGO(m_model);
-}
-
-bool Zombie::Start()
-{
 	return true;
 }
 
