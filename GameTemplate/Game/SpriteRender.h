@@ -8,7 +8,7 @@ public:
 	void Update() override;
 	bool Start() override;
 	void DrawHUD() override;
-	void SetData(CVector3 pos, CQuaternion rot, CVector3 scale)
+	void SetData(const CVector3& pos, CQuaternion rot, CVector3 scale)
 	{
 		m_pos = pos;
 		m_rot = rot;
@@ -18,7 +18,7 @@ public:
 	/// アルファ値をセット。
 	/// </summary>
 	/// <param name="m_alpha">アルファ値</param>
-	void SetAlpha(float alpha)
+	void SetAlpha(const float alpha)
 	{
 		m_sprite.SetAlpha(alpha);
 	}
