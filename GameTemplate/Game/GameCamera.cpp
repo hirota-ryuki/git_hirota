@@ -4,20 +4,31 @@
 
 GameCamera::GameCamera()
 {
-	//スプライト
-	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
-	m_sprite->Init(L"sprite/aim.dds", 60, 60);
 }
 
 GameCamera::~GameCamera()
 {
+}
+
+void GameCamera::OnDestroy()
+{
 	DeleteGO(m_sprite);
+}
+
+bool GameCamera::Start()
+{
+	//ゲームのインスタンスを取得。
+	m_game = GetGame();
+	//プレイヤーのインスタンスを取得。
+	m_player = m_game->GetPlayer();
+	//スプライト
+	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
+	m_sprite->Init(L"sprite/aim.dds", 60, 60);
+	return true;
 }
 
 void GameCamera::Update()
 {	
-	
-
 	if (m_player != nullptr) {
 
 
@@ -87,13 +98,4 @@ void GameCamera::Update()
 			CVector3::One()
 		);
 	}
-}
-
-bool GameCamera::Start()
-{
-	//ゲームのインスタンスを取得。
-	m_game = GetGame();
-	//プレイヤーのインスタンスを取得。
-	m_player = m_game->GetPlayer();
-	return true;
 }

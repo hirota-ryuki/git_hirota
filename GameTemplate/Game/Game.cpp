@@ -36,6 +36,7 @@ void Game::OnDestroy()
 	DeleteGO(m_gamecamera);
 	DeleteGO(m_player);
 	DeleteGO(m_floor);
+	DeleteGOs("mapchip");
 }
 
 bool Game::Start()

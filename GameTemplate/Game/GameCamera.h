@@ -8,8 +8,9 @@ class GameCamera : public IGameObject
 public:
 	GameCamera();
 	~GameCamera();
-	void Update() override;
+	void OnDestroy() override;
 	bool Start() override;
+	void Update() override;
 	/// <summary>
 	/// ‹“_‚ğæ“¾B
 	/// </summary>

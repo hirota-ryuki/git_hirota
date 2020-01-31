@@ -10,7 +10,7 @@ MapChip::MapChip(const LevelObjectData& objData)
 	//m_model.Init(filePath);
 	//m_model.UpdateWorldMatrix(objData.position, objData.rotation, CVector3::One());
 	swprintf_s(filePath, L"modelData/mapChip/%s.cmo", objData.name);
-	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
+	m_model = NewGO<SkinModelRender>(GOPrio_Defalut,"mapchip");
 	m_model->Init(filePath);
 	m_model->SetData(objData.position, objData.rotation);
 	//m_model->NotModelMode();
