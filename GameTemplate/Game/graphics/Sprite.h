@@ -48,7 +48,7 @@ public:
 	/// <param name="m_alpha">アルファ値</param>
 	void SetAlpha(float alpha)
 	{
-		m_alpha = alpha;
+		m_alphaHUD = alpha;
 	}
 private:
 	/// <summary>
@@ -93,4 +93,5 @@ private:
 	CVector2					m_size = CVector2::Zero();				//画像のサイズ。
 	ID3D11Buffer*				m_cb = nullptr;							//定数バッファ。
 	float						m_alpha = 1.0f;							//スプライトのα値。
+	float						m_alphaHUD = 1.0f;							//スプライトのα値。
 };

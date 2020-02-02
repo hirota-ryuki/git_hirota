@@ -56,6 +56,11 @@ bool Player::Start()
 	//アニメーション初期化。
 	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
 
+	//スプライト
+	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
+	m_sprite->Init(L"sprite/damage.dds", 1280.f, 720.f);
+	m_sprite->SetAlpha(m_alpha);
+
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 
@@ -130,52 +135,43 @@ void Player::Update()
 	m_timer++;
 	switch (m_state) {
 	case enState_idle:
-
 		//アニメーションの再生。
-		//if (m_animation.IsPlaying()) {
-			m_animation.Play(enAnimationClip_idle, 0.4f);
-		//}
+		m_animation.Play(enAnimationClip_idle, 0.4f);
 
 		Move();
 		Rotation();
 		ChangeState();
-		
 		break;
 	case enState_walk:
 		//アニメーションの再生。
-		//if (m_animation.IsPlaying()) {
-			//完全に横移動だったら。
-			if (g_pad[0].GetLStickYF() == 0.0f) {
-				//左。
-				if (g_pad[0].GetLStickXF() > 0.0f) {
-					m_animation.Play(enAnimationClip_walk_left, 0.4f);
-				}
-				//右。
-				if (g_pad[0].GetLStickXF() < 0.0f) {
-					m_animation.Play(enAnimationClip_walk_right, 0.4f);
-				}
+		//完全に横移動だったら。
+		if (g_pad[0].GetLStickYF() == 0.0f) {
+			//左。
+			if (g_pad[0].GetLStickXF() > 0.0f) {
+				m_animation.Play(enAnimationClip_walk_left, 0.4f);
 			}
+			//右。
+			if (g_pad[0].GetLStickXF() < 0.0f) {
+				m_animation.Play(enAnimationClip_walk_right, 0.4f);
+			}
+		}
 
-			//前。
-			if (g_pad[0].GetLStickYF() > 0.0f) {
-				m_animation.Play(enAnimationClip_walk, 0.4f);
-			}
-			//バック。
-			if (g_pad[0].GetLStickYF() < 0.0f) {
-				m_animation.Play(enAnimationClip_back, 0.4f);
-			}
-		//}
+		//前。
+		if (g_pad[0].GetLStickYF() > 0.0f) {
+			m_animation.Play(enAnimationClip_walk, 0.4f);
+		}
+		//バック。
+		if (g_pad[0].GetLStickYF() < 0.0f) {
+			m_animation.Play(enAnimationClip_back, 0.4f);
+		}
 		
 		Move();
 		Rotation();
 		ChangeState();
-		
 		break;
 	case enState_run:
 		//アニメーションの再生。
-		//if (m_animation.IsPlaying()) {
-			m_animation.Play(enAnimationClip_run, 0.4f);			
-		//}
+		m_animation.Play(enAnimationClip_run, 0.4f);			
 		
 		Move();
 		Rotation();
@@ -183,9 +179,7 @@ void Player::Update()
 		break;
 	case enState_aim:
 		//アニメーションの再生。
-		//if (m_animation.IsPlaying()) {
-			m_animation.Play(enAnimationClip_aim, 0.4f);
-		//}
+		m_animation.Play(enAnimationClip_aim, 0.4f);
 		
 		Move();
 		Rotation();
@@ -199,9 +193,7 @@ void Player::Update()
 		break;
 	case enState_shot:
 		//アニメーションの再生。
-		//if (m_animation.IsPlaying()) {
-			m_animation.Play(enAnimationClip_shot, 0.4f);
-		//}
+		m_animation.Play(enAnimationClip_shot, 0.4f);
 		
 		if (!m_isBullet) {
 			//弾丸の生成。
@@ -220,7 +212,6 @@ void Player::Update()
 		}
 
 		//アニメーションのフレーム数経ったら。
-		//if (m_timer > m_animation.GetLastAnimationControllerIndexInPublic()) {
 		if (!m_animation.IsPlaying()) {
 			ChangeState();
 			m_isBullet = false;
@@ -229,6 +220,8 @@ void Player::Update()
 	default:
 		break;
 	}
+	m_sprite->SetAlpha(m_alpha);
+
 	//アニメーションの更新。
 	m_animation.Update(1.f / 60.f);
 	//ワールド行列の更新。
@@ -241,4 +234,11 @@ void Player::Rotation()
 	CQuaternion qAddRot;
 	qAddRot.SetRotationDeg(CVector3::AxisY(), 4.0f*g_pad[0].GetRStickXF());
 	m_rotation.Multiply(qAddRot, m_rotation);
+}
+
+void Player::Damage()
+{
+	m_hp--;
+	m_alpha = 1.0f - (m_hp / 10);
+	m_sprite->SetAlpha(m_alpha);
 }

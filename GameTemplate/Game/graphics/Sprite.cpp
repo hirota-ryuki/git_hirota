@@ -13,6 +13,7 @@ struct Vertex {
 /// </summary>
 struct SSpriteCB {
 	CMatrix mWVP;		//ワールド×ビュー×プロジェクション行列。
+	CVector4 mAlpha;
 };
 
 Sprite::Sprite()
@@ -188,9 +189,10 @@ void Sprite::InitConstantBuffer()
 void Sprite::LoadShader()
 {
 	//シェーダーをロードする。
-	m_ps.Load("shader/sprite.fx", "PSMain", Shader::EnType::PS);
-	m_vs.Load("shader/sprite.fx", "VSMain", Shader::EnType::VS);
+	m_ps.Load("shader/sprite_hud.fx", "PSMain", Shader::EnType::PS);
+	m_vs.Load("shader/sprite_hud.fx", "VSMain", Shader::EnType::VS);
 }
+
 void Sprite::CreateConstantBuffer()
 {
 	int bufferSize = sizeof(SSpriteCB);
@@ -207,6 +209,7 @@ void Sprite::CreateConstantBuffer()
 	auto d3dDevice = g_graphicsEngine->GetD3DDevice();
 	d3dDevice->CreateBuffer(&desc, NULL, &m_cbGPU);
 }
+
 void Sprite::CreateVertexBuffer( float w, float h)
 {
 	float halfW = w * 0.5f;
@@ -327,6 +330,9 @@ void Sprite::Draw(CMatrix mView, CMatrix mProj)
 	//ワールド×ビュー×プロジェクション行列を計算。
 	cb.mWVP.Mul( m_world, mView );
 	cb.mWVP.Mul( cb.mWVP, mProj ) ;
+	CVector4 alpha = { 1.0f, 1.0f, 1.0f, 1.0f };
+	cb.mAlpha = alpha;
+
 	//定数バッファの内容をメインメモリからVRAMにコピー。
 	deviceContext->UpdateSubresource(m_cbGPU, 0, nullptr, &cb, 0, 0);
 	//定数バッファをレジスタb0にバインドする。

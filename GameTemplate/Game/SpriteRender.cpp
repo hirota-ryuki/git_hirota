@@ -1,14 +1,22 @@
 #include "stdafx.h"
 #include "SpriteRender.h"
 
-
 SpriteRender::SpriteRender()
 {
 }
 
-
 SpriteRender::~SpriteRender()
 {
+}
+
+bool SpriteRender::Start()
+{
+	return true;
+}
+
+void SpriteRender::Init(const wchar_t* texFilePath, float w, float h)
+{
+	m_sprite.Init(texFilePath, w, h);
 }
 
 void SpriteRender::Update()
@@ -18,11 +26,6 @@ void SpriteRender::Update()
 		m_rot,
 		m_scale
 	);
-}
-
-bool SpriteRender::Start()
-{
-	return true;
 }
 
 void SpriteRender::DrawHUD()
@@ -36,10 +39,6 @@ void SpriteRender::DrawHUD()
 		{ 0, 1, 0 }
 	);
 	mProj.MakeOrthoProjectionMatrix(1280, 720, 0, 100);
+	m_sprite.SetAlpha(m_alpha);
 	m_sprite.Draw(mView, mProj);
-}
-
-void SpriteRender::Init(const wchar_t* texFilePath, float w, float h)
-{
-	m_sprite.Init(texFilePath, w, h);
 }
