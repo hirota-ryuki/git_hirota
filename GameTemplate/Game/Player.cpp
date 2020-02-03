@@ -220,14 +220,14 @@ void Player::Update()
 	default:
 		break;
 	}
-	m_sprite->SetAlpha(m_alpha);
-
+	//回復。
+	Heal();
+	//HPがなくなったら死ぬ。
+	Death();
 	//アニメーションの更新。
 	m_animation.Update(1.f / 60.f);
 	//ワールド行列の更新。
 	m_model->SetData(m_position, m_rotation);
-	//HPがなくなったら死ぬ。
-	Death();
 }
 
 void Player::Rotation()
@@ -238,16 +238,53 @@ void Player::Rotation()
 	m_rotation.Multiply(qAddRot, m_rotation);
 }
 
+void Player::Heal()
+{
+	//ダメージを受けていて。
+	if (m_isDamage) {
+		m_healTimer++;
+		//一定時間経ったら。
+		if (m_healTimer == m_healStartTime) {
+			//ダメージを受けていない状態にする。
+			//（回復できる状態にする。）
+			m_isDamage = false;
+			m_healTimer = 0;
+		}
+	}
+	
+	//HPが減っていて。
+	if (m_hp < 10.0f) {
+		//ダメージを受けていなかったら。
+		if (!m_isDamage) {
+			//徐々に回復させるためにカウント。
+			m_heaIntervalTimer++;
+			if (m_heaIntervalTimer == m_healIntervalTime) {
+				//回復。
+				m_hp++;
+				//画像を透明にしていく。
+				m_alpha = 1.0f - (m_hp / 10.0f);
+				m_sprite->SetAlpha(m_alpha);
+				m_heaIntervalTimer = 0;
+			}
+		}
+	}
+}
+
 void Player::Damage()
 {
+	//ダメージを受ける。
 	m_hp -= 1.0f;
-	m_alpha = 1.0f - m_hp / 10.0f;
+	//画像を不透明にしていく。
+	m_alpha = 1.0f - (m_hp / 10.0f);
 	m_sprite->SetAlpha(m_alpha);
+	m_isDamage = true;
+	m_healTimer = 0;
 }
 
 void Player::Death()
 {
-	if (m_hp < 0) {
+	if (m_hp <= 0) {
 		m_state = enState_death;
+		m_game->GameOver();
 	}
 }

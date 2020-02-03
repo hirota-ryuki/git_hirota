@@ -54,6 +54,12 @@ public:
 	void Clear(){
 		m_isClear = true;
 	}
+	/// <summary>
+	/// ゲームオーバーしたときに呼び出す関数。
+	/// </summary>
+	void GameOver(){
+		m_isGameOver = true;
+	}
 private:
 	static Game* m_game;
 	GameCamera* m_gamecamera = nullptr;	//GameCameraクラスのポインタ。
@@ -63,6 +69,7 @@ private:
 	Goal* m_goal = nullptr;				//Goalクラスのポインタ。
 	Zombie* m_zombie = nullptr;			//Zombieクラスのポインタ。
 	bool m_isClear = false;				//クリアしたかどうか。
+	bool m_isGameOver = false;			//ゲームオーバーしたかどうか。
 };
 
 static inline Game* GetGame()

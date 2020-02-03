@@ -131,7 +131,9 @@ private:
 		float				specPow;			//鏡面反射の絞り。
 		CVector3			ambientLight;		//環境光。
 	};
-
+	/// <summary>
+	/// 
+	/// </summary>
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;					//定数バッファ。
 	Skeleton			m_skeleton;						//スケルトン。

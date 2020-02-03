@@ -336,6 +336,7 @@ void Sprite::Draw(CMatrix mView, CMatrix mProj)
 	deviceContext->UpdateSubresource(m_cbGPU, 0, nullptr, &cb, 0, 0);
 	//定数バッファをレジスタb0にバインドする。
 	deviceContext->VSSetConstantBuffers(0, 1, &m_cbGPU);
+	//mAlphaはピクセルシェーダーで使いたいのでPSにもバインドする。
 	//定数バッファをレジスタb0にバインドする。
 	deviceContext->PSSetConstantBuffers(0, 1, &m_cbGPU);
 	//テクスチャをレジスタt0にバインドする。

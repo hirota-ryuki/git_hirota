@@ -95,7 +95,6 @@ void Zombie::Update()
 			//攻撃。
 			Attack();
 		}
-
 		//アニメーションの再生中じゃなかったら。
 		if (!m_animation.IsPlaying()) {
 			//待機状態に遷移。
@@ -129,7 +128,6 @@ void Zombie::Update()
 	m_animation.Update(1.f / 60.f);
 	//座標の更新。
 	m_model->SetData(m_position, m_rotation);
-	
 }
 
 struct CallBack : public btCollisionWorld::ConvexResultCallback

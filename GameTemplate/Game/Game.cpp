@@ -46,7 +46,7 @@ bool Game::Start()
 	swprintf_s(floor, L"floor");
 	//レベル。
 	wchar_t levelname[50];
-	swprintf_s(levelname, L"level/level01.tkl");
+	swprintf_s(levelname, L"level/level02.tkl");
 	LevelObjectData floorObjData;
 	LevelObjectData playerObjData;
 	LevelObjectData goalObjData;
@@ -113,7 +113,7 @@ bool Game::Start()
 
 void Game::Update()
 {
-	if (m_isClear) {
+	if (m_isClear || m_isGameOver) {
 		//Resultクラスを生成
 		NewGO<Result>(GOPrio_Defalut);
 		//Gameクラスを消去

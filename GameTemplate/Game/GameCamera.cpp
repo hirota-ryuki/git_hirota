@@ -22,8 +22,9 @@ bool GameCamera::Start()
 	//プレイヤーのインスタンスを取得。
 	m_player = m_game->GetPlayer();
 	//スプライト
-	//m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
-	//m_sprite->Init(L"sprite/aim.dds", 60, 60);
+	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
+	m_sprite->Init(L"sprite/aim.dds", 60, 60);
+	m_sprite->SetData(CVector3::Zero(), CQuaternion::SpriteRot(), CVector3::One());
 	return true;
 }
 
@@ -92,10 +93,5 @@ void GameCamera::Update()
 		//更新。
 		g_camera3D.Update();
 
-		/*m_sprite->SetData(
-			CVector3::Zero(),
-			CQuaternion::SpriteRot(),
-			CVector3::One()
-		);*/
 	}
 }

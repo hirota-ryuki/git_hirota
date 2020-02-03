@@ -25,6 +25,10 @@ public:
 	/// </summary>
 	void Rotation();
 	/// <summary>
+	/// 時間によって回復する関数。
+	/// </summary>
+	void Heal();
+	/// <summary>
 	/// ダメージを与える関数。
 	/// </summary>
 	void Damage();
@@ -107,6 +111,12 @@ private:
 	SpriteRender*	m_sprite = nullptr;
 	CQuaternion		m_rot = CQuaternion::SpriteRot();
 	float			m_alpha = 0.0f;
+	//回復関係。
+	bool			m_isDamage = false;			//ダメージを受けたかどうか。
+	int 			m_healTimer = 0;			//回復するまでのタイマー。
+	int				m_healStartTime = 130;		//回復するまでの時間。
+	int 			m_heaIntervalTimer = 0;		//回復と回復の間のタイマー。徐々に回復するようにする。
+	int				m_healIntervalTime = 30;	//回復と回復の間の時間。徐々に回復するようにする。
 	//ステータス関係。
 	float			m_hp = 10.0f;
 };
