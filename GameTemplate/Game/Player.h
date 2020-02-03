@@ -28,6 +28,9 @@ public:
 	/// ダメージを与える関数。
 	/// </summary>
 	void Damage();
+	/// 死ぬ関数。
+	/// </summary>
+	void Death();
 	/// <summary>
 	/// プレイヤーのポジションをセット。
 	/// </summary>
@@ -90,6 +93,7 @@ private:
 		enState_run,
 		enState_aim,
 		enState_shot,
+		enState_death,
 		enState_num,
 	};
 	State			m_state = enState_idle;
@@ -104,5 +108,5 @@ private:
 	CQuaternion		m_rot = CQuaternion::SpriteRot();
 	float			m_alpha = 0.0f;
 	//ステータス関係。
-	int				m_hp = 10;
+	float			m_hp = 10.0f;
 };

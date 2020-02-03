@@ -81,17 +81,17 @@ private:
 		CMatrix WVP;		//ワールドビュープロジェクション行列。
 		float alpha;		//α値。
 	};
-	Shader	m_vs;											//頂点シェーダー。
-	Shader	m_ps;											//ピクセルシェーダー。
-	ID3D11Buffer*	m_vertexBuffer = nullptr;	//VRAM上の頂点バッファにアクセスするためのインターフェース。
+	Shader	m_vs;									//頂点シェーダー。
+	Shader	m_ps;									//ピクセルシェーダー。
+	ID3D11Buffer*	m_vertexBuffer = nullptr;		//VRAM上の頂点バッファにアクセスするためのインターフェース。
 	ID3D11Buffer*	m_indexBuffer = nullptr;		//VRAM上のインデックスバッファにアクセスするためのインターフェース。
-	ID3D11Buffer*	m_cbGPU = nullptr;			//GPU側の定数バッファにアクセスするためのインターフェース。
+	ID3D11Buffer*	m_cbGPU = nullptr;				//GPU側の定数バッファにアクセスするためのインターフェース。
 	ID3D11ShaderResourceView* m_texture = nullptr;	//テクスチャにアクセスするためのインターフェース。
 	ID3D11SamplerState* m_samplerState = nullptr;	//サンプラステート。
-	CMatrix m_world = CMatrix::Identity();					//ワールド行列。
+	CMatrix m_world = CMatrix::Identity();			//ワールド行列。
 
-	CVector2					m_size = CVector2::Zero();				//画像のサイズ。
-	ID3D11Buffer*				m_cb = nullptr;							//定数バッファ。
-	float						m_alpha = 1.0f;							//スプライトのα値。
-	float						m_alphaHUD = 1.0f;							//スプライトのα値。
+	CVector2					m_size = CVector2::Zero();	//画像のサイズ。
+	ID3D11Buffer*				m_cb = nullptr;				//定数バッファ。
+	float						m_alpha = 1.0f;				//スプライトのα値。
+	float						m_alphaHUD = 1.0f;			//スプライトのα値。
 };

@@ -226,6 +226,8 @@ void Player::Update()
 	m_animation.Update(1.f / 60.f);
 	//ワールド行列の更新。
 	m_model->SetData(m_position, m_rotation);
+	//HPがなくなったら死ぬ。
+	Death();
 }
 
 void Player::Rotation()
@@ -238,7 +240,14 @@ void Player::Rotation()
 
 void Player::Damage()
 {
-	m_hp--;
-	m_alpha = 1.0f - (m_hp / 10);
+	m_hp -= 1.0f;
+	m_alpha = 1.0f - m_hp / 10.0f;
 	m_sprite->SetAlpha(m_alpha);
+}
+
+void Player::Death()
+{
+	if (m_hp < 0) {
+		m_state = enState_death;
+	}
 }
