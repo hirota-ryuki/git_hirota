@@ -447,13 +447,8 @@
     <MeshContentTask Include="Assets\modelData\goal\goal.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\bullet\bullet2.fbx">
+    <MeshContentTask Include="Assets\modelData\bullet\bullet.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\modelData\bullet\bullet.FBX">
-      <Filter>Assets\modelData</Filter>
-    </None>
   </ItemGroup>
 </Project>

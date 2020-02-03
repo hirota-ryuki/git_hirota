@@ -20,7 +20,7 @@ bool Bullet::Start()
 {
 	//弾丸を生成。
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
-	m_model->Init(L"modelData/bullet/bullet2.cmo");
+	m_model->Init(L"modelData/bullet/bullet.cmo");
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。

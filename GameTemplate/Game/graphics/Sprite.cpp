@@ -13,7 +13,7 @@ struct Vertex {
 /// </summary>
 struct SSpriteCB {
 	CMatrix mWVP;		//ワールド×ビュー×プロジェクション行列。
-	CVector4 mAlpha;
+	float mAlpha;
 };
 
 Sprite::Sprite()
@@ -330,7 +330,7 @@ void Sprite::Draw(CMatrix mView, CMatrix mProj)
 	//ワールド×ビュー×プロジェクション行列を計算。
 	cb.mWVP.Mul( m_world, mView );
 	cb.mWVP.Mul( cb.mWVP, mProj ) ;
-	CVector4 alpha = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float alpha = 0.0f;
 	cb.mAlpha = alpha;
 
 	//定数バッファの内容をメインメモリからVRAMにコピー。
