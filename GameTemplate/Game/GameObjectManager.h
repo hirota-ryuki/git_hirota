@@ -111,7 +111,6 @@ public:
 					//削除リクエストを送る。
 					m_DeleteGOList.emplace_back(go);
 					go->OnDestroy();
-					//削除できたので終わり。
 					return;
 				}
 			}

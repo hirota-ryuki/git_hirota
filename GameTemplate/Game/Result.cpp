@@ -23,7 +23,7 @@ bool Result::Start()
 		m_sprite->Init(L"sprite/moca.dds", 1280.f, 720.f);
 	}
 	else {
-		m_sprite->Init(L"sprite/moca.dds", 1280.f, 720.f);
+		m_sprite->Init(L"sprite/gameover.dds", 1280.f, 720.f);
 	}
 
 	return true;

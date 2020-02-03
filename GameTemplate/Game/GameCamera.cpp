@@ -31,8 +31,6 @@ bool GameCamera::Start()
 void GameCamera::Update()
 {	
 	if (m_player != nullptr) {
-
-
 		//カメラに現在地をセット。
 		CVector3 l_setpos = m_player->GetPos();
 		l_setpos.y += 50000.0f;
@@ -92,6 +90,5 @@ void GameCamera::Update()
 
 		//更新。
 		g_camera3D.Update();
-
 	}
 }
