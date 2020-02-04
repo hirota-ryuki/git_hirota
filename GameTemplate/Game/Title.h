@@ -9,6 +9,7 @@ public:
 	bool Start() override;
 	void Update() override;
 private:
-	SpriteRender* m_sprite;		//‰æ‘œ
+	SpriteRender*	m_sprite;		//‰æ‘œB
+	CSoundSource	m_se;			//“ü—Í‚ÌSEB
 };
 

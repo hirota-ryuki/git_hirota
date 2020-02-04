@@ -88,6 +88,9 @@ void InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 	//DirectXの初期化。
 	g_graphicsEngine = new GraphicsEngine();
 	g_graphicsEngine->Init(g_hWnd);
+	//サウンドエンジンの初期化。
+	g_soundEngine = new CSoundEngine();
+	g_soundEngine->Init();
 
 	//ゲームオブジェクトマネージャーの生成。
 	GameObjectManager::GetInstance();

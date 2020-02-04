@@ -39,6 +39,12 @@
 #include "graphics/Camera.h"
 #include "graphics/Sprite.h"
 
+#include <xaudio2.h>
+#include <x3daudio.h>
+#include <xaudio2fx.h>
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
+
 #include "IGameObject.h"
 #include "GameObjectManager.h"
 #include "Game.h"

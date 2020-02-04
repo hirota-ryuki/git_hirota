@@ -119,4 +119,5 @@ private:
 	int				m_healIntervalTime = 30;	//回復と回復の間の時間。徐々に回復するようにする。
 	//ステータス関係。
 	float			m_hp = 10.0f;
+
 };

@@ -42,6 +42,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//物理エンジンの更新。
 		g_physics.Update();
 					
+		//サウンドの更新。
+		g_soundEngine->Update();
+
 		//GameObjectManagerの更新
 		GameObjectManager::GetInstance().Update();
 
