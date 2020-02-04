@@ -26,21 +26,33 @@ bool Opening::Start()
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
-	m_game->ChangePose();
 	return true;
 }
 
 void Opening::Update()
 {
-	//Aボタンを押したら。
-	if (g_pad[0].IsTrigger(enButtonA))
-	{
-		m_sprite[0]->ChangeActive();
-		m_sprite[1]->ChangeActive();
-		m_isButton = true;
-	}
-	if (m_isButton) {
+	m_poseTimer++;
+	if (m_poseTimer == 10.0f) {
 		m_game->ChangePose();
-		DeleteGO(this);
+	}
+
+	if (m_game->GetIsPose()) {
+		if (m_isButton) {
+			//Aボタンを押したら。
+			if (g_pad[0].IsTrigger(enButtonA))
+			{
+				m_game->ChangePose();
+				m_sprite[1]->ChangeActive();
+				DeleteGO(this);
+			}
+		}
+		//Aボタンを押したら。
+		if (g_pad[0].IsTrigger(enButtonA))
+		{
+			m_sprite[0]->ChangeActive();
+			m_sprite[1]->ChangeActive();
+			m_isButton = true;
+		}
+		
 	}
 }

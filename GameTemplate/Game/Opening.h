@@ -16,4 +16,5 @@ private:
 	SpriteRender*	m_sprite[2];			//画像のポインタ。
 	Game*			m_game = nullptr;		//Gameのポインタ。
 	bool			m_isButton = false;		//ボタンを押したかどうか。
+	int				m_poseTimer = 0;		//一時停止させるまでのタイマー。
 };
