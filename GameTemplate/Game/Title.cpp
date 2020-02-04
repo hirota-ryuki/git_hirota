@@ -25,14 +25,14 @@ bool Title::Start()
 
 void Title::Update()
 {
-	//Aボタンを押したら
+	//Aボタンを押したら。
 	if (g_pad[0].IsTrigger(enButtonA))
 	{
 		//Aボタンが押されたらSEを鳴らす。
 		m_se.Play(false);
-		//Gameクラスを生成
+		//Gameクラスを生成。
 		NewGO<Game>(GOPrio_Defalut);
-		//タイトルクラスを消去
+		//タイトルクラスを消去。
 		DeleteGO(this);
 	}
 }

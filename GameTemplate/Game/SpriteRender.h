@@ -22,12 +22,20 @@ public:
 	{
 		m_alpha = alpha;
 	}
+	/// <summary>
+	/// 描画するかどうか。
+	/// </summary>
+	void ChangeActive()
+	{
+		m_isActive = !m_isActive;
+	}
 	void Init(const wchar_t* texFilePath, float w, float h);
 private:
 	Sprite		m_sprite;
 	CVector3	m_pos = CVector3::Zero();
 	CQuaternion m_rot = CQuaternion::SpriteRot();
 	CVector3	m_scale = CVector3::One();
-	float		m_alpha = 1.0f;						//スプライトのα値。
+	float		m_alpha = 1.0f;					//スプライトのα値。
+	bool		m_isActive = true;				//画像がドローされているかどうか。
 };
 

@@ -56,7 +56,7 @@ bool Player::Start()
 	//アニメーション初期化。
 	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
 
-	//スプライト
+	//画像。
 	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
 	m_sprite->Init(L"sprite/damage.dds", 1280.f, 720.f);
 	m_sprite->SetAlpha(m_alpha);
@@ -132,102 +132,105 @@ void Player::Move()
 
 void Player::Update()
 {	
-	m_timer++;
-	switch (m_state) {
-	case enState_idle:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_idle, 0.4f);
+	//一時停止していなかったら。
+	if (!m_game->GetIsPose()) {
+		m_timer++;
+		switch (m_state) {
+		case enState_idle:
+			//アニメーションの再生。
+			m_animation.Play(enAnimationClip_idle, 0.4f);
 
-		Move();
-		Rotation();
-		ChangeState();
-		break;
-	case enState_walk:
-		//アニメーションの再生。
-		//完全に横移動だったら。
-		if (g_pad[0].GetLStickYF() == 0.0f) {
-			//左。
-			if (g_pad[0].GetLStickXF() > 0.0f) {
-				m_animation.Play(enAnimationClip_walk_left, 0.4f);
-			}
-			//右。
-			if (g_pad[0].GetLStickXF() < 0.0f) {
-				m_animation.Play(enAnimationClip_walk_right, 0.4f);
-			}
-		}
-
-		//前。
-		if (g_pad[0].GetLStickYF() > 0.0f) {
-			m_animation.Play(enAnimationClip_walk, 0.4f);
-		}
-		//バック。
-		if (g_pad[0].GetLStickYF() < 0.0f) {
-			m_animation.Play(enAnimationClip_back, 0.4f);
-		}
-		
-		Move();
-		Rotation();
-		ChangeState();
-		break;
-	case enState_run:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_run, 0.4f);			
-		
-		Move();
-		Rotation();
-		ChangeState();
-		break;
-	case enState_aim:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_aim, 0.4f);
-		
-		Move();
-		Rotation();
-		ChangeState();
-		//R2を押したら撃つ。
-		if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
-			m_timer = 0;
-			m_state = enState_shot;
-		
-		}
-		break;
-	case enState_shot:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_shot, 0.4f);
-		
-		if (!m_isBullet) {
-			//弾丸の生成。
-			m_bullet = NewGO<Bullet>(GOPrio_Defalut, "bullet");
-			m_bullet->SetRot(m_rotation);
-			m_isBullet = true;
-		}
-
-		Move();
-		Rotation();
-
-		//R2を押したら撃つ。
-		if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
+			Move();
+			Rotation();
 			ChangeState();
-			m_isBullet = false;
-		}
+			break;
+		case enState_walk:
+			//アニメーションの再生。
+			//完全に横移動だったら。
+			if (g_pad[0].GetLStickYF() == 0.0f) {
+				//左。
+				if (g_pad[0].GetLStickXF() > 0.0f) {
+					m_animation.Play(enAnimationClip_walk_left, 0.4f);
+				}
+				//右。
+				if (g_pad[0].GetLStickXF() < 0.0f) {
+					m_animation.Play(enAnimationClip_walk_right, 0.4f);
+				}
+			}
 
-		//アニメーションのフレーム数経ったら。
-		if (!m_animation.IsPlaying()) {
+			//前。
+			if (g_pad[0].GetLStickYF() > 0.0f) {
+				m_animation.Play(enAnimationClip_walk, 0.4f);
+			}
+			//バック。
+			if (g_pad[0].GetLStickYF() < 0.0f) {
+				m_animation.Play(enAnimationClip_back, 0.4f);
+			}
+
+			Move();
+			Rotation();
 			ChangeState();
-			m_isBullet = false;
+			break;
+		case enState_run:
+			//アニメーションの再生。
+			m_animation.Play(enAnimationClip_run, 0.4f);
+
+			Move();
+			Rotation();
+			ChangeState();
+			break;
+		case enState_aim:
+			//アニメーションの再生。
+			m_animation.Play(enAnimationClip_aim, 0.4f);
+
+			Move();
+			Rotation();
+			ChangeState();
+			//R2を押したら撃つ。
+			if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
+				m_timer = 0;
+				m_state = enState_shot;
+
+			}
+			break;
+		case enState_shot:
+			//アニメーションの再生。
+			m_animation.Play(enAnimationClip_shot, 0.4f);
+
+			if (!m_isBullet) {
+				//弾丸の生成。
+				m_bullet = NewGO<Bullet>(GOPrio_Defalut, "bullet");
+				m_bullet->SetRot(m_rotation);
+				m_isBullet = true;
+			}
+
+			Move();
+			Rotation();
+
+			//R2を押したら撃つ。
+			if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
+				ChangeState();
+				m_isBullet = false;
+			}
+
+			//アニメーションのフレーム数経ったら。
+			if (!m_animation.IsPlaying()) {
+				ChangeState();
+				m_isBullet = false;
+			}
+			break;
+		default:
+			break;
 		}
-		break;
-	default:
-		break;
+		//回復。
+		Heal();
+		//HPがなくなったら死ぬ。
+		Death();
+		//アニメーションの更新。
+		m_animation.Update(1.f / 60.f);
+		//ワールド行列の更新。
+		m_model->SetData(m_position, m_rotation);
 	}
-	//回復。
-	Heal();
-	//HPがなくなったら死ぬ。
-	Death();
-	//アニメーションの更新。
-	m_animation.Update(1.f / 60.f);
-	//ワールド行列の更新。
-	m_model->SetData(m_position, m_rotation);
 }
 
 void Player::Rotation()
@@ -253,7 +256,7 @@ void Player::Heal()
 	}
 	
 	//HPが減っていて。
-	if (m_hp < 10.0f) {
+	if (m_hp < m_maxhp) {
 		//ダメージを受けていなかったら。
 		if (!m_isDamage) {
 			//徐々に回復させるためにカウント。
@@ -262,7 +265,7 @@ void Player::Heal()
 				//回復。
 				m_hp++;
 				//画像を透明にしていく。
-				m_alpha = 1.0f - (m_hp / 10.0f);
+				m_alpha = 1.0f - (m_hp / m_maxhp);
 				m_sprite->SetAlpha(m_alpha);
 				m_heaIntervalTimer = 0;
 			}
@@ -275,7 +278,7 @@ void Player::Damage()
 	//ダメージを受ける。
 	m_hp -= 1.0f;
 	//画像を不透明にしていく。
-	m_alpha = 1.0f - (m_hp / 10.0f);
+	m_alpha = 1.0f - (m_hp / m_maxhp);
 	m_sprite->SetAlpha(m_alpha);
 	m_isDamage = true;
 	m_healTimer = 0;

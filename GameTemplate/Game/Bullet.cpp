@@ -39,17 +39,20 @@ bool Bullet::Start()
 
 void Bullet::Update()
 {
-	//弾丸を移動させる。
-	m_position += m_moveSpeed * m_speed;
-	//回転。
-	Rotation();
-	//スキンモデルレンダーに座標を伝える。
-	m_model->SetData(m_position, m_rotation);
-	//タイマーを加算する。
-	m_deleteTimer++;
-	if (m_deleteTimer == 50) {
-		//タイマーが50になったらインスタンスを削除する。
-		DeleteGO(this);
+	//一時停止していなかったら。
+	if (!m_game->GetIsPose()) {
+		//弾丸を移動させる。
+		m_position += m_moveSpeed * m_speed;
+		//回転。
+		Rotation();
+		//スキンモデルレンダーに座標を伝える。
+		m_model->SetData(m_position, m_rotation);
+		//タイマーを加算する。
+		m_deleteTimer++;
+		if (m_deleteTimer == 50) {
+			//タイマーが50になったらインスタンスを削除する。
+			DeleteGO(this);
+		}
 	}
 }
 

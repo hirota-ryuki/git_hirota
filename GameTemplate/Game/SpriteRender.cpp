@@ -30,15 +30,17 @@ void SpriteRender::Update()
 
 void SpriteRender::DrawHUD()
 {
-	//スプライト
-	CMatrix mView;
-	CMatrix mProj;
-	mView.MakeLookAt(
-		{ 0, 0, 1 },
-		{ 0, 0, 0 },
-		{ 0, 1, 0 }
-	);
-	mProj.MakeOrthoProjectionMatrix(1280, 720, 0, 100);
-	m_sprite.SetAlpha(m_alpha);
-	m_sprite.Draw(mView, mProj);
+	if (m_isActive) {
+		//スプライト
+		CMatrix mView;
+		CMatrix mProj;
+		mView.MakeLookAt(
+			{ 0, 0, 1 },
+			{ 0, 0, 0 },
+			{ 0, 1, 0 }
+		);
+		mProj.MakeOrthoProjectionMatrix(1280, 720, 0, 100);
+		m_sprite.SetAlpha(m_alpha);
+		m_sprite.Draw(mView, mProj);
+	}
 }

@@ -54,7 +54,7 @@ public:
 	/// <summary>
 	/// プレイヤーの回転をセット。
 	/// </summary>
-	/// <param name="pos">回転</param>
+	/// <param name="rot">回転</param>
 	void SetRot(CQuaternion rot)
 	{
 		m_rotation = rot;
@@ -67,7 +67,7 @@ public:
 		return m_rotation;
 	}
 private:
-	SkinModelRender*	m_model;								//スキンモデル。
+	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
 	CharacterController m_charaCon;								//キャラクターコントローラー。
 	CVector3			m_moveSpeed = CVector3::Zero();			//移動速度。
@@ -104,7 +104,7 @@ private:
 	bool			m_isRun = false;		//走っているかどうか。
 	bool			m_isShot = false;		//撃っているかどうか。
 	//Shot関係。
-	Bullet*			m_bullet;				//Bulletクラスのポインタ。
+	Bullet*			m_bullet = nullptr;		//Bulletクラスのポインタ。
 	int				m_timer = 0;			//タイマー。
 	bool			m_isBullet = false;		//撃ったかどうか。
 	//ダメージ画像関係。
@@ -118,6 +118,6 @@ private:
 	int 			m_heaIntervalTimer = 0;		//回復と回復の間のタイマー。徐々に回復するようにする。
 	int				m_healIntervalTime = 30;	//回復と回復の間の時間。徐々に回復するようにする。
 	//ステータス関係。
-	float			m_hp = 10.0f;
-
+	float			m_hp = 5.0f;		//体力。
+	const float		m_maxhp = 5.0f;		//最大体力。
 };

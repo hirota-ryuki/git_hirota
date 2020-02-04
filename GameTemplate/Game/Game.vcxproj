@@ -106,7 +106,9 @@
     </ClCompile>
     <ClCompile Include="DebugWireframe.cpp" />
     <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="Opening.cpp" />
     <ClCompile Include="physics\BoxCollider.cpp" />
+    <ClCompile Include="Pose.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="sound\SoundEngine.cpp" />
     <ClCompile Include="sound\SoundSource.cpp" />
@@ -166,7 +168,9 @@
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="DebugWireframe.h" />
     <ClInclude Include="Goal.h" />
+    <ClInclude Include="Opening.h" />
     <ClInclude Include="physics\BoxCollider.h" />
+    <ClInclude Include="Pose.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="sound\SoundEngine.h" />
     <ClInclude Include="sound\SoundSource.h" />
@@ -243,6 +247,9 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\event1.png" />
     <ImageContentTask Include="Assets\sprite\event2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\pose.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

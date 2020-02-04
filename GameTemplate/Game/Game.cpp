@@ -6,6 +6,8 @@
 #include "Goal.h"
 #include "Zombie.h"
 #include "Result.h"
+#include "Pose.h"
+#include "Opening.h"
 
 //静的メンバ変数を定義する。
 Game* Game::m_game = nullptr;
@@ -108,15 +110,29 @@ bool Game::Start()
 		m_zombie->SetRot(objData.rotation);
 	}
 
+	//ポーズを構築。
+	m_pose = NewGO<Pose>(GOPrio_Defalut);
+	
+	//オープニングを構築。
+	m_op = NewGO<Opening>(GOPrio_Defalut);
+
 	return true;
 }
 
 void Game::Update()
 {
+
+	//スタートボタンを押したら。
+	if (g_pad[0].IsTrigger(enButtonStart))
+	{
+		//一時停止。
+		ChangePose();
+	}
+
 	if (m_isClear || m_isGameOver) {
-		//Resultクラスを生成
+		//Resultクラスを生成。
 		NewGO<Result>(GOPrio_Defalut);
-		//Gameクラスを消去
+		//Gameクラスを消去。
 		DeleteGO(this);
 	}
 }

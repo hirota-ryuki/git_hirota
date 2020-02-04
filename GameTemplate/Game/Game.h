@@ -6,6 +6,8 @@ class Floor;
 class Player;
 class Goal;
 class Zombie;
+class Pose;
+class Opening;
 
 class Game :
 	public IGameObject
@@ -60,16 +62,34 @@ public:
 	void GameOver(){
 		m_isGameOver = true;
 	}
+	/// <summary>
+	/// 一時停止したいときに呼び出す関数。
+	/// </summary>
+	void ChangePose(){
+		m_isPose = !m_isPose;
+	}
+	/// <summary>
+	/// 一時停止しているかどうかを取得。
+	/// </summary>
+	/// <returns>一時停止しているかどうか。</returns>
+	bool GetIsPose() {
+		return m_isPose;
+	}
 private:
-	static Game* m_game;
-	GameCamera* m_gamecamera = nullptr;	//GameCameraクラスのポインタ。
-	Level m_level;						//レベル。
-	Floor* m_floor = nullptr;			//Floorクラスのポインタ。
-	Player* m_player = nullptr;			//Playerクラスのポインタ。
-	Goal* m_goal = nullptr;				//Goalクラスのポインタ。
-	Zombie* m_zombie = nullptr;			//Zombieクラスのポインタ。
-	bool m_isClear = false;				//クリアしたかどうか。
-	bool m_isGameOver = false;			//ゲームオーバーしたかどうか。
+	//インスタンス関係。
+	static Game*	m_game;					//Gameクラスのインスタンス。
+	GameCamera*		m_gamecamera = nullptr;	//GameCameraクラスのポインタ。
+	Level			m_level;				//レベル。
+	Floor*			m_floor = nullptr;		//Floorクラスのポインタ。
+	Player*			m_player = nullptr;		//Playerクラスのポインタ。
+	Goal*			m_goal = nullptr;		//Goalクラスのポインタ。
+	Zombie*			m_zombie = nullptr;		//Zombieクラスのポインタ。
+	Pose*			m_pose = nullptr;		//Poseクラスのポインタ。
+	Opening*		m_op = nullptr;			//Openingクラスのポインタ。
+	//状態関係。
+	bool m_isClear = false;			//クリアしたかどうか。
+	bool m_isGameOver = false;		//ゲームオーバーしたかどうか。
+	bool m_isPose = false;			//一時停止したかどうか。
 };
 
 static inline Game* GetGame()

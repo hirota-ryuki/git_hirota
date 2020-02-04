@@ -21,13 +21,6 @@ public:
 	{
 		return m_position;
 	}
-	// <summary>
-	/// ムーブスピードを加算。
-	/// </summary>
-	/// <param name="pos">加算量</param>
-	void AddMoveSpeed(CVector3 add) {
-		m_moveSpeed += add;
-	}
 	/// <summary>
 	/// ムーブスピードをセット。
 	/// </summary>

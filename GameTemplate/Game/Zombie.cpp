@@ -64,70 +64,73 @@ bool Zombie::Start()
 
 void Zombie::Update()
 {
-	switch (m_state) {
-	case enState_idle:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_idle, 0.2f);
-		
-		//攻撃後のクールタイム。
-		if (m_coolTimer > 0) {
-			m_coolTimer++;
-			if (m_coolTimer > 50) {
-				//タイマーのリセット。
-				m_coolTimer = 0;
+	//一時停止していなかったら。
+	if (!m_game->GetIsPose()) {
+		switch (m_state) {
+		case enState_idle:
+			//アニメーションの再生。
+			m_animation.Play(enAnimationClip_idle, 0.2f);
+
+			//攻撃後のクールタイム。
+			if (m_coolTimer > 0) {
+				m_coolTimer++;
+				if (m_coolTimer > 50) {
+					//タイマーのリセット。
+					m_coolTimer = 0;
+				}
 			}
-		}
-		else {
+			else {
+				ChangeState();
+			}
+			break;
+		case enState_walk:
+			//アニメーションの再生。
+			m_animation.Play(enAnimationClip_walk, 0.2f);
+			Move();
 			ChangeState();
+			break;
+		case enState_attack:
+			//アニメーションの再生。
+			m_animation.Play(enAnimationClip_attack, 0.2f);
+			m_atkTimer++;
+			if (m_atkTimer == 50) {
+				//攻撃。
+				Attack();
+			}
+			//アニメーションの再生中じゃなかったら。
+			if (!m_animation.IsPlaying()) {
+				//待機状態に遷移。
+				m_state = enState_idle;
+				m_coolTimer++;
+				m_atkTimer = 0;
+			}
+			break;
+		case enState_death:
+			//アニメーションの再生。
+			m_animation.Play(enAnimationClip_death, 0.2f);
+			//アニメーションの再生中じゃなかったら。
+			if (!m_animation.IsPlaying())
+			{
+				DeleteGO(this);
+			}
+			break;
+		default:
+			break;
 		}
-		break;
-	case enState_walk:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_walk, 0.2f);
-		Move();
-		ChangeState();
-		break;
-	case enState_attack:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_attack, 0.2f);
-		m_atkTimer++;
-		if (m_atkTimer == 50) {
-			//攻撃。
-			Attack();
-		}
-		//アニメーションの再生中じゃなかったら。
-		if (!m_animation.IsPlaying()) {
-			//待機状態に遷移。
-			m_state = enState_idle;
-			m_coolTimer++;
-			m_atkTimer = 0;
-		}
-		break;
-	case enState_death:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_death, 0.2f);
-		//アニメーションの再生中じゃなかったら。
-		if (!m_animation.IsPlaying()) 
-		{
-			DeleteGO(this);
-		}
-		break;
-	default:
-		break;
+		//ダメージを受ける。
+		Damage();
+		//死ぬ判定。
+		Death();
+		//重力。
+		m_moveSpeed.x = 0.f;
+		m_moveSpeed.z = 0.f;
+		m_moveSpeed.y -= 240.f * 1.f / 60.f;
+		m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
+		//アニメーションの更新。
+		m_animation.Update(1.f / 60.f);
+		//座標の更新。
+		m_model->SetData(m_position, m_rotation);
 	}
-	//ダメージを受ける。
-	Damage();
-	//死ぬ判定。
-	Death();
-	//重力。
-	m_moveSpeed.x = 0.f;
-	m_moveSpeed.z = 0.f;
-	m_moveSpeed.y -= 240.f * 1.f / 60.f;
-	m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
-	//アニメーションの更新。
-	m_animation.Update(1.f / 60.f);
-	//座標の更新。
-	m_model->SetData(m_position, m_rotation);
 }
 
 struct CallBack : public btCollisionWorld::ConvexResultCallback

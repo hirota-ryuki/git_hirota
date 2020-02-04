@@ -9,7 +9,6 @@ public:
 	bool Start() override;
 	void Update() override;
 private:
-	SpriteRender*	m_sprite;		//画像。
-	CSoundSource	m_se;			//入力時のSE。
+	SpriteRender*	m_sprite = nullptr;		//画像のポインタ。
+	CSoundSource	m_se;					//入力時のSE。
 };
-
