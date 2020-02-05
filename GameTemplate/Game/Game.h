@@ -6,6 +6,7 @@ class Floor;
 class Player;
 class Goal;
 class Zombie;
+class Result;
 class Pose;
 class Opening;
 
@@ -86,6 +87,7 @@ private:
 	Zombie*			m_zombie = nullptr;		//Zombieクラスのポインタ。
 	Pose*			m_pose = nullptr;		//Poseクラスのポインタ。
 	Opening*		m_op = nullptr;			//Openingクラスのポインタ。
+	Result*			m_result = nullptr;		//Resultクラスのポインタ。
 	//状態関係。
 	bool m_isClear = false;			//クリアしたかどうか。
 	bool m_isGameOver = false;		//ゲームオーバーしたかどうか。

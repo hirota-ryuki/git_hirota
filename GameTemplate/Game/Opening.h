@@ -1,7 +1,7 @@
 #pragma once
 #include "IGameObject.h"
 
-#define EVENT_SCENE 2.0f;
+#define EVENT_SCENE 2;
 
 class Opening :
 	public IGameObject

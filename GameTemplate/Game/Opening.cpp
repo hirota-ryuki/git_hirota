@@ -41,8 +41,8 @@ void Opening::Update()
 			//Aƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½‚çB
 			if (g_pad[0].IsTrigger(enButtonA))
 			{
-				m_game->ChangePose();
 				m_sprite[1]->ChangeActive();
+				m_game->ChangePose();
 				DeleteGO(this);
 			}
 		}

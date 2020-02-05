@@ -39,6 +39,7 @@ void Game::OnDestroy()
 	DeleteGO(m_player);
 	DeleteGO(m_floor);
 	DeleteGOs("mapchip");
+	DeleteGO(m_pose);
 }
 
 bool Game::Start()
@@ -131,7 +132,10 @@ void Game::Update()
 
 	if (m_isClear || m_isGameOver) {
 		//Resultクラスを生成。
-		NewGO<Result>(GOPrio_Defalut);
+		m_result = NewGO<Result>(GOPrio_Defalut);
+		if (m_isClear) {
+			m_result->SetIsClear();
+		}
 		//Gameクラスを消去。
 		DeleteGO(this);
 	}
