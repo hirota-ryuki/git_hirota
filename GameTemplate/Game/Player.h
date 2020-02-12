@@ -12,6 +12,26 @@ public:
 	bool Start() override;
 	void Update() override;
 	/// <summary>
+	/// 待機ステート関数。
+	/// </summary>
+	void En_Idle();
+	/// <summary>
+	/// 歩きステート関数。
+	/// </summary>
+	void En_Walk();
+	/// <summary>
+	/// 走りステート関数。
+	/// </summary>
+	void En_Run();
+	/// <summary>
+	/// エイムステート関数。
+	/// </summary>
+	void En_Aim();
+	/// <summary>
+	/// 撃つステート関数。
+	/// </summary>
+	void En_Shot();
+	/// <summary>
 	/// ステートを変更する関数。
 	/// 特殊な場合を除く。
 	/// </summary>
@@ -107,6 +127,8 @@ private:
 	Bullet*			m_bullet = nullptr;		//Bulletクラスのポインタ。
 	int				m_timer = 0;			//タイマー。
 	bool			m_isBullet = false;		//撃ったかどうか。
+	int				m_capacity = 30;		//残弾数。
+	const int		m_maxCapacity = 30;		//装弾数。
 	//ダメージ画像関係。
 	SpriteRender*	m_sprite = nullptr;
 	CQuaternion		m_rot = CQuaternion::SpriteRot();
@@ -120,4 +142,7 @@ private:
 	//ステータス関係。
 	float			m_hp = 5.0f;		//体力。
 	const float		m_maxhp = 5.0f;		//最大体力。
+	//サウンド関係。
+	CSoundSource	m_se;
+
 };

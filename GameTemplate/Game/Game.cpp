@@ -117,12 +117,15 @@ bool Game::Start()
 	//オープニングを構築。
 	m_op = NewGO<Opening>(GOPrio_Defalut);
 
+	//BGM再生のSE
+	m_bgm.Init(L"sound/story/bgm.wav");
+	//Aボタンが押されたらSEを鳴らす。
+	m_bgm.Play(true);
 	return true;
 }
 
 void Game::Update()
 {
-
 	//スタートボタンを押したら。
 	if (g_pad[0].IsTrigger(enButtonStart))
 	{
@@ -138,5 +141,13 @@ void Game::Update()
 		}
 		//Gameクラスを消去。
 		DeleteGO(this);
+	}
+	//Aボタンを押したら。
+	if (g_pad[0].IsTrigger(enButtonA))
+	{
+		//ワンショット再生のSE
+		m_se.Init(L"sound/story/decision.wav");
+		//Aボタンが押されたらSEを鳴らす。
+		m_se.Play(false);
 	}
 }

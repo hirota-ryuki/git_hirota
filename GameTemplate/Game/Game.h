@@ -89,9 +89,11 @@ private:
 	Opening*		m_op = nullptr;			//Openingクラスのポインタ。
 	Result*			m_result = nullptr;		//Resultクラスのポインタ。
 	//状態関係。
-	bool m_isClear = false;			//クリアしたかどうか。
-	bool m_isGameOver = false;		//ゲームオーバーしたかどうか。
-	bool m_isPose = false;			//一時停止したかどうか。
+	bool m_isClear = false;				//クリアしたかどうか。
+	bool m_isGameOver = false;			//ゲームオーバーしたかどうか。
+	bool m_isPose = false;				//一時停止したかどうか。
+	CSoundSource   m_bgm;
+	CSoundSource   m_se;
 };
 
 static inline Game* GetGame()

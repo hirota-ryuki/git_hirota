@@ -16,7 +16,7 @@ public:
 		m_isClear = true;
 	}
 private:
-	SpriteRender* m_sprite;		//画像
-	bool m_isClear = false;
+	SpriteRender* m_sprite = nullptr;	//画像のポインタ。
+	bool m_isClear = false;				//クリアしたかどうか。
 };
 

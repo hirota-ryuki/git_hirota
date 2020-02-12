@@ -6,7 +6,6 @@ Result::Result()
 {
 }
 
-
 Result::~Result()
 {
 }

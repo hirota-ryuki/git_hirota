@@ -15,6 +15,7 @@ Player::~Player()
 void Player::OnDestroy()
 {
 	DeleteGO(m_model);
+	DeleteGO(m_sprite);
 	DeleteGOs("bullet");
 }
 
@@ -57,13 +58,12 @@ bool Player::Start()
 	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
 
 	//画像。
-	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
+	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite,"a");
 	m_sprite->Init(L"sprite/damage.dds", 1280.f, 720.f);
 	m_sprite->SetAlpha(m_alpha);
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
-
 	return true;
 }
 
@@ -137,87 +137,19 @@ void Player::Update()
 		m_timer++;
 		switch (m_state) {
 		case enState_idle:
-			//アニメーションの再生。
-			m_animation.Play(enAnimationClip_idle, 0.4f);
-
-			Move();
-			Rotation();
-			ChangeState();
+			En_Idle();
 			break;
 		case enState_walk:
-			//アニメーションの再生。
-			//完全に横移動だったら。
-			if (g_pad[0].GetLStickYF() == 0.0f) {
-				//左。
-				if (g_pad[0].GetLStickXF() > 0.0f) {
-					m_animation.Play(enAnimationClip_walk_left, 0.4f);
-				}
-				//右。
-				if (g_pad[0].GetLStickXF() < 0.0f) {
-					m_animation.Play(enAnimationClip_walk_right, 0.4f);
-				}
-			}
-
-			//前。
-			if (g_pad[0].GetLStickYF() > 0.0f) {
-				m_animation.Play(enAnimationClip_walk, 0.4f);
-			}
-			//バック。
-			if (g_pad[0].GetLStickYF() < 0.0f) {
-				m_animation.Play(enAnimationClip_back, 0.4f);
-			}
-
-			Move();
-			Rotation();
-			ChangeState();
+			En_Walk();
 			break;
 		case enState_run:
-			//アニメーションの再生。
-			m_animation.Play(enAnimationClip_run, 0.4f);
-
-			Move();
-			Rotation();
-			ChangeState();
+			En_Run();
 			break;
 		case enState_aim:
-			//アニメーションの再生。
-			m_animation.Play(enAnimationClip_aim, 0.4f);
-
-			Move();
-			Rotation();
-			ChangeState();
-			//R2を押したら撃つ。
-			if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
-				m_timer = 0;
-				m_state = enState_shot;
-
-			}
+			En_Aim();
 			break;
 		case enState_shot:
-			//アニメーションの再生。
-			m_animation.Play(enAnimationClip_shot, 0.4f);
-
-			if (!m_isBullet) {
-				//弾丸の生成。
-				m_bullet = NewGO<Bullet>(GOPrio_Defalut, "bullet");
-				m_bullet->SetRot(m_rotation);
-				m_isBullet = true;
-			}
-
-			Move();
-			Rotation();
-
-			//R2を押したら撃つ。
-			if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
-				ChangeState();
-				m_isBullet = false;
-			}
-
-			//アニメーションのフレーム数経ったら。
-			if (!m_animation.IsPlaying()) {
-				ChangeState();
-				m_isBullet = false;
-			}
+			En_Shot();
 			break;
 		default:
 			break;
@@ -230,6 +162,114 @@ void Player::Update()
 		m_animation.Update(1.f / 60.f);
 		//ワールド行列の更新。
 		m_model->SetData(m_position, m_rotation);
+	}
+}
+
+void Player::En_Idle()
+{
+	//アニメーションの再生。
+	m_animation.Play(enAnimationClip_idle, 0.4f);
+
+	Move();
+	Rotation();
+	ChangeState();
+}
+
+void Player::En_Walk()
+{
+	//アニメーションの再生。
+			//完全に横移動だったら。
+	if (g_pad[0].GetLStickYF() == 0.0f) {
+		//左。
+		if (g_pad[0].GetLStickXF() > 0.0f) {
+			m_animation.Play(enAnimationClip_walk_left, 0.4f);
+		}
+		//右。
+		if (g_pad[0].GetLStickXF() < 0.0f) {
+			m_animation.Play(enAnimationClip_walk_right, 0.4f);
+		}
+	}
+
+	//前。
+	if (g_pad[0].GetLStickYF() > 0.0f) {
+		m_animation.Play(enAnimationClip_walk, 0.4f);
+	}
+	//バック。
+	if (g_pad[0].GetLStickYF() < 0.0f) {
+		m_animation.Play(enAnimationClip_back, 0.4f);
+	}
+
+	Move();
+	Rotation();
+	ChangeState();
+}
+
+void Player::En_Run()
+{
+	//アニメーションの再生。
+	m_animation.Play(enAnimationClip_run, 0.4f);
+
+	Move();
+	Rotation();
+	ChangeState();
+}
+
+void Player::En_Aim()
+{
+	//アニメーションの再生。
+	m_animation.Play(enAnimationClip_aim, 0.4f);
+
+	Move();
+	Rotation();
+	ChangeState();
+	//R2を押したら撃つ。
+	if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
+		//残弾数が0じゃなかったら。
+		if (m_capacity > 0) {
+			//撃つステートに遷移。
+			m_timer = 0;
+			m_state = enState_shot;
+		}
+		else {
+			//空砲。
+			//ワンショット再生のSE
+			m_se.Init(L"sound/gun/gun_empty.wav");
+			//Aボタンが押されたらSEを鳴らす。
+			m_se.Play(false); 
+		}
+	}
+}
+
+void Player::En_Shot()
+{
+	//アニメーションの再生。
+	m_animation.Play(enAnimationClip_shot, 0.4f);
+
+	if (!m_isBullet) {
+		//弾丸の生成。
+		m_bullet = NewGO<Bullet>(GOPrio_Defalut, "bullet");
+		m_bullet->SetRot(m_rotation);
+		m_isBullet = true;
+		m_capacity--;
+		//ワンショット再生のSE
+		m_se.Init(L"sound/gun/gun_shot.wav");
+		//Aボタンが押されたらSEを鳴らす。
+		m_se.Play(false);
+	}
+
+	Move();
+	Rotation();
+
+	//R2を押したら撃つ。
+	if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
+		ChangeState();
+		m_isBullet = false;
+	}
+
+	//アニメーションのフレーム数経ったら。
+	if (!m_animation.IsPlaying()) {
+		ChangeState();
+		m_isBullet = false;
 	}
 }
 

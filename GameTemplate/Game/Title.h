@@ -10,5 +10,5 @@ public:
 	void Update() override;
 private:
 	SpriteRender*	m_sprite = nullptr;		//画像のポインタ。
-	CSoundSource	m_se;					//入力時のSE。
+	CSoundSource   m_se;
 };

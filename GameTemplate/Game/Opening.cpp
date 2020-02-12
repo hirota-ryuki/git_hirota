@@ -41,6 +41,10 @@ void Opening::Update()
 			//Aボタンを押したら。
 			if (g_pad[0].IsTrigger(enButtonA))
 			{
+				//ワンショット再生のSE
+				m_se.Init(L"sound/story/decision.wav");
+				//Aボタンが押されたらSEを鳴らす。
+				m_se.Play(false);
 				m_sprite[1]->ChangeActive();
 				m_game->ChangePose();
 				DeleteGO(this);
@@ -51,6 +55,10 @@ void Opening::Update()
 		{
 			m_sprite[0]->ChangeActive();
 			m_sprite[1]->ChangeActive();
+			//ワンショット再生のSE
+			m_se.Init(L"sound/story/decision.wav");
+			//Aボタンが押されたらSEを鳴らす。
+			m_se.Play(false);
 			m_isButton = true;
 		}
 		
