@@ -32,6 +32,10 @@ public:
 	/// </summary>
 	void En_Shot();
 	/// <summary>
+	/// リロードするステート関数。
+	/// </summary>
+	void En_Reload();
+	/// <summary>
 	/// ステートを変更する関数。
 	/// 特殊な場合を除く。
 	/// </summary>
@@ -106,6 +110,7 @@ private:
 		enAnimationClip_run,
 		enAnimationClip_aim,
 		enAnimationClip_shot,
+		enAnimationClip_reload,
 		enAnimationClip_num,
 	};
 	AnimationClip m_animationClip[enAnimationClip_num];		//アニメーションクリップ。
@@ -117,6 +122,7 @@ private:
 		enState_run,
 		enState_aim,
 		enState_shot,
+		enState_reload,
 		enState_death,
 		enState_num,
 	};
@@ -136,7 +142,7 @@ private:
 	//回復関係。
 	bool			m_isDamage = false;			//ダメージを受けたかどうか。
 	int 			m_healTimer = 0;			//回復するまでのタイマー。
-	int				m_healStartTime = 130;		//回復するまでの時間。
+	int				m_healStartTime = 200;		//回復するまでの時間。
 	int 			m_heaIntervalTimer = 0;		//回復と回復の間のタイマー。徐々に回復するようにする。
 	int				m_healIntervalTime = 30;	//回復と回復の間の時間。徐々に回復するようにする。
 	//ステータス関係。

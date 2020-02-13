@@ -37,6 +37,7 @@ bool Player::Start()
 	m_animationClip[enAnimationClip_back].Load(L"animData/player/back.tka");
 	m_animationClip[enAnimationClip_aim].Load(L"animData/player/aim.tka");
 	m_animationClip[enAnimationClip_shot].Load(L"animData/player/shot.tka");
+	m_animationClip[enAnimationClip_reload].Load(L"animData/player/reload.tka");
 
 	//ループフラグを設定する。
 	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
@@ -47,6 +48,7 @@ bool Player::Start()
 	m_animationClip[enAnimationClip_back].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_aim].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_shot].SetLoopFlag(false);
+	m_animationClip[enAnimationClip_reload].SetLoopFlag(false);
 
 	//cmoファイルの読み込み。
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
@@ -58,7 +60,7 @@ bool Player::Start()
 	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
 
 	//画像。
-	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite,"a");
+	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
 	m_sprite->Init(L"sprite/damage.dds", 1280.f, 720.f);
 	m_sprite->SetAlpha(m_alpha);
 
@@ -92,6 +94,14 @@ void Player::ChangeState()
 	//L2を押したらエイム。
 	if (g_pad[0].IsPress(enButtonLB2)) {
 		m_state = enState_aim;
+	}
+	
+	//Xを押したらリロード。
+	if (g_pad[0].IsTrigger(enButtonX)) {
+		//弾が減っていたら。
+		if (m_capacity < m_maxCapacity) {
+			m_state = enState_reload;
+		}
 	}
 }
 
@@ -151,6 +161,9 @@ void Player::Update()
 		case enState_shot:
 			En_Shot();
 			break;
+		case enState_reload:
+			En_Reload();
+			break;
 		default:
 			break;
 		}
@@ -178,7 +191,7 @@ void Player::En_Idle()
 void Player::En_Walk()
 {
 	//アニメーションの再生。
-			//完全に横移動だったら。
+	//完全に横移動だったら。
 	if (g_pad[0].GetLStickYF() == 0.0f) {
 		//左。
 		if (g_pad[0].GetLStickXF() > 0.0f) {
@@ -232,7 +245,7 @@ void Player::En_Aim()
 		}
 		else {
 			//空砲。
-			//ワンショット再生のSE
+			//ワンショット再生のSE。
 			m_se.Init(L"sound/gun/gun_empty.wav");
 			//Aボタンが押されたらSEを鳴らす。
 			m_se.Play(false); 
@@ -270,6 +283,21 @@ void Player::En_Shot()
 	if (!m_animation.IsPlaying()) {
 		ChangeState();
 		m_isBullet = false;
+	}
+}
+
+void Player::En_Reload()
+{
+	//アニメーションの再生。
+	m_animation.Play(enAnimationClip_reload, 0.4f);
+
+	m_capacity += m_maxCapacity - m_capacity;
+
+	Move();
+	Rotation();
+	//アニメーションのフレーム数経ったら。
+	if (!m_animation.IsPlaying()) {
+		ChangeState();
 	}
 }
 
