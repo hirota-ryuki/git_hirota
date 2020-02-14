@@ -237,37 +237,45 @@ void Player::En_Aim()
 	ChangeState();
 	//R2を押したら撃つ。
 	if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
-		//残弾数が0じゃなかったら。
-		if (m_capacity > 0) {
+		
 			//撃つステートに遷移。
 			m_timer = 0;
 			m_state = enState_shot;
-		}
-		else {
-			//空砲。
-			//ワンショット再生のSE。
-			m_se.Init(L"sound/gun/gun_empty.wav");
-			//Aボタンが押されたらSEを鳴らす。
-			m_se.Play(false); 
-		}
 	}
+		
+	
 }
 
 void Player::En_Shot()
 {
-	//アニメーションの再生。
-	m_animation.Play(enAnimationClip_shot, 0.4f);
+	//残弾数が0じゃなかったら。
+	if (m_capacity > 0) {
+		//アニメーションの再生。
+		m_animation.Play(enAnimationClip_shot, 0.4f);
 
-	if (!m_isBullet) {
-		//弾丸の生成。
-		m_bullet = NewGO<Bullet>(GOPrio_Defalut, "bullet");
-		m_bullet->SetRot(m_rotation);
-		m_isBullet = true;
-		m_capacity--;
-		//ワンショット再生のSE
-		m_se.Init(L"sound/gun/gun_shot.wav");
-		//Aボタンが押されたらSEを鳴らす。
-		m_se.Play(false);
+		if (!m_isBullet) {
+			//弾丸の生成。
+			m_bullet = NewGO<Bullet>(GOPrio_Defalut, "bullet");
+			m_bullet->SetRot(m_rotation);
+			m_isBullet = true;
+			m_capacity--;
+			//ワンショット再生のSE
+			CSoundSource* m_seGunShot = new CSoundSource;
+			m_seGunShot->Init(L"sound/gun/gun_shot.wav");
+			//Aボタンが押されたらSEを鳴らす。
+			m_seGunShot->Play(false);
+		}
+	}
+	else {
+		if (!m_isEmpty) {
+			//空砲。
+			//ワンショット再生のSE。
+			CSoundSource* seGunEmpty = new CSoundSource;
+			seGunEmpty->Init(L"sound/gun/gun_empty.wav");
+			//Aボタンが押されたらSEを鳴らす。
+			seGunEmpty->Play(false);
+			m_isEmpty = true;
+		}
 	}
 
 	Move();
@@ -277,12 +285,18 @@ void Player::En_Shot()
 	if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
 		ChangeState();
 		m_isBullet = false;
+		m_isEmpty = false;
 	}
 
 	//アニメーションのフレーム数経ったら。
 	if (!m_animation.IsPlaying()) {
 		ChangeState();
 		m_isBullet = false;
+	}
+	//空砲を撃ったら。
+	if (m_isEmpty) {
+		ChangeState();
+		m_isEmpty = false;
 	}
 }
 

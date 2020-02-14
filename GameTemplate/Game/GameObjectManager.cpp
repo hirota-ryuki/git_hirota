@@ -65,8 +65,9 @@ void GameObjectManager::StartAndUpdate()
 
 void GameObjectManager::Delete()
 {
+	int u = 0;
 	//削除
-	for (auto* GO : m_DeleteGOList) {
+	for (auto GO : m_DeleteGOList) {
 		auto& goExecList = m_goList[GO->prio];
 		//ゲームオブジェクトリストから該当のオブジェクトの箇所を探して
 		auto it = std::find(goExecList.begin(), goExecList.end(), GO);
@@ -74,6 +75,7 @@ void GameObjectManager::Delete()
 		delete (*it);
 		//ゲームオブジェクトリストから削除
 		goExecList.erase(it);
+		u++;
 	}
 	m_DeleteGOList.clear();
 }

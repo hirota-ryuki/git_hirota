@@ -104,7 +104,7 @@ public:
 	/// <summary>
 	/// ボリュームを設定。
 	/// </summary>
-	/// <param name="vol">ボリューム</param>
+	/// <param name="vol">ボリューム。</param>
 	void SetVolume(float vol)
 	{
 		m_sourceVoice->SetVolume(vol);
@@ -113,7 +113,7 @@ public:
 	/// <summary>
 	/// ボリュームを取得。
 	/// </summary>
-	/// <returns>ボリューム</returns>
+	/// <returns>ボリューム。</returns>
 	float GetVolume() const
 	{
 		float vol;
@@ -129,12 +129,12 @@ public:
 		return m_isLoop;
 	}
 	/// <summary>
-	/// ボイスの周波数調整比
+	/// ボイスの周波数調整比。
 	/// </summary>
 	/// <remarks>
 	/// 詳細はIXAudio2SourceVoiceのSetFrequencyRatioを参照してください。
 	/// </remarks>
-	/// <param name="ratio">周波数比</param>
+	/// <param name="ratio">周波数比。</param>
 	void SetFrequencyRatio(float ratio)
 	{
 		if (m_sourceVoice != nullptr) {

@@ -107,30 +107,18 @@ public:
 			//リストから検索して、見つかったら削除する。
 			for (auto it = m_goList[i].begin(); it != m_goList[i].end(); it++) {
 				if ((*it) == go) {
-					//見つかった。
-					//削除リクエストを送る。
-					m_DeleteGOList.emplace_back(go);
-					go->OnDestroy();
+					if (!go->IsDelete()) {
+						//見つかった。
+						//削除リクエストを送る。
+						go->SetDelete();
+						m_DeleteGOList.emplace_back(go);
+						go->OnDestroy();
+					}
 					return;
 				}
 			}
 		}
 	}
-	//void DeleteGO(IGameObject* go)
-	//{
-	//	for (int i = 0; i < GOPrio_num; i++) {
-	//		//リストから検索して、見つかったら削除する。
-	//		for (auto it = m_goList[i].begin(); it != m_goList[i].end(); it++) {
-	//			if ((*it) == go) {
-	//				//見つかった。
-	//				//削除リクエストを送る。
-	//				go->RequestDelete();
-	//				//削除できたので終わり。
-	//				return;
-	//			}
-	//		}
-	//	}
-	//}
 	template<class T>
 	void FindGameObjects(const char* objectName, std::function<bool(T* go)> func)
 	{

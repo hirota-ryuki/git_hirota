@@ -88,11 +88,27 @@ public:
 	{
 		return m_nameKey;
 	}
+	/// <summary>
+	/// 消された状態にする関数。
+	/// </summary>
+	void SetDelete()
+	{
+		m_isDelete = true;
+	}
+	/// <summary>
+	/// 消されたかどうか。
+	/// </summary>
+	/// <returns>消されたフラグ。</returns>
+	bool IsDelete()
+	{
+		return m_isDelete;
+	}
 	//friend宣言、フレンドクラスは指定されたクラスのprivateやprotectedメンバにアクセスすることができる。
 	friend class GameObjectManager;
 private:
 	bool isRequestDelete = false;		//削除フラグ。
-	bool m_isStart = false; //開始関数が呼ばれたかどうか。
+	bool m_isStart = false;				//開始関数が呼ばれたかどうか。
+	bool m_isDelete = false;			//消された状態かどうか。
 	unsigned int m_nameKey = 0;			//名前キー。
 	int prio;//優先順位。
 protected:

@@ -191,6 +191,11 @@ void CSoundEngine::Update( )
 		soundSource->Update();
 		if (soundSource->IsPlaying() == false) {
 			//再生終了。
+			//ワンショット再生だったら。
+			if (soundSource->GetLoopFlag()) {
+				//直接消す。
+				delete soundSource;
+			}
 			it = RemoveSoundSource(*it);
 		}
 		else {

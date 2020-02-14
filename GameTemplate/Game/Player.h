@@ -133,6 +133,7 @@ private:
 	Bullet*			m_bullet = nullptr;		//Bulletクラスのポインタ。
 	int				m_timer = 0;			//タイマー。
 	bool			m_isBullet = false;		//撃ったかどうか。
+	bool			m_isEmpty = false;		//空砲を撃ったかどうか。
 	int				m_capacity = 30;		//残弾数。
 	const int		m_maxCapacity = 30;		//装弾数。
 	//ダメージ画像関係。
@@ -148,7 +149,4 @@ private:
 	//ステータス関係。
 	float			m_hp = 5.0f;		//体力。
 	const float		m_maxhp = 5.0f;		//最大体力。
-	//サウンド関係。
-	CSoundSource	m_se;
-
 };
