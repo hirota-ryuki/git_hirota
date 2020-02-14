@@ -24,8 +24,8 @@ CFont::~CFont()
 void CFont::Begin()
 {
 	//レンダリングステートを退避させる。
-
-	auto* deviceContext = g_graphicsEngine->GetD3DDeviceContext();
+	//問題が起きたら実装してね。
+	//auto* deviceContext = g_graphicsEngine->GetD3DDeviceContext();
 
 	m_spriteBatch->Begin(
 		DirectX::SpriteSortMode_Deferred,
@@ -41,6 +41,7 @@ void CFont::End()
 {
 	m_spriteBatch->End();
 	//レンダリングステートを復活させる。
+	//問題が起きたら実装してね。
 }
 void CFont::Draw(
 	wchar_t const* text,
