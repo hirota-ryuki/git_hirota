@@ -7,10 +7,10 @@
 /*!
 * @brief	フォント。
 */
-class CFont final{
+class Font final{
 public:
-	CFont();
-	~CFont();
+	Font();
+	~Font();
 	/*!
 	* @brief	フォントを設定。
 	* @details	デフォルトフォントから変更したい場合は
@@ -55,17 +55,17 @@ public:
 		*@param[in]	shadowOffset		影を描くときのピクセルのオフセット量。
 		*@param[in]	shadowColor			影の色。
 		*/
-	void SetShadowParam(bool isDrawShadow, float shadowOffset, const CVector4& shadowColor)
+	/*void SetShadowParam(bool isDrawShadow, float shadowOffset, const CVector4& shadowColor)
 	{
 		m_isDrawShadow = isDrawShadow;
 		m_shadowOffset = shadowOffset;
 		m_shadowColor = shadowColor;
-	}
+	}*/
 private:
 	DirectX::SpriteBatch*	m_spriteBatch = nullptr;		//!<スプライトバッチ。
 	DirectX::SpriteFont*	m_spriteFont = nullptr;			//!<スプライトフォント。
-	bool m_isDrawShadow = false;							//!<影を書く？
-	float m_shadowOffset = 0.0f;							//!<影を書くときのピクセルのオフセット量。
-	CVector4 m_shadowColor = { 0.0f, 0.0f, 0.0f, 1.0f };	//!<影の色。
+	//bool m_isDrawShadow = false;							//!<影を書く？
+	//float m_shadowOffset = 0.0f;							//!<影を書くときのピクセルのオフセット量。
+	//CVector4 m_shadowColor = { 0.0f, 0.0f, 0.0f, 1.0f };	//!<影の色。
 	CMatrix m_scaleMat;
 };

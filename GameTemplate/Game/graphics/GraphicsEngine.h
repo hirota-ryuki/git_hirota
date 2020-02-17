@@ -123,7 +123,7 @@ private:
 	int						m_frameBufferHeight = 0;					//!<フレームバッファの高さ。これが内部解像度。
 	const int				m_2dSpaceScreenWidth = 1280;				//!<2D空間のスクリーンの幅。2Dはこの座標系を前提に表示されていれば、解像度が変わっても大丈夫。
 	const int				m_2dSpaceScreenHeight = 720;				//!<2D空間のスクリーンの高さ。2Dはこの座標系を前提に表示されていれば、解像度が変わっても大丈夫。
-
+	
 };
 
 extern GraphicsEngine* g_graphicsEngine;			//グラフィックスエンジン

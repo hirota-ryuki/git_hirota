@@ -102,6 +102,7 @@ void GraphicsEngine::Init(HWND hWnd)
 		&m_featureLevel,								//使用される機能セットの格納先。
 		&m_pd3dDeviceContext							//作成したD3Dデバイスコンテキストのアドレスの格納先。
 	);
+	auto deviceContext = GetD3DDeviceContext();
 
 	//書き込み先になるレンダリングターゲットを作成。
 	ID3D11Texture2D* pBackBuffer = NULL;
@@ -154,8 +155,8 @@ void GraphicsEngine::Init(HWND hWnd)
 
 	////フォント////
 	//フォント用のデータの初期化。
-	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(deviceContext);
-	m_spriteFont = std::make_unique<DirectX::SpriteFont>(m_pd3dDevice, L"font/myfile.spritefont");
+	//m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(deviceContext);
+	//m_spriteFont = std::make_unique<DirectX::SpriteFont>(m_pd3dDevice, L"font/myfile.spritefont");
 	m_frameBufferWidth = FRAME_BUFFER_W;
 	m_frameBufferHeight = FRAME_BUFFER_H;
 	////フォント////

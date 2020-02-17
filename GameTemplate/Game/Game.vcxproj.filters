@@ -289,6 +289,7 @@
       <Filter>OP</Filter>
     </ClCompile>
     <ClCompile Include="graphics\font\Font.cpp" />
+    <ClCompile Include="FontRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -460,6 +461,7 @@
       <Filter>OP</Filter>
     </ClInclude>
     <ClInclude Include="graphics\font\Font.h" />
+    <ClInclude Include="FontRender.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

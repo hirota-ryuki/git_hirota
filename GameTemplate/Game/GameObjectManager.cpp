@@ -136,7 +136,6 @@ void GameObjectManager::PostRender()
 	//d3dDeviceContext->ClearDepthStencilView(m_frameBufferDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	d3dDeviceContext->OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
 
-
 	m_frameBufferRenderTargetView->Release();
 	m_frameBufferDepthStencilView->Release();
 }

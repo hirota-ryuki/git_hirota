@@ -357,6 +357,22 @@ public:
 		return DirectX::XMLoadFloat4(&vec);
 	}
 	CVector4(){}
+	template<class TVector4>
+	void CopyTo(TVector4& dst) const
+	{
+		dst.x = x;
+		dst.y = y;
+		dst.z = z;
+		dst.w = w;
+	}
+	template<>
+	void CopyTo(btQuaternion& dst) const
+	{
+		dst.setX(x);
+		dst.setY(y);
+		dst.setZ(z);
+		dst.setW(w);
+	}
 	/*!
 	*@brief	‘ã“ü‰‰ZqB
 	*/

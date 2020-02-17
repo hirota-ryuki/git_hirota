@@ -35,4 +35,23 @@ void Title::Update()
 		//タイトルクラスを消去。
 		DeleteGO(this);
 	}
+	m_font = std::make_unique<Font>();
+
+	m_font->Begin();
+	wchar_t fps[256];
+	swprintf_s(fps, L"FPS = %f", m_fps);
+	float w = (float)GraphicsEngine().Get2DSpaceScreenWidth();
+	float h = (float)GraphicsEngine().Get2DSpaceScreenHeight();
+	m_font->Draw(
+		fps,
+		{
+			w * -0.5f,
+			h * 0.5f
+		},
+		CVector4::White(),
+		0.0f,
+		1.0f,
+		{ 0.0f, 1.0f }
+	);
+	m_font->End();
 }
