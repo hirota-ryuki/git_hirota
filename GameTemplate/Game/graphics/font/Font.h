@@ -68,4 +68,5 @@ private:
 	//float m_shadowOffset = 0.0f;							//!<影を書くときのピクセルのオフセット量。
 	//CVector4 m_shadowColor = { 0.0f, 0.0f, 0.0f, 1.0f };	//!<影の色。
 	CMatrix m_scaleMat;
+	ID3D11Device* m_pd3d = nullptr;
 };

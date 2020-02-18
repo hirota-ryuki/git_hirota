@@ -28,6 +28,13 @@ public:
 	 */
 	void Release();
 	/*!
+	 *@brief	D3D11デバイスをセット。
+	 */
+	void SetD3DDevice(ID3D11Device* pd3d) 
+	{
+		m_pd3dDevice = pd3d;
+	}
+	/*!
 	 *@brief	D3D11デバイスを取得。
 	 */
 	ID3D11Device* GetD3DDevice()

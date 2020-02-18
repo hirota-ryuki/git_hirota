@@ -25,8 +25,7 @@ void Font::Begin()
 {
 	//レンダリングステートを退避させる。
 	//問題が起きたら実装してね。
-	//auto* deviceContext = g_graphicsEngine->GetD3DDeviceContext();
-
+	m_pd3d = g_graphicsEngine->GetD3DDevice();
 	m_spriteBatch->Begin(
 		DirectX::SpriteSortMode_Deferred,
 		nullptr,
@@ -42,6 +41,7 @@ void Font::End()
 	m_spriteBatch->End();
 	//レンダリングステートを復活させる。
 	//問題が起きたら実装してね。
+	g_graphicsEngine->SetD3DDevice(m_pd3d);
 }
 void Font::Draw(
 	wchar_t const* text,
