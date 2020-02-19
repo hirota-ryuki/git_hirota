@@ -116,6 +116,7 @@
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />
     <ClCompile Include="sound\WaveFileBank.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Zombie.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />
     <ClInclude Include="sound\WaveFileBank.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Zombie.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Game.h" />

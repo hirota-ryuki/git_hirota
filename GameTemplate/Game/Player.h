@@ -90,6 +90,20 @@ public:
 	{
 		return m_rotation;
 	}
+	/// <summary>
+	/// プレイヤーの残弾数を取得。
+	/// </summary>
+	int GetCapacity()
+	{
+		return m_capacity;
+	}
+	/// <summary>
+	/// プレイヤーの装弾数を取得。
+	/// </summary>
+	int GetMaxCapacity()
+	{
+		return m_maxCapacity;
+	}
 private:
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
@@ -134,8 +148,8 @@ private:
 	int				m_timer = 0;			//タイマー。
 	bool			m_isBullet = false;		//撃ったかどうか。
 	bool			m_isEmpty = false;		//空砲を撃ったかどうか。
-	int				m_capacity = 30;		//残弾数。
-	const int		m_maxCapacity = 30;		//装弾数。
+	int				m_capacity = 12;		//残弾数。
+	int				m_maxCapacity = 12;		//装弾数。
 	//ダメージ画像関係。
 	SpriteRender*	m_sprite = nullptr;
 	CQuaternion		m_rot = CQuaternion::SpriteRot();

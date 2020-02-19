@@ -136,6 +136,15 @@
     <Filter Include="Game\Enemy\Navmesh">
       <UniqueIdentifier>{401a9ca0-5080-4020-87ef-a4c6550598cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\UI">
+      <UniqueIdentifier>{8a451f2c-c8f5-4e6c-988a-a5481d8c811c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Player\Bullet">
+      <UniqueIdentifier>{fea57c69-62e0-4740-bc38-ec5e2243e5a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Player\Player">
+      <UniqueIdentifier>{4eaee890-9916-4309-9d9b-e39d858a5f5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -204,9 +213,6 @@
     <ClCompile Include="Navimesh.cpp">
       <Filter>Game\Enemy\Navmesh</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Game\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Main&amp;Game</Filter>
     </ClCompile>
@@ -255,9 +261,6 @@
     <ClCompile Include="ShadowMap.cpp">
       <Filter>Engine\shadowMap</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Game\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Floor.cpp">
       <Filter>Game\Floor</Filter>
     </ClCompile>
@@ -302,6 +305,15 @@
     </ClCompile>
     <ClCompile Include="FontRender.cpp">
       <Filter>Engine\font</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Game\Player\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Game\Player\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -383,9 +395,6 @@
     <ClInclude Include="Navimesh.h">
       <Filter>Game\Enemy\Navmesh</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Game\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Main&amp;Game</Filter>
     </ClInclude>
@@ -434,9 +443,6 @@
     <ClInclude Include="ShadowMap.h">
       <Filter>Engine\shadowMap</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Game\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Floor.h">
       <Filter>Game\Floor</Filter>
     </ClInclude>
@@ -478,6 +484,15 @@
     </ClInclude>
     <ClInclude Include="FontRender.h">
       <Filter>Engine\font</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Game\Player\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Game\Player\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

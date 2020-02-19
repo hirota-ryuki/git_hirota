@@ -3,7 +3,8 @@
 enum Prio {
 	GOPrio_Defalut = 2,
 	GOPrio_Sprite,
-	GOPrio_num = 5,
+	GOPrio_DrawAfter,
+	GOPrio_num,
 };
 
 class IGameObject

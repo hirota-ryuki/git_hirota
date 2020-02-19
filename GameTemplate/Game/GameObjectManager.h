@@ -82,6 +82,10 @@ public:
 	/// </summary>
 	void HudRender();
 	/// <summary>
+	/// フォントの描画。
+	/// </summary>
+	void FontRender();
+	/// <summary>
 	/// ゲームオブジェクトを追加。
 	/// </summary>
 	template <class T>
@@ -149,7 +153,7 @@ private:
 	//ベクタは新しい道を別で作りつつ配列を更新していくが、
 	//リストは道を延長していくので今回の場合はリストのほうが良い。
 	std::list< IGameObject* > m_goList[GOPrio_num];		//ゲームオブジェクトのリスト。
-	std::list< IGameObject* > m_DeleteGOList;		//削除予定のゲームオブジェクトのリスト。
+	std::list< IGameObject* > m_DeleteGOList;			//削除予定のゲームオブジェクトのリスト。
 };
 
 //外部からアクセスするので、extern宣言も必要。

@@ -18,9 +18,9 @@ void Opening::OnDestroy()
 bool Opening::Start()
 {
 	//‰æ‘œB
-	m_sprite[0] = NewGO<SpriteRender>(GOPrio_Sprite);
+	m_sprite[0] = NewGO<SpriteRender>(GOPrio_DrawAfter);
 	m_sprite[0]->Init(L"sprite/event1.dds", 1280.f, 720.f);
-	m_sprite[1] = NewGO<SpriteRender>(GOPrio_Sprite);
+	m_sprite[1] = NewGO<SpriteRender>(GOPrio_DrawAfter);
 	m_sprite[1]->Init(L"sprite/event2.dds", 1280.f, 720.f);
 	m_sprite[1]->ChangeActive();
 

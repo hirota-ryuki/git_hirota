@@ -9,6 +9,7 @@ class Zombie;
 class Result;
 class Pose;
 class Opening;
+class UI;
 
 class Game :
 	public IGameObject
@@ -88,11 +89,11 @@ private:
 	Pose*			m_pose = nullptr;		//Poseクラスのポインタ。
 	Opening*		m_op = nullptr;			//Openingクラスのポインタ。
 	Result*			m_result = nullptr;		//Resultクラスのポインタ。
+	UI*				m_ui = nullptr;			//UIクラスのポインタ。
 	//状態関係。
 	bool m_isClear = false;				//クリアしたかどうか。
 	bool m_isGameOver = false;			//ゲームオーバーしたかどうか。
 	bool m_isPose = false;				//一時停止したかどうか。
-	FontRender*	m_fontRender = nullptr;	//フォントレンダラー。
 };
 
 static inline Game* GetGame()

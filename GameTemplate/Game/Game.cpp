@@ -8,6 +8,7 @@
 #include "Result.h"
 #include "Pose.h"
 #include "Opening.h"
+#include "UI.h"
 
 //静的メンバ変数を定義する。
 Game* Game::m_game = nullptr;
@@ -40,8 +41,7 @@ void Game::OnDestroy()
 	DeleteGO(m_floor);
 	DeleteGOs("mapchip");
 	DeleteGO(m_pose);
-	DeleteGO(m_fontRender);
-
+	DeleteGO(m_ui);
 }
 
 bool Game::Start()
@@ -119,14 +119,15 @@ bool Game::Start()
 	//オープニングを構築。
 	m_op = NewGO<Opening>(GOPrio_Defalut);
 
-	//BGM再生のSE
+	//BGM再生のSE。
 	CSoundSource* m_bgm = new CSoundSource;
 	m_bgm->Init(L"sound/story/bgm.wav");
 	//Aボタンが押されたらSEを鳴らす。
 	m_bgm->Play(true);
 
-	m_fontRender = NewGO<FontRender>(GOPrio_Sprite);
-	m_fontRender->SetText(L"こんにちは世界");
+	//UIの構築。
+	m_ui = NewGO<UI>(GOPrio_Defalut);
+
 	return true;
 }
 

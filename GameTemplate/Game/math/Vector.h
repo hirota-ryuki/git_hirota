@@ -510,6 +510,29 @@ public:
 		return white;
 
 	}
+	static CVector4 Black()
+	{
+		static const CVector4 black = { 0.0f, 0.0f, 0.0f, 0.0f };
+		return black;
+
+	}
+	static CVector4 Red()
+	{
+		static const CVector4 red = { 255.0f, 0.0f, 0.0f, 0.0f };
+		return red;
+
+	}
+	static CVector4 Green()
+	{
+		static const CVector4 green = { 0.0f, 255.0f, 0.0f, 0.0f };
+		return green;
+
+	}static CVector4 Blue()
+	{
+		static const CVector4 blue = { 0.0f, 0.0f, 255.0f, 0.0f };
+		return blue;
+
+	}
 };
 
 class CQuaternion : public CVector4{
