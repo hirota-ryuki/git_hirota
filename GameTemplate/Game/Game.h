@@ -92,8 +92,7 @@ private:
 	bool m_isClear = false;				//クリアしたかどうか。
 	bool m_isGameOver = false;			//ゲームオーバーしたかどうか。
 	bool m_isPose = false;				//一時停止したかどうか。
-	CSoundSource   m_bgm;
-	CSoundSource   m_se;
+	FontRender*	m_fontRender = nullptr;	//フォントレンダラー。
 };
 
 static inline Game* GetGame()

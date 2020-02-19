@@ -7,196 +7,205 @@
     <Filter Include="Assets\modelData">
       <UniqueIdentifier>{a27dfd5d-af93-4623-b084-aad00b7739c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="graphics">
-      <UniqueIdentifier>{b7a9a0ab-a792-43fe-a5a7-760b8c976aca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="graphics\animation">
-      <UniqueIdentifier>{d83ac002-5cd8-4ff4-977a-e7b5ebce5263}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="level">
-      <UniqueIdentifier>{73eacaf4-a5db-4539-ab55-83b9c5d4807c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HID">
-      <UniqueIdentifier>{bbdeed04-d9d3-4ff9-bb44-9d888be6899a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="math">
-      <UniqueIdentifier>{39e7f303-3dac-4bde-bedf-33a5497f262e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="physics">
-      <UniqueIdentifier>{1eed4cab-11aa-4e90-960a-a01360c5a392}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="system">
-      <UniqueIdentifier>{48b58c60-bbe2-40d8-9d2f-e81d065b6820}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\sprite">
       <UniqueIdentifier>{65207ce4-f7c2-4100-933f-2b5d633c116a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sprite">
-      <UniqueIdentifier>{870d025f-6008-4837-812c-4396bc1af47f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DebugWireframe">
-      <UniqueIdentifier>{9a74b2a5-ecf6-4a3b-a80c-8bfdae491b6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Title">
-      <UniqueIdentifier>{3160188e-dd70-4f51-9cf4-d4606a998613}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCamera">
-      <UniqueIdentifier>{3bc132de-25ab-496d-b3a5-216adeb3c59e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject">
-      <UniqueIdentifier>{6749290a-8668-422e-bab7-2aca61452668}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Player">
-      <UniqueIdentifier>{e6069f4e-0819-43e1-8657-55347c8ff83d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Navmesh">
-      <UniqueIdentifier>{401a9ca0-5080-4020-87ef-a4c6550598cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Main&amp;Game">
       <UniqueIdentifier>{63dcc52c-71f9-4936-976c-6d5b45135ccf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Render">
-      <UniqueIdentifier>{b0089d51-9d89-49d0-a822-cc357445b98f}</UniqueIdentifier>
+    <Filter Include="Game">
+      <UniqueIdentifier>{8f61c064-546a-4254-a387-7eb9530e6bcc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Render\RenderState">
-      <UniqueIdentifier>{078e97f7-7a70-42b9-a835-7064c319ea01}</UniqueIdentifier>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{364dd86b-3f15-4c20-b648-67b3831eda87}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Render\RenderTarget">
-      <UniqueIdentifier>{a470e91e-1171-4041-9bc7-dc795ba22612}</UniqueIdentifier>
+    <Filter Include="Engine\font">
+      <UniqueIdentifier>{d44b41bc-418b-49e5-8f8b-3178f04fd8f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="graphics\Camera">
-      <UniqueIdentifier>{29e91e11-6e71-469f-b5fd-9eec3aeafee9}</UniqueIdentifier>
+    <Filter Include="Game\OP">
+      <UniqueIdentifier>{bf43ce53-ed89-467a-8612-60ca3562d2b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="graphics\GraphicsEngine">
-      <UniqueIdentifier>{aa57afd4-e7ab-4cfb-be2c-2ad5200437a6}</UniqueIdentifier>
+    <Filter Include="Engine\physics">
+      <UniqueIdentifier>{1eed4cab-11aa-4e90-960a-a01360c5a392}</UniqueIdentifier>
     </Filter>
-    <Filter Include="graphics\Shader">
-      <UniqueIdentifier>{50404ec3-2a06-49e5-8de2-10823a236d9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="graphics\Skeleton">
-      <UniqueIdentifier>{299e5eb2-3291-4b36-9dc1-98abb2085921}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="graphics\SkinModel">
-      <UniqueIdentifier>{290bb6f3-adc4-450d-8379-76021beeed51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="graphics\SkinModel\SkinModel">
-      <UniqueIdentifier>{1fd76b8e-43d5-49b1-b9e4-21cdac30250a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="graphics\SkinModel\SkinModelDataManager">
-      <UniqueIdentifier>{8d889623-597c-49bd-b33f-6f6138b86b10}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="graphics\SkinModel\SkinModelEffect">
-      <UniqueIdentifier>{f8bc32ee-5f0f-46d0-9647-5a9bc79ce919}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="graphics\SkinModel\SkinModelRender">
-      <UniqueIdentifier>{4d568310-b5dd-4f21-89a2-5a92a89db297}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="graphics\SkinModel\SkinModelShaderConst">
-      <UniqueIdentifier>{5d23801b-7af8-4eeb-8a71-21a8fbc996da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Character">
-      <UniqueIdentifier>{c57b7107-f9f3-4b72-8f3e-8644593ed533}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AStar">
-      <UniqueIdentifier>{683f2e8b-9ce1-4e8a-8a39-a39d527afaac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Enemy">
-      <UniqueIdentifier>{522a7a12-684b-4846-b9e4-f8b74728c655}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ShadowMap">
-      <UniqueIdentifier>{0fc2f8c5-3229-4c4e-b59a-dd6a6a45b2fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="LoadLevel">
-      <UniqueIdentifier>{8d26bc9f-47c1-4178-a3f4-a9b9588637dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Floor">
-      <UniqueIdentifier>{bcde93f3-6348-4dc4-9ce5-1e2cf954cfd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Goal">
-      <UniqueIdentifier>{8f4fb70b-55af-4cfd-8726-500a494773c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Result">
-      <UniqueIdentifier>{1780fc67-dfc4-4595-ae52-c11e75df0a32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sound">
+    <Filter Include="Engine\sound">
       <UniqueIdentifier>{f9911bd2-7591-48e8-b83f-f57a6be3f983}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Pose">
+    <Filter Include="Engine\system">
+      <UniqueIdentifier>{48b58c60-bbe2-40d8-9d2f-e81d065b6820}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\math">
+      <UniqueIdentifier>{39e7f303-3dac-4bde-bedf-33a5497f262e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\LoadLevel">
+      <UniqueIdentifier>{8d26bc9f-47c1-4178-a3f4-a9b9588637dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Player">
+      <UniqueIdentifier>{e6069f4e-0819-43e1-8657-55347c8ff83d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Pose">
       <UniqueIdentifier>{7dd33e0c-65eb-49ff-992e-e96d1e64a534}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OP">
-      <UniqueIdentifier>{bf43ce53-ed89-467a-8612-60ca3562d2b6}</UniqueIdentifier>
+    <Filter Include="Game\Result">
+      <UniqueIdentifier>{1780fc67-dfc4-4595-ae52-c11e75df0a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Title">
+      <UniqueIdentifier>{3160188e-dd70-4f51-9cf4-d4606a998613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\HID">
+      <UniqueIdentifier>{bbdeed04-d9d3-4ff9-bb44-9d888be6899a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics">
+      <UniqueIdentifier>{b7a9a0ab-a792-43fe-a5a7-760b8c976aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\animation">
+      <UniqueIdentifier>{d83ac002-5cd8-4ff4-977a-e7b5ebce5263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\Camera">
+      <UniqueIdentifier>{29e91e11-6e71-469f-b5fd-9eec3aeafee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\GraphicsEngine">
+      <UniqueIdentifier>{aa57afd4-e7ab-4cfb-be2c-2ad5200437a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\Shader">
+      <UniqueIdentifier>{50404ec3-2a06-49e5-8de2-10823a236d9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\Skeleton">
+      <UniqueIdentifier>{299e5eb2-3291-4b36-9dc1-98abb2085921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\SkinModel">
+      <UniqueIdentifier>{290bb6f3-adc4-450d-8379-76021beeed51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\SkinModel\SkinModel">
+      <UniqueIdentifier>{1fd76b8e-43d5-49b1-b9e4-21cdac30250a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\SkinModel\SkinModelDataManager">
+      <UniqueIdentifier>{8d889623-597c-49bd-b33f-6f6138b86b10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\SkinModel\SkinModelEffect">
+      <UniqueIdentifier>{f8bc32ee-5f0f-46d0-9647-5a9bc79ce919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\SkinModel\SkinModelRender">
+      <UniqueIdentifier>{4d568310-b5dd-4f21-89a2-5a92a89db297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\SkinModel\SkinModelShaderConst">
+      <UniqueIdentifier>{5d23801b-7af8-4eeb-8a71-21a8fbc996da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\level">
+      <UniqueIdentifier>{73eacaf4-a5db-4539-ab55-83b9c5d4807c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Floor">
+      <UniqueIdentifier>{bcde93f3-6348-4dc4-9ce5-1e2cf954cfd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Enemy">
+      <UniqueIdentifier>{522a7a12-684b-4846-b9e4-f8b74728c655}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameCamera">
+      <UniqueIdentifier>{3bc132de-25ab-496d-b3a5-216adeb3c59e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\sprite">
+      <UniqueIdentifier>{870d025f-6008-4837-812c-4396bc1af47f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\render">
+      <UniqueIdentifier>{b0089d51-9d89-49d0-a822-cc357445b98f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\render\RenderState">
+      <UniqueIdentifier>{078e97f7-7a70-42b9-a835-7064c319ea01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\render\RenderTarget">
+      <UniqueIdentifier>{a470e91e-1171-4041-9bc7-dc795ba22612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\shadowMap">
+      <UniqueIdentifier>{0fc2f8c5-3229-4c4e-b59a-dd6a6a45b2fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\DebugWireframe">
+      <UniqueIdentifier>{9a74b2a5-ecf6-4a3b-a80c-8bfdae491b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject">
+      <UniqueIdentifier>{6749290a-8668-422e-bab7-2aca61452668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Character">
+      <UniqueIdentifier>{c57b7107-f9f3-4b72-8f3e-8644593ed533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Goal">
+      <UniqueIdentifier>{8f4fb70b-55af-4cfd-8726-500a494773c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Enemy\AStar">
+      <UniqueIdentifier>{683f2e8b-9ce1-4e8a-8a39-a39d527afaac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Enemy\Navmesh">
+      <UniqueIdentifier>{401a9ca0-5080-4020-87ef-a4c6550598cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
-      <Filter>math</Filter>
+      <Filter>Engine\math</Filter>
     </ClCompile>
     <ClCompile Include="math\kMath.cpp">
-      <Filter>math</Filter>
+      <Filter>Engine\math</Filter>
     </ClCompile>
     <ClCompile Include="math\Matrix.cpp">
-      <Filter>math</Filter>
+      <Filter>Engine\math</Filter>
     </ClCompile>
     <ClCompile Include="graphics\animation\Animation.cpp">
-      <Filter>graphics\animation</Filter>
+      <Filter>Engine\graphics\animation</Filter>
     </ClCompile>
     <ClCompile Include="graphics\animation\AnimationClip.cpp">
-      <Filter>graphics\animation</Filter>
+      <Filter>Engine\graphics\animation</Filter>
     </ClCompile>
     <ClCompile Include="graphics\animation\AnimationPlayController.cpp">
-      <Filter>graphics\animation</Filter>
+      <Filter>Engine\graphics\animation</Filter>
     </ClCompile>
     <ClCompile Include="HID\Pad.cpp">
-      <Filter>HID</Filter>
+      <Filter>Engine\HID</Filter>
     </ClCompile>
     <ClCompile Include="system\system.cpp">
-      <Filter>system</Filter>
+      <Filter>Engine\system</Filter>
     </ClCompile>
     <ClCompile Include="physics\RigidBody.cpp">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClCompile>
     <ClCompile Include="physics\Physics.cpp">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClCompile>
     <ClCompile Include="physics\MeshCollider.cpp">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClCompile>
     <ClCompile Include="physics\CapsuleCollider.cpp">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClCompile>
     <ClCompile Include="physics\PhysicsStaticObject.cpp">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClCompile>
     <ClCompile Include="character\CharacterController.cpp">
-      <Filter>Character</Filter>
+      <Filter>Engine\Character</Filter>
     </ClCompile>
     <ClCompile Include="level\Level.cpp">
-      <Filter>level</Filter>
+      <Filter>Engine\level</Filter>
     </ClCompile>
     <ClCompile Include="level\MapChip.cpp">
-      <Filter>level</Filter>
+      <Filter>Engine\level</Filter>
     </ClCompile>
     <ClCompile Include="graphics\Sprite.cpp">
-      <Filter>Sprite</Filter>
+      <Filter>Engine\sprite</Filter>
     </ClCompile>
     <ClCompile Include="SpriteRender.cpp">
-      <Filter>Sprite</Filter>
+      <Filter>Engine\sprite</Filter>
     </ClCompile>
     <ClCompile Include="DebugWireframe.cpp">
-      <Filter>DebugWireframe</Filter>
+      <Filter>Engine\DebugWireframe</Filter>
     </ClCompile>
     <ClCompile Include="Title.cpp">
-      <Filter>Title</Filter>
+      <Filter>Game\Title</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectManager.cpp">
-      <Filter>GameObject</Filter>
+      <Filter>Engine\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Navimesh.cpp">
-      <Filter>Navmesh</Filter>
+      <Filter>Game\Enemy\Navmesh</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Player</Filter>
+      <Filter>Game\Player</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Main&amp;Game</Filter>
@@ -208,170 +217,174 @@
       <Filter>Main&amp;Game</Filter>
     </ClCompile>
     <ClCompile Include="RenderState.cpp">
-      <Filter>Render\RenderState</Filter>
+      <Filter>Engine\render\RenderState</Filter>
     </ClCompile>
     <ClCompile Include="RenderTarget.cpp">
-      <Filter>Render\RenderTarget</Filter>
+      <Filter>Engine\render\RenderTarget</Filter>
     </ClCompile>
     <ClCompile Include="graphics\Camera.cpp">
-      <Filter>graphics\Camera</Filter>
+      <Filter>Engine\graphics\Camera</Filter>
     </ClCompile>
     <ClCompile Include="graphics\GraphicsEngine.cpp">
-      <Filter>graphics\GraphicsEngine</Filter>
+      <Filter>Engine\graphics\GraphicsEngine</Filter>
     </ClCompile>
     <ClCompile Include="graphics\Shader.cpp">
-      <Filter>graphics\Shader</Filter>
+      <Filter>Engine\graphics\Shader</Filter>
     </ClCompile>
     <ClCompile Include="graphics\ShaderResources.cpp">
-      <Filter>graphics\Shader</Filter>
+      <Filter>Engine\graphics\Shader</Filter>
     </ClCompile>
     <ClCompile Include="graphics\Skeleton.cpp">
-      <Filter>graphics\Skeleton</Filter>
+      <Filter>Engine\graphics\Skeleton</Filter>
     </ClCompile>
     <ClCompile Include="graphics\SkinModel.cpp">
-      <Filter>graphics\SkinModel\SkinModel</Filter>
+      <Filter>Engine\graphics\SkinModel\SkinModel</Filter>
     </ClCompile>
     <ClCompile Include="graphics\SkinModelDataManager.cpp">
-      <Filter>graphics\SkinModel\SkinModelDataManager</Filter>
+      <Filter>Engine\graphics\SkinModel\SkinModelDataManager</Filter>
     </ClCompile>
     <ClCompile Include="graphics\SkinModelEffect.cpp">
-      <Filter>graphics\SkinModel\SkinModelEffect</Filter>
+      <Filter>Engine\graphics\SkinModel\SkinModelEffect</Filter>
     </ClCompile>
     <ClCompile Include="SkinModelRender.cpp">
-      <Filter>graphics\SkinModel\SkinModelRender</Filter>
+      <Filter>Engine\graphics\SkinModel\SkinModelRender</Filter>
     </ClCompile>
     <ClCompile Include="AStar.cpp">
-      <Filter>AStar</Filter>
+      <Filter>Game\Enemy\AStar</Filter>
     </ClCompile>
     <ClCompile Include="ShadowMap.cpp">
-      <Filter>ShadowMap</Filter>
+      <Filter>Engine\shadowMap</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Player</Filter>
+      <Filter>Game\Player</Filter>
     </ClCompile>
     <ClCompile Include="Floor.cpp">
-      <Filter>Floor</Filter>
+      <Filter>Game\Floor</Filter>
     </ClCompile>
     <ClCompile Include="LoadLevel.cpp">
-      <Filter>LoadLevel</Filter>
+      <Filter>Game\LoadLevel</Filter>
     </ClCompile>
     <ClCompile Include="Zombie.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>Game\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="physics\BoxCollider.cpp">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClCompile>
     <ClCompile Include="GameCamera.cpp">
-      <Filter>GameCamera</Filter>
+      <Filter>Game\GameCamera</Filter>
     </ClCompile>
     <ClCompile Include="Goal.cpp">
-      <Filter>Goal</Filter>
+      <Filter>Game\Goal</Filter>
     </ClCompile>
     <ClCompile Include="Result.cpp">
-      <Filter>Result</Filter>
+      <Filter>Game\Result</Filter>
     </ClCompile>
     <ClCompile Include="sound\WaveFile.cpp">
-      <Filter>sound</Filter>
+      <Filter>Engine\sound</Filter>
     </ClCompile>
     <ClCompile Include="sound\WaveFileBank.cpp">
-      <Filter>sound</Filter>
+      <Filter>Engine\sound</Filter>
     </ClCompile>
     <ClCompile Include="sound\SoundEngine.cpp">
-      <Filter>sound</Filter>
+      <Filter>Engine\sound</Filter>
     </ClCompile>
     <ClCompile Include="sound\SoundSource.cpp">
-      <Filter>sound</Filter>
+      <Filter>Engine\sound</Filter>
     </ClCompile>
     <ClCompile Include="Pose.cpp">
-      <Filter>Pose</Filter>
+      <Filter>Game\Pose</Filter>
     </ClCompile>
     <ClCompile Include="Opening.cpp">
-      <Filter>OP</Filter>
+      <Filter>Game\OP</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\font\Font.cpp" />
-    <ClCompile Include="FontRender.cpp" />
+    <ClCompile Include="graphics\font\Font.cpp">
+      <Filter>Engine\font</Filter>
+    </ClCompile>
+    <ClCompile Include="FontRender.cpp">
+      <Filter>Engine\font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
-      <Filter>math</Filter>
+      <Filter>Engine\math</Filter>
     </ClInclude>
     <ClInclude Include="math\kMath.h">
-      <Filter>math</Filter>
+      <Filter>Engine\math</Filter>
     </ClInclude>
     <ClInclude Include="math\Matrix.h">
-      <Filter>math</Filter>
+      <Filter>Engine\math</Filter>
     </ClInclude>
     <ClInclude Include="graphics\animation\Animation.h">
-      <Filter>graphics\animation</Filter>
+      <Filter>Engine\graphics\animation</Filter>
     </ClInclude>
     <ClInclude Include="graphics\animation\AnimationClip.h">
-      <Filter>graphics\animation</Filter>
+      <Filter>Engine\graphics\animation</Filter>
     </ClInclude>
     <ClInclude Include="graphics\animation\AnimationPlayController.h">
-      <Filter>graphics\animation</Filter>
+      <Filter>Engine\graphics\animation</Filter>
     </ClInclude>
     <ClInclude Include="HID\Pad.h">
-      <Filter>HID</Filter>
+      <Filter>Engine\HID</Filter>
     </ClInclude>
     <ClInclude Include="system\system.h">
-      <Filter>system</Filter>
+      <Filter>Engine\system</Filter>
     </ClInclude>
     <ClInclude Include="physics\RigidBody.h">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClInclude>
     <ClInclude Include="physics\Physics.h">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClInclude>
     <ClInclude Include="physics\ICollider.h">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClInclude>
     <ClInclude Include="physics\MeshCollider.h">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClInclude>
     <ClInclude Include="physics\CapsuleCollider.h">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClInclude>
     <ClInclude Include="physics\CollisionAttr.h">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClInclude>
     <ClInclude Include="physics\PhysicsStaticObject.h">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClInclude>
     <ClInclude Include="character\CharacterController.h">
-      <Filter>Character</Filter>
+      <Filter>Engine\Character</Filter>
     </ClInclude>
     <ClInclude Include="level\Level.h">
-      <Filter>level</Filter>
+      <Filter>Engine\level</Filter>
     </ClInclude>
     <ClInclude Include="level\MapChip.h">
-      <Filter>level</Filter>
+      <Filter>Engine\level</Filter>
     </ClInclude>
     <ClInclude Include="graphics\Sprite.h">
-      <Filter>Sprite</Filter>
+      <Filter>Engine\sprite</Filter>
     </ClInclude>
     <ClInclude Include="SpriteRender.h">
-      <Filter>Sprite</Filter>
+      <Filter>Engine\sprite</Filter>
     </ClInclude>
     <ClInclude Include="DebugWireframe.h">
-      <Filter>DebugWireframe</Filter>
+      <Filter>Engine\DebugWireframe</Filter>
     </ClInclude>
     <ClInclude Include="Title.h">
-      <Filter>Title</Filter>
+      <Filter>Game\Title</Filter>
     </ClInclude>
     <ClInclude Include="GameCamera.h">
-      <Filter>GameCamera</Filter>
+      <Filter>Game\GameCamera</Filter>
     </ClInclude>
     <ClInclude Include="IGameObject.h">
-      <Filter>GameObject</Filter>
+      <Filter>Engine\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectManager.h">
-      <Filter>GameObject</Filter>
+      <Filter>Engine\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Navimesh.h">
-      <Filter>Navmesh</Filter>
+      <Filter>Game\Enemy\Navmesh</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Player</Filter>
+      <Filter>Game\Player</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Main&amp;Game</Filter>
@@ -380,88 +393,92 @@
       <Filter>Main&amp;Game</Filter>
     </ClInclude>
     <ClInclude Include="RenderState.h">
-      <Filter>Render\RenderState</Filter>
+      <Filter>Engine\render\RenderState</Filter>
     </ClInclude>
     <ClInclude Include="RenderTarget.h">
-      <Filter>Render\RenderTarget</Filter>
+      <Filter>Engine\render\RenderTarget</Filter>
     </ClInclude>
     <ClInclude Include="graphics\Camera.h">
-      <Filter>graphics\Camera</Filter>
+      <Filter>Engine\graphics\Camera</Filter>
     </ClInclude>
     <ClInclude Include="graphics\GraphicsEngine.h">
-      <Filter>graphics\GraphicsEngine</Filter>
+      <Filter>Engine\graphics\GraphicsEngine</Filter>
     </ClInclude>
     <ClInclude Include="graphics\Shader.h">
-      <Filter>graphics\Shader</Filter>
+      <Filter>Engine\graphics\Shader</Filter>
     </ClInclude>
     <ClInclude Include="graphics\ShaderResources.h">
-      <Filter>graphics\Shader</Filter>
+      <Filter>Engine\graphics\Shader</Filter>
     </ClInclude>
     <ClInclude Include="graphics\Skeleton.h">
-      <Filter>graphics\Skeleton</Filter>
+      <Filter>Engine\graphics\Skeleton</Filter>
     </ClInclude>
     <ClInclude Include="graphics\SkinModel.h">
-      <Filter>graphics\SkinModel\SkinModel</Filter>
+      <Filter>Engine\graphics\SkinModel\SkinModel</Filter>
     </ClInclude>
     <ClInclude Include="graphics\SkinModelDataManager.h">
-      <Filter>graphics\SkinModel\SkinModelDataManager</Filter>
+      <Filter>Engine\graphics\SkinModel\SkinModelDataManager</Filter>
     </ClInclude>
     <ClInclude Include="graphics\SkinModelEffect.h">
-      <Filter>graphics\SkinModel\SkinModelEffect</Filter>
+      <Filter>Engine\graphics\SkinModel\SkinModelEffect</Filter>
     </ClInclude>
     <ClInclude Include="SkinModelRender.h">
-      <Filter>graphics\SkinModel\SkinModelRender</Filter>
+      <Filter>Engine\graphics\SkinModel\SkinModelRender</Filter>
     </ClInclude>
     <ClInclude Include="graphics\SkinModelShaderConst.h">
-      <Filter>graphics\SkinModel\SkinModelShaderConst</Filter>
+      <Filter>Engine\graphics\SkinModel\SkinModelShaderConst</Filter>
     </ClInclude>
     <ClInclude Include="AStar.h">
-      <Filter>AStar</Filter>
+      <Filter>Game\Enemy\AStar</Filter>
     </ClInclude>
     <ClInclude Include="ShadowMap.h">
-      <Filter>ShadowMap</Filter>
+      <Filter>Engine\shadowMap</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Player</Filter>
+      <Filter>Game\Player</Filter>
     </ClInclude>
     <ClInclude Include="Floor.h">
-      <Filter>Floor</Filter>
+      <Filter>Game\Floor</Filter>
     </ClInclude>
     <ClInclude Include="LoadLevel.h">
-      <Filter>LoadLevel</Filter>
+      <Filter>Game\LoadLevel</Filter>
     </ClInclude>
     <ClInclude Include="Zombie.h">
-      <Filter>Enemy</Filter>
+      <Filter>Game\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="physics\BoxCollider.h">
-      <Filter>physics</Filter>
+      <Filter>Engine\physics</Filter>
     </ClInclude>
     <ClInclude Include="Goal.h">
-      <Filter>Goal</Filter>
+      <Filter>Game\Goal</Filter>
     </ClInclude>
     <ClInclude Include="Result.h">
-      <Filter>Result</Filter>
+      <Filter>Game\Result</Filter>
     </ClInclude>
     <ClInclude Include="sound\WaveFile.h">
-      <Filter>sound</Filter>
+      <Filter>Engine\sound</Filter>
     </ClInclude>
     <ClInclude Include="sound\WaveFileBank.h">
-      <Filter>sound</Filter>
+      <Filter>Engine\sound</Filter>
     </ClInclude>
     <ClInclude Include="sound\SoundEngine.h">
-      <Filter>sound</Filter>
+      <Filter>Engine\sound</Filter>
     </ClInclude>
     <ClInclude Include="sound\SoundSource.h">
-      <Filter>sound</Filter>
+      <Filter>Engine\sound</Filter>
     </ClInclude>
     <ClInclude Include="Pose.h">
-      <Filter>Pose</Filter>
+      <Filter>Game\Pose</Filter>
     </ClInclude>
     <ClInclude Include="Opening.h">
-      <Filter>OP</Filter>
+      <Filter>Game\OP</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\font\Font.h" />
-    <ClInclude Include="FontRender.h" />
+    <ClInclude Include="graphics\font\Font.h">
+      <Filter>Engine\font</Filter>
+    </ClInclude>
+    <ClInclude Include="FontRender.h">
+      <Filter>Engine\font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

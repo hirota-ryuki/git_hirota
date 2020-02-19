@@ -1,6 +1,20 @@
 #include "stdafx.h"
 #include "FontRender.h"
-void FontRender::PostRender()
+
+void FontRender::OnDestroy()
+{
+}
+
+bool FontRender::Start()
+{
+	return true;
+}
+
+void FontRender::Update()
+{
+}
+
+void FontRender::DrawFont()
 {
 	m_font.Begin();
 	const wchar_t* text = nullptr;

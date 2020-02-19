@@ -40,6 +40,8 @@ void Game::OnDestroy()
 	DeleteGO(m_floor);
 	DeleteGOs("mapchip");
 	DeleteGO(m_pose);
+	DeleteGO(m_fontRender);
+
 }
 
 bool Game::Start()
@@ -118,9 +120,13 @@ bool Game::Start()
 	m_op = NewGO<Opening>(GOPrio_Defalut);
 
 	//BGM再生のSE
-	m_bgm.Init(L"sound/story/bgm.wav");
+	CSoundSource* m_bgm = new CSoundSource;
+	m_bgm->Init(L"sound/story/bgm.wav");
 	//Aボタンが押されたらSEを鳴らす。
-	m_bgm.Play(true);
+	m_bgm->Play(true);
+
+	m_fontRender = NewGO<FontRender>(GOPrio_Sprite);
+	m_fontRender->SetText(L"こんにちは世界");
 	return true;
 }
 
@@ -146,8 +152,9 @@ void Game::Update()
 	if (g_pad[0].IsTrigger(enButtonA))
 	{
 		//ワンショット再生のSE
-		m_se.Init(L"sound/story/decision.wav");
+		CSoundSource* m_se = new CSoundSource;
+		m_se->Init(L"sound/story/decision.wav");
 		//Aボタンが押されたらSEを鳴らす。
-		m_se.Play(false);
+		m_se->Play(false);
 	}
 }

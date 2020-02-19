@@ -1,10 +1,13 @@
 #pragma once
 #include "graphics/font/Font.h"
 
-class FontRender
+class FontRender :
+	public IGameObject
 {
 public:
-	
+	void OnDestroy() override;
+	bool Start() override;
+	void Update() override;
 	/*!
 		* @brief	フォントを設定。
 		* @details	デフォルトフォントから変更したい場合は
@@ -91,16 +94,15 @@ public:
 		m_pivot = pivot;
 	}
 private:
-	void PostRender();
+	void DrawFont() override;
 private:
 	Font m_font;
 	std::wstring m_text;					//!<テキスト。
 	const wchar_t* m_textUnsafe = nullptr;	//!<アンセーフ版のテキスト。
 	CVector2 m_position = CVector2::Zero();	//!<座標。x = 0.0f, y = 0.0fで画面の中心。
-	CVector4 m_color = CVector4::White();		//!<カラー。
+	CVector4 m_color = CVector4::White();	//!<カラー。
 	float m_rotation = 0.0f;				//!<回転。
 	float m_scale = 1.0f;					//!<拡大率。
 	CVector2 m_pivot;						//!<ピボット。
-
 };
 

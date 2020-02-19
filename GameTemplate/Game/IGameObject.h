@@ -37,6 +37,11 @@ public:
 	/// HUD描画時に呼ばれる処理。
 	/// </summary>
 	virtual void DrawHUD() {}
+	
+	/// /// <summary>
+	/// HUD描画時に呼ばれる処理。
+	/// </summary>
+	virtual void DrawFont() {}
 
 	/// <summary>
 	/// 削除リクエストを行う。

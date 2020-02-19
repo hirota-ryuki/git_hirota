@@ -6,13 +6,12 @@
 
 Font::Font()
 {
-	m_spriteBatch = GraphicsEngine().GetSpriteBatch();
-	m_spriteFont = GraphicsEngine().GetSpriteFont();
-	auto& ge = GraphicsEngine();
+	m_spriteBatch = g_graphicsEngine->GetSpriteBatch();
+	m_spriteFont = g_graphicsEngine->GetSpriteFont();
 	m_scaleMat.MakeScaling(
 		{ 
-			ge.GetFrameBufferWidth() / static_cast<float>(ge.Get2DSpaceScreenWidth()), 
-			ge.GetFrameBufferHeight() / static_cast<float>(ge.Get2DSpaceScreenHeight()), 
+			g_graphicsEngine->GetFrameBufferWidth() / static_cast<float>(g_graphicsEngine->Get2DSpaceScreenWidth()),
+			g_graphicsEngine->GetFrameBufferHeight() / static_cast<float>(g_graphicsEngine->Get2DSpaceScreenHeight()),
 			1.0f 
 		}
 	);
@@ -25,7 +24,9 @@ void Font::Begin()
 {
 	//レンダリングステートを退避させる。
 	//問題が起きたら実装してね。
-	m_pd3d = g_graphicsEngine->GetD3DDevice();
+	 //auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
+	 //d3dDeviceContext->OMGetDepthStencilState(&m_depthStencilState, &m_depthStencilStateRef);
+
 	m_spriteBatch->Begin(
 		DirectX::SpriteSortMode_Deferred,
 		nullptr,
@@ -41,7 +42,9 @@ void Font::End()
 	m_spriteBatch->End();
 	//レンダリングステートを復活させる。
 	//問題が起きたら実装してね。
-	g_graphicsEngine->SetD3DDevice(m_pd3d);
+	//auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
+	//d3dDeviceContext->OMSetDepthStencilState(m_depthStencilState, m_depthStencilStateRef);
+
 }
 void Font::Draw(
 	wchar_t const* text,
@@ -58,8 +61,8 @@ void Font::Draw(
 	DirectX::XMFLOAT2 tkFloat2Zero(0, 0);
 	//座標系をスプライトと合わせる。
 	CVector2 pos = position;
-	float frameBufferHalfWidth = GraphicsEngine().Get2DSpaceScreenWidth() * 0.5f;
-	float frameBufferHalfHeight = GraphicsEngine().Get2DSpaceScreenHeight() * 0.5f;
+	float frameBufferHalfWidth = g_graphicsEngine->Get2DSpaceScreenWidth() * 0.5f;
+	float frameBufferHalfHeight = g_graphicsEngine->Get2DSpaceScreenHeight() * 0.5f;
 	pos.x += frameBufferHalfWidth;
 	pos.y = -pos.y + frameBufferHalfHeight;
 

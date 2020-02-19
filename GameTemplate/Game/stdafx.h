@@ -38,6 +38,7 @@
 #include "graphics/animation/AnimationClip.h"
 #include "graphics/Camera.h"
 #include "graphics/Sprite.h"
+#include "graphics/font/Font.h"
 
 #include <xaudio2.h>
 #include <x3daudio.h>
@@ -47,10 +48,11 @@
 
 #include "IGameObject.h"
 #include "GameObjectManager.h"
-#include "Game.h"
-#include "SpriteRender.h"
 #include "SkinModelRender.h"
+#include "SpriteRender.h"
+#include "FontRender.h"
 #include "RenderTarget.h"
+#include "Game.h"
 
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。

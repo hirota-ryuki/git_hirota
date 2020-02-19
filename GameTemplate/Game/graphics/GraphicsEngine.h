@@ -59,17 +59,17 @@ public:
 
 	////フォント////
 	/*!
-		*@brief	SpriteBatchの取得。
-		*@details
-		* ゲーム層では使用しないように。
-		*/
-		/// <summary>
-		/// SpriteBatchの取得
-		/// </summary>
-		/// <remarks>
-		/// エンジン内部で使用されます。ゲーム層では使用しないように。
-		/// </remarks>
-		/// <returns></returns>
+	*@brief	SpriteBatchの取得。
+	*@details
+	* ゲーム層では使用しないように。
+	*/
+	/// <summary>
+	/// SpriteBatchの取得
+	/// </summary>
+	/// <remarks>
+	/// エンジン内部で使用されます。ゲーム層では使用しないように。
+	/// </remarks>
+	/// <returns></returns>
 	DirectX::SpriteBatch* GetSpriteBatch() const
 	{
 		return m_spriteBatch.get();
