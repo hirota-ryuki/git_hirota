@@ -100,7 +100,10 @@ void Player::ChangeState()
 	if (g_pad[0].IsTrigger(enButtonX)) {
 		//弾が減っていたら。
 		if (m_capacity < m_maxCapacity) {
-			m_state = enState_reload;
+			//手持ちの弾数が0じゃなかったら。
+			if (m_stack > 0) {
+				m_state = enState_reload;
+			}
 		}
 	}
 }
@@ -237,10 +240,9 @@ void Player::En_Aim()
 	ChangeState();
 	//R2を押したら撃つ。
 	if (g_pad[0].IsTrigger(enButtonRB2) && m_timer > 20) {
-		
-			//撃つステートに遷移。
-			m_timer = 0;
-			m_state = enState_shot;
+		//撃つステートに遷移。
+		m_timer = 0;
+		m_state = enState_shot;
 	}
 		
 	
@@ -262,7 +264,6 @@ void Player::En_Shot()
 			//ワンショット再生のSE
 			CSoundSource* m_seGunShot = new CSoundSource;
 			m_seGunShot->Init(L"sound/gun/gun_shot.wav");
-			//Aボタンが押されたらSEを鳴らす。
 			m_seGunShot->Play(false);
 		}
 	}
@@ -272,7 +273,6 @@ void Player::En_Shot()
 			//ワンショット再生のSE。
 			CSoundSource* seGunEmpty = new CSoundSource;
 			seGunEmpty->Init(L"sound/gun/gun_empty.wav");
-			//Aボタンが押されたらSEを鳴らす。
 			seGunEmpty->Play(false);
 			m_isEmpty = true;
 		}
@@ -305,7 +305,19 @@ void Player::En_Reload()
 	//アニメーションの再生。
 	m_animation.Play(enAnimationClip_reload, 0.4f);
 
-	m_capacity += m_maxCapacity - m_capacity;
+	//マガジンにこめる弾の数。
+	int reloadbullet = m_maxCapacity - m_capacity;
+	//手持ちの弾数がマガジンにこめられる弾数より少なかったら。
+	if (m_stack < reloadbullet) {
+		//手持ちの弾を全部装填し、
+		m_capacity += m_stack;
+		//手持ちの弾を空にする。
+		m_stack = 0;
+	}
+	else {
+		m_capacity += reloadbullet;
+		m_stack -= reloadbullet;
+	}
 
 	Move();
 	Rotation();

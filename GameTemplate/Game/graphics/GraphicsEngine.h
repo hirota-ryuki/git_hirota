@@ -48,6 +48,24 @@ public:
 	{
 		return m_pd3dDeviceContext;
 	}
+	/// <summary>
+	/// 現在のレンダーステートを保存する関数。
+	/// </summary>
+	void SaveRenderState()
+	{
+		m_pd3dDeviceContext->OMGetDepthStencilState(&m_depthStencilState, &m_depthStencilStateRef);
+		m_pd3dDeviceContext->OMGetBlendState(&m_blendState, m_blendFactor, &m_blendSampleMask);
+		m_pd3dDeviceContext->RSGetState(&m_saveRasterizerState);
+	}
+	/// <summary>
+	/// 保存したステートをロードする関数。
+	/// </summary>
+	void LoadRenderState()
+	{
+		m_pd3dDeviceContext->OMSetDepthStencilState(m_depthStencilState, m_depthStencilStateRef);
+		m_pd3dDeviceContext->OMSetBlendState(m_blendState, m_blendFactor, m_blendSampleMask);
+		m_pd3dDeviceContext->RSSetState(m_saveRasterizerState);
+	}
 	/*!
 	 *@brief	描画開始。
 	 */
@@ -113,6 +131,7 @@ public:
 	{
 		return m_2dSpaceScreenHeight;
 	}
+
 private:
 	D3D_FEATURE_LEVEL		m_featureLevel;				//Direct3D デバイスのターゲットとなる機能セット。
 	ID3D11Device*			m_pd3dDevice = NULL;		//D3D11デバイス。
@@ -122,6 +141,15 @@ private:
 	ID3D11RasterizerState*	m_rasterizerState = NULL;	//ラスタライザステート。
 	ID3D11Texture2D*		m_depthStencil = NULL;		//デプスステンシル。
 	ID3D11DepthStencilView* m_depthStencilView = NULL;	//デプスステンシルビュー。
+
+	////保存用ステート。////
+	ID3D11DepthStencilState*	m_depthStencilState = nullptr;	//!<現在のデプスステンシルステート。
+	UINT						m_depthStencilStateRef;
+	ID3D11RasterizerState*		m_saveRasterizerState = nullptr;//!<現在のラスタライザステート。
+	ID3D11BlendState*			m_blendState = nullptr;			//!<現在のブレンドステート。
+	float						m_blendFactor[4];
+	UINT						m_blendSampleMask;
+
 
 	////フォント////
 	std::unique_ptr<DirectX::SpriteBatch>	m_spriteBatch;				//!<スプライトバッチ。

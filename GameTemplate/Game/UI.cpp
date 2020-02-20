@@ -13,7 +13,7 @@ UI::~UI()
 void UI::OnDestroy()
 {
 	DeleteGO(m_fontCapacity);
-	DeleteGO(m_fontMaxCapacity);
+	DeleteGO(m_fontStack);
 	DeleteGO(m_fontLine);
 }
 
@@ -28,12 +28,12 @@ bool UI::Start()
 	m_fontCapacity->SetPosition({ 500.0f, -290.0f });
 	m_fontCapacity->SetScale(1.0f);
 
-	m_fontMaxCapacity = NewGO<FontRender>(GOPrio_Sprite);
+	m_fontStack = NewGO<FontRender>(GOPrio_Sprite);
 	wchar_t bullet[50];
-	swprintf_s(bullet, L"%d", m_player->GetMaxCapacity());
-	m_fontMaxCapacity->SetText(bullet);
-	m_fontMaxCapacity->SetPosition({ 560.0f, -290.0f });
-	m_fontMaxCapacity->SetScale(0.6f);
+	swprintf_s(bullet, L"%d", m_player->GetStack());
+	m_fontStack->SetText(bullet);
+	m_fontStack->SetPosition({ 560.0f, -290.0f });
+	m_fontStack->SetScale(0.6f);
 
 	m_fontLine = NewGO<FontRender>(GOPrio_Sprite);
 	m_fontLine->SetText(L"|");
@@ -57,4 +57,8 @@ void UI::Update()
 	else{
 		m_fontCapacity->SetColor(CVector4::White());
 	}
+
+	wchar_t allbullet[50];
+	swprintf_s(allbullet, L"%d", m_player->GetStack());
+	m_fontStack->SetText(allbullet);
 }

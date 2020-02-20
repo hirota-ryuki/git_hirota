@@ -14,7 +14,7 @@ private:
 	Game*			m_game = nullptr;				//Gameクラスのインスタンス。
 	Player*			m_player = nullptr;				//Playerクラスのポインタ。
 	FontRender*		m_fontCapacity = nullptr;		//残弾数のフォントレンダー。
-	FontRender*		m_fontMaxCapacity = nullptr;	//装弾数のフォントレンダー。
+	FontRender*		m_fontStack = nullptr;			//装弾数のフォントレンダー。
 	FontRender*		m_fontLine = nullptr;			//区切り線のフォントレンダー。
 };
 

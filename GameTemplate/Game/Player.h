@@ -104,6 +104,13 @@ public:
 	{
 		return m_maxCapacity;
 	}
+	/// <summary>
+	/// プレイヤーの手持ちの総弾数を取得。
+	/// </summary>
+	int GetStack()
+	{
+		return m_stack;
+	}
 private:
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
@@ -149,7 +156,8 @@ private:
 	bool			m_isBullet = false;		//撃ったかどうか。
 	bool			m_isEmpty = false;		//空砲を撃ったかどうか。
 	int				m_capacity = 12;		//残弾数。
-	int				m_maxCapacity = 12;		//装弾数。
+	const int		m_maxCapacity = 12;		//装弾数。
+	int				m_stack = 24;			//手持ちの総弾数。
 	//ダメージ画像関係。
 	SpriteRender*	m_sprite = nullptr;
 	CQuaternion		m_rot = CQuaternion::SpriteRot();

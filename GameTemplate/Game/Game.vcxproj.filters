@@ -19,9 +19,6 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{364dd86b-3f15-4c20-b648-67b3831eda87}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\font">
-      <UniqueIdentifier>{d44b41bc-418b-49e5-8f8b-3178f04fd8f0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\OP">
       <UniqueIdentifier>{bf43ce53-ed89-467a-8612-60ca3562d2b6}</UniqueIdentifier>
     </Filter>
@@ -144,6 +141,9 @@
     </Filter>
     <Filter Include="Game\Player\Player">
       <UniqueIdentifier>{4eaee890-9916-4309-9d9b-e39d858a5f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\font">
+      <UniqueIdentifier>{d44b41bc-418b-49e5-8f8b-3178f04fd8f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -51,7 +51,7 @@ bool Game::Start()
 	swprintf_s(floor, L"floor");
 	//レベル。
 	wchar_t levelname[50];
-	swprintf_s(levelname, L"level/level02.tkl");
+	swprintf_s(levelname, L"level/level00.tkl");
 	LevelObjectData floorObjData;
 	LevelObjectData playerObjData;
 	LevelObjectData goalObjData;
@@ -122,7 +122,6 @@ bool Game::Start()
 	//BGM再生のSE。
 	CSoundSource* m_bgm = new CSoundSource;
 	m_bgm->Init(L"sound/story/bgm.wav");
-	//Aボタンが押されたらSEを鳴らす。
 	m_bgm->Play(true);
 
 	//UIの構築。

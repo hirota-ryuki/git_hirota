@@ -24,8 +24,7 @@ void Font::Begin()
 {
 	//レンダリングステートを退避させる。
 	//問題が起きたら実装してね。
-	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
-	d3dDeviceContext->OMGetDepthStencilState(&m_depthStencilState, &m_depthStencilStateRef);
+	g_graphicsEngine->SaveRenderState();
 
 	m_spriteBatch->Begin(
 		DirectX::SpriteSortMode_Deferred,
@@ -42,9 +41,7 @@ void Font::End()
 	m_spriteBatch->End();
 	//レンダリングステートを復活させる。
 	//問題が起きたら実装してね。
-	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
-	d3dDeviceContext->OMSetDepthStencilState(m_depthStencilState, m_depthStencilStateRef);
-
+	g_graphicsEngine->LoadRenderState();
 }
 void Font::Draw(
 	wchar_t const* text,
