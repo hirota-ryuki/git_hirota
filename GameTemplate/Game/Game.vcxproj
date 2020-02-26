@@ -257,10 +257,10 @@
     <ImageContentTask Include="Assets\sprite\event2.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\pose.png" />
+    <ImageContentTask Include="Assets\sprite\clear.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\clear.png" />
+    <ImageContentTask Include="Assets\sprite\item_menu.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

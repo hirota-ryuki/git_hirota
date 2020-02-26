@@ -19,10 +19,11 @@ private:
 	SpriteRender*	m_sprite = nullptr;					//画像のポインタ。
 	SpriteRender*	m_itemSprite = nullptr;				//アイテムの画像のポインタ。
 	std::vector< CVector3* >		m_itemPosList;		//アイテムの座標配列。
-	std::vector< wchar_t* >			m_itemTexList;		//アイテムのテクスチャの配列。
+	std::vector< const wchar_t* >			m_itemTexList;		//アイテムのテクスチャの配列。
 	std::vector< SpriteRender* >	m_itemSpriteList;	//アイテムのテクスチャの配列。
 	int				m_item = 0;							//アイテムの手持ちの総数。			
 	const int		m_maxItem = 12;						//持てるアイテムの最大数。
 	bool			m_isStart = false;					//スタート画面が表示されているかどうか。
+	bool			m_isNewSprite = false;					//スタート画面が表示されているかどうか。
 };
 

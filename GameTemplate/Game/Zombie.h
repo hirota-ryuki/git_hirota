@@ -110,6 +110,11 @@ private:
 	//攻撃関係。
 	int				m_atkTimer = 0;
 
+	//ヘッドショット用の頭の骨データ。
+	CVector3			m_bonePos = CVector3::Zero();			//骨の座標。
+	CQuaternion			m_boneRot = CQuaternion::Identity();	//骨の回転。
+	CVector3			m_boneScale = CVector3::Zero();			//骨の拡大率。
+
 	//ステータス関係。
-	int				m_hp = 3;		//HP。
+	int				m_hp = 10;		//HP。
 };

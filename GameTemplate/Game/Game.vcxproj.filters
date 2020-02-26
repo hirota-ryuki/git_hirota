@@ -522,7 +522,7 @@
     <ImageContentTask Include="Assets\sprite\event2.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\pose.png">
+    <ImageContentTask Include="Assets\sprite\item_menu.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
   </ItemGroup>

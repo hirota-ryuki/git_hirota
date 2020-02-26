@@ -322,13 +322,27 @@ void Zombie::Attack()
 
 void Zombie::Damage()
 {
+	//“ª‚Æ‚ÌÕ“Ë”»’è‚ğs‚¤B
 	QueryGOs<Bullet>("bullet", [&](Bullet * bullet)->bool {
-		CVector3 pos = m_position;
-		pos.y += 100.0f;
-		CVector3 diff = bullet->GetPos() - pos;
-		if (diff.Length() < 100.0f) {
-			m_hp--;
+		auto& model = m_model->GetModel();
+		auto bone = model.FindBone(L"Head");
+			bone->CalcWorldTRS(m_bonePos, m_boneRot, m_boneScale);
+
+
+		CVector3 diff = bullet->GetPos() - m_bonePos;
+		if (diff.Length() < 20.0f) {
+			m_hp = m_hp - 5;
 			DeleteGO(bullet);
+		}
+		else {
+
+			CVector3 pos = m_position;
+			pos.y += 70.0f;
+			CVector3 diff2 = bullet->GetPos() - pos;
+			if (diff2.Length() < 60.0f) {
+				m_hp--;
+				DeleteGO(bullet);
+			}
 		}
 		return true;
 		});

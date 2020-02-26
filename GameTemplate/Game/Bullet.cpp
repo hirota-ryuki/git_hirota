@@ -29,6 +29,8 @@ bool Bullet::Start()
 	CVector3 l_pos = m_player->GetPos();
 	l_pos.y += 140.0f;
 	m_position = l_pos;
+	m_gamecamera = m_game->GetCamera();
+	m_position = g_camera3D.GetPosition();
 	m_model->SetPos(m_position);
 	//カメラのインスタンスを取得。
 	m_gamecamera = m_game->GetCamera();

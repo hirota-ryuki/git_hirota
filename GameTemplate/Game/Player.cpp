@@ -110,6 +110,7 @@ void Player::ChangeState()
 
 void Player::Move()
 {
+	
 	//左スティックの入力量を受け取る。
 	float lStick_x = g_pad[0].GetLStickXF();
 	float lStick_y = g_pad[0].GetLStickYF();
@@ -135,8 +136,15 @@ void Player::Move()
 		m_moveSpeed += cameraRight * lStick_x * m_runSpeed;			//右方向への移動速度を加算。
 	}
 	else {
-		m_moveSpeed += cameraForward * lStick_y * m_speed;		//奥方向への移動速度を代入。
-		m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。
+		if (m_state == enState_aim) {
+			m_moveSpeed += cameraForward * lStick_y * m_speed / 3.0f;		//奥方向への移動速度を代入。
+			m_moveSpeed += cameraRight * lStick_x * m_speed / 3.0f;		//右方向への移動速度を加算。
+
+		}
+		else {
+			m_moveSpeed += cameraForward * lStick_y * m_speed;		//奥方向への移動速度を代入。
+			m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。
+		}
 	}
 	
 	//キャラクターコントローラーを使用して、座標を更新。
