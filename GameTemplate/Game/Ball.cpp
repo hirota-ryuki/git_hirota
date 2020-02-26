@@ -29,7 +29,6 @@ bool Ball::Start()
 
 void Ball::Update()
 {
-
 	//Bƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚çB
 	if (g_pad[0].IsTrigger(enButtonB))
 	{
