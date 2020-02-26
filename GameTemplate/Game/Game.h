@@ -6,6 +6,7 @@ class Floor;
 class Player;
 class Goal;
 class Zombie;
+class Ball;
 class Result;
 class Pose;
 class Opening;
@@ -86,6 +87,7 @@ private:
 	Player*			m_player = nullptr;		//Playerクラスのポインタ。
 	Goal*			m_goal = nullptr;		//Goalクラスのポインタ。
 	Zombie*			m_zombie = nullptr;		//Zombieクラスのポインタ。
+	Ball*			m_ball = nullptr;		//Ballクラスのポインタ。
 	Pose*			m_pose = nullptr;		//Poseクラスのポインタ。
 	Opening*		m_op = nullptr;			//Openingクラスのポインタ。
 	Result*			m_result = nullptr;		//Resultクラスのポインタ。

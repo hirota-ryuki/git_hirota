@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Goal.h"
 #include "Zombie.h"
+#include "Ball.h"
 #include "Result.h"
 #include "Pose.h"
 #include "Opening.h"
@@ -56,6 +57,7 @@ bool Game::Start()
 	LevelObjectData playerObjData;
 	LevelObjectData goalObjData;
 	std::vector<LevelObjectData> zombieObjDatas;
+	std::vector<LevelObjectData> ballObjDatas;
 	m_level.Init(
 		levelname,
 		[&](LevelObjectData& objData) {
@@ -78,6 +80,11 @@ bool Game::Start()
 		if (wcscmp(objData.name, L"zombie") == 0) {
 			//配置しようとしているオブジェクトはゾンビ。
 			zombieObjDatas.push_back(objData);
+			return true;
+		}
+		if (objData.ForwardMatchName(L"ball")) {
+			//配置しようとしているオブジェクトはボール。
+			ballObjDatas.push_back(objData);
 			return true;
 		}
 		return false;
@@ -111,6 +118,15 @@ bool Game::Start()
 		//配置情報から座標と回転をステージに渡す。
 		m_zombie->SetPos(objData.position);
 		m_zombie->SetRot(objData.rotation);
+	}
+	
+	//ボールを構築。
+	for (auto& objData : ballObjDatas) {
+		m_ball = NewGO<Ball>(GOPrio_Defalut, "ball");
+		//配置情報から座標と回転をステージに渡す。
+		m_ball->SetPos(objData.position);
+		m_ball->SetRot(objData.rotation);
+		m_ball->SetNomber(_wtoi(&objData.name[11]));
 	}
 
 	//ポーズを構築。
@@ -154,7 +170,6 @@ void Game::Update()
 		//ワンショット再生のSE
 		CSoundSource* m_se = new CSoundSource;
 		m_se->Init(L"sound/story/decision.wav");
-		//Aボタンが押されたらSEを鳴らす。
 		m_se->Play(false);
 	}
 }

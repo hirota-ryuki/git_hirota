@@ -32,7 +32,6 @@ bool Goal::Start()
 
 void Goal::Update()
 {
-	m_model->SetData(m_position, m_rotation);
 	CVector3 diff = m_player->GetPos() - m_position;
 	if (diff.Length() < 100.0f) {
 		m_game->Clear();

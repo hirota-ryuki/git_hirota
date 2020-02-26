@@ -315,6 +315,7 @@
     <ClCompile Include="Player.cpp">
       <Filter>Game\Player\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Ball.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -494,6 +495,7 @@
     <ClInclude Include="Player.h">
       <Filter>Game\Player\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Ball.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
