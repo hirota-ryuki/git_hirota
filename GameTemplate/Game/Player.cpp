@@ -110,7 +110,6 @@ void Player::ChangeState()
 
 void Player::Move()
 {
-	
 	//左スティックの入力量を受け取る。
 	float lStick_x = g_pad[0].GetLStickXF();
 	float lStick_y = g_pad[0].GetLStickYF();
@@ -132,15 +131,18 @@ void Player::Move()
 
 	//走っているかどうか判定。
 	if (m_isRun) {
+		//走っている。
 		m_moveSpeed += cameraForward * lStick_y * m_runSpeed;		//奥方向への移動速度を代入。
 		m_moveSpeed += cameraRight * lStick_x * m_runSpeed;			//右方向への移動速度を加算。
 	}
 	else {
-		if (m_state == enState_aim) {
+		//エイムしているときは遅くする。
+		if (m_state == enState_aim|| m_state == enState_reload) {
 			m_moveSpeed += cameraForward * lStick_y * m_speed / 3.0f;		//奥方向への移動速度を代入。
 			m_moveSpeed += cameraRight * lStick_x * m_speed / 3.0f;		//右方向への移動速度を加算。
 
 		}
+		//歩いている。
 		else {
 			m_moveSpeed += cameraForward * lStick_y * m_speed;		//奥方向への移動速度を代入。
 			m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。
@@ -203,7 +205,8 @@ void Player::En_Walk()
 {
 	//アニメーションの再生。
 	//完全に横移動だったら。
-	if (g_pad[0].GetLStickYF() == 0.0f) {
+	if (g_pad[0].GetLStickYF() < 0.2f&&g_pad[0].GetLStickYF() > -0.2f)
+	{
 		//左。
 		if (g_pad[0].GetLStickXF() > 0.0f) {
 			m_animation.Play(enAnimationClip_walk_left, 0.4f);
@@ -215,11 +218,11 @@ void Player::En_Walk()
 	}
 
 	//前。
-	if (g_pad[0].GetLStickYF() > 0.0f) {
+	if (g_pad[0].GetLStickYF() > 0.2f) {
 		m_animation.Play(enAnimationClip_walk, 0.4f);
 	}
 	//バック。
-	if (g_pad[0].GetLStickYF() < 0.0f) {
+	if (g_pad[0].GetLStickYF() < -0.2f) {
 		m_animation.Play(enAnimationClip_back, 0.4f);
 	}
 
@@ -339,7 +342,7 @@ void Player::Rotation()
 {
 	//右スティックの入力量で、加算する回転クォータニオンを作る。
 	CQuaternion qAddRot;
-	qAddRot.SetRotationDeg(CVector3::AxisY(), 4.0f*g_pad[0].GetRStickXF());
+	qAddRot.SetRotationDeg(CVector3::AxisY(), 2.0f*g_pad[0].GetRStickXF());
 	m_rotation.Multiply(qAddRot, m_rotation);
 }
 

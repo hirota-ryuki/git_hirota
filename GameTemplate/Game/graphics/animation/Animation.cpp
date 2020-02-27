@@ -138,6 +138,7 @@ void Animation::UpdateGlobalPose()
 		boneMatrix.Mul(scaleMatrix, rotMatrix);
 		boneMatrix.Mul(boneMatrix, transMat);
 		
+		//‚±‚±‚Éã‚Ìœ‚¾‚Á‚½‚ç‚Æ‰º‚Ìœ‚¾‚Á‚½‚ç‚Ì•ªŠò‚ð‘‚­B
 		m_skeleton->SetBoneLocalMatrix(
 			boneNo,
 			boneMatrix

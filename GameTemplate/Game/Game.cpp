@@ -167,9 +167,7 @@ void Game::Update()
 	//Aボタンを押したら。
 	if (g_pad[0].IsTrigger(enButtonA))
 	{
-		//ワンショット再生のSE
-		CSoundSource* m_se = new CSoundSource;
-		m_se->Init(L"sound/story/decision.wav");
-		m_se->Play(false);
+
+		m_pose->AddItem(L"ball");
 	}
 }

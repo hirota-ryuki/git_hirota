@@ -48,11 +48,13 @@ bool Zombie::Start()
 	m_animationClip[enAnimationClip_idle].Load(L"animData/zombie/idle.tka");
 	m_animationClip[enAnimationClip_walk].Load(L"animData/zombie/walk.tka");
 	m_animationClip[enAnimationClip_attack].Load(L"animData/zombie/attack.tka");
+	m_animationClip[enAnimationClip_knockback].Load(L"animData/zombie/knockback.tka");
 	m_animationClip[enAnimationClip_death].Load(L"animData/zombie/death.tka");
 	//ループフラグを設定する。
 	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_walk].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_attack].SetLoopFlag(false);
+	m_animationClip[enAnimationClip_knockback].SetLoopFlag(false);
 	m_animationClip[enAnimationClip_death].SetLoopFlag(false);
 	//アニメーション初期化。
 	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
@@ -71,7 +73,7 @@ void Zombie::Update()
 			//アニメーションの再生。
 			m_animation.Play(enAnimationClip_idle, 0.2f);
 
-			//攻撃後のクールタイム。
+			//攻撃後とノックバック後のクールタイム。
 			if (m_coolTimer > 0) {
 				m_coolTimer++;
 				if (m_coolTimer > 50) {
@@ -103,6 +105,16 @@ void Zombie::Update()
 				m_state = enState_idle;
 				m_coolTimer++;
 				m_atkTimer = 0;
+			}
+			break;
+		case enAnimationClip_knockback:
+			//アニメーションの再生。
+			m_animation.Play(enAnimationClip_knockback, 0.1f);
+			//アニメーションの再生中じゃなかったら。
+			if (!m_animation.IsPlaying()) {
+				//待機状態に遷移。
+				m_state = enState_idle;
+				m_coolTimer++;
 			}
 			break;
 		case enState_death:
@@ -186,58 +198,76 @@ void Zombie::ChangeState()
 
 void Zombie::Move()
 {
-	//A*を行っていなかったら。
-	if (!m_isAstar)
-	{
-		//A*を行う。
-		Astar();
-		m_isAstar = true;
+	//プレイヤーとの距離が近かったら。
+	CVector3 diff = m_player->GetPos() - m_position;
+	//A*をしない。
+	if (diff.Length() < 400.f) {
+		CVector3 moveDirection = m_player->GetPos() - m_position;
+		moveDirection.y = 0.0f;
+		moveDirection.Normalize();
+		m_moveSpeed = moveDirection * m_speed;		//移動速度を加算。
+
+		//キャラクターコントローラーを使用して、座標を更新。
+		m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
+
+		//回転。
+		Rotation();
 	}
-	else
-	{
-		//配列の最後までパスを読み込む。
-		//ゴール地点に行くまで移動を続ける。
-		if (m_itr != m_moveList.end()) {
-			//パスに向かうまでじわじわと移動。
-			//移動する向き。
-			CVector3 moveDirection = *m_itr - m_position;
-			moveDirection.y = 0.0f;
-			moveDirection.Normalize();
-			m_moveSpeed = moveDirection * m_speed;		//移動速度を加算。
+	//A*をする。
+	else {
+		//A*を行っていなかったら。
+		if (!m_isAstar)
+		{
+			//A*を行う。
+			Astar();
+			m_isAstar = true;
 
-			//キャラクターコントローラーを使用して、座標を更新。
-			m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
-
-			//回転。
-			Rotation();
-
-			CVector3 diff = *m_itr - m_position;
-			if (diff.Length() < 100.0f) { //todo バグの元
-				m_isPoint = true;
-			}
-			
-			CVector3 endDiff = m_player->GetPos() - m_position;
-			if (endDiff.Length() < 200.0f) {
-				//プレイヤーの近くに来たらA*強制終了。
-				m_isAstar = false;
-			}
-			//n番目のパスに着いたら。
-			//n = m_moveListの要素の場所（今移動しようとしているパスの場所）。
-			if (m_isPoint)
-			{
-				//次のパスを指し示す。
-				m_itr++;
-				//フラグをリセット。
-				m_isPoint = false;
-			}
 		}
 		else
 		{
-			//移動終了。
-			m_isAstar = false;
+			//配列の最後までパスを読み込む。
+			//ゴール地点に行くまで移動を続ける。
+			if (m_itr != m_moveList.end()) {
+				//パスに向かうまでじわじわと移動。
+				//移動する向き。
+				CVector3 moveDirection = *m_itr - m_position;
+				moveDirection.y = 0.0f;
+				moveDirection.Normalize();
+				m_moveSpeed = moveDirection * m_speed;		//移動速度を加算。
+
+				//キャラクターコントローラーを使用して、座標を更新。
+				m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
+
+				//回転。
+				Rotation();
+
+				CVector3 diff = *m_itr - m_position;
+				if (diff.Length() < 100.0f) { //todo バグの元
+					m_isPoint = true;
+				}
+
+				CVector3 endDiff = m_player->GetPos() - m_position;
+				if (endDiff.Length() < 200.0f) {
+					//プレイヤーの近くに来たらA*強制終了。
+					m_isAstar = false;
+				}
+				//n番目のパスに着いたら。
+				//n = m_moveListの要素の場所（今移動しようとしているパスの場所）。
+				if (m_isPoint)
+				{
+					//次のパスを指し示す。
+					m_itr++;
+					//フラグをリセット。
+					m_isPoint = false;
+				}
+			}
+			else
+			{
+				//移動終了。
+				m_isAstar = false;
+			}
 		}
 	}
-	
 }
 
 void Zombie::Astar()
@@ -324,18 +354,19 @@ void Zombie::Damage()
 {
 	//頭との衝突判定を行う。
 	QueryGOs<Bullet>("bullet", [&](Bullet * bullet)->bool {
+		//頭の骨の読み込み。
 		auto& model = m_model->GetModel();
 		auto bone = model.FindBone(L"Head");
-			bone->CalcWorldTRS(m_bonePos, m_boneRot, m_boneScale);
-
-
+		bone->CalcWorldTRS(m_bonePos, m_boneRot, m_boneScale);
+		//頭の判定。
 		CVector3 diff = bullet->GetPos() - m_bonePos;
 		if (diff.Length() < 20.0f) {
 			m_hp = m_hp - 5;
+			m_state = enState_knockback;
 			DeleteGO(bullet);
 		}
+		//体の判定。
 		else {
-
 			CVector3 pos = m_position;
 			pos.y += 70.0f;
 			CVector3 diff2 = bullet->GetPos() - pos;
