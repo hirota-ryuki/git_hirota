@@ -175,8 +175,6 @@ bool Game::Start()
 	m_bgm->Init(L"sound/story/bgm.wav");
 	m_bgm->Play(true);
 
-	
-
 	return true;
 }
 

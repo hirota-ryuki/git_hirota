@@ -38,7 +38,6 @@ bool Ball::Start()
 
 void Ball::Update()
 {
-
 	CVector3 diff = m_player->GetPos() - m_position;
 	if (diff.Length() < 100.0f) {
 		//Bƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½‚çB
