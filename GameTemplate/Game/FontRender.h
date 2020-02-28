@@ -93,6 +93,13 @@ public:
 	{
 		m_pivot = pivot;
 	}
+	/// <summary>
+	/// 描画するかどうか。
+	/// </summary>
+	void ChangeActive()
+	{
+		m_isActive = !m_isActive;
+	}
 private:
 	void DrawFont() override;
 private:
@@ -104,5 +111,5 @@ private:
 	float m_rotation = 0.0f;				//!<回転。
 	float m_scale = 1.0f;					//!<拡大率。
 	CVector2 m_pivot;						//!<ピボット。
+	bool		m_isActive = true;			//画像がドローされているかどうか。
 };
-
