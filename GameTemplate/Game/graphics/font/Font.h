@@ -61,6 +61,13 @@ public:
 		m_shadowOffset = shadowOffset;
 		m_shadowColor = shadowColor;
 	}*/
+	/// <summary>
+	/// 描画するかどうか。
+	/// </summary>
+	void ChangeActive()
+	{
+		m_isActive = !m_isActive;
+	}
 private:
 	DirectX::SpriteBatch*	m_spriteBatch = nullptr;		//!<スプライトバッチ。
 	DirectX::SpriteFont*	m_spriteFont = nullptr;			//!<スプライトフォント。
@@ -74,4 +81,6 @@ private:
 	//
 	ID3D11Device* device;
 	ID3D11DeviceContext* context;
+	bool		m_isActive = true;				//画像がドローされているかどうか。
+
 };

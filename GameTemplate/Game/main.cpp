@@ -48,16 +48,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//GameObjectManagerの更新
 		GameObjectManager::GetInstance().Update();
 
-		//ボタンで切り替え
-		if (g_pad[0].IsTrigger(enButtonSelect))
-		{
-			m_isDebug = !m_isDebug;
-		}
-		if (m_isDebug)
-		{
-			//デバッグモード
-			g_physics.DebugDraw();
-		}
+		////ボタンで切り替え
+		//if (g_pad[0].IsTrigger(enButtonSelect))
+		//{
+		//	m_isDebug = !m_isDebug;
+		//}
+		//if (m_isDebug)
+		//{
+		//	//デバッグモード
+		//	g_physics.DebugDraw();
+		//}
 
 		//描画終了。
 		g_graphicsEngine->EndRender();

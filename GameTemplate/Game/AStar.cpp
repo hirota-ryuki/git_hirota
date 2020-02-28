@@ -13,22 +13,26 @@ AStar::~AStar()
 
 void AStar::AstarSearch(Cell* startcell, Cell* endcell)
 {
-	//リストを初期化
+	//リストを初期化。
 	m_openList.clear();
 	m_closeList.clear();
 
-	//スタートから現在地までのコストの初期化
+	//スタートから現在地までのコストの初期化。
 	startcell->costFromStart = 0;
-	//現在地からゴールまでのコストの計算
+	//現在地からゴールまでのコストの計算。
 	startcell->costToGoal = Length(startcell, endcell);
-	//親のセルの初期化
+	//親のセルの初期化。
 	startcell->parentCell = NULL;
-	//オープンリストに登録
+	//オープンリストに登録。
 	m_openList.push_back(startcell);
 	bool isSuccess = false;
-	//オープンリストが空になるまで
+	//クラッシュを防ぐため。
+	int crashCount = 0;
+	//オープンリストが空になるまで。
 	while (m_openList.empty() != true)
 	{
+		//カウント。
+		crashCount++;
 		//オープンリストの最初のセル
 		Cell* cell = m_openList[0];
 		//最終的なコストの計算
@@ -42,63 +46,67 @@ void AStar::AstarSearch(Cell* startcell, Cell* endcell)
 				cell = m_openList[i];
 			}
 		}
-		//このセルがゴールだったら
+		//このセルがゴールだったら。
 		if (cell == endcell) {
-			//終了
+			//終了。
 			isSuccess = true;
 			break;
 		}
-		//除外
+		//除外。
 		for (auto it = m_openList.begin(); it != m_openList.end(); it++) {
 			if (*it == cell) {
-				//オープンリストから削除
+				//オープンリストから削除。
 				m_openList.erase(it);
 				break;
 			}
 		}
-		//クローズリストに登録
+		//クローズリストに登録。
 		cell->state = Cell::State_Closed; //閉じる。
 		m_closeList.push_back(cell);
 		//このセルにリンクしているセルのコストを計算して、オープンリストに積む。
 		for (int i = 0; i < 3; i++)
 		{
-			//セルが隣接していたら
+			//セルが隣接していたら。
 			if (cell->linkCells[i] != NULL)
 			{
 				Cell* link = cell->linkCells[i];
 			
-				//リストの最後まで行ったら
+				//リストの最後まで行ったら。
 				if (link->state ==Cell::State_NotResearch) { //未調査なら
 					//スタートから調査していたセルの距離と
-					//調査していたセルと隣接セルの距離を足す
+					//調査していたセルと隣接セルの距離を足す。
 					link->costFromStart = cell->costFromStart + Length(cell, link);
-					//隣接セルとゴールまでの距離
+					//隣接セルとゴールまでの距離。
 					link->costToGoal = Length(link, endcell);
-					//調査していたセルを親として登録
+					//調査していたセルを親として登録。
 					link->parentCell = cell;
-					//オープンリストに隣接セルを登録
+					//オープンリストに隣接セルを登録。
 					link->state = Cell::State_Opened; //オープンリストに積まれた。
 					m_openList.push_back(link);
 				}
 
 			}
 		}
+		//60回ループしたら強制終了。
+		if (crashCount == 600) {
+			break;
+		}
 	}
 	m_moveCellListTmp.clear();
 	if (isSuccess) {
-		//経路を格納
+		//経路を格納。
 		Cell* cell = endcell;
 		while (true)
 		{
-			//セルの重心を格納
+			//セルの重心を格納。
 			m_moveCellListTmp.push_back(cell->centerPos);
 
-			//調査しているセルがスタート地点だったら終わり
+			//調査しているセルがスタート地点だったら終わり。
 			if (cell == startcell)
 			{
 				break;
 			}
-			//セルの親を格納
+			//セルの親を格納。
 			cell = cell->parentCell;
 		}
 		//要素はゴール地点からスタート地点までの順番で格納されているので反転させる。
@@ -125,9 +133,9 @@ float AStar::Length(Cell * startcell, Cell * endcell)
 
 struct CallBack : public btCollisionWorld::ConvexResultCallback
 {
-	//障害物があるかないか判定
+	//障害物があるかないか判定。
 	bool isHit = false;
-	//衝突したら勝手に呼んでくれる
+	//衝突したら勝手に呼んでくれる。
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
 		if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Map) {
@@ -157,14 +165,18 @@ void AStar::Smoothing()
 	bool isFirst = false;
 	//移動可能な座標を記憶しておくため。
 	CVector3 oldPos = startPos;
+	//クラッシュを防ぐため。
+	int crashCount = 0;
 	while (1) {
-		//コリジョンの移動の始点と終点の設定
+		//カウント。
+		crashCount++;
+		//コリジョンの移動の始点と終点の設定。
 		btTransform start, end;
 		{
-			//回転の設定
+			//回転の設定。
 			start.setIdentity();
 			end.setIdentity();
-			//座標の設定
+			//座標の設定。
 			CVector3 endPos = *m_itr;
 			start.setOrigin(btVector3(startPos.x, startPos.y + 20.f, startPos.z));
 			end.setOrigin(btVector3(endPos.x, startPos.y + 20.f, endPos.z));
@@ -190,6 +202,10 @@ void AStar::Smoothing()
 			startPos = oldPos;
 			//移動先を格納。
 			m_moveCellList.push_back(startPos);
+			break;
+		}
+		//15回ループしたら強制終了。
+		if (crashCount == 600) {
 			break;
 		}
 	}

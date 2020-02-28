@@ -7,6 +7,8 @@ class Player;
 class Goal;
 class Zombie;
 class Ball;
+class RockDoor;
+class BulletStack;
 class Result;
 class Pose;
 class Opening;
@@ -53,6 +55,10 @@ public:
 	{
 		return m_floor;
 	}
+	Pose* GetPose()
+	{
+		return m_pose;
+	}
 	/// <summary>
 	/// クリアしたときに呼び出す関数。
 	/// </summary>
@@ -88,6 +94,8 @@ private:
 	Goal*			m_goal = nullptr;		//Goalクラスのポインタ。
 	Zombie*			m_zombie = nullptr;		//Zombieクラスのポインタ。
 	Ball*			m_ball = nullptr;		//Ballクラスのポインタ。
+	RockDoor*		m_rockdoor = nullptr;	//RockDoorクラスのポインタ。
+	BulletStack*	m_bs = nullptr;			//BulletStackクラスのポインタ。
 	Pose*			m_pose = nullptr;		//Poseクラスのポインタ。
 	Opening*		m_op = nullptr;			//Openingクラスのポインタ。
 	Result*			m_result = nullptr;		//Resultクラスのポインタ。

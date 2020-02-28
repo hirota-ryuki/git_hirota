@@ -73,21 +73,6 @@
     <Filter Include="Engine\graphics\SkinModel">
       <UniqueIdentifier>{290bb6f3-adc4-450d-8379-76021beeed51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\graphics\SkinModel\SkinModel">
-      <UniqueIdentifier>{1fd76b8e-43d5-49b1-b9e4-21cdac30250a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\graphics\SkinModel\SkinModelDataManager">
-      <UniqueIdentifier>{8d889623-597c-49bd-b33f-6f6138b86b10}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\graphics\SkinModel\SkinModelEffect">
-      <UniqueIdentifier>{f8bc32ee-5f0f-46d0-9647-5a9bc79ce919}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\graphics\SkinModel\SkinModelRender">
-      <UniqueIdentifier>{4d568310-b5dd-4f21-89a2-5a92a89db297}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\graphics\SkinModel\SkinModelShaderConst">
-      <UniqueIdentifier>{5d23801b-7af8-4eeb-8a71-21a8fbc996da}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\level">
       <UniqueIdentifier>{73eacaf4-a5db-4539-ab55-83b9c5d4807c}</UniqueIdentifier>
     </Filter>
@@ -144,6 +129,15 @@
     </Filter>
     <Filter Include="Engine\font">
       <UniqueIdentifier>{d44b41bc-418b-49e5-8f8b-3178f04fd8f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Ball">
+      <UniqueIdentifier>{814a6cea-a4d6-4ed3-a046-6ea2cdcfd541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\BulletStack">
+      <UniqueIdentifier>{557bc44e-5784-48b9-a4cf-0b32c24a0417}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\RockDoor">
+      <UniqueIdentifier>{29c3b63b-d8c9-4ba0-9af5-c81ff6ea5ab9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -243,18 +237,6 @@
     <ClCompile Include="graphics\Skeleton.cpp">
       <Filter>Engine\graphics\Skeleton</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\SkinModel.cpp">
-      <Filter>Engine\graphics\SkinModel\SkinModel</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModelDataManager.cpp">
-      <Filter>Engine\graphics\SkinModel\SkinModelDataManager</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModelEffect.cpp">
-      <Filter>Engine\graphics\SkinModel\SkinModelEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="SkinModelRender.cpp">
-      <Filter>Engine\graphics\SkinModel\SkinModelRender</Filter>
-    </ClCompile>
     <ClCompile Include="AStar.cpp">
       <Filter>Game\Enemy\AStar</Filter>
     </ClCompile>
@@ -315,7 +297,27 @@
     <ClCompile Include="Player.cpp">
       <Filter>Game\Player\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Ball.cpp">
+      <Filter>Game\Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletStack.cpp">
+      <Filter>Game\BulletStack</Filter>
+    </ClCompile>
+    <ClCompile Include="RockDoor.cpp">
+      <Filter>Game\RockDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\SkinModel.cpp">
+      <Filter>Engine\graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\SkinModelDataManager.cpp">
+      <Filter>Engine\graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\SkinModelEffect.cpp">
+      <Filter>Engine\graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinModelRender.cpp">
+      <Filter>Engine\graphics\SkinModel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -423,21 +425,6 @@
     <ClInclude Include="graphics\Skeleton.h">
       <Filter>Engine\graphics\Skeleton</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\SkinModel.h">
-      <Filter>Engine\graphics\SkinModel\SkinModel</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelDataManager.h">
-      <Filter>Engine\graphics\SkinModel\SkinModelDataManager</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelEffect.h">
-      <Filter>Engine\graphics\SkinModel\SkinModelEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="SkinModelRender.h">
-      <Filter>Engine\graphics\SkinModel\SkinModelRender</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelShaderConst.h">
-      <Filter>Engine\graphics\SkinModel\SkinModelShaderConst</Filter>
-    </ClInclude>
     <ClInclude Include="AStar.h">
       <Filter>Game\Enemy\AStar</Filter>
     </ClInclude>
@@ -495,7 +482,30 @@
     <ClInclude Include="Player.h">
       <Filter>Game\Player\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Ball.h" />
+    <ClInclude Include="Ball.h">
+      <Filter>Game\Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletStack.h">
+      <Filter>Game\BulletStack</Filter>
+    </ClInclude>
+    <ClInclude Include="RockDoor.h">
+      <Filter>Game\RockDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModel.h">
+      <Filter>Engine\graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelDataManager.h">
+      <Filter>Engine\graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelEffect.h">
+      <Filter>Engine\graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinModelRender.h">
+      <Filter>Engine\graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelShaderConst.h">
+      <Filter>Engine\graphics\SkinModel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
@@ -546,6 +556,15 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\bullet\bullet.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\ball\ball.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\rockdoor\rockdoor.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\bulletstack\bulletstack.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>

@@ -1,5 +1,8 @@
 #pragma once
 #include "IGameObject.h"
+class Player;
+class Pose;
+
 class Ball :
 	public IGameObject
 {
@@ -38,5 +41,8 @@ private:
 	CVector3			m_position = CVector3::Zero();			//座標。
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
 	int					m_nomber = 0;							//識別番号。		
+	Game*				m_game = nullptr;						//Gameのポインタ。
+	Player*				m_player = nullptr;						//プレイヤークラスのポインタ。
+	Pose*				m_pose = nullptr;
 };
 

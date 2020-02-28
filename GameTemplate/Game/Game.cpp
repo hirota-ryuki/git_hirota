@@ -6,6 +6,8 @@
 #include "Goal.h"
 #include "Zombie.h"
 #include "Ball.h"
+#include "RockDoor.h"
+#include "BulletStack.h"
 #include "Result.h"
 #include "Pose.h"
 #include "Opening.h"
@@ -43,6 +45,9 @@ void Game::OnDestroy()
 	DeleteGOs("mapchip");
 	DeleteGO(m_pose);
 	DeleteGO(m_ui);
+	DeleteGO(m_rockdoor);
+	DeleteGOs("bulletstack");
+	DeleteGOs("ball");
 }
 
 bool Game::Start()
@@ -56,8 +61,10 @@ bool Game::Start()
 	LevelObjectData floorObjData;
 	LevelObjectData playerObjData;
 	LevelObjectData goalObjData;
+	LevelObjectData rockdoorObjData;
 	std::vector<LevelObjectData> zombieObjDatas;
 	std::vector<LevelObjectData> ballObjDatas;
+	std::vector<LevelObjectData> bulletstackObjDatas;
 	m_level.Init(
 		levelname,
 		[&](LevelObjectData& objData) {
@@ -85,6 +92,16 @@ bool Game::Start()
 		if (objData.ForwardMatchName(L"ball")) {
 			//配置しようとしているオブジェクトはボール。
 			ballObjDatas.push_back(objData);
+			return true;
+		}
+		if (objData.ForwardMatchName(L"rockdoor")) {
+			//配置しようとしているオブジェクトはボール。
+			rockdoorObjData = objData;
+			return true;
+		}
+		if (objData.ForwardMatchName(L"bulletstack")) {
+			//配置しようとしているオブジェクトはボール。
+			bulletstackObjDatas.push_back(objData);
 			return true;
 		}
 		return false;
@@ -120,14 +137,32 @@ bool Game::Start()
 		m_zombie->SetRot(objData.rotation);
 	}
 	
+	//UIの構築。
+	m_ui = NewGO<UI>(GOPrio_Defalut);
+	
 	//ボールを構築。
 	for (auto& objData : ballObjDatas) {
 		m_ball = NewGO<Ball>(GOPrio_Defalut, "ball");
 		//配置情報から座標と回転をステージに渡す。
 		m_ball->SetPos(objData.position);
 		m_ball->SetRot(objData.rotation);
-		m_ball->SetNomber(_wtoi(&objData.name[11]));
+		//m_ball->SetNomber(_wtoi(&objData.name[11]));
 	}
+	
+	//弾薬を構築。
+	for (auto& objData : bulletstackObjDatas) {
+		m_bs = NewGO<BulletStack>(GOPrio_Defalut, "bulletstack");
+		//配置情報から座標と回転をステージに渡す。
+		m_bs->SetPos(objData.position);
+		m_bs->SetRot(objData.rotation);
+		//m_ball->SetNomber(_wtoi(&objData.name[11]));
+	}
+
+	//ドアを構築。
+	m_rockdoor = NewGO<RockDoor>(GOPrio_Defalut);
+	//配置情報から座標と回転をステージに渡す。
+	m_rockdoor->SetPos(rockdoorObjData.position);
+	m_rockdoor->SetRot(rockdoorObjData.rotation);
 
 	//ポーズを構築。
 	m_pose = NewGO<Pose>(GOPrio_Defalut);
@@ -140,8 +175,7 @@ bool Game::Start()
 	m_bgm->Init(L"sound/story/bgm.wav");
 	m_bgm->Play(true);
 
-	//UIの構築。
-	m_ui = NewGO<UI>(GOPrio_Defalut);
+	
 
 	return true;
 }
@@ -167,7 +201,5 @@ void Game::Update()
 	//Aボタンを押したら。
 	if (g_pad[0].IsTrigger(enButtonA))
 	{
-
-		m_pose->AddItem(L"ball");
 	}
 }

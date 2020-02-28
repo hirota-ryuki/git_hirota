@@ -188,6 +188,11 @@ void Player::Update()
 		m_animation.Update(1.f / 60.f);
 		//ワールド行列の更新。
 		m_model->SetData(m_position, m_rotation);
+		auto dir = g_camera3D.GetForward();
+		dir.y = 0.0f;
+		dir.Normalize();
+		dir.y -= 0.2f;
+		m_model->SetLight(0, dir);
 	}
 }
 

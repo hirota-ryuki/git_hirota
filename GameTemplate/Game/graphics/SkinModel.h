@@ -77,6 +77,10 @@ public:
 			}
 		}
 	}
+	void SetLight(int light,CVector4 direction) {
+		m_light.directionLight.direction[light] = direction;
+		m_light.directionLight.direction[light].Normalize();
+	}
 	/*!
 	*@brief	SRVのレジスタ番号。
 	*/

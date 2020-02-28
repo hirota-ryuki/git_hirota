@@ -67,6 +67,10 @@ public:
 	{
 		return m_forward;
 	}
+	void SetLight(int light, CVector4 direction) {
+		m_model.SetLight(light, direction);
+	}
+
 private:
 	SkinModel m_model;									//スキンモデル。
 	CVector3 m_pos = CVector3::Zero();

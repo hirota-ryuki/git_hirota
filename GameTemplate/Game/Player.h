@@ -111,6 +111,13 @@ public:
 	{
 		return m_stack;
 	}
+	/// <summary>
+	/// プレイヤーの手持ちの総弾数を足す。
+	/// </summary>
+	void AddStack(int bullet)
+	{
+		m_stack += bullet;
+	}
 private:
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。

@@ -36,13 +36,25 @@ public:
 	//	}*/
 	//	m_itemInfo.m_texFIlePath = textureFIlePath;
 	//}
-	void AddItem(const wchar_t* itemname);
+	//void AddItem(const wchar_t* itemname);
+	int GetItemCount(){
+		return m_itemCount;
+	}
+	void AddItemCount(){
+		m_itemCount++;
+	}
 private:
 	SpriteRender*	m_sprite = nullptr;			//画像のポインタ。
-	ItemInfo_Font	m_itemList[12];
-	FontPos			m_posList[12];
 	bool			m_isStart = false;			//スタート画面が表示されているかどうか。
-	int				m_allItemCount = 0;			//アイテムの種類の数。
+	FontRender*		m_itemNameFont = nullptr;	//アイテム名のフォント。
+	FontRender*		m_itemCountfont = nullptr;	//アイテムの個数のフォント。
+	int				m_itemCount = 0;	//このアイテムの個数。
+
+
+	//ItemInfo_Font	m_itemList[12];
+	//FontPos			m_posList[12];
+	//bool			m_isStart = false;			//スタート画面が表示されているかどうか。
+	//int				m_allItemCount = 0;			//アイテムの種類の数。
 
 	//SpriteRender*	m_itemSprite = nullptr;				//アイテムの画像のポインタ。
 	//std::vector< CVector3* >		m_itemPosList;		//アイテムの座標配列。

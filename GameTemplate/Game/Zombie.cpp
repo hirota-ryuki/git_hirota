@@ -123,7 +123,8 @@ void Zombie::Update()
 			//アニメーションの再生中じゃなかったら。
 			if (!m_animation.IsPlaying())
 			{
-				DeleteGO(this);
+				//DeleteGO(this);
+				m_charaCon.RemoveRigidBoby();
 			}
 			break;
 		default:
@@ -194,6 +195,18 @@ void Zombie::ChangeState()
 			m_state = enState_walk;
 		}
 	}
+	//else {
+	//	if (m_isFind) {
+	//		//歩行状態に遷移。
+	//		m_state = enState_walk;
+	//	}
+	//}
+	//else if(diff.Length() < 3000.0f){
+	//	if (m_isFind) {
+	//		//歩行状態に遷移。
+	//		m_state = enState_walk;
+	//	}
+	//}
 }
 
 void Zombie::Move()

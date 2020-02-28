@@ -37,8 +37,10 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 //ディレクションライトの初期化。
 void SkinModel::InitDirectionLight()
 {
-	m_light.directionLight.direction[0] = { 1.f, 0.f, 0.f, 0.f };
-	m_light.directionLight.color[0] = { 1.f, 1.f, 1.f, 1.f };
+	m_light.directionLight.direction[0] = { 1.f, -1.f, 0.f, 0.f };
+	m_light.directionLight.direction[0].Normalize();
+	m_light.directionLight.color[0] = { 1.2f, 1.2f, 1.2f, 0.2f };
+	m_light.ambientLight.Set(0.4f, 0.4f, 0.4f);
 	m_light.specPow = 10.0f;
 }
 
@@ -147,9 +149,6 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	if (g_pad[0].IsPress(enButtonRight)) {
 		m_light.specPow = min(100.0f, m_light.specPow + 0.5f);
 	}
-
-	//環境光
-	m_light.ambientLight = CVector3{ 0.4f,0.4f,0.4f };
 
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 

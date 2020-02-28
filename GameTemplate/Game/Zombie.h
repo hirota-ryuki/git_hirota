@@ -77,7 +77,7 @@ private:
 	bool			m_isAstar = false;			//ゴールしているかどうか。
 	bool			m_isPoint = false;			//各*itrに到達したかどうか。
 	bool			m_isHit   = false;			//コリジョンにヒットしたかどうか。
-
+	bool			m_isMove = false;
 	//アニメーション関係。
 	enum {
 		enAnimationClip_idle,
