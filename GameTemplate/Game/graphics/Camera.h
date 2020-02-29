@@ -96,6 +96,13 @@ public:
 		m_viewAngle = angle;
 	}
 	/*!
+		* @brief	画角を取得。
+		*/
+	float GetViewAngle() const
+	{
+		return m_viewAngle;
+	}
+	/*!
 	* @brief	カメラの前方方向を取得。
 	*/
 	const CVector3& GetForward() const
@@ -108,6 +115,13 @@ public:
 	const CVector3& GetRight() const
 	{
 		return m_right;
+	}
+	/*!
+	* @brief	カメラの回転行列を取得。
+	*/
+	const CMatrix& GetCameraRotation() const
+	{
+		return m_cameraRotation;
 	}
 	/// <summary>
 	/// 平行投影の幅を設定。
@@ -154,6 +168,8 @@ private:
 	float m_width = 1280.0f;						//平行投影の幅。
 	float m_height = 720.0f;						//平行投影の高さ。
 	EnUpdateProjMatrixFunc m_updateProjMatrixFunc = enUpdateProjMatrixFunc_Perspective;	//射影行列の作成方法。
+	CMatrix		m_cameraRotation;					//!<カメラの回転行列。
+
 };
 
 extern Camera g_camera3D;		//!<3Dカメラ。

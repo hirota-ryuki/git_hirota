@@ -25,6 +25,13 @@ bool GameCamera::Start()
 	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
 	m_sprite->Init(L"sprite/aim.dds", 60, 60);
 	m_sprite->SetData(CVector3::Zero(), CQuaternion::SpriteRot(), CVector3::One());
+	//ばねカメラの初期化。
+	m_springCamera.Init(
+		g_camera3D,		//ばねカメラの処理を行うカメラを指定する。
+		1000.0f,			//カメラの移動速度の最大値。
+		true,			//カメラと地形とのあたり判定を取るかどうかのフラグ。trueだとあたり判定を行う。
+		5.0f			//カメラに設定される球体コリジョンの半径。第３引数がtrueの時に有効になる。
+	);
 	return true;
 }
 
@@ -41,7 +48,7 @@ void GameCamera::Update()
 				//カメラに現在地をセット。
 				CVector3 l_setpos = m_player->GetPos();
 				l_setpos.y += 50000.0f;
-				g_camera3D.SetPosition(l_setpos);
+				m_springCamera.SetPosition(l_setpos);
 
 				// 限界を決める
 				float toCameraPosRotAngleold = toCameraPosRotAngle;
@@ -92,24 +99,24 @@ void GameCamera::Update()
 				m_pos = m_target + l_toCameraPos;
 
 				//注視点と視点を設定する。
-				g_camera3D.SetTarget(m_target);
-				g_camera3D.SetPosition(m_pos);
+				m_springCamera.SetTarget(m_target);
+				m_springCamera.SetPosition(m_pos);
 
 				//更新。
-				g_camera3D.Update();
+				m_springCamera.Update();
 			}
 		}
 	}
-	else {
-		m_target = CVector3::Zero();		
-		m_pos = CVector3::Zero();		
-		m_pos.y = 5000.0f;
+	//else {
+	//	m_target = CVector3::Zero();		
+	//	m_pos = CVector3::Zero();		
+	//	m_pos.y = 5000.0f;
 
-		//注視点と視点を設定する。
-		g_camera3D.SetTarget(m_target);
-		g_camera3D.SetPosition(m_pos);
+	//	//注視点と視点を設定する。
+	//	g_camera3D.SetTarget(m_target);
+	//	g_camera3D.SetPosition(m_pos);
 
-		//更新。
-		g_camera3D.Update();
-	}
+	//	//更新。
+	//	g_camera3D.Update();
+	//}
 }

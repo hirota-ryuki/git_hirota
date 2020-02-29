@@ -103,6 +103,7 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletStack.cpp" />
+    <ClCompile Include="CameraCollisionSolver.cpp" />
     <ClCompile Include="character\CharacterController.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
     </ClCompile>
@@ -120,6 +121,8 @@
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />
     <ClCompile Include="sound\WaveFileBank.cpp" />
+    <ClCompile Include="SphereCollider.cpp" />
+    <ClCompile Include="SpringCamera.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Zombie.cpp" />
     <ClCompile Include="Floor.cpp" />
@@ -174,21 +177,26 @@
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletStack.h" />
+    <ClInclude Include="CameraCollisionSolver.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="DebugWireframe.h" />
     <ClInclude Include="FontRender.h" />
+    <ClInclude Include="GameTime.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="graphics\font\Font.h" />
     <ClInclude Include="MapCamera.h" />
     <ClInclude Include="Opening.h" />
     <ClInclude Include="physics\BoxCollider.h" />
     <ClInclude Include="Pose.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="RockDoor.h" />
     <ClInclude Include="sound\SoundEngine.h" />
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />
     <ClInclude Include="sound\WaveFileBank.h" />
+    <ClInclude Include="SphereCollider.h" />
+    <ClInclude Include="SpringCamera.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Zombie.h" />
     <ClInclude Include="Floor.h" />
@@ -270,6 +278,9 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\item_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

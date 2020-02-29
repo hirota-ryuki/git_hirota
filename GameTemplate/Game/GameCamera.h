@@ -1,4 +1,5 @@
 #pragma once
+#include "SpringCamera.h"
 
 class Game;
 class Player;
@@ -42,4 +43,6 @@ private:
 	//Æ€‰æ‘œŠÖŒWB
 	SpriteRender*	m_sprite = nullptr;
 	CQuaternion		m_rot = CQuaternion::SpriteRot();
+	SpringCamera m_springCamera; //‚Î‚ËƒJƒƒ‰B
+
 };

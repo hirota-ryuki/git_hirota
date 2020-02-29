@@ -125,8 +125,8 @@ private:
 	CVector3			m_moveSpeed = CVector3::Zero();			//移動速度。
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
 	Game*				m_game = nullptr;						//Gameのポインタ。
-	float m_speed = 300.0f;			//キャラが歩くスピード。
-	float m_runSpeed = 500.0f;		//キャラが走るスピード。
+	float m_speed = 210.0f;			//キャラが歩くスピード。
+	float m_runSpeed = 280.0f;		//キャラが走るスピード。
 	
 	//アニメーション関係。
 	enum {

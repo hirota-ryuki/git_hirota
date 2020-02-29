@@ -321,6 +321,11 @@
     <ClCompile Include="MapCamera.cpp">
       <Filter>Game\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="SpringCamera.cpp" />
+    <ClCompile Include="CameraCollisionSolver.cpp" />
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>Engine\physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -512,6 +517,13 @@
     <ClInclude Include="MapCamera.h">
       <Filter>Game\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="SpringCamera.h" />
+    <ClInclude Include="CameraCollisionSolver.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="GameTime.h" />
+    <ClInclude Include="SphereCollider.h">
+      <Filter>Engine\physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
@@ -573,5 +585,8 @@
     <MeshContentTask Include="Assets\modelData\bulletstack\bulletstack.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game.rc" />
   </ItemGroup>
 </Project>
