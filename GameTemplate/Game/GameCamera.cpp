@@ -31,7 +31,7 @@ bool GameCamera::Start()
 void GameCamera::Update()
 {	
 	if (g_pad[0].IsTrigger(enButtonSelect)) {
-		m_isMapMode = !m_isMapMode;
+		//m_isMapMode = !m_isMapMode;
 	}
 
 	if (!m_isMapMode) {

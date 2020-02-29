@@ -110,6 +110,7 @@
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="graphics\font\Font.cpp" />
+    <ClCompile Include="MapCamera.cpp" />
     <ClCompile Include="Opening.cpp" />
     <ClCompile Include="physics\BoxCollider.cpp" />
     <ClCompile Include="Pose.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="graphics\font\Font.h" />
+    <ClInclude Include="MapCamera.h" />
     <ClInclude Include="Opening.h" />
     <ClInclude Include="physics\BoxCollider.h" />
     <ClInclude Include="Pose.h" />

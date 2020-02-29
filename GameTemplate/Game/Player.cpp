@@ -76,6 +76,12 @@ void Player::ChangeState()
 		m_isRun = !m_isRun;
 	}
 
+	//動いていない時に走り状態を解除する。
+	if (g_pad[0].GetLStickXF() == 0 && g_pad[0].GetLStickYF() == 0)
+	{
+		m_isRun = false;
+	}
+
 	//m_isRunが真だったら走る。
 	if (m_isRun) {
 		m_state = enState_run;
@@ -83,7 +89,6 @@ void Player::ChangeState()
 	else {
 		m_state = enState_walk;
 	}
-
 	//待機に遷移。
 	if (g_pad[0].GetLStickXF() <= 0.1f&&g_pad[0].GetLStickXF() >= -0.1f) {
 		if (g_pad[0].GetLStickYF() <= 0.1f&&g_pad[0].GetLStickYF() >= -0.1f) {
@@ -94,6 +99,7 @@ void Player::ChangeState()
 	//L2を押したらエイム。
 	if (g_pad[0].IsPress(enButtonLB2)) {
 		m_state = enState_aim;
+		m_isRun = false;
 	}
 	
 	//Xを押したらリロード。
@@ -103,6 +109,7 @@ void Player::ChangeState()
 			//手持ちの弾数が0じゃなかったら。
 			if (m_stack > 0) {
 				m_state = enState_reload;
+				m_isRun = false;
 			}
 		}
 	}
@@ -129,24 +136,23 @@ void Player::Move()
 	m_moveSpeed.z = 0.f;
 	m_moveSpeed.y -= 240.f * 1.f / 60.f;
 
+	//エイムしているときは遅くする。
+	if (m_state == enState_aim || m_state == enState_reload) {
+		m_moveSpeed += cameraForward * lStick_y * m_speed / 3.0f;		//奥方向への移動速度を代入。
+		m_moveSpeed += cameraRight * lStick_x * m_speed / 3.0f;		//右方向への移動速度を加算。
+
+	}
 	//走っているかどうか判定。
-	if (m_isRun) {
+	else if (m_isRun) {
 		//走っている。
 		m_moveSpeed += cameraForward * lStick_y * m_runSpeed;		//奥方向への移動速度を代入。
 		m_moveSpeed += cameraRight * lStick_x * m_runSpeed;			//右方向への移動速度を加算。
 	}
+	//歩いている。
 	else {
-		//エイムしているときは遅くする。
-		if (m_state == enState_aim|| m_state == enState_reload) {
-			m_moveSpeed += cameraForward * lStick_y * m_speed / 3.0f;		//奥方向への移動速度を代入。
-			m_moveSpeed += cameraRight * lStick_x * m_speed / 3.0f;		//右方向への移動速度を加算。
-
-		}
-		//歩いている。
-		else {
-			m_moveSpeed += cameraForward * lStick_y * m_speed;		//奥方向への移動速度を代入。
-			m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。
-		}
+		m_moveSpeed += cameraForward * lStick_y * m_speed;		//奥方向への移動速度を代入。
+		m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。
+		
 	}
 	
 	//キャラクターコントローラーを使用して、座標を更新。

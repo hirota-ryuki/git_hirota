@@ -82,9 +82,6 @@
     <Filter Include="Game\Enemy">
       <UniqueIdentifier>{522a7a12-684b-4846-b9e4-f8b74728c655}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\GameCamera">
-      <UniqueIdentifier>{3bc132de-25ab-496d-b3a5-216adeb3c59e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\sprite">
       <UniqueIdentifier>{870d025f-6008-4837-812c-4396bc1af47f}</UniqueIdentifier>
     </Filter>
@@ -138,6 +135,9 @@
     </Filter>
     <Filter Include="Game\RockDoor">
       <UniqueIdentifier>{29c3b63b-d8c9-4ba0-9af5-c81ff6ea5ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Camera">
+      <UniqueIdentifier>{3bc132de-25ab-496d-b3a5-216adeb3c59e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -256,7 +256,7 @@
       <Filter>Engine\physics</Filter>
     </ClCompile>
     <ClCompile Include="GameCamera.cpp">
-      <Filter>Game\GameCamera</Filter>
+      <Filter>Game\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Goal.cpp">
       <Filter>Game\Goal</Filter>
@@ -317,6 +317,9 @@
     </ClCompile>
     <ClCompile Include="SkinModelRender.cpp">
       <Filter>Engine\graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="MapCamera.cpp">
+      <Filter>Game\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -387,7 +390,7 @@
       <Filter>Game\Title</Filter>
     </ClInclude>
     <ClInclude Include="GameCamera.h">
-      <Filter>Game\GameCamera</Filter>
+      <Filter>Game\Camera</Filter>
     </ClInclude>
     <ClInclude Include="IGameObject.h">
       <Filter>Engine\GameObject</Filter>
@@ -505,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="graphics\SkinModelShaderConst.h">
       <Filter>Engine\graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="MapCamera.h">
+      <Filter>Game\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
