@@ -2,6 +2,7 @@
 #include "character/CharacterController.h"
 
 class Bullet;
+class UI;
 
 class Player : public IGameObject
 {
@@ -59,6 +60,9 @@ public:
 	/// 死ぬ関数。
 	/// </summary>
 	void Death();
+	/// 女優ライト関数。
+	/// </summary>
+	void ActressLight();
 	/// <summary>
 	/// プレイヤーのポジションをセット。
 	/// </summary>
@@ -125,6 +129,7 @@ private:
 	CVector3			m_moveSpeed = CVector3::Zero();			//移動速度。
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
 	Game*				m_game = nullptr;						//Gameのポインタ。
+	UI*				m_ui = nullptr;						//UIのポインタ。
 	float m_speed = 210.0f;			//キャラが歩くスピード。
 	float m_runSpeed = 280.0f;		//キャラが走るスピード。
 	

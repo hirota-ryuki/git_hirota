@@ -199,13 +199,13 @@ class SpringCamera
 			}
 		}
 	private:
-		Camera*	m_camera = nullptr;				//!<カメラ。
-		CVector3	m_target = CVector3::Zero();		//!<目標となる注視点。
-		CVector3	m_position = CVector3::Zero();	//!<目標となる視点。
-		CVector3	m_targetMoveSpeed = CVector3::Zero();		//!<注視点の移動速度。
+		Camera*		m_camera = nullptr;						//!<カメラ。
+		CVector3	m_target = CVector3::Zero();			//!<目標となる注視点。
+		CVector3	m_position = CVector3::Zero();			//!<目標となる視点。
+		CVector3	m_targetMoveSpeed = CVector3::Zero();	//!<注視点の移動速度。
 		CVector3	m_positionMoveSpeed = CVector3::Zero();	//!<視点の移動速度。
 		float		m_maxMoveSpeed = 0.0f;					//!<最高移動速度。
-		float		m_targetDampingRate = 0.2f;				//!<減衰率。値が大きいほどカメラが遅れ付いてくる。
+		float		m_targetDampingRate = 0.8f;				//!<減衰率。値が大きいほどカメラが遅れ付いてくる。
 		float		m_dampingRate = 1.0f;					//!<減衰率。
 		float		m_dampingRateVel = 0.0f;
 		bool		m_isEnableCollisionSolver = false;		//!<コリジョン処理が有効？

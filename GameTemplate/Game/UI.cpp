@@ -39,6 +39,8 @@ bool UI::Start()
 	m_fontLine->SetText(L"|");
 	m_fontLine->SetPosition({ 540.0f, -290.0f });
 	m_fontLine->SetScale(1.0f);
+	//フォントは消しておく。
+	CangeActives(false);
 	return true;
 }
 

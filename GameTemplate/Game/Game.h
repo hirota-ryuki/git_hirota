@@ -55,9 +55,21 @@ public:
 	{
 		return m_floor;
 	}
+	/// <summary>
+	/// ポーズメニューのインスタンスを取得。
+	/// </summary>
+	/// <returns>ポーズメニューのインスタンス</returns>
 	Pose* GetPose()
 	{
 		return m_pose;
+	}
+	/// <summary>
+	/// UIのインスタンスを取得。
+	/// </summary>
+	/// <returns>UIのインスタンス</returns>
+	UI* GetUI()
+	{
+		return m_ui;
 	}
 	/// <summary>
 	/// クリアしたときに呼び出す関数。

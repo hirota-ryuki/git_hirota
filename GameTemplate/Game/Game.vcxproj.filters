@@ -139,6 +139,9 @@
     <Filter Include="Game\Camera">
       <UniqueIdentifier>{3bc132de-25ab-496d-b3a5-216adeb3c59e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Camera">
+      <UniqueIdentifier>{de7a89b4-844c-47b6-aad7-fe4d4e19b8b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -321,10 +324,14 @@
     <ClCompile Include="MapCamera.cpp">
       <Filter>Game\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="SpringCamera.cpp" />
-    <ClCompile Include="CameraCollisionSolver.cpp" />
     <ClCompile Include="SphereCollider.cpp">
       <Filter>Engine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraCollisionSolver.cpp">
+      <Filter>Engine\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SpringCamera.cpp">
+      <Filter>Engine\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -517,12 +524,18 @@
     <ClInclude Include="MapCamera.h">
       <Filter>Game\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="SpringCamera.h" />
-    <ClInclude Include="CameraCollisionSolver.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="GameTime.h" />
     <ClInclude Include="SphereCollider.h">
       <Filter>Engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraCollisionSolver.h">
+      <Filter>Engine\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringCamera.h">
+      <Filter>Engine\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

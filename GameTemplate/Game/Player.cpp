@@ -3,6 +3,7 @@
 #include "Navimesh.h"
 #include "Bullet.h"
 #include "Zombie.h"
+#include "UI.h"
 
 Player::Player()
 {	
@@ -161,6 +162,19 @@ void Player::Move()
 
 void Player::Update()
 {	
+	//1回だけUIのインスタンスを取得。
+	if (m_game->GetUI() != nullptr&&m_ui == nullptr) {
+		//UIのインスタンスを取得。
+		m_ui = m_game->GetUI();
+	}
+	//エイムしていたら残弾を表示。
+	if (m_state == enState_aim) {
+		m_ui->CangeActives(true);
+	}
+	//普段は非表示。
+	else {
+		m_ui->CangeActives(false);
+	}
 	//一時停止していなかったら。
 	if (!m_game->GetIsPose()) {
 		m_timer++;
@@ -194,11 +208,8 @@ void Player::Update()
 		m_animation.Update(1.f / 60.f);
 		//ワールド行列の更新。
 		m_model->SetData(m_position, m_rotation);
-		auto dir = g_camera3D.GetForward();
-		dir.y = 0.0f;
-		dir.Normalize();
-		dir.y -= 0.2f;
-		m_model->SetLight(0, dir);
+		//女優ライト。
+		ActressLight();
 	}
 }
 
@@ -406,4 +417,13 @@ void Player::Death()
 		m_state = enState_death;
 		m_game->GameOver();
 	}
+}
+
+void Player::ActressLight()
+{
+	auto dir = g_camera3D.GetForward();
+	dir.y = 0.0f;
+	dir.Normalize();
+	dir.y -= 0.2f;
+	m_model->SetLight(0, dir);
 }
