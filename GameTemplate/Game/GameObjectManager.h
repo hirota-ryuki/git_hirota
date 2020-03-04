@@ -24,7 +24,7 @@ private:
 		return hash;
 	}
 public:
-	//シングルトン
+	//シングルトン。
 	static GameObjectManager& GetInstance()
 	{
 		static GameObjectManager instance;
@@ -69,6 +69,10 @@ public:
 	/// <param name="depthStensil">デプスステンシル</param>
 	/// <param name="viewport">ビューポート</param>
 	void ChangeRenderTarget(ID3D11DeviceContext * d3dDeviceContext, ID3D11RenderTargetView * renderTarget, ID3D11DepthStencilView * depthStensil, D3D11_VIEWPORT * viewport);
+	/// <summary>
+	/// シャドウマップのアップデート。
+	/// </summary>
+	void ShadowMapUpdate();
 	/// <summary>
 	/// フォワードレンダリング(通常の描画だと考えてOK)
 	/// </summary>
@@ -142,7 +146,7 @@ public:
 			}
 		}
 	}
-
+	
 private:
 	RenderTarget m_mainRenderTarget;				//メインレンダリングターゲット。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。

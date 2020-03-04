@@ -40,9 +40,6 @@ private:
 	float			toCameraPosRotAngle = 0.f;				//視点の角度。
 	float			toCameraTargetRotAngle = 0.f;			//注視点の角度。
 	bool			m_isMapMode = false;
-	//照準画像関係。
-	SpriteRender*	m_sprite = nullptr;
-	CQuaternion		m_rot = CQuaternion::SpriteRot();
+	//ばねカメラ。
 	SpringCamera m_springCamera; //ばねカメラ。
-
 };

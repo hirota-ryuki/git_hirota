@@ -1,4 +1,5 @@
 #pragma once
+
 class SkinModelRender : public IGameObject
 {
 public:
@@ -70,7 +71,16 @@ public:
 	void SetLight(int light, CVector4 direction) {
 		m_model.SetLight(light, direction);
 	}
-
+	/// <summary>
+	/// 影を設定する関数。
+	/// </summary>
+	/// <param name="shadow">影を設定するかどうか。</param>
+	void SetShadow(bool shadow) {
+		/*if (shadow) {
+			ShadowMap::GetInstance().RegistShadowCaster(&m_model);
+		}*/
+	}
+	
 private:
 	SkinModel m_model;									//スキンモデル。
 	CVector3 m_pos = CVector3::Zero();

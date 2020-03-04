@@ -12,7 +12,6 @@ GameCamera::~GameCamera()
 
 void GameCamera::OnDestroy()
 {
-	DeleteGO(m_sprite);
 }
 
 bool GameCamera::Start()
@@ -21,10 +20,6 @@ bool GameCamera::Start()
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。
 	m_player = m_game->GetPlayer();
-	//スプライト
-	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
-	m_sprite->Init(L"sprite/aim.dds", 60, 60);
-	m_sprite->SetData(CVector3::Zero(), CQuaternion::SpriteRot(), CVector3::One());
 	//ばねカメラの初期化。
 	m_springCamera.Init(
 		g_camera3D,		//ばねカメラの処理を行うカメラを指定する。

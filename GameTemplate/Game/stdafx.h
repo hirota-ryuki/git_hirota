@@ -46,6 +46,7 @@
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 
+#include "ShadowMap.h"
 #include "IGameObject.h"
 #include "GameObjectManager.h"
 #include "SkinModelRender.h"

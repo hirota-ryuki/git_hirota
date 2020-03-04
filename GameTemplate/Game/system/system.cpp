@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "system.h"
+#include "ShadowMap.h"
+
 
 HWND			g_hWnd = NULL;				//ウィンドウハンドル。
 GraphicsEngine* g_graphicsEngine = NULL;	//グラフィックスエンジン。
@@ -92,6 +94,8 @@ void InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 	g_soundEngine = new CSoundEngine();
 	g_soundEngine->Init();
 
+	//シャドウマップの生成。
+	ShadowMap::GetInstance();
 	//ゲームオブジェクトマネージャーの生成。
 	GameObjectManager::GetInstance();
 

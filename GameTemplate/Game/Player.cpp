@@ -56,14 +56,22 @@ bool Player::Start()
 	m_model->Init(L"modelData/player/player.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
 	m_model->SetData(m_position, m_rotation);
+	m_model->SetShadow(true);
 
 	//アニメーション初期化。
 	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
 
-	//画像。
+	//ダメージ画像。
 	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
 	m_sprite->Init(L"sprite/damage.dds", 1280.f, 720.f);
 	m_sprite->SetAlpha(m_alpha);
+
+	//照準画像関係。
+	//スプライト
+	m_aimSprite = NewGO<SpriteRender>(GOPrio_Sprite);
+	m_aimSprite->Init(L"sprite/aim.dds", 60, 60);
+	m_aimSprite->SetData(CVector3::Zero(), CQuaternion::SpriteRot(), CVector3::One());
+	m_aimSprite->ActiveMode(false);
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
@@ -170,10 +178,12 @@ void Player::Update()
 	//エイムしていたら残弾を表示。
 	if (m_state == enState_aim) {
 		m_ui->CangeActives(true);
+		m_aimSprite->ActiveMode(true);
 	}
 	//普段は非表示。
 	else {
 		m_ui->CangeActives(false);
+		m_aimSprite->ActiveMode(false);
 	}
 	//一時停止していなかったら。
 	if (!m_game->GetIsPose()) {

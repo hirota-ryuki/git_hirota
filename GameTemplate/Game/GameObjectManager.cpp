@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameObjectManager.h"
 #include "RenderState.h"
+#include "ShadowMap.h"
 
 GameObjectManager::GameObjectManager()
 {
@@ -60,6 +61,11 @@ void GameObjectManager::StartAndUpdate()
 				go->Update();
 			}
 		}
+		//シャドウマップを更新。
+		ShadowMap::GetInstance().UpdateFromLightTarget(
+			{ 1000.0f, 1000.0f, 1000.0f },
+			{ 0.0f, 0.0f, 0.0f }
+		);
 	}
 }
 
@@ -101,6 +107,40 @@ void GameObjectManager::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext
 		//ビューポートが指定されていたら、ビューポートも変更する。
 		d3dDeviceContext->RSSetViewports(1, viewport);
 	}
+}
+
+void GameObjectManager::ShadowMapUpdate()
+{
+	///////////////////////////////////////////////
+	//シャドウマップにレンダリング
+	///////////////////////////////////////////////
+	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
+	//現在のレンダリングターゲットをバックアップしておく。
+	ID3D11RenderTargetView* oldRenderTargetView;
+	ID3D11DepthStencilView* oldDepthStencilView;
+	d3dDeviceContext->OMGetRenderTargets(
+		1, 
+		&oldRenderTargetView, 
+		&oldDepthStencilView
+	);
+	//ビューポートもバックアップを取っておく。
+	unsigned int numViewport = 1;
+	D3D11_VIEWPORT oldViewports;
+	d3dDeviceContext->RSGetViewports(&numViewport, &oldViewports);
+
+	//シャドウマップにレンダリング。	
+	ShadowMap::GetInstance().RenderToShadowMap();
+
+	//元に戻す。
+	d3dDeviceContext->OMSetRenderTargets(
+		1, 
+		&oldRenderTargetView, 
+		oldDepthStencilView
+	);
+	d3dDeviceContext->RSSetViewports(numViewport, &oldViewports);
+	//レンダリングターゲットとデプスステンシルの参照カウンタを下す。
+	oldRenderTargetView->Release();
+	oldDepthStencilView->Release();
 }
 
 void GameObjectManager::ForwordRender()
@@ -170,6 +210,7 @@ void GameObjectManager::Render()
 	//ビューポートもバックアップを取っておく。
 	unsigned int numViewport = 1;
 	d3dDeviceContext->RSGetViewports(&numViewport, &m_frameBufferViewports);
+	ShadowMapUpdate();
 
 	ForwordRender();
 

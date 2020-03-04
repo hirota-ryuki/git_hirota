@@ -174,6 +174,8 @@ private:
 	SpriteRender*	m_sprite = nullptr;
 	CQuaternion		m_rot = CQuaternion::SpriteRot();
 	float			m_alpha = 0.0f;
+	//照準画像関係。
+	SpriteRender*	m_aimSprite = nullptr;
 	//回復関係。
 	bool			m_isDamage = false;			//ダメージを受けたかどうか。
 	int 			m_healTimer = 0;			//回復するまでのタイマー。

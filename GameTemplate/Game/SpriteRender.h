@@ -32,10 +32,19 @@ public:
 	}
 	/// <summary>
 	/// 描画するかどうか。
+	/// 呼ばれたらtrueとfalseを入れ替える。
 	/// </summary>
 	void ChangeActive()
 	{
 		m_isActive = !m_isActive;
+	}
+	/// <summary>
+	/// 描画するかどうか。
+	/// trueかfalseかを指定する。
+	/// </summary>
+	void ActiveMode(bool active)
+	{
+		m_isActive = active;
 	}
 	void Init(const wchar_t* texFilePath, float w, float h);
 private:

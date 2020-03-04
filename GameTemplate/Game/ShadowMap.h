@@ -1,8 +1,6 @@
 #pragma once
 #include "RenderTarget.h"
 
-class C3DModelDraw;
-
 /// <summary>
 /// シャドウマップクラス。
 /// </summary>
@@ -38,7 +36,7 @@ class C3DModelDraw;
 /// </code>
 class ShadowMap
 {
-public:
+private:
 	/// <summary>
 	/// コンストラクタ。
 	/// </summary>
@@ -48,7 +46,13 @@ public:
 	/// デストラクタ。
 	/// </summary>
 	~ShadowMap();
-
+public:
+	//シングルトン。
+	static ShadowMap& GetInstance()
+	{
+		static ShadowMap instance;
+		return instance;
+	}
 	/// <summary>
 	/// ライトビュー行列を取得。
 	/// </summary>
