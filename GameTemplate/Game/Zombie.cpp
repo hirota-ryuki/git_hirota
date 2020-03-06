@@ -225,6 +225,7 @@ void Zombie::Move()
 
 		//回転。
 		Rotation();
+		//m_moveList.clear();
 	}
 	//A*をする。
 	else {
@@ -258,11 +259,13 @@ void Zombie::Move()
 				if (diff.Length() < 100.0f) { //todo バグの元
 					m_isPoint = true;
 				}
-
+				//プレイヤーの近くに来たらA*強制終了。
 				CVector3 endDiff = m_player->GetPos() - m_position;
-				if (endDiff.Length() < 200.0f) {
-					//プレイヤーの近くに来たらA*強制終了。
+				//最終地点よりプレイヤーが離れていたらA*やり直し。
+				CVector3 endDiff2 = m_player->GetPos() - m_endPos;
+				if (endDiff.Length() < 200.0f || endDiff2.Length() > 300.0f) {
 					m_isAstar = false;
+					m_moveList.clear();
 				}
 				//n番目のパスに着いたら。
 				//n = m_moveListの要素の場所（今移動しようとしているパスの場所）。
@@ -326,9 +329,9 @@ void Zombie::Astar()
 	m_position = startCell->centerPos;
 	m_model->SetPos(m_position);
 	m_charaCon.SetPosition(m_position);
+	m_endPos = endCell->centerPos;
 	//A*実施
 	m_aStar.AstarSearch(startCell, endCell);
-
 
 	m_moveList = m_aStar.GetMoveList();
 	m_itr = m_moveList.begin();	

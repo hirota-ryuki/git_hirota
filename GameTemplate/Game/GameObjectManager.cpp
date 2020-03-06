@@ -61,12 +61,20 @@ void GameObjectManager::StartAndUpdate()
 				go->Update();
 			}
 		}
-		//シャドウマップを更新。
-		ShadowMap::GetInstance().UpdateFromLightTarget(
-			{ 1000.0f, 1000.0f, 1000.0f },
-			{ 0.0f, 0.0f, 0.0f }
-		);
 	}
+	//auto pos = m_lightTag;
+	//	float p = 800.0f;
+	//	//pos.x += p;
+	//	pos.y += p;
+	//	//pos.z += p;
+
+	//シャドウマップを更新。
+	ShadowMap::GetInstance().UpdateFromLightTarget(
+		{ 1000.0f, 1000.0f, 1000.0f },
+		{ 0.0f, 0.0f, 0.0f }
+		/*pos,
+		m_lightTag*/
+	);
 }
 
 void GameObjectManager::Delete()
@@ -210,6 +218,7 @@ void GameObjectManager::Render()
 	//ビューポートもバックアップを取っておく。
 	unsigned int numViewport = 1;
 	d3dDeviceContext->RSGetViewports(&numViewport, &m_frameBufferViewports);
+
 	ShadowMapUpdate();
 
 	ForwordRender();

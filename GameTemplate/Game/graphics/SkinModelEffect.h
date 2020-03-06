@@ -17,7 +17,7 @@ protected:
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
 	EnRenderMode m_renderMode = enRenderMode_Invalid;	//レンダリングモード。
-
+	bool m_isCreateShadow = false;
 public:
 	ModelEffect()
 	{

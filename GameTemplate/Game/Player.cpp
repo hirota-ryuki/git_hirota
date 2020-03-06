@@ -56,7 +56,6 @@ bool Player::Start()
 	m_model->Init(L"modelData/player/player.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
 	m_model->SetData(m_position, m_rotation);
-	m_model->SetShadow(true);
 
 	//アニメーション初期化。
 	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
@@ -176,7 +175,7 @@ void Player::Update()
 		m_ui = m_game->GetUI();
 	}
 	//エイムしていたら残弾を表示。
-	if (m_state == enState_aim) {
+	if (m_state == enState_aim || m_state == enState_shot) {
 		m_ui->CangeActives(true);
 		m_aimSprite->ActiveMode(true);
 	}
@@ -220,6 +219,8 @@ void Player::Update()
 		m_model->SetData(m_position, m_rotation);
 		//女優ライト。
 		ActressLight();
+		GameObjectManager::GetInstance().SetPos(m_position);
+		//m_model->SetShadowReciever(true);
 	}
 }
 

@@ -92,6 +92,21 @@ public:
 	{
 		return m_worldMatrix;
 	}
+	/// <summary>
+	/// シャドウレシーバーのフラグを設定する。
+	/// </summary>
+	/// <param name="flag">trueを渡すとシャドウレシーバーになる</param>
+	/// <remarks>
+	/// シャドウレシーバーとは影を落とされるオブジェクトのことです。
+	/// シャドウキャスターによって生成された、シャドウマップを利用して
+	/// 自身に影を落とします。
+	/// オブジェクトがシャドウレシーバーかつシャドウキャスターになっている場合は
+	/// セルフシャドウ(自分の影が自分に落ちる)を行うことができます。
+	/// </remarks>
+	void SetShadowReciever(bool flag)
+	{
+		m_isShadowReciever = flag;
+	}
 private:
 	/*!
 	*@brief	サンプラステートの初期化。
@@ -117,6 +132,9 @@ private:
 		CMatrix mWorld;
 		CMatrix mView;
 		CMatrix mProj;
+		CMatrix mLightView;		//ライトビュー行列。
+		CMatrix mLightProj;		//ライトプロジェクション行列。
+		int isShadowReciever;	//シャドウレシーバーのフラグ。
 	};
 	/*!
 	*@brief	ディレクションライト。
@@ -144,8 +162,9 @@ private:
 	CMatrix				m_worldMatrix;					//ワールド行列。
 	DirectX::Model*		m_modelDx;						//DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;		//サンプラステート。
-
 	//ライト
 	ID3D11Buffer*		m_lightCb = nullptr;			//ライト用の定数バッファ。
 	SLight				m_light;						//ライトクラス。
+	//影。
+	bool				m_isShadowReciever = false;		//シャドウレシーバーのフラグ。
 };

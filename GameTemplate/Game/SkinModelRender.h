@@ -73,21 +73,35 @@ public:
 	}
 	/// <summary>
 	/// 影を設定する関数。
+	/// 基本はtrue。
 	/// </summary>
 	/// <param name="shadow">影を設定するかどうか。</param>
-	void SetShadow(bool shadow) {
-		/*if (shadow) {
-			ShadowMap::GetInstance().RegistShadowCaster(&m_model);
-		}*/
+	void SetShadowCaster(bool shadow) {
+		m_isShadow = shadow;
 	}
-	
+	/// <summary>
+	/// シャドウレシーバーのフラグを設定する。
+	/// </summary>
+	/// <param name="flag">trueを渡すとシャドウレシーバーになる</param>
+	/// <remarks>
+	/// シャドウレシーバーとは影を落とされるオブジェクトのことです。
+	/// シャドウキャスターによって生成された、シャドウマップを利用して
+	/// 自身に影を落とします。
+	/// オブジェクトがシャドウレシーバーかつシャドウキャスターになっている場合は
+	/// セルフシャドウ(自分の影が自分に落ちる)を行うことができます。
+	/// </remarks>
+	void SetShadowReciever(bool flag)
+	{
+		m_model.SetShadowReciever(flag);
+	}
 private:
-	SkinModel m_model;									//スキンモデル。
-	CVector3 m_pos = CVector3::Zero();
-	CQuaternion m_rot = CQuaternion::SpriteRot();
-	CVector3 m_scale = CVector3::One();
-	bool m_isNotModel = true;
-	bool m_isUpdate = false;	//Update関数が呼ばれたかどうか。
-	CVector3	m_forward = CVector3::Front();		//カメラの前方。
-	CMatrix m_viewMatrixInv = CMatrix::Identity();	//ビューの逆行列。
+	SkinModel		m_model;								//スキンモデル。
+	CVector3		m_pos = CVector3::Zero();
+	CQuaternion		m_rot = CQuaternion::SpriteRot();
+	CVector3		m_scale = CVector3::One();
+	bool			m_isNotModel = true;
+	bool			m_isUpdate = false;						//Update関数が呼ばれたかどうか。
+	CVector3		m_forward = CVector3::Front();			//カメラの前方。
+	CMatrix			m_viewMatrixInv = CMatrix::Identity();	//ビューの逆行列。
+	bool			m_isShadow = true;						//影を落とすかどうか。
 };

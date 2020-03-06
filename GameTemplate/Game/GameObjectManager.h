@@ -146,7 +146,14 @@ public:
 			}
 		}
 	}
-	
+	/// <summary>
+	/// ライトの注視点をセット。
+	/// </summary>
+	/// <param name="pos">座標</param>
+	void SetPos(CVector3 pos)
+	{
+		m_lightTag = pos;
+	}
 private:
 	RenderTarget m_mainRenderTarget;				//メインレンダリングターゲット。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
@@ -158,6 +165,8 @@ private:
 	//リストは道を延長していくので今回の場合はリストのほうが良い。
 	std::list< IGameObject* > m_goList[GOPrio_num];		//ゲームオブジェクトのリスト。
 	std::list< IGameObject* > m_DeleteGOList;			//削除予定のゲームオブジェクトのリスト。
+
+	CVector3 m_lightTag = CVector3::Zero();
 };
 
 //外部からアクセスするので、extern宣言も必要。

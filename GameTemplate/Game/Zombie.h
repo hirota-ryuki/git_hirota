@@ -78,6 +78,7 @@ private:
 	bool			m_isPoint = false;			//各*itrに到達したかどうか。
 	bool			m_isHit   = false;			//コリジョンにヒットしたかどうか。
 	bool			m_isMove = false;
+	CVector3		m_endPos = CVector3::Zero();//最終地点。
 	//アニメーション関係。
 	enum {
 		enAnimationClip_idle,
