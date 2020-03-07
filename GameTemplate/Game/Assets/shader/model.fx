@@ -87,8 +87,7 @@ struct PSInput{
 	float3 Tangent		: TANGENT;
 	float2 TexCoord 	: TEXCOORD0;
 	float3 worldPos		: TEXCOORD1;	//ワールド座標。
-	float  lpos	: TEXCOORD2;
-	float4 posInLVP		: TEXCOORD3;	//ライトビュープロジェクション空間での座標。
+	float4 posInLVP		: TEXCOORD2;	//ライトビュープロジェクション空間での座標。
 };
 
 /// <summary>
