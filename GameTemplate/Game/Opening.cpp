@@ -32,8 +32,8 @@ bool Opening::Start()
 void Opening::Update()
 {
 	m_poseTimer++;
-	if (m_poseTimer == 10.0f) {
-		m_game->ChangePose();
+	if (m_poseTimer > 10) {
+		m_game->IsPose(true);
 	}
 
 	if (m_game->GetIsPose()) {
@@ -46,7 +46,7 @@ void Opening::Update()
 				//Aƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚çSE‚ð–Â‚ç‚·B
 				m_se.Play(false);
 				m_sprite[1]->ChangeActive();
-				m_game->ChangePose();
+				m_game->IsPose(false);
 				DeleteGO(this);
 			}
 		}

@@ -90,6 +90,13 @@ public:
 		m_isPose = !m_isPose;
 	}
 	/// <summary>
+	/// 一時停止したいときに呼び出す関数。
+	/// trueなら一時停止、falseなら一時停止解除。
+	/// </summary>
+	void IsPose(bool flag){
+		m_isPose = flag;
+	}
+	/// <summary>
 	/// 一時停止しているかどうかを取得。
 	/// </summary>
 	/// <returns>一時停止しているかどうか。</returns>
