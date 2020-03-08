@@ -131,7 +131,7 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 	//影。
 	if(isShadowReciever == 1 ){
 		//続いて、ライトビュープロジェクション空間に変換。
-		psInput.posInLVP = mul( mLightView, pos );
+		psInput.posInLVP = mul( mLightView, float4(psInput.worldPos.xyz,1.0f));
 		psInput.posInLVP = mul( mLightProj, psInput.posInLVP );
 	}
 	//UV座標はそのままピクセルシェーダーに渡す。
@@ -182,7 +182,7 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	//影。
 	if(isShadowReciever == 1 ){
 		//続いて、ライトビュープロジェクション空間に変換。
-		psInput.posInLVP = mul( mLightView, pos );
+		psInput.posInLVP = mul( mLightView, float4(psInput.worldPos.xyz,1.0f));
 		psInput.posInLVP = mul( mLightProj, psInput.posInLVP );
 	}
 	psInput.TexCoord = In.TexCoord;

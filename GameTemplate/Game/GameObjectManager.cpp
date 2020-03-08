@@ -62,18 +62,15 @@ void GameObjectManager::StartAndUpdate()
 			}
 		}
 	}
-	//auto pos = m_lightTag;
-	//	float p = 800.0f;
-	//	//pos.x += p;
-	//	pos.y += p;
-	//	//pos.z += p;
-
+	float p = 800.0f;
+	auto pos = g_camera3D.GetPosition();
+	pos.x += p;
+	pos.y += p;
+	pos.z += p;
 	//シャドウマップを更新。
 	ShadowMap::GetInstance().UpdateFromLightTarget(
-		{ 1000.0f, 1000.0f, 1000.0f },
-		{ 0.0f, 0.0f, 0.0f }
-		/*pos,
-		m_lightTag*/
+		pos,
+		g_camera3D.GetPosition()
 	);
 }
 

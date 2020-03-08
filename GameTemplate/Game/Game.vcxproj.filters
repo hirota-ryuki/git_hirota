@@ -139,6 +139,9 @@
     <Filter Include="Game\Camera">
       <UniqueIdentifier>{3bc132de-25ab-496d-b3a5-216adeb3c59e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\resource">
+      <UniqueIdentifier>{47fe27fd-12ee-49b6-918a-535b68d3a76d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -521,7 +524,6 @@
     <ClInclude Include="MapCamera.h">
       <Filter>Game\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="SphereCollider.h">
       <Filter>Engine\physics</Filter>
     </ClInclude>
@@ -533,6 +535,9 @@
     </ClInclude>
     <ClInclude Include="SpringCamera.h">
       <Filter>Engine\graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Engine\resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -597,6 +602,8 @@
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Game.rc" />
+    <ResourceCompile Include="Game.rc">
+      <Filter>Engine\resource</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
