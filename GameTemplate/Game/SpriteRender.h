@@ -23,6 +23,23 @@ public:
 		m_pos = pos;
 	}
 	/// <summary>
+	/// 回転をセット。
+	/// </summary>
+	/// <param name="m_alpha">回転。</param>
+	void SetRot(const CQuaternion rot)
+	{
+		m_rot = rot;
+	}
+	/// <summary>
+	/// 回転を取得。
+	/// </summary>
+	/// <param name="m_alpha">回転。</param>
+	CQuaternion GetRot()
+	{
+		return m_rot;
+	}
+	
+	/// <summary>
 	/// アルファ値をセット。
 	/// </summary>
 	/// <param name="m_alpha">アルファ値。</param>

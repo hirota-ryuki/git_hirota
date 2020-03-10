@@ -1,5 +1,4 @@
 #pragma once
-#include "IGameObject.h"
 //struct ItemInfo {
 //	SpriteRender*	m_sprite = nullptr;		//画像のポインタ。
 //	const wchar_t*  m_texFIlePath;

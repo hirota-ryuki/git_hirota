@@ -70,15 +70,15 @@ public:
 	/// <param name="viewport">ビューポート</param>
 	void ChangeRenderTarget(ID3D11DeviceContext * d3dDeviceContext, ID3D11RenderTargetView * renderTarget, ID3D11DepthStencilView * depthStensil, D3D11_VIEWPORT * viewport);
 	/// <summary>
-	/// シャドウマップのアップデート。
+	/// シャドウマップのレンダー。
 	/// </summary>
-	void ShadowMapUpdate();
+	void ShadowMapRender();
 	/// <summary>
-	/// フォワードレンダリング(通常の描画だと考えてOK)
+	/// フォワードレンダリング(通常の描画だと考えてOK)。
 	/// </summary>
 	void ForwordRender();
 	/// <summary>
-	/// ポストエフェクト用のレンダー
+	/// ポストエフェクト用のレンダー。
 	/// </summary>
 	void PostRender();
 	/// <summary>
@@ -146,15 +146,6 @@ public:
 			}
 		}
 	}
-	/// <summary>
-	/// ライトの注視点をセット。
-	/// </summary>
-	/// <param name="pos">座標</param>
-	void SetPos(CVector3 pos)
-	{
-		m_lightTag = pos;
-	}
-private:
 	RenderTarget m_mainRenderTarget;				//メインレンダリングターゲット。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
@@ -165,8 +156,6 @@ private:
 	//リストは道を延長していくので今回の場合はリストのほうが良い。
 	std::list< IGameObject* > m_goList[GOPrio_num];		//ゲームオブジェクトのリスト。
 	std::list< IGameObject* > m_DeleteGOList;			//削除予定のゲームオブジェクトのリスト。
-
-	CVector3 m_lightTag = CVector3::Zero();
 };
 
 //外部からアクセスするので、extern宣言も必要。

@@ -142,6 +142,9 @@
     <Filter Include="Engine\resource">
       <UniqueIdentifier>{47fe27fd-12ee-49b6-918a-535b68d3a76d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Map">
+      <UniqueIdentifier>{50f595c6-d3ec-4353-98f5-b84ea0920c39}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -332,6 +335,9 @@
     </ClCompile>
     <ClCompile Include="SpringCamera.cpp">
       <Filter>Engine\graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Game\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -539,6 +545,9 @@
     <ClInclude Include="resource.h">
       <Filter>Engine\resource</Filter>
     </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Game\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
@@ -568,6 +577,7 @@
     <ImageContentTask Include="Assets\sprite\item_menu.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\map.png" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\battlefield\floor.FBX">
@@ -600,10 +610,18 @@
     <MeshContentTask Include="Assets\modelData\bulletstack\bulletstack.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\mapChip\stage1.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
       <Filter>Engine\resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\sprite\player_icon.png">
+      <Filter>Assets\sprite</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -28,12 +28,10 @@ bool Pose::Start()
 	swprintf_s(bullet, L"玉x");
 	m_itemNameFont->SetText(bullet);
 	m_itemNameFont->SetPosition({ 0.0f, 0.0f });
-	m_itemNameFont->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 	m_itemNameFont->ChangeActive();
 
 	m_itemCountfont = NewGO<FontRender>(GOPrio_Sprite,"item");
 	m_itemCountfont->SetPosition({ 100.0f, 0.0f });
-	m_itemCountfont->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 	m_itemCountfont->ChangeActive();
 
 
@@ -51,7 +49,6 @@ void Pose::Update()
 	//スタートボタンを押したら。
 	if (g_pad[0].IsTrigger(enButtonStart))
 	{
-		//m_sprite->ChangeActive();
 		m_isStart = !m_isStart;
 		wchar_t allbullet[50];
 		swprintf_s(allbullet, L"%d", m_itemCount);

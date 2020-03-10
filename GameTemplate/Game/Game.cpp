@@ -12,6 +12,7 @@
 #include "Pose.h"
 #include "Opening.h"
 #include "UI.h"
+#include "Map.h"
 
 //静的メンバ変数を定義する。
 Game* Game::m_game = nullptr;
@@ -45,6 +46,7 @@ void Game::OnDestroy()
 	DeleteGOs("mapchip");
 	DeleteGO(m_pose);
 	DeleteGO(m_ui);
+	DeleteGO(m_map);
 	DeleteGO(m_rockdoor);
 	DeleteGOs("bulletstack");
 	DeleteGOs("ball");
@@ -139,6 +141,9 @@ bool Game::Start()
 	
 	//UIの構築。
 	m_ui = NewGO<UI>(GOPrio_Defalut);
+	
+	//Mapの構築。
+	m_map = NewGO<Map>(GOPrio_Defalut);
 	
 	//ボールを構築。
 	for (auto& objData : ballObjDatas) {

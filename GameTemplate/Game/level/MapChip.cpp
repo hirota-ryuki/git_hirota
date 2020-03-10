@@ -10,13 +10,13 @@ MapChip::MapChip(const LevelObjectData& objData)
 	//m_model.Init(filePath);
 	//m_model.UpdateWorldMatrix(objData.position, objData.rotation, CVector3::One());
 	swprintf_s(filePath, L"modelData/mapChip/%s.cmo", objData.name);
-	/*m_model = NewGO<SkinModelRender>(GOPrio_Defalut,"mapchip");
+	m_model = NewGO<SkinModelRender>(GOPrio_Defalut,"mapchip");
 	m_model->Init(filePath);
 	m_model->SetData(objData.position, objData.rotation);
-	m_model->SetShadow(true);
-	m_model->SetShadowReciever(false);*/
+	m_model->SetShadowCaster(true);
+	m_model->SetShadowReciever(true);
 	//m_model->NotModelMode();
 	//静的物理オブジェクトをメッシュコライダーから作成する。
-	/*m_physicsStaticObject.CreateMeshObject(m_model->GetModel(), objData.position, objData.rotation);
-	m_physicsStaticObject.SetUserIndex(enCollisionAttr_Map);*/
+	m_physicsStaticObject.CreateMeshObject(m_model->GetModel(), objData.position, objData.rotation);
+	m_physicsStaticObject.SetUserIndex(enCollisionAttr_Map);
 }

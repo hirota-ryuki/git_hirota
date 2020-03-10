@@ -96,6 +96,7 @@ private:
 		enState_idle,
 		enState_walk,
 		enState_attack,
+		enState_bite,
 		enState_knockback,
 		enState_death,
 		enState_num,

@@ -62,7 +62,8 @@ void GameObjectManager::StartAndUpdate()
 			}
 		}
 	}
-	float p = 800.0f;
+	//影。
+	float p = 1000.0f;
 	auto pos = g_camera3D.GetPosition();
 	pos.x += p;
 	pos.y += p;
@@ -76,7 +77,6 @@ void GameObjectManager::StartAndUpdate()
 
 void GameObjectManager::Delete()
 {
-	int u = 0;
 	//削除
 	for (auto GO : m_DeleteGOList) {
 		auto& goExecList = m_goList[GO->prio];
@@ -86,7 +86,6 @@ void GameObjectManager::Delete()
 		delete (*it);
 		//ゲームオブジェクトリストから削除
 		goExecList.erase(it);
-		u++;
 	}
 	m_DeleteGOList.clear();
 }
@@ -114,7 +113,7 @@ void GameObjectManager::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext
 	}
 }
 
-void GameObjectManager::ShadowMapUpdate()
+void GameObjectManager::ShadowMapRender()
 {
 	///////////////////////////////////////////////
 	//シャドウマップにレンダリング
@@ -216,7 +215,7 @@ void GameObjectManager::Render()
 	unsigned int numViewport = 1;
 	d3dDeviceContext->RSGetViewports(&numViewport, &m_frameBufferViewports);
 
-	ShadowMapUpdate();
+	ShadowMapRender();
 
 	ForwordRender();
 

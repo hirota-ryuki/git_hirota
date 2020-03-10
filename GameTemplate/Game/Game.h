@@ -13,6 +13,7 @@ class Result;
 class Pose;
 class Opening;
 class UI;
+class Map;
 
 class Game :
 	public IGameObject
@@ -119,6 +120,7 @@ private:
 	Opening*		m_op = nullptr;			//Openingクラスのポインタ。
 	Result*			m_result = nullptr;		//Resultクラスのポインタ。
 	UI*				m_ui = nullptr;			//UIクラスのポインタ。
+	Map*			m_map = nullptr;		//Mapクラスのポインタ。
 	//状態関係。
 	bool m_isClear = false;				//クリアしたかどうか。
 	bool m_isGameOver = false;			//ゲームオーバーしたかどうか。

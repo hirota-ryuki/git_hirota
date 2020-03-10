@@ -1,5 +1,5 @@
 #pragma once
-#include "IGameObject.h"
+class Player;
 class UI :
 	public IGameObject
 {

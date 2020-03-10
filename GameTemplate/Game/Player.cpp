@@ -69,7 +69,6 @@ bool Player::Start()
 	//スプライト
 	m_aimSprite = NewGO<SpriteRender>(GOPrio_Sprite);
 	m_aimSprite->Init(L"sprite/aim.dds", 60, 60);
-	m_aimSprite->SetData(CVector3::Zero(), CQuaternion::SpriteRot(), CVector3::One());
 	m_aimSprite->ActiveMode(false);
 
 	//ゲームのインスタンスを取得。
@@ -219,8 +218,6 @@ void Player::Update()
 		m_model->SetData(m_position, m_rotation);
 		//女優ライト。
 		ActressLight();
-		GameObjectManager::GetInstance().SetPos(m_position);
-		//m_model->SetShadowReciever(true);
 	}
 }
 
@@ -376,6 +373,7 @@ void Player::Rotation()
 	//右スティックの入力量で、加算する回転クォータニオンを作る。
 	CQuaternion qAddRot;
 	qAddRot.SetRotationDeg(CVector3::AxisY(), 2.0f*g_pad[0].GetRStickXF());
+	m_rot = qAddRot;
 	m_rotation.Multiply(qAddRot, m_rotation);
 }
 

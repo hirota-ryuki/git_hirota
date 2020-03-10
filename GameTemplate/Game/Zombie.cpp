@@ -106,8 +106,11 @@ void Zombie::Update()
 				m_coolTimer++;
 				m_atkTimer = 0;
 			}
+			break; 
+		case enState_bite:
+
 			break;
-		case enAnimationClip_knockback:
+		case enState_knockback:
 			//アニメーションの再生。
 			m_animation.Play(enAnimationClip_knockback, 0.1f);
 			//アニメーションの再生中じゃなかったら。
@@ -345,25 +348,37 @@ void Zombie::Rotation()
 
 void Zombie::Attack()
 {
-	//プレイヤーへの攻撃判定。
-	//プレイヤーと敵の角度を求める。
-	CVector3 diff = m_player->GetPos() - m_position;
-	//内積。
-	float angleDot = m_model->GetForward().Dot(diff);
-	//内積から角度（ラジアン）を求める。
-	float radian = 0.0f;
-	radian = atan(angleDot);
-	//ラジアンから度に変換。
-	float degree = radian * 180.0f / PI;
-	//距離が200以内かつ。
-	if (diff.Length() < 200.0f
-		//45度から、
-		&& degree < -45.0f
-		//135度の範囲だったら。
-		&& degree > -135.0f) {
-		//ダメージを与える。
-		m_player->Damage();
+	////プレイヤーへの攻撃判定。
+	////プレイヤーと敵の角度を求める。
+	//CVector3 diff = m_player->GetPos() - m_position;
+	////内積。
+	//float angleDot = m_model->GetForward().Dot(diff);
+	////内積から角度（ラジアン）を求める。
+	//float radian = 0.0f;
+	//radian = atan(angleDot);
+	////ラジアンから度に変換。
+	//float degree = radian * 180.0f / PI;
+	////距離が200以内かつ。
+	//if (diff.Length() < 200.0f
+	//	//45度から、
+	//	&& degree < -45.0f
+	//	//135度の範囲だったら。
+	//	&& degree > -135.0f) {
+	//	//ダメージを与える。
+	//	m_player->Damage();
+	//}
+	
+	//頭の骨の読み込み。
+	auto& model = m_model->GetModel();
+	auto bone = model.FindBone(L"RightHandMiddle2");
+	bone->CalcWorldTRS(m_bonePos, m_boneRot, m_boneScale);
+	//あたり判定。
+	CVector3 diff = m_player->GetPos() - m_bonePos;
+	if (diff.Length() < 20.0f) {
+		m_state = enState_bite;
 	}
+	//
+
 }
 
 void Zombie::Damage()

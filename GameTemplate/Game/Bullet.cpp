@@ -60,6 +60,6 @@ void Bullet::Update()
 
 void Bullet::Rotation()
 {
-	float angle = atan2(m_moveSpeed.x, m_moveSpeed.z);
+	float angle = atan2(m_moveSpeed.z, m_moveSpeed.x);
 	m_rotation.SetRotation(CVector3::AxisY(), angle);
 }

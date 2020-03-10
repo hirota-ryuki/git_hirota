@@ -111,6 +111,7 @@
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="graphics\font\Font.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapCamera.cpp" />
     <ClCompile Include="Opening.cpp" />
     <ClCompile Include="physics\BoxCollider.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="graphics\font\Font.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="MapCamera.h" />
     <ClInclude Include="Opening.h" />
     <ClInclude Include="physics\BoxCollider.h" />
@@ -253,6 +255,7 @@
     <MeshContentTask Include="Assets\modelData\debug\debugbox.fbx" />
     <MeshContentTask Include="Assets\modelData\goal\goal.fbx" />
     <MeshContentTask Include="Assets\modelData\mapChip\stage.fbx" />
+    <MeshContentTask Include="Assets\modelData\mapChip\stage1.fbx" />
     <MeshContentTask Include="Assets\modelData\player\player.fbx" />
     <MeshContentTask Include="Assets\modelData\rockdoor\rockdoor.fbx" />
     <MeshContentTask Include="Assets\modelData\zombie\zombie.fbx" />
@@ -281,6 +284,12 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\player_icon.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

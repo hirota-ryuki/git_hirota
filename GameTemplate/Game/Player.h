@@ -80,6 +80,13 @@ public:
 		return m_position;
 	}
 	/// <summary>
+	/// プレイヤーのムーブスピードを取得。
+	/// </summary>
+	CVector3 GetMoveSpeed()
+	{
+		return m_moveSpeed;
+	}
+	/// <summary>
 	/// プレイヤーの回転をセット。
 	/// </summary>
 	/// <param name="rot">回転</param>
@@ -93,6 +100,13 @@ public:
 	CQuaternion GetRot()
 	{
 		return m_rotation;
+	}
+	/// <summary>
+	/// プレイヤーの回転を取得。
+	/// </summary>
+	CQuaternion GetRot2()
+	{
+		return m_rot;
 	}
 	/// <summary>
 	/// プレイヤーの残弾数を取得。
@@ -111,16 +125,23 @@ public:
 	/// <summary>
 	/// プレイヤーの手持ちの総弾数を取得。
 	/// </summary>
-	int GetStack()
+	int GetStack() const
 	{
 		return m_stack;
 	}
 	/// <summary>
 	/// プレイヤーの手持ちの総弾数を足す。
 	/// </summary>
-	void AddStack(int bullet)
+	void AddStack(const int bullet)
 	{
 		m_stack += bullet;
+	}
+	/// <summary>
+	/// プレイヤーの手持ちの総弾数を取得。
+	/// </summary>
+	SkinModelRender* GetSkinModelRender() const
+	{
+		return m_model;
 	}
 private:
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
@@ -129,7 +150,7 @@ private:
 	CVector3			m_moveSpeed = CVector3::Zero();			//移動速度。
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
 	Game*				m_game = nullptr;						//Gameのポインタ。
-	UI*				m_ui = nullptr;						//UIのポインタ。
+	UI*					m_ui = nullptr;							//UIのポインタ。
 	float m_speed = 210.0f;			//キャラが歩くスピード。
 	float m_runSpeed = 280.0f;		//キャラが走るスピード。
 	
@@ -172,7 +193,6 @@ private:
 	int				m_stack = 24;			//手持ちの総弾数。
 	//ダメージ画像関係。
 	SpriteRender*	m_sprite = nullptr;
-	CQuaternion		m_rot = CQuaternion::SpriteRot();
 	float			m_alpha = 0.0f;
 	//照準画像関係。
 	SpriteRender*	m_aimSprite = nullptr;
@@ -185,4 +205,6 @@ private:
 	//ステータス関係。
 	float			m_hp = 5.0f;		//体力。
 	const float		m_maxhp = 5.0f;		//最大体力。
+
+	CQuaternion m_rot;
 };
