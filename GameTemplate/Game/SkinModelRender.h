@@ -68,6 +68,13 @@ public:
 	{
 		return m_forward;
 	}
+	/*!
+	* @brief	モデルの横方方向を取得。
+	*/
+	const CVector3& GetRight() const
+	{
+		return m_right;
+	}
 	void SetLight(int light, CVector4 direction) {
 		m_model.SetLight(light, direction);
 	}
@@ -102,6 +109,7 @@ private:
 	bool			m_isNotModel = true;
 	bool			m_isUpdate = false;						//Update関数が呼ばれたかどうか。
 	CVector3		m_forward = CVector3::Front();			//カメラの前方。
+	CVector3		m_right = CVector3::Right();			//カメラの右。
 	CMatrix			m_viewMatrixInv = CMatrix::Identity();	//ビューの逆行列。
 	bool			m_isShadow = true;						//影を落とすかどうか。
 };

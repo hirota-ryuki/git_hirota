@@ -84,6 +84,7 @@ private:
 		enAnimationClip_idle,
 		enAnimationClip_walk,
 		enAnimationClip_attack,
+		enAnimationClip_bite,
 		enAnimationClip_knockback,
 		enAnimationClip_death,
 		enAnimationClip_num,
@@ -114,10 +115,14 @@ private:
 	//攻撃関係。
 	int				m_atkTimer = 0;
 
-	//ヘッドショット用の頭の骨データ。
-	CVector3			m_bonePos = CVector3::Zero();			//骨の座標。
-	CQuaternion			m_boneRot = CQuaternion::Identity();	//骨の回転。
-	CVector3			m_boneScale = CVector3::Zero();			//骨の拡大率。
+	//骨データ。
+	//ヘッドショットの判定と噛みつき攻撃の判定に使用する。	
+	CVector3		m_bonePos = CVector3::Zero();			//骨の座標。
+	CQuaternion		m_boneRot = CQuaternion::Identity();	//骨の回転。
+	CVector3		m_boneScale = CVector3::Zero();			//骨の拡大率。
+
+	//噛みつき関係。
+	bool			m_isBite = false;
 
 	//ステータス関係。
 	int				m_hp = 10;		//HP。

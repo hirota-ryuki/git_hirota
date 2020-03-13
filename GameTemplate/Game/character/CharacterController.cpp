@@ -169,9 +169,11 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 			SweepResultWall callback;
 			callback.me = m_rigidBody.GetBody();
 			callback.startPos = posTmp;
+			
 			//衝突検出。
-			g_physics.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
-
+			if (m_isActive) {
+				g_physics.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+			}
 			if (callback.isHit) {
 				//当たった。
 				//壁。
@@ -266,7 +268,9 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 		callback.startPos.Set(start.getOrigin());
 		//衝突検出。
 		if(fabsf(endPos.y - callback.startPos.y) > FLT_EPSILON){
-			g_physics.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+			if (m_isActive) {
+				g_physics.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+			}
 			if (callback.isHit) {
 				//当たった。
 				moveSpeed.y = 0.0f;

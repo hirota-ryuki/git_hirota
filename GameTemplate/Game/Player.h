@@ -37,6 +37,10 @@ public:
 	/// </summary>
 	void En_Reload();
 	/// <summary>
+	/// 噛みつかれるステート関数。
+	/// </summary>
+	void En_Lie();
+	/// <summary>
 	/// ステートを変更する関数。
 	/// 特殊な場合を除く。
 	/// </summary>
@@ -143,6 +147,13 @@ public:
 	{
 		return m_model;
 	}
+	/// <summary>
+	/// 噛まれたかどうかをセット。
+	/// </summary>
+	/// <param name="flag">噛まれたかどうか。</param>
+	void SetIsBite(bool flag) {
+		m_isBite = flag;
+	}
 private:
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
@@ -165,6 +176,7 @@ private:
 		enAnimationClip_aim,
 		enAnimationClip_shot,
 		enAnimationClip_reload,
+		enAnimationClip_lie,
 		enAnimationClip_num,
 	};
 	AnimationClip m_animationClip[enAnimationClip_num];		//アニメーションクリップ。
@@ -177,6 +189,7 @@ private:
 		enState_aim,
 		enState_shot,
 		enState_reload,
+		enState_lie,
 		enState_death,
 		enState_num,
 	};
@@ -191,6 +204,8 @@ private:
 	int				m_capacity = 12;		//残弾数。
 	const int		m_maxCapacity = 12;		//装弾数。
 	int				m_stack = 24;			//手持ちの総弾数。
+	//ダメージ関係。
+	bool			m_isBite = false;		//噛まれたかどうか。
 	//ダメージ画像関係。
 	SpriteRender*	m_sprite = nullptr;
 	float			m_alpha = 0.0f;

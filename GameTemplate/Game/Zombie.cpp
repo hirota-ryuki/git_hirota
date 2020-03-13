@@ -48,12 +48,14 @@ bool Zombie::Start()
 	m_animationClip[enAnimationClip_idle].Load(L"animData/zombie/idle.tka");
 	m_animationClip[enAnimationClip_walk].Load(L"animData/zombie/walk.tka");
 	m_animationClip[enAnimationClip_attack].Load(L"animData/zombie/attack.tka");
+	m_animationClip[enAnimationClip_bite].Load(L"animData/zombie/bite.tka");
 	m_animationClip[enAnimationClip_knockback].Load(L"animData/zombie/knockback.tka");
 	m_animationClip[enAnimationClip_death].Load(L"animData/zombie/death.tka");
 	//ループフラグを設定する。
 	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_walk].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_attack].SetLoopFlag(false);
+	m_animationClip[enAnimationClip_bite].SetLoopFlag(false);
 	m_animationClip[enAnimationClip_knockback].SetLoopFlag(false);
 	m_animationClip[enAnimationClip_death].SetLoopFlag(false);
 	//アニメーション初期化。
@@ -95,7 +97,7 @@ void Zombie::Update()
 			//アニメーションの再生。
 			m_animation.Play(enAnimationClip_attack, 0.2f);
 			m_atkTimer++;
-			if (m_atkTimer == 50) {
+			if (m_atkTimer >= 60) {
 				//攻撃。
 				Attack();
 			}
@@ -108,7 +110,16 @@ void Zombie::Update()
 			}
 			break; 
 		case enState_bite:
-
+			//アニメーションの再生。
+			m_animation.Play(enAnimationClip_bite, 0.1f);
+			//アニメーションの再生中じゃなかったら。
+			if (!m_animation.IsPlaying()) {
+				//待機状態に遷移。
+				m_state = enState_idle;
+				m_charaCon.ActiveMode(true);
+				m_isBite = false;
+				m_coolTimer++;
+			}
 			break;
 		case enState_knockback:
 			//アニメーションの再生。
@@ -138,10 +149,12 @@ void Zombie::Update()
 		//死ぬ判定。
 		Death();
 		//重力。
-		m_moveSpeed.x = 0.f;
-		m_moveSpeed.z = 0.f;
-		m_moveSpeed.y -= 240.f * 1.f / 60.f;
-		m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
+		if (!m_isBite) {
+			m_moveSpeed.x = 0.f;
+			m_moveSpeed.z = 0.f;
+			m_moveSpeed.y -= 240.f * 1.f / 60.f;
+			m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
+		}
 		//アニメーションの更新。
 		m_animation.Update(1.f / 60.f);
 		//座標の更新。
@@ -373,12 +386,19 @@ void Zombie::Attack()
 	auto bone = model.FindBone(L"RightHandMiddle2");
 	bone->CalcWorldTRS(m_bonePos, m_boneRot, m_boneScale);
 	//あたり判定。
-	CVector3 diff = m_player->GetPos() - m_bonePos;
-	if (diff.Length() < 20.0f) {
+	auto playerPos = m_player->GetPos();
+	playerPos.y += 100.0f;
+	CVector3 diff = playerPos - m_bonePos;
+	if (diff.Length() < 50.0f) {
 		m_state = enState_bite;
+		m_player->SetIsBite(true);
+		m_charaCon.ActiveMode(false);
+		auto f = m_player->GetPos();
+		f.y += 50.0f;
+		m_position = f;
+		m_isBite = true;
 	}
-	//
-
+	m_atkTimer = 0;
 }
 
 void Zombie::Damage()

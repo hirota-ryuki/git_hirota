@@ -81,10 +81,27 @@ public:
 	* @brief	剛体を物理エンジンから削除。。
 	*/
 	void RemoveRigidBoby();
+	/// <summary>
+	/// 衝突判定を行うかどうか。
+	/// 呼ばれたらtrueとfalseを入れ替える。
+	/// </summary>
+	void ChangeActive()
+	{
+		m_isActive = !m_isActive;
+	}
+	/// <summary>
+	/// 衝突判定を行うかどうか。
+	/// trueかfalseかを指定する。
+	/// </summary>
+	void ActiveMode(bool active)
+	{
+		m_isActive = active;
+	}
 private:
 	CVector3 			m_position = CVector3::Zero();	//座標。
 	bool 				m_isJump = false;				//ジャンプ中？
 	bool				m_isOnGround = true;			//地面の上にいる？
+	bool				m_isActive = true;				//衝突判定を行うかどうか。地面との当たり判定はある。
 	CapsuleCollider		m_collider;						//コライダー。
 	float				m_radius = 0.0f;
 	float				m_height = 0.0f;		

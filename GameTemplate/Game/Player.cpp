@@ -39,6 +39,7 @@ bool Player::Start()
 	m_animationClip[enAnimationClip_aim].Load(L"animData/player/aim.tka");
 	m_animationClip[enAnimationClip_shot].Load(L"animData/player/shot.tka");
 	m_animationClip[enAnimationClip_reload].Load(L"animData/player/reload.tka");
+	m_animationClip[enAnimationClip_lie].Load(L"animData/player/lie.tka");
 
 	//ループフラグを設定する。
 	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
@@ -50,6 +51,7 @@ bool Player::Start()
 	m_animationClip[enAnimationClip_aim].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_shot].SetLoopFlag(false);
 	m_animationClip[enAnimationClip_reload].SetLoopFlag(false);
+	m_animationClip[enAnimationClip_lie].SetLoopFlag(false);
 
 	//cmoファイルの読み込み。
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
@@ -119,6 +121,10 @@ void Player::ChangeState()
 				m_isRun = false;
 			}
 		}
+	}
+
+	if (m_isBite) {
+		m_state = enState_lie;
 	}
 }
 
@@ -205,6 +211,9 @@ void Player::Update()
 		case enState_reload:
 			En_Reload();
 			break;
+		case enState_lie:
+			En_Lie();
+			break;
 		default:
 			break;
 		}
@@ -285,8 +294,6 @@ void Player::En_Aim()
 		m_timer = 0;
 		m_state = enState_shot;
 	}
-		
-	
 }
 
 void Player::En_Shot()
@@ -362,9 +369,22 @@ void Player::En_Reload()
 
 	Move();
 	Rotation();
-	//アニメーションのフレーム数経ったら。
+	//アニメーションの再生中じゃなかったら。
 	if (!m_animation.IsPlaying()) {
 		ChangeState();
+	}
+}
+
+void Player::En_Lie()
+{
+	m_charaCon.ActiveMode(false);
+	//アニメーションの再生。
+	m_animation.Play(enAnimationClip_lie, 0.4f);
+	//アニメーションの再生中じゃなかったら。
+	if (!m_animation.IsPlaying()) {
+		ChangeState();
+		m_charaCon.ActiveMode(true);
+		m_isBite = false;
 	}
 }
 

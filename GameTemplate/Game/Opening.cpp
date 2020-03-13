@@ -22,7 +22,7 @@ bool Opening::Start()
 	m_sprite[0]->Init(L"sprite/event1.dds", 1280.f, 720.f);
 	m_sprite[1] = NewGO<SpriteRender>(GOPrio_DrawAfter);
 	m_sprite[1]->Init(L"sprite/event2.dds", 1280.f, 720.f);
-	m_sprite[1]->ChangeActive();
+	m_sprite[1]->ActiveMode(false);
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
@@ -32,7 +32,7 @@ bool Opening::Start()
 void Opening::Update()
 {
 	m_poseTimer++;
-	if (m_poseTimer > 10) {
+	if (m_poseTimer >= 10) {
 		m_game->IsPose(true);
 	}
 
@@ -45,22 +45,21 @@ void Opening::Update()
 				m_se.Init(L"sound/story/decision.wav");
 				//Aボタンが押されたらSEを鳴らす。
 				m_se.Play(false);
-				m_sprite[1]->ChangeActive();
+				m_sprite[1]->ActiveMode(false);
 				m_game->IsPose(false);
 				DeleteGO(this);
 			}
 		}
 		//Aボタンを押したら。
-		if (g_pad[0].IsTrigger(enButtonA))
+		else if (g_pad[0].IsTrigger(enButtonA))
 		{
-			m_sprite[0]->ChangeActive();
-			m_sprite[1]->ChangeActive();
+			m_sprite[0]->ActiveMode(false);
+			m_sprite[1]->ActiveMode(true);
 			//ワンショット再生のSE
 			m_se.Init(L"sound/story/decision.wav");
 			//Aボタンが押されたらSEを鳴らす。
 			m_se.Play(false);
 			m_isButton = true;
 		}
-		
 	}
 }
