@@ -17,7 +17,6 @@ public:
 	/// <summary>
 	/// 座標をセット。
 	/// </summary>
-	/// <param name="m_alpha">座標。</param>
 	void SetPos(const CVector3 pos)
 	{
 		m_pos = pos;
@@ -25,20 +24,30 @@ public:
 	/// <summary>
 	/// 回転をセット。
 	/// </summary>
-	/// <param name="m_alpha">回転。</param>
 	void SetRot(const CQuaternion rot)
 	{
 		m_rot = rot;
+		m_rot.Multiply(CQuaternion::SpriteRot());
+		m_isMulti = true;
 	}
 	/// <summary>
 	/// 回転を取得。
 	/// </summary>
-	/// <param name="m_alpha">回転。</param>
+	/// <param name="m_rot">回転。</param>
 	CQuaternion GetRot()
 	{
 		return m_rot;
 	}
-	
+	/// <summary>
+	/// 
+	/// </summary>
+	void RotMultiply()
+	{
+		if (!m_isMulti) {
+			m_rot.Multiply(CQuaternion::SpriteRot());
+			m_isMulti = true;
+		}
+	}
 	/// <summary>
 	/// アルファ値をセット。
 	/// </summary>
@@ -67,9 +76,10 @@ public:
 private:
 	Sprite		m_sprite;
 	CVector3	m_pos = CVector3::Zero();
-	CQuaternion m_rot = CQuaternion::SpriteRot();
+	CQuaternion m_rot = CQuaternion::Identity();
 	CVector3	m_scale = CVector3::One();
 	float		m_alpha = 1.0f;					//スプライトのα値。
 	bool		m_isActive = true;				//画像がドローされているかどうか。
+	bool		m_isMulti = false;				//画像がドローされているかどうか。
 };
 

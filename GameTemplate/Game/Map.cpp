@@ -38,19 +38,11 @@ bool Map::Start()
 
 void Map::Update()
 {
-	//CQuaternion rot;
-	//CVector3 f = m_player->GetSkinModelRender()->GetForward();
-	////CVector3 r = m_player->GetSkinModelRender()->GetRight();
-	//CVector3 r = CVector3::Right();
-	////v.Normalize();
-	////float angle = atan2(v.z,v.x);
-	////float angle = 2 * acos(m_player->GetRot().w);
-	//float angle = atan(f.Dot(r));
-	//rot.SetRotation(CVector3::AxisZ(),angle );
-	//rot.Multiply(m_playerSprite->GetRot());
-	////rot.Multiply(m_player->GetRot(),m_playerSprite->GetRot());
-	//m_playerSprite->SetRot(rot);
-
+	CQuaternion rot;
+	CVector3 forward = m_player->GetSkinModelRender()->GetForward();
+	float angle = atan2(forward.x, -forward.z);
+	rot.SetRotation(CVector3::AxisZ(), -angle);
+	m_playerSprite->SetRot(rot);
 	//Yƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚çB
 	if (g_pad[0].IsTrigger(enButtonY))
 	{

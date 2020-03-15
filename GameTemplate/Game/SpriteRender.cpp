@@ -21,6 +21,7 @@ void SpriteRender::Init(const wchar_t* texFilePath, float w, float h)
 
 void SpriteRender::Update()
 {
+	RotMultiply();
 	m_sprite.UpdateWorldMatrix(
 		m_pos,
 		m_rot,

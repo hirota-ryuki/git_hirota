@@ -5,7 +5,7 @@
 #include "Navimesh.h"
 #include "Bullet.h"
 
-#define PI 3.14
+#define PI 3.14f
 
 Zombie::Zombie()
 {
@@ -361,43 +361,45 @@ void Zombie::Rotation()
 
 void Zombie::Attack()
 {
-	////プレイヤーへの攻撃判定。
-	////プレイヤーと敵の角度を求める。
-	//CVector3 diff = m_player->GetPos() - m_position;
-	////内積。
-	//float angleDot = m_model->GetForward().Dot(diff);
-	////内積から角度（ラジアン）を求める。
-	//float radian = 0.0f;
-	//radian = atan(angleDot);
-	////ラジアンから度に変換。
-	//float degree = radian * 180.0f / PI;
-	////距離が200以内かつ。
-	//if (diff.Length() < 200.0f
-	//	//45度から、
-	//	&& degree < -45.0f
-	//	//135度の範囲だったら。
-	//	&& degree > -135.0f) {
-	//	//ダメージを与える。
-	//	m_player->Damage();
-	//}
-	
-	//頭の骨の読み込み。
-	auto& model = m_model->GetModel();
-	auto bone = model.FindBone(L"RightHandMiddle2");
-	bone->CalcWorldTRS(m_bonePos, m_boneRot, m_boneScale);
-	//あたり判定。
-	auto playerPos = m_player->GetPos();
-	playerPos.y += 100.0f;
-	CVector3 diff = playerPos - m_bonePos;
-	if (diff.Length() < 50.0f) {
-		m_state = enState_bite;
-		m_player->SetIsBite(true);
-		m_charaCon.ActiveMode(false);
-		auto f = m_player->GetPos();
-		f.y += 50.0f;
-		m_position = f;
-		m_isBite = true;
+	//プレイヤーへの攻撃判定。
+	//プレイヤーと敵の角度を求める。
+	CVector3 diff = m_player->GetPos() - m_position;
+	CVector3 f = m_model->GetForward();
+	f.z *= -1;
+	//内積。
+	float angleDot = f.Dot(diff);
+	//内積からcosθを求める。
+	float cos = angleDot / (f.Length()*diff.Length());
+	//cosθから角度(ラジアン)を求める。
+	float radian = acos(cos);
+	//ラジアンから度に変換。
+	float degree = radian * 180.0f / PI;
+	//距離が200以内かつ。
+	if (diff.Length() < 200.0f
+	//45度なら。
+	//内積に符号は無い。
+		&& degree < 45.0f) {
+		//ダメージを与える。
+		m_player->Damage();
 	}
+	
+	////頭の骨の読み込み。
+	//auto& model = m_model->GetModel();
+	//auto bone = model.FindBone(L"RightHandMiddle2");
+	//bone->CalcWorldTRS(m_bonePos, m_boneRot, m_boneScale);
+	////あたり判定。
+	//auto playerPos = m_player->GetPos();
+	//playerPos.y += 100.0f;
+	//CVector3 diff = playerPos - m_bonePos;
+	//if (diff.Length() < 50.0f) {
+	//	m_state = enState_bite;
+	//	m_player->SetIsBite(true);
+	//	m_charaCon.ActiveMode(false);
+	//	auto f = m_player->GetPos();
+	//	f.y += 50.0f;
+	//	m_position = f;
+	//	m_isBite = true;
+	//}
 	m_atkTimer = 0;
 }
 

@@ -646,9 +646,16 @@ public:
 	/// <returns></returns>
 	static CQuaternion SpriteRot()
 	{
-		static CQuaternion rot = CQuaternion::Identity();
+		/*static CQuaternion rot = CQuaternion::Identity();
 		rot.SetRotationDeg(CVector3::AxisY(), 180.f);
-		return rot;
+		return rot;*/
+		CQuaternion rot = CQuaternion::Identity();
+		float s;
+		float halfAngle = CMath::PI * 0.5f;
+		s = sin(halfAngle);
+		rot.w = cos(halfAngle);
+		rot.y = s;
+		return rot; 
 	}
 };
 //整数型のベクトルクラス。
