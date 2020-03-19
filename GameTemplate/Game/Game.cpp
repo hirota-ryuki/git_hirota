@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "GameCamera.h"
 #include "Floor.h"
+#include "Ceiling.h"
 #include "Player.h"
 #include "Goal.h"
 #include "Zombie.h"
@@ -42,6 +43,7 @@ void Game::OnDestroy()
 	DeleteGO(m_goal);
 	DeleteGO(m_gamecamera);
 	DeleteGO(m_player);
+	DeleteGO(m_ceiling);
 	DeleteGO(m_floor);
 	DeleteGOs("mapchip");
 	DeleteGO(m_pose);
@@ -61,6 +63,7 @@ bool Game::Start()
 	wchar_t levelname[50];
 	swprintf_s(levelname, L"level/level00.tkl");
 	LevelObjectData floorObjData;
+	LevelObjectData ceilingObjData;
 	LevelObjectData playerObjData;
 	LevelObjectData goalObjData;
 	LevelObjectData rockdoorObjData;
@@ -73,6 +76,11 @@ bool Game::Start()
 		//ステージ遷移する場合は背景と床の番号を送るように
 		if (wcscmp(objData.name, floor) == 0) {
 			floorObjData = objData;
+
+			return true;
+		}
+		if (wcscmp(objData.name, L"ceiling") == 0) {
+			ceilingObjData = objData;
 
 			return true;
 		}
@@ -115,7 +123,13 @@ bool Game::Start()
 	//配置情報から座標と回転をステージに渡す。
 	m_floor->SetPos(floorObjData.position);
 	m_floor->SetRot(floorObjData.rotation);
-
+	
+	//天井を構築。
+	m_ceiling = NewGO<Ceiling>(GOPrio_Defalut);
+	//配置情報から座標と回転をステージに渡す。
+	m_ceiling->SetPos(ceilingObjData.position);
+	m_ceiling->SetRot(ceilingObjData.rotation);
+	   
 	//プレイヤーを構築。
 	m_player = NewGO<Player>(GOPrio_Defalut);
 	//配置情報から座標と回転をステージに渡す。

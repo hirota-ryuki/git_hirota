@@ -3,6 +3,7 @@
 
 class GameCamera;
 class Floor;
+class Ceiling;
 class Player;
 class Goal;
 class Zombie;
@@ -110,6 +111,7 @@ private:
 	GameCamera*		m_gamecamera = nullptr;	//GameCameraクラスのポインタ。
 	Level			m_level;				//レベル。
 	Floor*			m_floor = nullptr;		//Floorクラスのポインタ。
+	Ceiling*		m_ceiling = nullptr;	//Ceilingクラスのポインタ。
 	Player*			m_player = nullptr;		//Playerクラスのポインタ。
 	Goal*			m_goal = nullptr;		//Goalクラスのポインタ。
 	Zombie*			m_zombie = nullptr;		//Zombieクラスのポインタ。

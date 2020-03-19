@@ -339,6 +339,7 @@
     <ClCompile Include="Map.cpp">
       <Filter>Game\Map</Filter>
     </ClCompile>
+    <ClCompile Include="Ceiling.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -548,6 +549,7 @@
     <ClInclude Include="Map.h">
       <Filter>Game\Map</Filter>
     </ClInclude>
+    <ClInclude Include="Ceiling.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
@@ -577,7 +579,10 @@
     <ImageContentTask Include="Assets\sprite\item_menu.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\map.png" />
+    <ImageContentTask Include="Assets\sprite\player_icon.png" />
+    <ImageContentTask Include="Assets\sprite\map.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\battlefield\floor.FBX">
@@ -613,15 +618,16 @@
     <MeshContentTask Include="Assets\modelData\mapChip\stage1.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\ceiling\ceiling.fbx">
+      <Filter>Assets</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\mapChip\wall.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
       <Filter>Engine\resource</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\sprite\player_icon.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
   </ItemGroup>
 </Project>

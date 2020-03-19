@@ -104,6 +104,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletStack.cpp" />
     <ClCompile Include="CameraCollisionSolver.cpp" />
+    <ClCompile Include="Ceiling.cpp" />
     <ClCompile Include="character\CharacterController.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
     </ClCompile>
@@ -179,6 +180,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletStack.h" />
     <ClInclude Include="CameraCollisionSolver.h" />
+    <ClInclude Include="Ceiling.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="DebugWireframe.h" />
     <ClInclude Include="FontRender.h" />
@@ -252,10 +254,12 @@
     <MeshContentTask Include="Assets\modelData\battlefield\floor.FBX" />
     <MeshContentTask Include="Assets\modelData\bulletstack\bulletstack.fbx" />
     <MeshContentTask Include="Assets\modelData\bullet\bullet.fbx" />
+    <MeshContentTask Include="Assets\modelData\ceiling\ceiling.fbx" />
     <MeshContentTask Include="Assets\modelData\debug\debugbox.fbx" />
     <MeshContentTask Include="Assets\modelData\goal\goal.fbx" />
     <MeshContentTask Include="Assets\modelData\mapChip\stage.fbx" />
     <MeshContentTask Include="Assets\modelData\mapChip\stage1.fbx" />
+    <MeshContentTask Include="Assets\modelData\mapChip\wall.fbx" />
     <MeshContentTask Include="Assets\modelData\player\player.fbx" />
     <MeshContentTask Include="Assets\modelData\rockdoor\rockdoor.fbx" />
     <MeshContentTask Include="Assets\modelData\zombie\zombie.fbx" />
