@@ -42,7 +42,8 @@ void GameCamera::Update()
 			if (m_player != nullptr) {
 				//カメラに現在地をセット。
 				CVector3 l_setpos = m_player->GetPos();
-				l_setpos.y += 50000.0f;
+				//元50000
+				l_setpos.y += 2000.0f;
 				m_springCamera.SetPosition(l_setpos);
 
 				// 限界を決める
