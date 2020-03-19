@@ -161,7 +161,7 @@ void SpringCamera::UpdateSpringCamera()
 */
 void SpringCamera::Update()
 {
-	UpdateSpringCamera();/*
+	UpdateSpringCamera();
 	if (m_isEnableCollisionSolver) {
 		CVector3 result;
 		m_cameraCollisionSolver.Execute(
@@ -170,6 +170,6 @@ void SpringCamera::Update()
 			m_camera->GetTarget()
 		);
 		m_camera->SetPosition(result);
-	}*/
+	}
 	UpdateCamera();
 }

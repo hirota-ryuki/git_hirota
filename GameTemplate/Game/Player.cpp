@@ -383,9 +383,6 @@ void Player::En_Lie()
 	if (!m_isOldCameraInfo) {
 		m_oldplayer = m_gamecamera->GetTargetFromPlayer();
 		m_oldpos = m_gamecamera->GetTargetFromPos();
-
-		
-
 		m_isOldCameraInfo = true;
 	}
 
