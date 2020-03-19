@@ -85,8 +85,8 @@ private:
 	float			toCameraTargetRotAngle = 0.f;			//注視点の角度。
 	//float			m_targetFromPos = -1100.0f;			//注視点の角度。
 	//float			m_targetFromPlayer = 1000.0f;			//注視点の角度。
-	float			m_targetFromPos = -1100.0f;			//注視点の角度。
-	float			m_targetFromPlayer = 1000.0f;			//注視点の角度。
+	float			m_targetFromPos = -200.0f;			//注視点の角度。
+	float			m_targetFromPlayer = 100.0f;			//注視点の角度。
 	bool			m_isMapMode = false;
 	//ばねカメラ。
 	SpringCamera m_springCamera; //ばねカメラ。

@@ -43,7 +43,7 @@ void GameCamera::Update()
 				//カメラに現在地をセット。
 				CVector3 l_setpos = m_player->GetPos();
 				//元50000
-				l_setpos.y += 2000.0f;
+				l_setpos.y += 50000.0f;
 				m_springCamera.SetPosition(l_setpos);
 
 				// 限界を決める
@@ -73,6 +73,8 @@ void GameCamera::Update()
 				axis2.Normalize();
 				qAddRot2.SetRotationDeg(axis2, toCameraPosRotAngle);
 				qAddRot2.Multiply(l_toCameraTarget);
+
+
 				//視点から注視点までのベクトルを設定。
 				CVector3 l_toCameraPos;
 				l_toCameraPos.Set(60.0f, 0.0f, m_targetFromPos);
