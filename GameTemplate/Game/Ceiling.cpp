@@ -21,6 +21,7 @@ bool Ceiling::Start()
 	m_model->Init(L"modelData/ceiling/ceiling.cmo");
 	m_model->SetData(m_position, m_rotation);
 	m_model->UpdateWorldMatrix();
+	m_model->SetShadowCaster(false);
 	return true;
 }
 
