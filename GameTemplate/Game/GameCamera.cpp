@@ -62,7 +62,7 @@ void GameCamera::Update()
 				//プレイヤーから注視点までのベクトルを設定。
 				//zが前
 				CVector3 l_toCameraTarget;
-				l_toCameraTarget.Set(0.0f, 0.0f, 1000.0f);
+				l_toCameraTarget.Set(0.0f, 0.0f, m_targetFromPlayer);
 				m_player->GetRot().Multiply(l_toCameraTarget);
 
 				CQuaternion qAddRot2;
@@ -74,7 +74,7 @@ void GameCamera::Update()
 				qAddRot2.Multiply(l_toCameraTarget);
 				//視点から注視点までのベクトルを設定。
 				CVector3 l_toCameraPos;
-				l_toCameraPos.Set(60.0f, 0.0f, -1100.0f);
+				l_toCameraPos.Set(60.0f, 0.0f, m_targetFromPos);
 				m_player->GetRot().Multiply(l_toCameraPos);
 
 				CQuaternion qAddRot;

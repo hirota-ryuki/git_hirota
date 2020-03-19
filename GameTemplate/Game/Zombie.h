@@ -40,9 +40,14 @@ public:
 	/// ダメージを受ける関数。
 	/// </summary>
 	void Damage();
+	/// <summary>
 	/// 死ぬ関数。
 	/// </summary>
 	void Death();
+	/// <summary>
+	/// 視野角を計算する関数。
+	/// </summary>
+	float CalcViewingAngleDeg(CVector3 v1, CVector3 v2);
 	/// <summary>
 	/// ゾンビのポジションをセット。
 	/// </summary>

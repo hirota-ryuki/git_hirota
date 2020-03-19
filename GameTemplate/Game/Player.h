@@ -13,6 +13,16 @@ public:
 	bool Start() override;
 	void Update() override;
 	/// <summary>
+	/// GameCameraのインスタンスを取得する関数。
+	/// </summary>
+	void GetGameCameraInst() {
+		if (m_game->GetCamera() != nullptr
+			&& !m_isGameCamera) {
+			m_gamecamera = m_game->GetCamera();
+			m_isGameCamera = true;
+		}
+	}
+	/// <summary>
 	/// 待機ステート関数。
 	/// </summary>
 	void En_Idle();
@@ -104,13 +114,6 @@ public:
 	CQuaternion GetRot()
 	{
 		return m_rotation;
-	}
-	/// <summary>
-	/// プレイヤーの回転を取得。
-	/// </summary>
-	CQuaternion GetRot2()
-	{
-		return m_rot;
 	}
 	/// <summary>
 	/// プレイヤーの残弾数を取得。
@@ -205,7 +208,12 @@ private:
 	const int		m_maxCapacity = 12;		//装弾数。
 	int				m_stack = 24;			//手持ちの総弾数。
 	//ダメージ関係。
-	bool			m_isBite = false;		//噛まれたかどうか。
+	bool			m_isBite = false;			//噛まれたかどうか。
+	bool			m_isOldCameraInfo = false;	//カメラの情報を記録したかどうか。
+	bool			m_isGameCamera = false;		//GameCameraクラスのポインタを取得したかどうか。
+	GameCamera*		m_gamecamera = nullptr;		//GameCameraクラスのポインタ。
+	float		m_oldplayer = 0.0f;		//倒れる前のカメラの視点。
+	float		m_oldpos = 0.0f;	//倒れる前のカメラの注視点。
 	//ダメージ画像関係。
 	SpriteRender*	m_sprite = nullptr;
 	float			m_alpha = 0.0f;
@@ -220,6 +228,4 @@ private:
 	//ステータス関係。
 	float			m_hp = 5.0f;		//体力。
 	const float		m_maxhp = 5.0f;		//最大体力。
-
-	CQuaternion m_rot;
 };

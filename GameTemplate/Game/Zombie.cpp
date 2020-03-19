@@ -361,45 +361,79 @@ void Zombie::Rotation()
 
 void Zombie::Attack()
 {
-	//プレイヤーへの攻撃判定。
-	//プレイヤーと敵の角度を求める。
-	CVector3 diff = m_player->GetPos() - m_position;
-	CVector3 f = m_model->GetForward();
-	f.z *= -1;
-	//内積。
-	float angleDot = f.Dot(diff);
-	//内積からcosθを求める。
-	float cos = angleDot / (f.Length()*diff.Length());
-	//cosθから角度(ラジアン)を求める。
-	float radian = acos(cos);
-	//ラジアンから度に変換。
-	float degree = radian * 180.0f / PI;
-	//距離が200以内かつ。
-	if (diff.Length() < 200.0f
-	//45度なら。
-	//内積に符号は無い。
-		&& degree < 45.0f) {
-		//ダメージを与える。
-		m_player->Damage();
-	}
-	
-	////頭の骨の読み込み。
-	//auto& model = m_model->GetModel();
-	//auto bone = model.FindBone(L"RightHandMiddle2");
-	//bone->CalcWorldTRS(m_bonePos, m_boneRot, m_boneScale);
-	////あたり判定。
-	//auto playerPos = m_player->GetPos();
-	//playerPos.y += 100.0f;
-	//CVector3 diff = playerPos - m_bonePos;
-	//if (diff.Length() < 50.0f) {
-	//	m_state = enState_bite;
-	//	m_player->SetIsBite(true);
-	//	m_charaCon.ActiveMode(false);
-	//	auto f = m_player->GetPos();
-	//	f.y += 50.0f;
-	//	m_position = f;
-	//	m_isBite = true;
+	////プレイヤーへの攻撃判定。
+	////プレイヤーと敵の角度を求める。
+	//CVector3 f = m_model->GetForward();
+	//f.z *= -1;
+	//CVector3 diff = m_player->GetPos() - m_position;
+	////視野角。
+	//float degree = CalcViewingAngleDeg(f, diff);
+	////距離が200以内かつ。
+	//if (diff.Length() < 200.0f
+	////45度なら。
+	////内積に符号は無い。
+	//	&& degree < 45.0f) {
+	//	//ダメージを与える。
+	//	m_player->Damage();
 	//}
+	
+	//指の骨の読み込み。
+	auto& model = m_model->GetModel();
+	auto bone = model.FindBone(L"RightHandMiddle2");
+	bone->CalcWorldTRS(m_bonePos, m_boneRot, m_boneScale);
+	//あたり判定。
+	auto playerPos = m_player->GetPos();
+	//プレイヤーの判定の位置を上げる。
+	playerPos.y += 100.0f;
+	CVector3 diff = playerPos - m_bonePos;
+	//骨とプレイヤーが当たったら。
+	if (diff.Length() < 50.0f) {
+		//ステートを噛みつき状態にする。
+		m_state = enState_bite;
+		//プレイヤーの噛みつきフラグを有効にする。
+		m_player->SetIsBite(true);
+		//キャラコンの衝突判定を消す。
+		m_charaCon.ActiveMode(false);
+		//ゾンビの向きをプレイヤーにあわせる。
+		{
+			//プレイヤーと敵の角度を求める。
+			CVector3 f = m_model->GetForward();
+			f.z *= -1;
+			CVector3 diff = m_player->GetPos() - m_position;
+			//視野角。
+			float degree = CalcViewingAngleDeg(f, diff);
+			
+			//もし角度が10度以内ではなかったら。
+			if (degree > 10.0f) {
+				CVector3 cross;
+				f.y = 0.0f;
+				diff.y = 0.0f;
+				cross.Cross(f, diff);
+				cross.Normalize();
+				m_rotation.SetRotationDeg(cross, degree - 10.0f);
+
+				//プレイヤーと敵の角度を求める。
+				CVector3 f2 = m_player->GetSkinModelRender()->GetForward();
+				f2.z *= -1;
+				CVector3 diff2 = m_position - m_player->GetPos();
+				//視野角。
+				float degree2 = CalcViewingAngleDeg(f2, diff2);
+				CVector3 cross2;
+				f2.y = 0.0f;
+				diff2.y = 0.0f;
+				cross2.Cross(f2, diff2);
+				cross2.Normalize();
+				m_player->GetRot().SetRotationDeg(cross2, degree2 - 10.0f);
+
+			}
+		}
+		//ゾンビをプレイヤーの位置に移動させる。
+		auto pPos = m_player->GetPos();
+		pPos.y += 50.0f;
+		m_position = pPos;
+		//ゾンビの噛みつきフラグを有効にする。
+		m_isBite = true;
+	}
 	m_atkTimer = 0;
 }
 
@@ -439,4 +473,17 @@ void Zombie::Death()
 		//死ぬ。
 		m_state = enState_death;
 	}
+}
+
+float Zombie::CalcViewingAngleDeg(CVector3 v1, CVector3 v2)
+{	
+	//内積。
+	float angleDot = v1.Dot(v2);
+	//内積からcosθを求める。
+	float cos = angleDot / (v1.Length()*v2.Length());
+	//cosθから角度(ラジアン)を求める。
+	float radian = acos(cos);
+	//ラジアンから度に変換。
+	float degree = radian * 180.0f / PI;
+	return degree;
 }

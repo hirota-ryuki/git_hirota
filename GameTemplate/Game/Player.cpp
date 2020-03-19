@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "GameCamera.h"
 #include "Navimesh.h"
 #include "Bullet.h"
 #include "Zombie.h"
@@ -174,6 +175,7 @@ void Player::Move()
 
 void Player::Update()
 {	
+	GetGameCameraInst();
 	//1回だけUIのインスタンスを取得。
 	if (m_game->GetUI() != nullptr&&m_ui == nullptr) {
 		//UIのインスタンスを取得。
@@ -378,13 +380,25 @@ void Player::En_Reload()
 void Player::En_Lie()
 {
 	m_charaCon.ActiveMode(false);
+	if (!m_isOldCameraInfo) {
+		m_oldplayer = m_gamecamera->GetTargetFromPlayer();
+		m_oldpos = m_gamecamera->GetTargetFromPos();
+
+		
+
+		m_isOldCameraInfo = true;
+	}
+
 	//アニメーションの再生。
 	m_animation.Play(enAnimationClip_lie, 0.4f);
 	//アニメーションの再生中じゃなかったら。
 	if (!m_animation.IsPlaying()) {
 		ChangeState();
+		m_gamecamera->SetTargetFromPlayer(m_oldplayer);
+		m_gamecamera->SetTargetFromPos(m_oldpos);
 		m_charaCon.ActiveMode(true);
 		m_isBite = false;
+		m_isOldCameraInfo = false;
 	}
 }
 
@@ -393,7 +407,6 @@ void Player::Rotation()
 	//右スティックの入力量で、加算する回転クォータニオンを作る。
 	CQuaternion qAddRot;
 	qAddRot.SetRotationDeg(CVector3::AxisY(), 2.0f*g_pad[0].GetRStickXF());
-	m_rot = qAddRot;
 	m_rotation.Multiply(qAddRot, m_rotation);
 }
 
