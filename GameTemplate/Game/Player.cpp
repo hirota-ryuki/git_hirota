@@ -123,10 +123,6 @@ void Player::ChangeState()
 			}
 		}
 	}
-
-	if (m_isBite) {
-		m_state = enState_lie;
-	}
 }
 
 void Player::Move()
@@ -175,6 +171,8 @@ void Player::Move()
 
 void Player::Update()
 {	
+	//m_state = enState_lie;
+
 	GetGameCameraInst();
 	//1回だけUIのインスタンスを取得。
 	if (m_game->GetUI() != nullptr&&m_ui == nullptr) {
@@ -190,6 +188,9 @@ void Player::Update()
 	else {
 		m_ui->CangeActives(false);
 		m_aimSprite->ActiveMode(false);
+	}
+	if (m_isBite) {
+		m_state = enState_lie;
 	}
 	//一時停止していなかったら。
 	if (!m_game->GetIsPose()) {
@@ -379,22 +380,28 @@ void Player::En_Reload()
 
 void Player::En_Lie()
 {
-	m_charaCon.ActiveMode(false);
+	//m_charaCon.ActiveMode(false);
 	if (!m_isOldCameraInfo) {
+		//バックアップ。
 		m_oldplayer = m_gamecamera->GetTargetFromPlayer();
-		m_oldpos = m_gamecamera->GetTargetFromPos();
+		m_oldpos = m_gamecamera->GetPosFromTarget();
+		m_oldAddY = m_gamecamera->GetAddY();
 		m_isOldCameraInfo = true;
 	}
-
+	m_gamecamera->SetTargetFromPlayer(50.0f);
+	m_gamecamera->SetPosFromTarget(-200.0f);
+	m_gamecamera->SetAddY(30.0f);
 	//アニメーションの再生。
 	m_animation.Play(enAnimationClip_lie, 0.4f);
 	//アニメーションの再生中じゃなかったら。
 	if (!m_animation.IsPlaying()) {
 		ChangeState();
-		m_gamecamera->SetTargetFromPlayer(m_oldplayer);
-		m_gamecamera->SetTargetFromPos(m_oldpos);
 		m_charaCon.ActiveMode(true);
 		m_isBite = false;
+		//ロード。
+		m_gamecamera->SetTargetFromPlayer(m_oldplayer);
+		m_gamecamera->SetPosFromTarget(m_oldpos);
+		m_gamecamera->SetAddY(m_oldAddY);
 		m_isOldCameraInfo = false;
 	}
 }

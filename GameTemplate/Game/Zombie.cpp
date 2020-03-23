@@ -110,16 +110,7 @@ void Zombie::Update()
 			}
 			break; 
 		case enState_bite:
-			//アニメーションの再生。
-			m_animation.Play(enAnimationClip_bite, 0.1f);
-			//アニメーションの再生中じゃなかったら。
-			if (!m_animation.IsPlaying()) {
-				//待機状態に遷移。
-				m_state = enState_idle;
-				m_charaCon.ActiveMode(true);
-				m_isBite = false;
-				m_coolTimer++;
-			}
+			En_Bite();
 			break;
 		case enState_knockback:
 			//アニメーションの再生。
@@ -159,6 +150,61 @@ void Zombie::Update()
 		m_animation.Update(1.f / 60.f);
 		//座標の更新。
 		m_model->SetData(m_position, m_rotation);
+	}
+}
+
+void Zombie::En_Bite()
+{
+	//ゾンビの向きをプレイヤーにあわせる。
+	{
+		//プレイヤーと敵の角度を求める。
+		CVector3 f = m_model->GetForward();
+		f.z *= -1;
+		CVector3 diff = m_player->GetPos() - m_position;
+		//視野角。
+		float degree = CalcViewingAngleDeg(f, diff);
+
+		//もし角度が10度以内ではなかったら。
+		if (degree > 10.0f) {
+			CVector3 cross;
+			//斜めに傾かないように0にしておく。
+			f.y = 0.0f;
+			diff.y = 0.0f;
+			cross.Cross(f, diff);
+			cross.Normalize();
+			CQuaternion qAddRot;
+			qAddRot.SetRotationDeg(cross, degree - 10.0f);
+			qAddRot.Multiply(m_rotation);
+			//プレイヤーと敵の角度を求める。
+			CVector3 f2 = m_player->GetSkinModelRender()->GetForward();
+			f2.z *= -1;
+			CVector3 diff2 = m_position - m_player->GetPos();
+			//視野角。
+			float degree2 = CalcViewingAngleDeg(f2, diff2);
+			CVector3 cross2;
+			f2.y = 0.0f;
+			diff2.y = 0.0f;
+			cross2.Cross(f2, diff2);
+			cross2.Normalize();
+			CQuaternion qAddRot2;
+			qAddRot2.SetRotationDeg(cross2, degree2 - 10.0f);
+			qAddRot2.Multiply(m_player->GetRot());
+		}
+	}
+	//ゾンビをプレイヤーの位置に移動させる。
+	auto pPos = m_player->GetPos();
+	pPos.x += 30.0f;
+	pPos.y += 30.0f;
+	m_position = pPos;
+	//アニメーションの再生。
+	m_animation.Play(enAnimationClip_bite, 0.1f);
+	//アニメーションの再生中じゃなかったら。
+	if (!m_animation.IsPlaying()) {
+		//待機状態に遷移。
+		m_state = enState_idle;
+		m_charaCon.ActiveMode(true);
+		m_isBite = false;
+		m_coolTimer++;
 	}
 }
 
@@ -394,43 +440,8 @@ void Zombie::Attack()
 		m_player->SetIsBite(true);
 		//キャラコンの衝突判定を消す。
 		m_charaCon.ActiveMode(false);
-		//ゾンビの向きをプレイヤーにあわせる。
-		{
-			//プレイヤーと敵の角度を求める。
-			CVector3 f = m_model->GetForward();
-			f.z *= -1;
-			CVector3 diff = m_player->GetPos() - m_position;
-			//視野角。
-			float degree = CalcViewingAngleDeg(f, diff);
-			
-			//もし角度が10度以内ではなかったら。
-			if (degree > 10.0f) {
-				CVector3 cross;
-				f.y = 0.0f;
-				diff.y = 0.0f;
-				cross.Cross(f, diff);
-				cross.Normalize();
-				m_rotation.SetRotationDeg(cross, degree - 10.0f);
-
-				//プレイヤーと敵の角度を求める。
-				CVector3 f2 = m_player->GetSkinModelRender()->GetForward();
-				f2.z *= -1;
-				CVector3 diff2 = m_position - m_player->GetPos();
-				//視野角。
-				float degree2 = CalcViewingAngleDeg(f2, diff2);
-				CVector3 cross2;
-				f2.y = 0.0f;
-				diff2.y = 0.0f;
-				cross2.Cross(f2, diff2);
-				cross2.Normalize();
-				m_player->GetRot().SetRotationDeg(cross2, degree2 - 10.0f);
-
-			}
-		}
-		//ゾンビをプレイヤーの位置に移動させる。
-		auto pPos = m_player->GetPos();
-		pPos.y += 50.0f;
-		m_position = pPos;
+		m_player->GetCharaCon()->ActiveMode(false);
+		
 		//ゾンビの噛みつきフラグを有効にする。
 		m_isBite = true;
 	}

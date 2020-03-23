@@ -157,6 +157,9 @@ public:
 	void SetIsBite(bool flag) {
 		m_isBite = flag;
 	}
+	CharacterController* GetCharaCon() {
+		return &m_charaCon;
+	}
 private:
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
@@ -212,8 +215,10 @@ private:
 	bool			m_isOldCameraInfo = false;	//カメラの情報を記録したかどうか。
 	bool			m_isGameCamera = false;		//GameCameraクラスのポインタを取得したかどうか。
 	GameCamera*		m_gamecamera = nullptr;		//GameCameraクラスのポインタ。
-	float		m_oldplayer = 0.0f;		//倒れる前のカメラの視点。
-	float		m_oldpos = 0.0f;	//倒れる前のカメラの注視点。
+	//カメラ情報のバックアップ。
+	float			m_oldplayer = 0.0f;			//倒れる前のカメラの視点。
+	float			m_oldpos = 0.0f;			//倒れる前のカメラの注視点。
+	float			m_oldAddY = 0.0f;			//倒れる前の点を地面から上昇させる量。
 	//ダメージ画像関係。
 	SpriteRender*	m_sprite = nullptr;
 	float			m_alpha = 0.0f;

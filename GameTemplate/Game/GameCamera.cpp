@@ -32,133 +32,106 @@ bool GameCamera::Start()
 
 void GameCamera::Update()
 {	
-	if (g_pad[0].IsTrigger(enButtonSelect)) {
-		//m_isMapMode = !m_isMapMode;
-	}
+	//一時停止していなかったら。
+	if (!m_game->GetIsPose()) {
+		if (m_player != nullptr) {
+			// 限界を決める。
+			float toCameraPosRotAngleold = m_toCameraPosRotAngle;
+			toCameraPosRotAngleold += (g_pad[0].GetRStickYF()*1.5f);
 
-	if (!m_isMapMode) {
-		//一時停止していなかったら。
-		if (!m_game->GetIsPose()) {
-			if (m_player != nullptr) {
-				//カメラに現在地をセット。
-				CVector3 l_setpos = m_player->GetPos();
-				l_setpos.y += 50000.0f;
-				m_springCamera.SetPosition(l_setpos);
+			float t = 60.0f;
 
-				// 限界を決める
-				float toCameraPosRotAngleold = toCameraPosRotAngle;
-				toCameraPosRotAngleold += (g_pad[0].GetRStickYF()*1.5f);
+			if (m_toCameraPosRotAngle > t) {
+				toCameraPosRotAngleold = t;
+			}
+			if (m_toCameraPosRotAngle < -70.0f) {
+				toCameraPosRotAngleold = -70.0f;
+			}
+			m_toCameraPosRotAngle = toCameraPosRotAngleold;
 
-				float t = 60.0f;
+			//プレイヤーから注視点までのベクトルを設定。
+			//zが前
+			//プレイヤーの前ベクトル。
+			CVector3 l_toCameraTarget;
+			l_toCameraTarget.Set(0.0f, 0.0f, m_targetFromPlayer);
+			m_player->GetRot().Multiply(l_toCameraTarget);
 
-				if (toCameraPosRotAngle > t) {
-					toCameraPosRotAngleold = t;
-				}
-				if (toCameraPosRotAngle < -70.0f) {
-					toCameraPosRotAngleold = -70.0f;
-				}
-				toCameraPosRotAngle = toCameraPosRotAngleold;
+			//注視点を動かすための外積。
+			CQuaternion qAddRot2;
+			CVector3 axis2;
+			CVector3 y2 = { 0.0f,1.0f,0.0f };
+			axis2.Cross(l_toCameraTarget, y2);
+			axis2.Normalize();
+			qAddRot2.SetRotationDeg(axis2, m_toCameraPosRotAngle);
+			qAddRot2.Multiply(l_toCameraTarget);
 
-				//プレイヤーから注視点までのベクトルを設定。
-				//zが前
-				//プレイヤーの前ベクトル。
-				CVector3 l_toCameraTarget;
-				l_toCameraTarget.Set(0.0f, 0.0f, m_targetFromPlayer);
-				m_player->GetRot().Multiply(l_toCameraTarget);
+			//注視点から視点までのベクトルを設定。
+			CVector3 l_toCameraPos;
+			l_toCameraPos.Set(60.0f, 0.0f, m_posFromTarget);
+			m_player->GetRot().Multiply(l_toCameraPos);
 
-				//注視点を動かすための外積。
-				CQuaternion qAddRot2;
-				CVector3 axis2;
-				CVector3 y2 = { 0.0f,1.0f,0.0f };
-				axis2.Cross(l_toCameraTarget, y2);
-				axis2.Normalize();
-				qAddRot2.SetRotationDeg(axis2, toCameraPosRotAngle);
-				qAddRot2.Multiply(l_toCameraTarget);
+			//視点を動かすための外積。
+			CQuaternion qAddRot;
+			CVector3 axis;
+			CVector3 y = { 0.0f,-1.0f,0.0f };
+			axis.Cross(l_toCameraPos, y);
+			axis.Normalize();
+			qAddRot.SetRotationDeg(axis, m_toCameraPosRotAngle);
+			qAddRot.Multiply(l_toCameraPos);
 
+			CVector3 m_pos = m_player->GetPos();
+			m_pos.y += m_playerPosAddY;
 
-				//注視点から視点までのベクトルを設定。
-				CVector3 l_toCameraPos;
-				l_toCameraPos.Set(60.0f, 0.0f, m_targetFromPos);
-				m_player->GetRot().Multiply(l_toCameraPos);
+			//仮の注視点を計算する。
+			m_target = m_pos + l_toCameraTarget;
+			//視点を計算する。
+			m_pos = m_target + l_toCameraPos;
 
-				//視点を動かすための外積。
-				CQuaternion qAddRot;
-				CVector3 axis;
-				CVector3 y = { 0.0f,-1.0f,0.0f };
-				axis.Cross(l_toCameraPos, y);
-				axis.Normalize();
-				qAddRot.SetRotationDeg(axis, toCameraPosRotAngle);
-				qAddRot.Multiply(l_toCameraPos);
+			//視点を設定する。
+			m_springCamera.SetPosition(m_pos);
 
-				CVector3 m_pos = m_player->GetPos();
-				m_pos.y += 150.0f;
-
-				//注視点を計算する。
-				m_target = m_pos + l_toCameraTarget;
-				//視点を計算する。
-				m_pos = m_target + l_toCameraPos;
-
-				//注視点と視点を設定する。
-				m_springCamera.SetTarget(m_target);
-				m_springCamera.SetPosition(m_pos);
-
+			//注視点をプレイヤーの右側に移す。
+			//   〇 仮の注視点(m_target)
+			//　　 \
+			//　    \
+			//　　P  〇　 //ここが最終的な注視点！！！
+			//        \
+			//         \
+			//         〇視点
+			//なぜ横にするかというと、プレイヤーの前方方向だと、前方の壁をすり抜けてしまって
+			//カメラの当たり判定で誤動作するため。
+			{
+				//1.プレイヤーの前方方向と逆向きのベクトル v0 を求める。
+				CVector3 v0 = l_toCameraTarget;
+				v0.Normalize();
+				v0 *= -1.0f;
+				//2. 1で求めたv0と仮の注視点から視点に向かうベクトルとの内積を求める。
 				//注視点をプレイヤーの右側に移す。
 				//   〇 仮の注視点(m_target)
-				//　　 \
-				//　    \
+				//　こ|\
+				//　の| \
+				//　長P  〇　 //ここが最終的な注視点！！！
+				//  さ|   \
+				//  が|    \
+				//  t |ーーー〇視点
+				t = v0.Dot(l_toCameraPos);
+				//3.プレイヤーから仮の注視点までの距離÷tで最終的な注視点までの比率を求める。
+				//2. 1で求めたv0と仮の注視点から視点に向かうベクトルとの内積を求める。
+				//注視点をプレイヤーの右側に移す。
+				//   〇 仮の注視点(m_target)
+				//この||\   この
+				//長さ|| \　長さ！！！　
 				//　　P  〇　 //ここが最終的な注視点！！！
-				//        \
-				//         \
-				//         〇視点
-				//なぜ横にするかというと、プレイヤーの前方方向だと、前方の壁をすり抜けてしまって
-				//カメラの当たり判定で誤動作するため。
-				{
-					//1.プレイヤーの前方方向と逆向きのベクトル v0 を求める。
-					CVector3 v0 = l_toCameraTarget;
-					v0.Normalize();
-					v0 *= -1.0f;
-					//2. 1で求めたv0と仮の注視点から視点に向かうベクトルとの内積を求める。
-					//注視点をプレイヤーの右側に移す。
-					//   〇 仮の注視点(m_target)
-					//　こ|
-					//　の| \
-					//　長P  〇　 //ここが最終的な注視点！！！
-					//  さ|   \
-					//  が|    \
-					//  t |ーーー〇視点
-					t = v0.Dot(l_toCameraPos);
-					//3.プレイヤーから仮の注視点までの距離÷tで最終的な注視点までの比率を求める。
-					//2. 1で求めたv0と仮の注視点から視点に向かうベクトルとの内積を求める。
-					//注視点をプレイヤーの右側に移す。
-					//   〇 仮の注視点(m_target)
-					//この||\   この
-					//長さ|| \　長さ！！！　
-					//　　P  〇　 //ここが最終的な注視点！！！
-					//  　|   \
-					//  　|    \
-					//  　|ーーー〇視点
-					t = m_targetFromPlayer / t;
-					//4.あとは線形ほかーん。
-					m_target.Lerp(t, m_target, m_pos);
-					m_springCamera.SetTarget(m_target);
-				}
-
-
-				//更新。
-				m_springCamera.Update();
+				//  　|   \
+				//  　|    \
+				//  　|ーーー〇視点
+				t = m_targetFromPlayer / t;
+				//4.あとは線形ほかーん。
+				m_target.Lerp(t, m_target, m_pos);
+				m_springCamera.SetTarget(m_target);
 			}
+			//更新。
+			m_springCamera.Update();
 		}
 	}
-	//else {
-	//	m_target = CVector3::Zero();		
-	//	m_pos = CVector3::Zero();		
-	//	m_pos.y = 5000.0f;
-
-	//	//注視点と視点を設定する。
-	//	g_camera3D.SetTarget(m_target);
-	//	g_camera3D.SetPosition(m_pos);
-
-	//	//更新。
-	//	g_camera3D.Update();
-	//}
 }

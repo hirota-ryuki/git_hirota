@@ -16,6 +16,10 @@ public:
 	bool Start() override;
 	void Update() override;
 	/// <summary>
+	/// 噛みつき攻撃。
+	/// </summary>
+	void En_Bite();
+	/// <summary>
 	/// ステートを変更する関数。
 	/// 特殊な場合を除く。
 	/// </summary>

@@ -43,34 +43,49 @@ public:
 		return m_target;
 	}
 	/// <summary>
-	/// 注視点をセット。
-	/// </summary>
-	void SetTargetFromPos(const float& targetFromPos)
-	{
-		m_targetFromPos = targetFromPos;
-	}
-	/// <summary>
-	/// 注視点を取得。
-	/// </summary>
-	/// <returns>注視点。</returns>
-	float GetTargetFromPos()
-	{
-		return m_targetFromPos;
-	}
-	/// <summary>
-	/// 注視点をセット。
+	/// プレイヤーから注視点をセット。
 	/// </summary>
 	void SetTargetFromPlayer(const float& targetFromPlayer)
 	{
 		m_targetFromPlayer = targetFromPlayer;
 	}
 	/// <summary>
-	/// 注視点を取得。
+	/// プレイヤーから注視点を取得。
 	/// </summary>
-	/// <returns>注視点。</returns>
+	/// <returns>プレイヤーから注視点。</returns>
 	float GetTargetFromPlayer()
 	{
 		return m_targetFromPlayer;
+	}
+	/// <summary>
+	/// 注視点から視点をセット。
+	/// </summary>
+	void SetPosFromTarget(const float& posFromTarget)
+	{
+		m_posFromTarget = posFromTarget;
+	}
+	/// <summary>
+	/// 注視点から視点を取得。
+	/// </summary>
+	/// <returns>注視点から視点。</returns>
+	float GetPosFromTarget()
+	{
+		return m_posFromTarget;
+	}
+	/// <summary>
+	/// 視点を地面から上昇させる量をセット。
+	/// </summary>
+	void SetAddY(const float& playerPosAddY)
+	{
+		m_playerPosAddY = playerPosAddY;
+	}
+	/// <summary>
+	/// 視点を地面から上昇させる量を取得。
+	/// </summary>
+	/// <returns>視点を地面から上昇させる量。</returns>
+	float GetAddY()
+	{
+		return m_playerPosAddY;
 	}
 private:
 	//インスタンス関係。
@@ -81,13 +96,10 @@ private:
 	CVector3		m_toCameraPos = CVector3::Zero();		
 	CVector3		m_target = CVector3::Zero();			//注視点。
 	CVector3		m_pos = CVector3::Zero();				//視点。
-	float			toCameraPosRotAngle = 0.f;				//視点の角度。
-	float			toCameraTargetRotAngle = 0.f;			//注視点の角度。
-	//float			m_targetFromPos = -1100.0f;			//注視点の角度。
-	//float			m_targetFromPlayer = 1000.0f;			//注視点の角度。
-	float			m_targetFromPos = -200.0f;			//注視点の角度。
-	float			m_targetFromPlayer = 100.0f;			//注視点の角度。
-	bool			m_isMapMode = false;
-	//ばねカメラ。
-	SpringCamera m_springCamera; //ばねカメラ。
+	float			m_toCameraPosRotAngle = 0.f;			//視点の角度。
+	float			m_toCameraTargetRotAngle = 0.f;			//注視点の角度。
+	float			m_targetFromPlayer = 100.0f;			//プレイヤーから注視点。
+	float			m_posFromTarget = -200.0f;				//注視点から視点。
+	float			m_playerPosAddY = 150.0f;				//視点を地面から上昇させる量。
+	SpringCamera	m_springCamera;							//ばねカメラ。
 };
