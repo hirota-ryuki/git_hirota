@@ -623,6 +623,7 @@ public:
 	}
 	/*!
 	*@brief	ベクトルにクォータニオンを適用する。
+	*@brief	_vに結果が入る。
 	*@param[in,out] v	ベクトル。
 	*/
 	void Multiply(CVector4& _v)

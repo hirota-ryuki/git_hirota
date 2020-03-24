@@ -433,7 +433,7 @@ void Zombie::Attack()
 	playerPos.y += 100.0f;
 	CVector3 diff = playerPos - m_bonePos;
 	//骨とプレイヤーが当たったら。
-	if (diff.Length() < 50.0f) {
+	//if (diff.Length() < 50.0f) {
 		//ステートを噛みつき状態にする。
 		m_state = enState_bite;
 		//プレイヤーの噛みつきフラグを有効にする。
@@ -444,7 +444,7 @@ void Zombie::Attack()
 		
 		//ゾンビの噛みつきフラグを有効にする。
 		m_isBite = true;
-	}
+	//}
 	m_atkTimer = 0;
 }
 
