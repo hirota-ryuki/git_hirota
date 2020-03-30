@@ -97,9 +97,10 @@ void Zombie::Update()
 			//アニメーションの再生。
 			m_animation.Play(enAnimationClip_attack, 0.2f);
 			m_atkTimer++;
-			if (m_atkTimer >= 60) {
+			if (m_atkTimer >= 60 && !m_isAttack) {
 				//攻撃。
 				Attack();
+				m_isAttack = true;
 			}
 			//アニメーションの再生中じゃなかったら。
 			if (!m_animation.IsPlaying()) {
@@ -107,6 +108,7 @@ void Zombie::Update()
 				m_state = enState_idle;
 				m_coolTimer++;
 				m_atkTimer = 0;
+				m_isAttack = false;
 			}
 			break; 
 		case enState_bite:
@@ -175,6 +177,7 @@ void Zombie::En_Bite()
 			CQuaternion qAddRot;
 			qAddRot.SetRotationDeg(cross, degree - 10.0f);
 			qAddRot.Multiply(m_rotation);
+			//いずれプレイヤークラスに処理を移す。
 			//プレイヤーと敵の角度を求める。
 			CVector3 f2 = m_player->GetSkinModelRender()->GetForward();
 			f2.z *= -1;
@@ -275,8 +278,21 @@ void Zombie::Move()
 {
 	//プレイヤーとの距離が近かったら。
 	CVector3 diff = m_player->GetPos() - m_position;
+	//コリジョンの移動の始点と終点の設定
+	btTransform start, end;
+	{
+		//回転の設定
+		start.setIdentity();
+		end.setIdentity();
+		start.setOrigin(btVector3(m_position.x, m_position.y + 20.f, m_position.z));
+		end.setOrigin(btVector3(m_player->GetPos().x, m_position.y + 20.f, m_player->GetPos().z));
+	}
+	CallBack callback;
+	//startからendまでコリジョンを移動させて当たり判定を取る
+	g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
+	//コリジョンにヒットしなかったら。
 	//A*をしない。
-	if (diff.Length() < 400.f) {
+	if (diff.Length() < 400.f&&callback.isHit == false) {
 		CVector3 moveDirection = m_player->GetPos() - m_position;
 		moveDirection.y = 0.0f;
 		moveDirection.Normalize();
@@ -407,22 +423,22 @@ void Zombie::Rotation()
 
 void Zombie::Attack()
 {
-	////プレイヤーへの攻撃判定。
-	////プレイヤーと敵の角度を求める。
-	//CVector3 f = m_model->GetForward();
-	//f.z *= -1;
-	//CVector3 diff = m_player->GetPos() - m_position;
-	////視野角。
-	//float degree = CalcViewingAngleDeg(f, diff);
-	////距離が200以内かつ。
-	//if (diff.Length() < 200.0f
-	////45度なら。
-	////内積に符号は無い。
-	//	&& degree < 45.0f) {
-	//	//ダメージを与える。
-	//	m_player->Damage();
-	//}
-	
+	//プレイヤーへの攻撃判定。
+	//プレイヤーと敵の角度を求める。
+	CVector3 f = m_model->GetForward();
+	f.z *= -1;
+	CVector3 diff = m_player->GetPos() - m_position;
+	//視野角。
+	float degree = CalcViewingAngleDeg(f, diff);
+	//距離が200以内かつ。
+	if (diff.Length() < 200.0f
+	//45度なら。
+	//内積に符号は無い。
+		&& degree < 45.0f) {
+		//ダメージを与える。
+		m_player->Damage();
+	}
+	/*
 	//指の骨の読み込み。
 	auto& model = m_model->GetModel();
 	auto bone = model.FindBone(L"RightHandMiddle2");
@@ -444,7 +460,7 @@ void Zombie::Attack()
 		
 		//ゾンビの噛みつきフラグを有効にする。
 		m_isBite = true;
-	//}
+	//}*/
 	m_atkTimer = 0;
 }
 

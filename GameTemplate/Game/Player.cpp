@@ -180,7 +180,7 @@ void Player::Update()
 		m_ui = m_game->GetUI();
 	}
 	//エイムしていたら残弾を表示。
-	if (m_state == enState_aim || m_state == enState_shot) {
+	if (m_state == enState_aim || m_state == enState_shot || m_state == enState_reload) {
 		m_ui->CangeActives(true);
 		m_aimSprite->ActiveMode(true);
 	}

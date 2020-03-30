@@ -123,6 +123,7 @@ private:
 
 	//攻撃関係。
 	int				m_atkTimer = 0;
+	bool			m_isAttack = false;//攻撃したかどうか。
 
 	//骨データ。
 	//ヘッドショットの判定と噛みつき攻撃の判定に使用する。	
