@@ -256,6 +256,7 @@
     <MeshContentTask Include="Assets\modelData\bullet\bullet.fbx" />
     <MeshContentTask Include="Assets\modelData\ceiling\ceiling.fbx" />
     <MeshContentTask Include="Assets\modelData\debug\debugbox.fbx" />
+    <MeshContentTask Include="Assets\modelData\debug\debugstick.fbx" />
     <MeshContentTask Include="Assets\modelData\goal\goal.fbx" />
     <MeshContentTask Include="Assets\modelData\mapChip\stage.fbx" />
     <MeshContentTask Include="Assets\modelData\mapChip\stage1.fbx" />

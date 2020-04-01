@@ -42,6 +42,12 @@ bool Zombie::Start()
 	m_model->Init(L"modelData/zombie/zombie.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
 	m_model->SetData(m_position, m_rotation);
+	
+	//debug cmoファイルの読み込み。
+	m_debugModel = NewGO<SkinModelRender>(GOPrio_Defalut);
+	m_debugModel->Init(L"modelData/debug/debugstick.cmo");
+	m_debugrotation.SetRotationDeg(CVector3::AxisY(), 180.f);
+	m_debugModel->SetData(m_position, m_debugrotation);
 
 	//アニメーション。
 	//アニメーションクリップのロード。
@@ -143,16 +149,38 @@ void Zombie::Update()
 		Death();
 		//重力。
 		if (!m_isBite) {
-			m_moveSpeed.x = 0.f;
-			m_moveSpeed.z = 0.f;
-			m_moveSpeed.y -= 240.f * 1.f / 60.f;
-			m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
+			m_moveSpeed.x = 0.0f;
+			m_moveSpeed.z = 0.0f;
+			m_moveSpeed.y -= 240.0f * 1.0f / 60.0f;
+			m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 		}
 		//アニメーションの更新。
-		m_animation.Update(1.f / 60.f);
+		m_animation.Update(1.0f / 60.0f);
 		//座標の更新。
 		m_model->SetData(m_position, m_rotation);
+
+
+		//プレイヤーと敵の角度を求める。
+		/*CVector3 f = m_model->GetForward();
+		f.z *= -1;*/
+		//f.Normalize();
+		//CVector3 dir = CVector3::One();
+		CVector3 dir;
+		dir.Set(0.0f, 0.0f, -1.0f);
+		m_rotation.Multiply(dir);
+		dir.Normalize();
+		float angle = dir.Dot(CVector3::AxisY());
+
+		CVector3 cross;
+		cross.Cross(dir, CVector3::AxisY());
+		cross.Normalize();
+
+		CQuaternion Rot;
+		Rot.SetRotation(cross, acos(angle));
+		
+		m_debugModel->SetData(m_position, Rot);
 	}
+
 }
 
 void Zombie::En_Bite()
@@ -425,11 +453,19 @@ void Zombie::Attack()
 {
 	//プレイヤーへの攻撃判定。
 	//プレイヤーと敵の角度を求める。
-	CVector3 f = m_model->GetForward();
-	f.z *= -1;
+	CVector3 f;
+	f.Set(0.0f, 0.0f, 1.0f);
+	f.Normalize();
+	m_rotation.Multiply(f);
 	CVector3 diff = m_player->GetPos() - m_position;
+	diff.Normalize();
+	float dot = f.Dot(diff);
+	float angle = acos(dot);
+	float degree = angle * 180.0f / PI;
+
+
 	//視野角。
-	float degree = CalcViewingAngleDeg(f, diff);
+	//float degree = CalcViewingAngleDeg(f, diff);
 	//距離が200以内かつ。
 	if (diff.Length() < 200.0f
 	//45度なら。
@@ -504,12 +540,21 @@ void Zombie::Death()
 
 float Zombie::CalcViewingAngleDeg(CVector3 v1, CVector3 v2)
 {	
+	////内積。
+	//float angleDot = v1.Dot(v2);
+	////内積からcosθを求める。
+	//float cos = angleDot / (v1.Length()*v2.Length());
+	////cosθから角度(ラジアン)を求める。
+	//float radian = acos(cos);
+	////ラジアンから度に変換。
+	//float degree = radian * 180.0f / PI;
+
 	//内積。
+	v1.Normalize();
+	v2.Normalize();
 	float angleDot = v1.Dot(v2);
-	//内積からcosθを求める。
-	float cos = angleDot / (v1.Length()*v2.Length());
 	//cosθから角度(ラジアン)を求める。
-	float radian = acos(cos);
+	float radian = acos(angleDot);
 	//ラジアンから度に変換。
 	float degree = radian * 180.0f / PI;
 	return degree;

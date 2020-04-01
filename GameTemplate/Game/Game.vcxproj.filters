@@ -145,6 +145,9 @@
     <Filter Include="Game\Map">
       <UniqueIdentifier>{50f595c6-d3ec-4353-98f5-b84ea0920c39}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Ceiling">
+      <UniqueIdentifier>{94369ea4-bb0d-4878-8b81-66cfc189e4c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -339,7 +342,9 @@
     <ClCompile Include="Map.cpp">
       <Filter>Game\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Ceiling.cpp" />
+    <ClCompile Include="Ceiling.cpp">
+      <Filter>Game\Ceiling</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -549,7 +554,9 @@
     <ClInclude Include="Map.h">
       <Filter>Game\Map</Filter>
     </ClInclude>
-    <ClInclude Include="Ceiling.h" />
+    <ClInclude Include="Ceiling.h">
+      <Filter>Game\Ceiling</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
@@ -579,8 +586,10 @@
     <ImageContentTask Include="Assets\sprite\item_menu.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\player_icon.png" />
     <ImageContentTask Include="Assets\sprite\map.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\player_icon.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
   </ItemGroup>
@@ -622,6 +631,9 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\ceiling\ceiling.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\debug\debugstick.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>

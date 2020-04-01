@@ -136,4 +136,9 @@ private:
 
 	//ステータス関係。
 	int				m_hp = 10;		//HP。
+
+	//デバッグ。
+	SkinModelRender*	m_debugModel = nullptr;						//スキンモデル。
+	CQuaternion			m_debugrotation = CQuaternion::Identity();	//回転。
+
 };

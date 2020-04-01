@@ -87,7 +87,7 @@ void AStar::AstarSearch(Cell* startcell, Cell* endcell)
 
 			}
 		}
-		//60回ループしたら強制終了。
+		//600回ループしたら強制終了。
 		if (crashCount == 600) {
 			break;
 		}
@@ -204,7 +204,7 @@ void AStar::Smoothing()
 			m_moveCellList.push_back(startPos);
 			break;
 		}
-		//15回ループしたら強制終了。
+		//600回ループしたら強制終了。
 		if (crashCount == 600) {
 			break;
 		}

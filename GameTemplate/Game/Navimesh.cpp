@@ -88,7 +88,7 @@ private:
 
 };
 
-#define REBUILD_NAVIMESH_DATA		//これを定義するとナビメッシュのデータが再作成される。
+//#define REBUILD_NAVIMESH_DATA		//これを定義するとナビメッシュのデータが再作成される。
 
 #ifdef _DEBUG
 	//#define USE_NAVIMESH_DEBUG	//これを定義すると、ナビメッシュのデバッグ表示が有効になる。
@@ -190,7 +190,7 @@ void Navimesh::Init(Floor* floor)
 				all->centerPos.z*all->linkCells[No]->centerPos.z;
 			float k = atan(dot);
 			CQuaternion g;
-			//g.SetRotationDeg(CVector3::AxisX(), 45.f);
+			//g.SetRotationDeg(CVector3::AxisX(), 45.0f);
 			g.SetRotation(CVector3::AxisY(), k);
 			m_model->SetRot(g);
 		}
@@ -363,8 +363,8 @@ void Navimesh::Create(SkinModel& model)
 			}
 			//カプセルコライダーの半径を拡大
 			CVector3 halfSize;
-			halfSize.x = maxLength.Length() * 3.0f;
-			halfSize.z = maxLength.Length() * 3.0f;
+			halfSize.x = maxLength.Length() * 2.0f;
+			halfSize.z = maxLength.Length() * 2.0f;
 			halfSize.y = 30.0f;
 			m_collider.Create(halfSize);
 
@@ -444,6 +444,7 @@ void Navimesh::Create(SkinModel& model)
 	OutputDebugString(text);
 #endif
 #ifdef USE_NAVIMESH_DEBUG
+
 	for (auto &all : m_cells)
 	{
 		m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
