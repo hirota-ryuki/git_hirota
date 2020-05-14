@@ -61,7 +61,7 @@ bool Game::Start()
 	swprintf_s(floor, L"floor");
 	//ƒŒƒxƒ‹B
 	wchar_t levelname[50];
-	swprintf_s(levelname, L"level/level00.tkl");
+	swprintf_s(levelname, L"level/level01.tkl");
 	LevelObjectData floorObjData;
 	LevelObjectData ceilingObjData;
 	LevelObjectData playerObjData;

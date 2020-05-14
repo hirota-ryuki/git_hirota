@@ -112,13 +112,13 @@ public:
 private:
 	void DrawFont() override;
 private:
-	Font m_font;
-	std::wstring m_text;					//!<テキスト。
-	const wchar_t* m_textUnsafe = nullptr;	//!<アンセーフ版のテキスト。
-	CVector2 m_position = CVector2::Zero();	//!<座標。x = 0.0f, y = 0.0fで画面の中心。
-	CVector4 m_color = CVector4::White();	//!<カラー。
-	float m_rotation = 0.0f;				//!<回転。
-	float m_scale = 1.0f;					//!<拡大率。
-	CVector2 m_pivot;						//!<ピボット。
-	bool		m_isActive = true;			//画像がドローされているかどうか。
+	Font				m_font;
+	std::wstring		m_text;							//!<テキスト。
+	const wchar_t*		m_textUnsafe = nullptr;			//!<アンセーフ版のテキスト。
+	CVector2			m_position = CVector2::Zero();	//!<座標。x = 0.0f, y = 0.0fで画面の中心。
+	CVector4			m_color = CVector4::White();	//!<カラー。
+	float				m_rotation = 0.0f;				//!<回転。
+	float				m_scale = 1.0f;					//!<拡大率。
+	CVector2			m_pivot = { 0.5f,0.5f };		//!<ピボット。
+	bool				m_isActive = true;				//画像がドローされているかどうか。
 };

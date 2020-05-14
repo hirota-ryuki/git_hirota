@@ -127,6 +127,7 @@ Navimesh::Navimesh()
 
 Navimesh::~Navimesh()
 {
+	m_isCreateModel = false;
 }
 
 void Navimesh::Init(Floor* floor)
@@ -176,23 +177,27 @@ void Navimesh::Init(Floor* floor)
 	fclose(fp);
 #endif
 #ifdef USE_NAVIMESH_DEBUG
-	for (auto &all : m_cells)
-	{
-		m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
-		m_model->Init(L"modelData/debug/debugbox.cmo");
-		m_model->SetPos(all->centerPos);
-		int No = 0;
-		if (all->linkCells[No] != NULL)
+	if (!m_isCreateModel) {
+		for (auto &all : m_cells)
 		{
-			//float dot = all->centerPos.Dot(all->linkCells[2]->centerPos);
-			float dot = all->centerPos.x*all->linkCells[No]->centerPos.x +
-				all->centerPos.y*all->linkCells[No]->centerPos.y +
-				all->centerPos.z*all->linkCells[No]->centerPos.z;
-			float k = atan(dot);
-			CQuaternion g;
-			//g.SetRotationDeg(CVector3::AxisX(), 45.0f);
-			g.SetRotation(CVector3::AxisY(), k);
-			m_model->SetRot(g);
+			m_debugModel = NewGO<SkinModelRender>(GOPrio_Defalut);
+			m_debugModel->Init(L"modelData/debug/debugbox.cmo");
+			m_debugModel->SetPos(all->centerPos);
+			int No = 0;
+			if (all->linkCells[No] != NULL)
+			{
+				//float dot = all->centerPos.Dot(all->linkCells[2]->centerPos);
+				float dot = all->centerPos.x*all->linkCells[No]->centerPos.x +
+					all->centerPos.y*all->linkCells[No]->centerPos.y +
+					all->centerPos.z*all->linkCells[No]->centerPos.z;
+				float k = atan(dot);
+				CQuaternion g;
+				//g.SetRotationDeg(CVector3::AxisX(), 45.0f);
+				g.SetRotation(CVector3::AxisY(), k);
+				m_debugModel->SetRot(g);
+			}
+			m_debugModel->ActiveMode(false);
+			m_debugModelList.emplace_back(m_debugModel);
 		}
 	}
 #endif
@@ -363,8 +368,8 @@ void Navimesh::Create(SkinModel& model)
 			}
 			//カプセルコライダーの半径を拡大
 			CVector3 halfSize;
-			halfSize.x = maxLength.Length() * 2.0f;
-			halfSize.z = maxLength.Length() * 2.0f;
+			halfSize.x = maxLength.Length() * 2.5f;
+			halfSize.z = maxLength.Length() * 2.5f;
 			halfSize.y = 30.0f;
 			m_collider.Create(halfSize);
 
@@ -444,37 +449,41 @@ void Navimesh::Create(SkinModel& model)
 	OutputDebugString(text);
 #endif
 #ifdef USE_NAVIMESH_DEBUG
-
-	for (auto &all : m_cells)
-	{
-		m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
-		m_model->Init(L"modelData/debug/debugbox.cmo");
-		m_model->SetPos(all->centerPos);
-		int No = 0;
-		if (all->linkCells[No] != NULL)
+	if (!m_isCreateModel) {
+		for (auto &all : m_cells)
 		{
-			//float dot = all->centerPos.Dot(all->linkCells[2]->centerPos);
-			float dot = all->centerPos.x*all->linkCells[No]->centerPos.x +
-				all->centerPos.y*all->linkCells[No]->centerPos.y +
-				all->centerPos.z*all->linkCells[No]->centerPos.z;
-			float k = atan(dot);
-			CQuaternion g;
-			//g.SetRotationDeg(CVector3::AxisX(), 45.f);
-			g.SetRotation(CVector3::AxisY(), k);
-			m_model->SetRot(g);
-		}
-		/*for (int i = 0; i < 3; i++) {
-			if (all->linkCells[i] != nullptr) {
-				auto dir = all->linkCells[i]->centerPos - all->centerPos;
-				dir.Normalize();
-				auto hoge = NewGO<SkinModelRender>(GOPrio_Defalut);
-				m_model->Init(L"modelData/zombie/zombie.cmo");
-				hoge->SetPos(all->centerPos);
-				CQuaternion rot;
-				rot.SetRotation({ 0.0f, 1.0f, 0.0f }, dir);
-				hoge->SetRot(rot);
+			m_debugModel = NewGO<SkinModelRender>(GOPrio_Defalut);
+			m_debugModel->Init(L"modelData/debug/debugbox.cmo");
+			m_debugModel->SetPos(all->centerPos);
+			int No = 0;
+			if (all->linkCells[No] != NULL)
+			{
+				//float dot = all->centerPos.Dot(all->linkCells[2]->centerPos);
+				float dot = all->centerPos.x*all->linkCells[No]->centerPos.x +
+					all->centerPos.y*all->linkCells[No]->centerPos.y +
+					all->centerPos.z*all->linkCells[No]->centerPos.z;
+				float k = atan(dot);
+				CQuaternion g;
+				//g.SetRotationDeg(CVector3::AxisX(), 45.f);
+				g.SetRotation(CVector3::AxisY(), k);
+				m_debugModel->SetRot(g);
 			}
-		}*/
+			m_debugModel->ActiveMode(false);
+			m_debugModelList.emplace_back(m_debugModel);
+			/*for (int i = 0; i < 3; i++) {
+				if (all->linkCells[i] != nullptr) {
+					auto dir = all->linkCells[i]->centerPos - all->centerPos;
+					dir.Normalize();
+					auto hoge = NewGO<SkinModelRender>(GOPrio_Defalut);
+					m_model->Init(L"modelData/zombie/zombie.cmo");
+					hoge->SetPos(all->centerPos);
+					CQuaternion rot;
+					rot.SetRotation({ 0.0f, 1.0f, 0.0f }, dir);
+					hoge->SetRot(rot);
+				}
+			}*/
+		}
+		m_isCreateModel = true;
 	}
 #endif //
 
@@ -531,7 +540,28 @@ void Navimesh::Create(SkinModel& model)
 	fclose(fp);
 }
 
-bool Navimesh::Start()
+void Navimesh::Update()
 {
-	return true;
+#ifdef USE_NAVIMESH_DEBUG
+	//ボタンで切り替え。
+	if (g_pad[0].IsTrigger(enButtonSelect))
+	{
+		m_isDebug = !m_isDebug;
+		m_isChangeActiveModel = true;
+	}
+
+	if (m_isChangeActiveModel) {
+		if (m_isDebug) {
+			for (auto& model : m_debugModelList) {
+				model->ActiveMode(true);
+			}
+		}
+		else {
+			for (auto& model : m_debugModelList) {
+				model->ActiveMode(false);
+			}
+		}
+		m_isChangeActiveModel = false;
+	}
+#endif
 }

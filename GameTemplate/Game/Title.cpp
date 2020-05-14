@@ -26,6 +26,7 @@ void Title::Update()
 {
 	//Aボタンを押したら。
 	if (g_pad[0].IsTrigger(enButtonA))
+	//if (g_pad[0].IsPressAnyKey())
 	{
 		//ワンショット再生のSE
 		CSoundSource* m_se = new CSoundSource;

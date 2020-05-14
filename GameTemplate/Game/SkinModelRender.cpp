@@ -31,7 +31,7 @@ void SkinModelRender::UpdateWorldMatrix()
 void SkinModelRender::Draw()
 {
 	if (m_isUpdate) {
-		if (m_isNotModel) {
+		if (m_isActive) {
 			//ƒ‚ƒfƒ‹
 			m_model.Draw(
 				enRenderMode_Normal,

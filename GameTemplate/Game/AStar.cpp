@@ -89,6 +89,7 @@ void AStar::AstarSearch(Cell* startcell, Cell* endcell)
 		}
 		//600回ループしたら強制終了。
 		if (crashCount == 600) {
+			//isSuccesshはfalseのまま。
 			break;
 		}
 	}
@@ -111,6 +112,7 @@ void AStar::AstarSearch(Cell* startcell, Cell* endcell)
 		}
 		//要素はゴール地点からスタート地点までの順番で格納されているので反転させる。
 		std::reverse(m_moveCellListTmp.begin(), m_moveCellListTmp.end());
+		//m_moveCellList = m_moveCellListTmp;
 		//スムージング。
 		Smoothing();
 	}
@@ -139,7 +141,7 @@ struct CallBack : public btCollisionWorld::ConvexResultCallback
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
 		if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Map) {
-			//当たった
+			//当たった。
 			isHit = true;
 		}
 		return 0;
@@ -154,19 +156,20 @@ void AStar::Smoothing()
 	//最初の座標の設定。
 	CVector3 startPos = *m_itr;
 	//リストの初期化。
+	m_moveCellSmoothListTmp.clear();
 	m_moveCellList.clear();
 	//スタート位置を格納。
-	m_moveCellList.push_back(startPos);
+	m_moveCellSmoothListTmp.push_back(startPos);
 	//イテレータを進めておく。
 	m_itr++;
 	//コライダーの設定。
 	m_collider.Create(m_boxSize);
-	//最初だけ自分のキャラコンに当たるので範囲を伸ばすための判定。
-	bool isFirst = false;
 	//移動可能な座標を記憶しておくため。
-	CVector3 oldPos = startPos;
+	//CVector3 oldPos = startPos;
+	CVector3 oldPos;
 	//クラッシュを防ぐため。
 	int crashCount = 0;
+	bool isSuccess = false;
 	while (1) {
 		//カウント。
 		crashCount++;
@@ -178,11 +181,11 @@ void AStar::Smoothing()
 			end.setIdentity();
 			//座標の設定。
 			CVector3 endPos = *m_itr;
-			start.setOrigin(btVector3(startPos.x, startPos.y + 20.f, startPos.z));
-			end.setOrigin(btVector3(endPos.x, startPos.y + 20.f, endPos.z));
+			start.setOrigin(btVector3(startPos.x, startPos.y + m_boxHeight, startPos.z));
+			end.setOrigin(btVector3(endPos.x, startPos.y + m_boxHeight, endPos.z));
 		}
 		CallBack callback;
-		//startからendまでコリジョンを移動させて当たり判定を取る
+		//startからendまでコリジョンを移動させて当たり判定を取る。
 		g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
 		//コリジョンにヒットしなかったら。
 		if (callback.isHit == false) {
@@ -194,19 +197,23 @@ void AStar::Smoothing()
 			//現在地を設定。
 			startPos = oldPos;
 			//移動先を格納。
-			m_moveCellList.push_back(startPos);
+			m_moveCellSmoothListTmp.push_back(startPos);
 		}
 		//終わりに達したら。
 		if (m_itr == m_moveCellListTmp.end()) {
 			//現在地を設定。
 			startPos = oldPos;
 			//移動先を格納。
-			m_moveCellList.push_back(startPos);
+			m_moveCellSmoothListTmp.push_back(startPos);
+			isSuccess = true;
 			break;
 		}
-		//600回ループしたら強制終了。
-		if (crashCount == 600) {
+		//100回ループしたら強制終了。
+		if (crashCount >= 100) {
 			break;
 		}
+	}
+	if (isSuccess) {
+		m_moveCellList = m_moveCellSmoothListTmp;
 	}
 }

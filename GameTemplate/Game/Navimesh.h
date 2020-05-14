@@ -3,6 +3,8 @@
 #include "physics/PhysicsStaticObject.h"
 #include "physics/BoxCollider.h"
 
+class Game;
+
 struct CellBinary {
 
 	CVector3 vertexPos[3];	//セルの頂点のポジション
@@ -35,8 +37,8 @@ public:
 	~Navimesh();
 	void Init(Floor* floor);
 	void Create(SkinModel& model);
-	void Update() override {};
-	bool Start() override;
+	void Update() override;
+	bool Start() override { return true; };
 	std::vector<Cell*> GetCell()
 	{
 		return m_cells;
@@ -49,17 +51,22 @@ private:
 	/// <param name="endCellNo">終了セルの番号。</param>
 	void BuildLinkCellInfo(int startCellNo, int endCellNo);
 private:
-	//typedefは既存の型名に新しい名前を付ける
+	//typedefは既存の型名に新しい名前を付ける。
 	typedef std::vector<CVector3>					VertexBuffer;	//頂点バッファ。
 	typedef std::vector<unsigned int>				IndexBuffer;	//インデックスバッファ。
-	//unique_ptrはコピー不可能なクラス
+	//unique_ptrはコピー不可能なクラス。
 	typedef std::unique_ptr<VertexBuffer>			VertexBufferPtr;
 	typedef std::unique_ptr<IndexBuffer>			IndexBufferPtr;
 	std::vector<VertexBufferPtr>					m_vertexBufferArray;	//頂点バッファの配列。
 	std::vector<IndexBufferPtr>						m_indexBufferArray;		//インデックスバッファの配列。
 	
-	SkinModelRender* m_model = nullptr;					//スキンモデル。
-	SkinModelRender* m_skin = nullptr;					//スキンモデル。
-	BoxCollider m_collider;								//セル用のカプセルコライダー
-	std::vector<Cell*>		m_cells;					//セルの配列。
+	BoxCollider			m_collider;					//セル用のカプセルコライダー。
+	std::vector<Cell*>	m_cells;					//セルの配列。
+	
+	//デバッグ関係。
+	SkinModelRender*				m_debugModel = nullptr;			//デバッグモデル。
+	std::vector<SkinModelRender*>	m_debugModelList;				//デバッグモデルの配列。
+	bool							m_isDebug = false;				//デバッグモードのオンオフ。
+	bool							m_isChangeActiveModel = false;	//デバッグモードのオンオフ。
+	bool							m_isCreateModel = false;		//デバッグモデルを作ったかどうか。
 };

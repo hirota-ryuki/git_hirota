@@ -29,6 +29,11 @@ public:
 	/// </summary>
 	void Move();
 	/// <summary>
+	/// スムージングされた経路情報どおりに動く関数。
+	/// Move関数内で行う。
+	/// </summary>
+	void Move_AStar();
+	/// <summary>
 	/// A*を行う関数。
 	/// </summary>
 	void Astar();
@@ -118,8 +123,9 @@ private:
 	CVector3		m_moveSpeed = CVector3::Zero();			//移動速度。
 	float			m_speed = 200.f;						//キャラが歩くスピード。
 	BoxCollider		m_collider;								//セル用のボックスコライダー
-	CVector3		m_boxSize = CVector3::One() * 70.0f;	//コライダーのサイズ。
+	CVector3		m_boxSize = CVector3::One() * 40.0f;	//コライダーのサイズ。
 	bool			m_isFind = false;						//プレイヤーが見つかったかどうか。
+	int				m_aStarCount = 0;						//A*の無限計算ループの回避用のカウンタ。
 
 	//攻撃関係。
 	int				m_atkTimer = 0;

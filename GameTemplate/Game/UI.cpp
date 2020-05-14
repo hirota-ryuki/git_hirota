@@ -61,6 +61,6 @@ void UI::Update()
 	}
 
 	wchar_t allbullet[50];
-	swprintf_s(allbullet, L"%d", m_player->GetStack());
+	_itow_s(m_player->GetStack(), allbullet, 10);
 	m_fontStack->SetText(allbullet);
 }

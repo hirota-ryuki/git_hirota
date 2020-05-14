@@ -4,6 +4,7 @@
 #include "floor.h"
 #include "Navimesh.h"
 #include "Bullet.h"
+#include "physics/CollisionAttr.h"
 
 #define PI 3.14f
 
@@ -18,6 +19,7 @@ Zombie::~Zombie()
 void Zombie::OnDestroy()
 {
 	DeleteGO(m_model);
+	DeleteGOs("debug");
 }
 
 bool Zombie::Start()
@@ -33,7 +35,7 @@ bool Zombie::Start()
 
 	//キャラコンの初期化
 	m_charaCon.Init(
-		30.0f,
+		20.0f,
 		100.0f,
 		m_position
 	);
@@ -44,7 +46,7 @@ bool Zombie::Start()
 	m_model->SetData(m_position, m_rotation);
 	
 	//debug cmoファイルの読み込み。
-	m_debugModel = NewGO<SkinModelRender>(GOPrio_Defalut);
+	m_debugModel = NewGO<SkinModelRender>(GOPrio_Defalut, "debug");
 	m_debugModel->Init(L"modelData/debug/debugstick.cmo");
 	m_debugrotation.SetRotationDeg(CVector3::AxisY(), 180.f);
 	m_debugModel->SetData(m_position, m_debugrotation);
@@ -95,7 +97,12 @@ void Zombie::Update()
 			break;
 		case enState_walk:
 			//アニメーションの再生。
-			m_animation.Play(enAnimationClip_walk, 0.2f);
+			if (m_aStarCount > 100) {
+				m_animation.Play(enAnimationClip_idle, 0.2f);
+			}
+			else {
+				m_animation.Play(enAnimationClip_walk, 0.2f);
+			}
 			Move();
 			ChangeState();
 			break;
@@ -180,7 +187,6 @@ void Zombie::Update()
 		
 		m_debugModel->SetData(m_position, Rot);
 	}
-
 }
 
 void Zombie::En_Bite()
@@ -241,13 +247,15 @@ void Zombie::En_Bite()
 
 struct CallBack : public btCollisionWorld::ConvexResultCallback
 {
-	//障害物があるかないか判定
+	//障害物があるかないか判定。
 	bool isHit = false;
-	//衝突したら勝手に呼んでくれる
+	//衝突したら勝手に呼んでくれる。
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
-		//当たった
-		isHit = true;
+		if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Map) {
+			//当たった。
+			isHit = true;
+		}
 		return 0;
 	}
 };
@@ -258,136 +266,139 @@ void Zombie::ChangeState()
 	m_state = enState_idle;
 
 	CVector3 diff = m_player->GetPos() - m_position;	
-	if (diff.Length() < 200.0f) {
-		//攻撃状態に遷移。
-		m_state = enState_attack;
-	}
-	else if (diff.Length() < 1000.0f) {
-		if (!m_isFind) {
-			//コリジョンの移動の始点と終点の設定
+	
+	//見つけたかどうかを判定。
+	//距離判定だが、壁越しに見つけないようにする。
+	if (!m_isFind) {
+		if (diff.Length() < 1000.0f) {
+			//コリジョンの移動の始点と終点の設定。
 			btTransform start, end;
 			{
-				//回転の設定
+				//回転の設定。
 				start.setIdentity();
 				end.setIdentity();
 				start.setOrigin(btVector3(m_position.x, m_position.y + 20.f, m_position.z));
 				end.setOrigin(btVector3(m_player->GetPos().x, m_position.y + 20.f, m_player->GetPos().z));
 			}
 			CallBack callback;
-			//startからendまでコリジョンを移動させて当たり判定を取る
+			//startからendまでコリジョンを移動させて当たり判定を取る。
 			g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
 			//コリジョンにヒットしなかったら。
 			if (callback.isHit == false) {
-				//歩行状態に遷移。
-				m_state = enState_walk;
 				m_isFind = true;
 			}
 		}
-		else {
-			//歩行状態に遷移。
-			m_state = enState_walk;
-		}
 	}
-	//else {
-	//	if (m_isFind) {
-	//		//歩行状態に遷移。
-	//		m_state = enState_walk;
-	//	}
-	//}
-	//else if(diff.Length() < 3000.0f){
-	//	if (m_isFind) {
-	//		//歩行状態に遷移。
-	//		m_state = enState_walk;
-	//	}
-	//}
+	
+	if (diff.Length() < 100.0f) {
+		//攻撃状態に遷移。
+		m_state = enState_attack;
+	}
+	else if (m_isFind) {
+		//歩行状態に遷移。
+		m_state = enState_walk;
+	}
 }
 
 void Zombie::Move()
 {
 	//プレイヤーとの距離が近かったら。
-	CVector3 diff = m_player->GetPos() - m_position;
-	//コリジョンの移動の始点と終点の設定
-	btTransform start, end;
-	{
-		//回転の設定
-		start.setIdentity();
-		end.setIdentity();
-		start.setOrigin(btVector3(m_position.x, m_position.y + 20.f, m_position.z));
-		end.setOrigin(btVector3(m_player->GetPos().x, m_position.y + 20.f, m_player->GetPos().z));
-	}
-	CallBack callback;
-	//startからendまでコリジョンを移動させて当たり判定を取る
-	g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
-	//コリジョンにヒットしなかったら。
 	//A*をしない。
-	if (diff.Length() < 400.f&&callback.isHit == false) {
-		CVector3 moveDirection = m_player->GetPos() - m_position;
-		moveDirection.y = 0.0f;
-		moveDirection.Normalize();
-		m_moveSpeed = moveDirection * m_speed;		//移動速度を加算。
+	CVector3 diff = m_player->GetPos() - m_position;
+	if (diff.Length() < 400.0f ){
+		//コリジョンの移動の始点と終点の設定。
+		btTransform start, end;
+		{
+			//回転の設定。
+			start.setIdentity();
+			end.setIdentity();
+			start.setOrigin(btVector3(m_position.x, m_position.y + 20.f, m_position.z));
+			end.setOrigin(btVector3(m_player->GetPos().x, m_position.y + 20.f, m_player->GetPos().z));
+		}
+		CallBack callback;
+		//startからendまでコリジョンを移動させて当たり判定を取る。
+		g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
+		//コリジョンにヒットしなかったら。
+		//A*をしない。
+		if (callback.isHit == false) {
+			CVector3 moveDirection = m_player->GetPos() - m_position;
+			moveDirection.y = 0.0f;
+			moveDirection.Normalize();
+			m_moveSpeed = moveDirection * m_speed;		//移動速度を加算。
 
-		//キャラクターコントローラーを使用して、座標を更新。
-		m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
+			//キャラクターコントローラーを使用して、座標を更新。
+			m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 
-		//回転。
-		Rotation();
-		//m_moveList.clear();
+			//回転。
+			Rotation();
+		}
+		else {
+			//障害物があったらA*をする。
+			Move_AStar();
+		}
 	}
 	//A*をする。
 	else {
-		//A*を行っていなかったら。
-		if (!m_isAstar)
-		{
-			//A*を行う。
-			Astar();
-			m_isAstar = true;
+		Move_AStar();
+	}
+}
 
+void Zombie::Move_AStar()
+{
+	//A*を行っていなかったら。
+	if (!m_isAstar)
+	{
+		//A*を行う。
+		m_moveList.clear();
+		Astar();
+		m_isAstar = true;
+		m_aStarCount++;
+	}
+	else
+	{
+		//配列の最後までパスを読み込む。
+		//ゴール地点に行くまで移動を続ける。
+		if (m_itr != m_moveList.end()) {
+			//A*カウンタのリセット。
+			m_aStarCount = 0;
+			//パスに向かうまでじわじわと移動。
+			//移動する向き。
+			CVector3 moveDirection = *m_itr - m_position;
+			moveDirection.y = 0.0f;
+			moveDirection.Normalize();
+			m_moveSpeed = moveDirection * m_speed;		//移動速度を加算。
+
+			//キャラクターコントローラーを使用して、座標を更新。
+			m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
+
+			//回転。
+			Rotation();
+
+			CVector3 diff = *m_itr - m_position;
+			if (diff.Length() < 50.0f) { //todo バグの元
+				m_isPoint = true;
+			}
+			//プレイヤーの近くに来たらA*強制終了。
+			CVector3 endDiff = m_player->GetPos() - m_position;
+			//最終地点よりプレイヤーが離れていたらA*やり直し。
+			CVector3 endDiff2 = m_player->GetPos() - m_endPos;
+			if (endDiff.Length() < 200.0f || endDiff2.Length() > 300.0f) {
+				m_isAstar = false;
+			}
+			//n番目のパスに着いたら。
+			//n = m_moveListの要素の場所（今移動しようとしているパスの場所）。
+			if (m_isPoint)
+			{
+				//次のパスを指し示す。
+				m_itr++;
+				//フラグをリセット。
+				m_isPoint = false;
+			}
 		}
 		else
 		{
-			//配列の最後までパスを読み込む。
-			//ゴール地点に行くまで移動を続ける。
-			if (m_itr != m_moveList.end()) {
-				//パスに向かうまでじわじわと移動。
-				//移動する向き。
-				CVector3 moveDirection = *m_itr - m_position;
-				moveDirection.y = 0.0f;
-				moveDirection.Normalize();
-				m_moveSpeed = moveDirection * m_speed;		//移動速度を加算。
-
-				//キャラクターコントローラーを使用して、座標を更新。
-				m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
-
-				//回転。
-				Rotation();
-
-				CVector3 diff = *m_itr - m_position;
-				if (diff.Length() < 100.0f) { //todo バグの元
-					m_isPoint = true;
-				}
-				//プレイヤーの近くに来たらA*強制終了。
-				CVector3 endDiff = m_player->GetPos() - m_position;
-				//最終地点よりプレイヤーが離れていたらA*やり直し。
-				CVector3 endDiff2 = m_player->GetPos() - m_endPos;
-				if (endDiff.Length() < 200.0f || endDiff2.Length() > 300.0f) {
-					m_isAstar = false;
-					m_moveList.clear();
-				}
-				//n番目のパスに着いたら。
-				//n = m_moveListの要素の場所（今移動しようとしているパスの場所）。
-				if (m_isPoint)
-				{
-					//次のパスを指し示す。
-					m_itr++;
-					//フラグをリセット。
-					m_isPoint = false;
-				}
-			}
-			else
-			{
-				//移動終了。
-				m_isAstar = false;
-			}
+			//移動終了。
+			m_isAstar = false;
 		}
 	}
 }

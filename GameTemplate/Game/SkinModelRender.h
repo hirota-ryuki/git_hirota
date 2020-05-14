@@ -47,11 +47,20 @@ public:
 		m_rot = rot;
 	}
 	/// <summary>
-	/// 描画を行わないモード。
+	/// 描画するかどうか。
+	/// 呼ばれたらtrueとfalseを入れ替える。
 	/// </summary>
-	void NotModelMode()
+	void ChangeActive()
 	{
-		m_isNotModel = false;
+		m_isActive = !m_isActive;
+	}
+	/// <summary>
+	/// 描画するかどうか。
+	/// trueかfalseかを指定する。
+	/// </summary>
+	void ActiveMode(bool active)
+	{
+		m_isActive = active;
 	}
 	/// <summary>
 	/// スキンモデルを取得。
@@ -106,7 +115,7 @@ private:
 	CVector3		m_pos = CVector3::Zero();
 	CQuaternion		m_rot = CQuaternion::SpriteRot();
 	CVector3		m_scale = CVector3::One();
-	bool			m_isNotModel = true;
+	bool			m_isActive = true;
 	bool			m_isUpdate = false;						//Update関数が呼ばれたかどうか。
 	CVector3		m_forward = CVector3::Front();			//カメラの前方。
 	CVector3		m_right = CVector3::Right();			//カメラの右。

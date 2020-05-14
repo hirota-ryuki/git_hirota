@@ -420,7 +420,7 @@ void Player::Heal()
 	if (m_isDamage) {
 		m_healTimer++;
 		//一定時間経ったら。
-		if (m_healTimer == m_healStartTime) {
+		if (m_healTimer >= m_healStartTime) {
 			//ダメージを受けていない状態にする。
 			//（回復できる状態にする。）
 			m_isDamage = false;

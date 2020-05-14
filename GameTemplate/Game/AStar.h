@@ -32,11 +32,13 @@ public:
 		return m_moveCellList;
 	}
 private:
-	std::vector<Cell*> m_openList;				//未調査のオープンリスト
-	std::vector<Cell*> m_closeList;				//調査済みのオープンリスト
-	std::vector<CVector3> m_moveCellListTmp;	//スムージング前の算出されたセルのリスト
-	std::vector<CVector3>::iterator m_itr;		//m_moveCellListTmpのイテレータ。
-	std::vector<CVector3> m_moveCellList;		//最終的に移動するセルのリスト
-	BoxCollider m_collider;						//セル用のボックスコライダー
-	CVector3 m_boxSize = CVector3::One()*70.0f;	//コライダーのサイズ。
+	std::vector<Cell*> m_openList;					//未調査のオープンリスト。
+	std::vector<Cell*> m_closeList;					//調査済みのオープンリスト。
+	std::vector<CVector3> m_moveCellListTmp;		//スムージング前の算出されたセルのリスト。
+	std::vector<CVector3> m_moveCellSmoothListTmp;	//スムージング後の算出されたセルのリスト。
+	std::vector<CVector3>::iterator m_itr;			//m_moveCellListTmpのイテレータ。
+	std::vector<CVector3> m_moveCellList;			//最終的に移動するセルのリスト。
+	BoxCollider m_collider;							//セル用のボックスコライダー。
+	CVector3	m_boxSize = { 45.0f,40.0f,45.0f };	//コライダーのサイズ。
+	float		m_boxHeight = 50.0f;				//箱を設置する高さ。		
 };
