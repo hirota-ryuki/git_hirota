@@ -112,6 +112,8 @@
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="graphics\font\Font.cpp" />
+    <ClCompile Include="graphics\posteffect\bloom\Bloom.cpp" />
+    <ClCompile Include="graphics\posteffect\PostEffect.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapCamera.cpp" />
     <ClCompile Include="Opening.cpp" />
@@ -187,6 +189,8 @@
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="graphics\font\Font.h" />
+    <ClInclude Include="graphics\posteffect\bloom\Bloom.h" />
+    <ClInclude Include="graphics\posteffect\PostEffect.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapCamera.h" />
     <ClInclude Include="Opening.h" />

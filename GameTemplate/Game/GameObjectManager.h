@@ -2,6 +2,7 @@
 #include "RenderTarget.h"
 #include "util/Util.h"
 #include <list>
+#include "graphics/posteffect/PostEffect.h"
 
 class GameObjectManager
 {
@@ -146,6 +147,15 @@ public:
 			}
 		}
 	}
+
+	/// <summary>
+	/// メインレンダリングターゲットを取得。
+	/// </summary>
+	/// <returns>メインレンダリングターゲット。</returns>
+	RenderTarget* GetMainRenderTarget(){
+		return &m_mainRenderTarget;
+	}
+
 	RenderTarget m_mainRenderTarget;				//メインレンダリングターゲット。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
@@ -156,6 +166,8 @@ public:
 	//リストは道を延長していくので今回の場合はリストのほうが良い。
 	std::list< IGameObject* > m_goList[GOPrio_num];		//ゲームオブジェクトのリスト。
 	std::list< IGameObject* > m_DeleteGOList;			//削除予定のゲームオブジェクトのリスト。
+
+	PostEffect m_postEffect;				//ポストエフェクト。
 };
 
 //外部からアクセスするので、extern宣言も必要。

@@ -67,6 +67,7 @@ bool Player::Start()
 	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
 	m_sprite->Init(L"sprite/damage.dds", 1280.f, 720.f);
 	m_sprite->SetAlpha(m_alpha);
+	//m_sprite->ActiveMode(false);
 
 	//照準画像関係。
 	//スプライト

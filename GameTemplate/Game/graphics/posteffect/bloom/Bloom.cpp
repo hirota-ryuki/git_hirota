@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Bloom.h"
 #include "Game.h"
-#include "PostEffect.h"
+#include "graphics/posteffect/PostEffect.h"
 
 Bloom::Bloom()
 {
@@ -56,12 +56,12 @@ void Bloom::InitSamplerState()
 }
 void Bloom::InitShader()
 {
-	m_vs.Load("Assets/shader/bloom.fx", "VSMain", Shader::EnType::VS);
-	m_psLuminance.Load("Assets/shader/bloom.fx", "PSSamplingLuminance", Shader::EnType::PS);
-	m_vsXBlur.Load("Assets/shader/bloom.fx", "VSXBlur", Shader::EnType::VS);
-	m_vsYBlur.Load("Assets/shader/bloom.fx", "VSYBlur", Shader::EnType::VS);
-	m_psBlur.Load("Assets/shader/bloom.fx", "PSBlur", Shader::EnType::PS);
-	m_psFinal.Load("Assets/shader/bloom.fx", "PSFinal", Shader::EnType::PS);
+	m_vs.Load("shader/bloom.fx", "VSMain", Shader::EnType::VS);
+	m_psLuminance.Load("shader/bloom.fx", "PSSamplingLuminance", Shader::EnType::PS);
+	m_vsXBlur.Load("shader/bloom.fx", "VSXBlur", Shader::EnType::VS);
+	m_vsYBlur.Load("shader/bloom.fx", "VSYBlur", Shader::EnType::VS);
+	m_psBlur.Load("shader/bloom.fx", "PSBlur", Shader::EnType::PS);
+	m_psFinal.Load("shader/bloom.fx", "PSFinal", Shader::EnType::PS);
 }
 void Bloom::InitRenderTarget()
 {
@@ -134,7 +134,7 @@ void Bloom::Draw(PostEffect& postEffect)
 		m_luminanceRT.ClearRenderTarget(clearColor);
 		
 		//シーンをテクスチャとする。
-		auto mainRTTexSRV = g_game->GetMainRenderTarget()->GetRenderTargetSRV();
+		auto mainRTTexSRV = GameObjectManager::GetInstance().GetMainRenderTarget()->GetRenderTargetSRV();
 		deviceContext->PSSetShaderResources(0, 1, &mainRTTexSRV);
 
 		//フルスクリーン描画。
@@ -182,7 +182,7 @@ void Bloom::Draw(PostEffect& postEffect)
 	}
 	//最後にぼかした絵を加算合成でメインレンダリングターゲットに合成して終わり。
 	{
-		auto mainRT = g_game->GetMainRenderTarget();
+		auto mainRT = GameObjectManager::GetInstance().GetMainRenderTarget();
 		g_graphicsEngine->ChangeRenderTarget(mainRT, mainRT->GetViewport());
 
 		//XYブラーをかけたテクスチャをt0レジスタに設定する。

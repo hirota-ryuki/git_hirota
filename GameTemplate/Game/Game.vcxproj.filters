@@ -148,6 +148,12 @@
     <Filter Include="Game\Ceiling">
       <UniqueIdentifier>{94369ea4-bb0d-4878-8b81-66cfc189e4c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\graphics\posteffect">
+      <UniqueIdentifier>{65e3c927-fe4f-4b29-a221-414a4527f5f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\graphics\posteffect\bloom">
+      <UniqueIdentifier>{143639a9-2ab3-4d84-87f4-e5cc5d2d9e5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -344,6 +350,12 @@
     </ClCompile>
     <ClCompile Include="Ceiling.cpp">
       <Filter>Game\Ceiling</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\posteffect\bloom\Bloom.cpp">
+      <Filter>Engine\graphics\posteffect\bloom</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\posteffect\PostEffect.cpp">
+      <Filter>Engine\graphics\posteffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -556,6 +568,12 @@
     </ClInclude>
     <ClInclude Include="Ceiling.h">
       <Filter>Game\Ceiling</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\posteffect\bloom\Bloom.h">
+      <Filter>Engine\graphics\posteffect\bloom</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\posteffect\PostEffect.h">
+      <Filter>Engine\graphics\posteffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

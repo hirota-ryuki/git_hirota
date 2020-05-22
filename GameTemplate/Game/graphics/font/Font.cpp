@@ -23,7 +23,6 @@ Font::~Font()
 void Font::Begin()
 {
 	//レンダリングステートを退避させる。
-	//問題が起きたら実装してね。
 	g_graphicsEngine->SaveRenderState();
 
 	m_spriteBatch->Begin(

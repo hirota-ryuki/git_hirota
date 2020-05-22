@@ -73,6 +73,9 @@ void GameObjectManager::StartAndUpdate()
 		pos,
 		g_camera3D.GetPosition()
 	);
+
+	//ポストエフェクトの更新。
+	//m_postEffect.Update();
 }
 
 void GameObjectManager::Delete()
@@ -166,6 +169,14 @@ void GameObjectManager::ForwordRender()
 
 void GameObjectManager::PostRender()
 {
+	//レンダーステートの保存。
+	g_graphicsEngine->SaveRenderState();
+	//ポストエフェクトの描画。
+	//m_postEffect.Draw();
+	//レンダーステートの読み込み。
+	g_graphicsEngine->LoadRenderState();
+
+
 	//レンダリングターゲットをフレームバッファに戻す。
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	ChangeRenderTarget(
@@ -174,8 +185,9 @@ void GameObjectManager::PostRender()
 		m_frameBufferDepthStencilView,
 		&m_frameBufferViewports
 	);
-	//ドロー
+	//ドロー。
 	m_copyMainRtToFrameBufferSprite.Draw();
+	
 	//デプスをクリア。
 	//d3dDeviceContext->ClearDepthStencilView(m_frameBufferDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	d3dDeviceContext->OMSetDepthStencilState(DepthStencilState::spriteRender, 0);

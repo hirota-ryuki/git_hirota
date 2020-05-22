@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "PostEffect.h"
 
-
 PostEffect::PostEffect()
 {
 	//フルスクリーン描画のための四角形プリミティブを初期化。
@@ -26,14 +25,14 @@ void PostEffect::Draw()
 	m_bloom.Draw(*this);
 }
 
-struct SVertex {
+struct SVertex_Post {
 	float position[4];		//頂点座標。
 	float uv[2];			//UV座標。これがテクスチャ座標
 };
 void PostEffect::InitFullScreenQuadPrimitive()
 {
 	//頂点バッファを初期化。
-	SVertex vertex[4] = {
+	SVertex_Post vertex[4] = {
 		//頂点１
 		{
 			//座標　position[4]
@@ -83,7 +82,7 @@ void PostEffect::DrawFullScreenQuadPrimitive(ID3D11DeviceContext* deviceContext,
 {
 	//プリミティブのトポロジーとして、トライアングルストリップを設定する。
 	deviceContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	unsigned int vertexSize = sizeof(SVertex);
+	unsigned int vertexSize = sizeof(SVertex_Post);
 	unsigned int offset = 0;
 	//輝度抽出用のシェーダーを設定する。
 	deviceContext->VSSetShader(
