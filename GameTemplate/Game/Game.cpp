@@ -199,8 +199,9 @@ bool Game::Start()
 
 void Game::Update()
 {
-	//スタートボタンを押したら。
-	if (g_pad[0].IsTrigger(enButtonStart))
+	//スタートボタンかYボタンを押したら。
+	if (g_pad[0].IsTrigger(enButtonStart)
+		|| g_pad[0].IsTrigger(enButtonY))
 	{
 		//一時停止。
 		ChangePose();

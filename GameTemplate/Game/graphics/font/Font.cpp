@@ -39,7 +39,6 @@ void Font::End()
 {
 	m_spriteBatch->End();
 	//レンダリングステートを復活させる。
-	//問題が起きたら実装してね。
 	g_graphicsEngine->LoadRenderState();
 }
 void Font::Draw(
