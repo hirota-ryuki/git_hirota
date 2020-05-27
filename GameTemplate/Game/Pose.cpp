@@ -17,8 +17,6 @@ void Pose::OnDestroy()
 
 bool Pose::Start()
 {
-	
-
 	m_itemNameFont = NewGO<FontRender>(GOPrio_Sprite,"item");
 	wchar_t bullet[50];
 	swprintf_s(bullet, L"玉x");
@@ -56,12 +54,11 @@ void Pose::Update()
 		m_spriteMenu->ChangeActive();
 #endif // BAG_MODE
 	}
+
 #ifdef BAG_MODE
 	//メニュー画面が表示されていたら。
 	if (m_isStart) {
 		
 	}
-
 #endif // BAG_MODE
 }
-

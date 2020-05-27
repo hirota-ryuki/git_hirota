@@ -3,24 +3,12 @@
 
 #ifdef BAG_MODE
 struct ItemInfo {
-	SpriteRender*	m_sprite = nullptr;		//画像のポインタ。
-	const wchar_t*  m_texFIlePath;
-	int				m_nomber = 0;			//バッグの何番目にあるか。
+	const wchar_t*		name;				//アイテムの名前。
+	SpriteRender*		sprite = nullptr;	//画像のポインタ。
+	int					nomber = 0;			//バッグの何番目にあるか。
 };
 #endif // BAG_MODE
 
-
-struct ItemInfo_Font {
-	//アイテムの基本情報。
-	const wchar_t*  m_itemName;			//アイテムの名前。
-	int				m_itemCount = 0;	//このアイテムの個数。
-	int				m_bagNumber = 0;	//バッグの何番目にあるか。
-	//フォントを表示するための情報。
-	FontRender*		m_itemNameFont = nullptr;	//アイテム名のフォント。
-	FontRender*		m_itemCountfont = nullptr;	//アイテムの個数のフォント。
-	bool			m_isNewGO = false;			//フォントをNewGOしたかどうか。
-	bool			m_isChange = false;			//アイテムの個数が変更されたかどうか。
-};
 struct FontPos {
 	CVector2	namepos = CVector2::Zero();
 	CVector2	countpos = CVector2::Zero();
@@ -35,7 +23,12 @@ public:
 	bool Start() override;
 	void Update() override;
 #ifdef BAG_MODE
-	
+	void AddItem(const wchar_t* name, const wchar_t* textureFIlePath) {
+		ItemInfo itemData;
+		itemData.name = name;
+		itemData.sprite = NewGO<SpriteRender>(GOPrio_Sprite);
+		itemData.sprite->Init(textureFIlePath, 640.f, 360.f);
+	}
 #endif // BAG_MODE
 
 
@@ -52,7 +45,8 @@ private:
 	int				m_itemCount = 0;			//このアイテムの個数。
 
 #ifdef BAG_MODE
-	SpriteRender*	m_spriteMenu = nullptr;		//メニュー画面の画像。
+	SpriteRender*			m_spriteMenu = nullptr;		//メニュー画面の画像。
+	std::vector<ItemInfo>	m_itemList;					//アイテムのリスト。
 
 #endif // BAG_MODE
 };
