@@ -11,7 +11,9 @@ Pose::~Pose()
 
 void Pose::OnDestroy()
 {
+#ifdef BAG_MODE
 	DeleteGO(m_spriteMenu);
+#endif // BAG_MODE
 	DeleteGOs("item");
 }
 
