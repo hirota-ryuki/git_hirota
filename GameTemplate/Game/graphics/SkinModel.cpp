@@ -39,7 +39,7 @@ void SkinModel::InitDirectionLight()
 {
 	m_light.directionLight.direction[0] = { 1.f, -1.f, 0.f, 0.f };
 	m_light.directionLight.direction[0].Normalize();
-	m_light.directionLight.color[0] = { 1.2f, 1.2f, 1.2f, 0.2f };
+	m_light.directionLight.color[0] = { 20.2f, 20.2f, 20.2f, 0.2f };
 	m_light.ambientLight.Set(0.4f, 0.4f, 0.4f);
 	m_light.specPow = 10.0f;
 }

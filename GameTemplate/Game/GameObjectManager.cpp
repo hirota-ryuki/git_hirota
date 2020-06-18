@@ -75,7 +75,7 @@ void GameObjectManager::StartAndUpdate()
 	);
 
 	//ポストエフェクトの更新。
-	//m_postEffect.Update();
+	m_postEffect.Update();
 }
 
 void GameObjectManager::Delete()
@@ -172,7 +172,7 @@ void GameObjectManager::PostRender()
 	//レンダーステートの保存。
 	g_graphicsEngine->SaveRenderState();
 	//ポストエフェクトの描画。
-	//m_postEffect.Draw();
+	m_postEffect.Draw();
 	//レンダーステートの読み込み。
 	g_graphicsEngine->LoadRenderState();
 

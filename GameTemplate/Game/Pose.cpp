@@ -64,3 +64,14 @@ void Pose::Update()
 	}
 #endif // BAG_MODE
 }
+#ifdef BAG_MODE
+void Pose::AddItem(const wchar_t * name, const wchar_t * textureFIlePath)
+{
+	ItemInfo itemData;
+	itemData.name = name;
+	itemData.sprite = NewGO<SpriteRender>(GOPrio_Sprite);
+	itemData.sprite->Init(textureFIlePath, 640.0f, 360.0f);
+	m_itemList.push_back(itemData);
+	m_totalItemCount++;
+}
+#endif // BAG_MODE

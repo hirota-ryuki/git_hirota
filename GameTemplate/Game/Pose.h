@@ -1,5 +1,5 @@
 #pragma once
-//#define BAG_MODE
+#define BAG_MODE
 
 #ifdef BAG_MODE
 struct ItemInfo {
@@ -23,14 +23,14 @@ public:
 	bool Start() override;
 	void Update() override;
 #ifdef BAG_MODE
-	void AddItem(const wchar_t* name, const wchar_t* textureFIlePath) {
-		ItemInfo itemData;
-		itemData.name = name;
-		itemData.sprite = NewGO<SpriteRender>(GOPrio_Sprite);
-		itemData.sprite->Init(textureFIlePath, 640.f, 360.f);
-	}
+	/// <summary>
+	/// アイテムを追加する関数。
+	/// すでに持っているアイテムなら、個数だけ追加する
+	/// </summary>
+	/// <param name="name"></param>
+	/// <param name="textureFIlePath"></param>
+	void AddItem(const wchar_t* name, const wchar_t* textureFIlePath);
 #endif // BAG_MODE
-
 
 	int GetItemCount(){
 		return m_itemCount;
@@ -47,7 +47,7 @@ private:
 #ifdef BAG_MODE
 	SpriteRender*			m_spriteMenu = nullptr;		//メニュー画面の画像。
 	std::vector<ItemInfo>	m_itemList;					//アイテムのリスト。
-
+	int						m_totalItemCount = 0;		//総アイテム数。
 #endif // BAG_MODE
 };
 
