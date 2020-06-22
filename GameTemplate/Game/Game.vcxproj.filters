@@ -127,12 +127,6 @@
     <Filter Include="Engine\font">
       <UniqueIdentifier>{d44b41bc-418b-49e5-8f8b-3178f04fd8f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Ball">
-      <UniqueIdentifier>{814a6cea-a4d6-4ed3-a046-6ea2cdcfd541}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\BulletStack">
-      <UniqueIdentifier>{557bc44e-5784-48b9-a4cf-0b32c24a0417}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\RockDoor">
       <UniqueIdentifier>{29c3b63b-d8c9-4ba0-9af5-c81ff6ea5ab9}</UniqueIdentifier>
     </Filter>
@@ -153,6 +147,24 @@
     </Filter>
     <Filter Include="Engine\graphics\posteffect\bloom">
       <UniqueIdentifier>{143639a9-2ab3-4d84-87f4-e5cc5d2d9e5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\map">
+      <UniqueIdentifier>{a64a5a09-1ef6-4816-a3d2-caafc88bb8aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\map\spec">
+      <UniqueIdentifier>{6534a9b0-6e4a-4717-9688-e4ff395b435d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\map\normal">
+      <UniqueIdentifier>{f986606a-77be-46f7-a1a5-66d80633cbd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Item">
+      <UniqueIdentifier>{585ae1be-cc80-46ff-86eb-b4389d06733c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Item\BulletStack">
+      <UniqueIdentifier>{557bc44e-5784-48b9-a4cf-0b32c24a0417}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Item\Ball">
+      <UniqueIdentifier>{814a6cea-a4d6-4ed3-a046-6ea2cdcfd541}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -313,10 +325,10 @@
       <Filter>Game\Player\Player</Filter>
     </ClCompile>
     <ClCompile Include="Ball.cpp">
-      <Filter>Game\Ball</Filter>
+      <Filter>Game\Item\Ball</Filter>
     </ClCompile>
     <ClCompile Include="BulletStack.cpp">
-      <Filter>Game\BulletStack</Filter>
+      <Filter>Game\Item\BulletStack</Filter>
     </ClCompile>
     <ClCompile Include="RockDoor.cpp">
       <Filter>Game\RockDoor</Filter>
@@ -351,12 +363,19 @@
     <ClCompile Include="Ceiling.cpp">
       <Filter>Game\Ceiling</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\posteffect\bloom\Bloom.cpp">
-      <Filter>Engine\graphics\posteffect\bloom</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\posteffect\PostEffect.cpp">
       <Filter>Engine\graphics\posteffect</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\posteffect\bloom\ConstantBufferGPU.cpp">
+      <Filter>Engine\graphics\posteffect\bloom</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\posteffect\bloom\GaussianBlur.cpp">
+      <Filter>Engine\graphics\posteffect\bloom</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\posteffect\bloom\Bloom.cpp">
+      <Filter>Engine\graphics\posteffect\bloom</Filter>
+    </ClCompile>
+    <ClCompile Include="IItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -522,10 +541,10 @@
       <Filter>Game\Player\Player</Filter>
     </ClInclude>
     <ClInclude Include="Ball.h">
-      <Filter>Game\Ball</Filter>
+      <Filter>Game\Item\Ball</Filter>
     </ClInclude>
     <ClInclude Include="BulletStack.h">
-      <Filter>Game\BulletStack</Filter>
+      <Filter>Game\Item\BulletStack</Filter>
     </ClInclude>
     <ClInclude Include="RockDoor.h">
       <Filter>Game\RockDoor</Filter>
@@ -569,12 +588,19 @@
     <ClInclude Include="Ceiling.h">
       <Filter>Game\Ceiling</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\posteffect\bloom\Bloom.h">
-      <Filter>Engine\graphics\posteffect\bloom</Filter>
-    </ClInclude>
     <ClInclude Include="graphics\posteffect\PostEffect.h">
       <Filter>Engine\graphics\posteffect</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\posteffect\bloom\Bloom.h">
+      <Filter>Engine\graphics\posteffect\bloom</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\posteffect\bloom\ConstantBufferGPU.h">
+      <Filter>Engine\graphics\posteffect\bloom</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\posteffect\bloom\GaussianBlur.h">
+      <Filter>Engine\graphics\posteffect\bloom</Filter>
+    </ClInclude>
+    <ClInclude Include="IItem.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
@@ -609,6 +635,12 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\player_icon.png">
       <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\bulletstack\Normal.tga">
+      <Filter>Assets\map\normal</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\bulletstack\Metalness.tga">
+      <Filter>Assets\map\spec</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

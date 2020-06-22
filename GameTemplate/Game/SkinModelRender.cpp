@@ -53,3 +53,13 @@ void SkinModelRender::Init(const wchar_t * texFilePath)
 	//cmoファイルの読み込み。
 	m_model.Init(texFilePath);
 }
+
+void SkinModelRender::InitNormalMap(const wchar_t * filePath)
+{
+	m_model.InitNormalMap(filePath);
+}
+
+void SkinModelRender::InitSpecMap(const wchar_t * filePath)
+{
+	m_model.InitSpecMap(filePath);
+}

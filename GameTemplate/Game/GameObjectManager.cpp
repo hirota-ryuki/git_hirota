@@ -156,7 +156,7 @@ void GameObjectManager::ForwordRender()
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget, &m_frameBufferViewports);
 	//メインレンダリングターゲットをクリアする。
-	float clearColor[] = { 0.0f, 0.0f, 255.0f, 1.0f };
+	float clearColor[] = { 0.0f, 0.0f, 1.0f, 1.0f };
 	m_mainRenderTarget.ClearRenderTarget(clearColor);
 	
 	//ドロー

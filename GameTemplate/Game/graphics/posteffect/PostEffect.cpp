@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PostEffect.h"
 
+
 PostEffect::PostEffect()
 {
 	//フルスクリーン描画のための四角形プリミティブを初期化。
@@ -17,7 +18,6 @@ PostEffect::~PostEffect()
 
 void PostEffect::Update()
 {
-	m_bloom.Update();
 }
 
 void PostEffect::Draw()

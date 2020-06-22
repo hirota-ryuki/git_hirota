@@ -1,5 +1,5 @@
 #pragma once
-#define BAG_MODE
+//#define BAG_MODE
 
 #ifdef BAG_MODE
 struct ItemInfo {

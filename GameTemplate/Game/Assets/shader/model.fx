@@ -8,6 +8,8 @@
 /////////////////////////////////////////////////////////////
 Texture2D<float4> albedoTexture : register(t0);	//アルベドテクスチャ。
 Texture2D<float4> g_shadowMap : register(t1);	//シャドウマップ。
+Texture2D<float4> g_normalMap : register(t2);	//法線マップ。
+Texture2D<float4> g_specMap : register(t3);		//スペキュラマップ。
 
 //ボーン行列
 StructuredBuffer<float4x4> boneMatrix : register(t1);
@@ -30,6 +32,8 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mLightView;	//ライトビュー行列。
 	float4x4 mLightProj;	//ライトプロジェクション行列。
 	int isShadowReciever;	//シャドウレシーバーフラグ。
+	int isHasNormalMap;		//法線マップあるかどうか。
+	int isHasSpecMap;		//スペキュラマップあるかどうか。
 };
 
 static const int NUM_DIRECTION_LIG = 1;
@@ -41,7 +45,7 @@ cbuffer LightCb : register(b1) {
 	float4 dligColor[NUM_DIRECTION_LIG];
 	float3 eyePos;									//カメラの視点。
 	float  specPow;									//スペキュラライトの絞り。
-	float3 ambientLight;
+	float3 ambientLight;							//環境光。
 };
 
 
@@ -195,32 +199,100 @@ float4 PSMain( PSInput In ) : SV_Target0
 {
 	//albedoテクスチャからカラーをフェッチする。
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
+/*
+	//法線を計算する。
+	float3 normal = 0;
+	if(isHasNormalMap == 1){
+		//法線マップがある。
+		//法線と接ベクトルの外積を計算して、従ベクトルを計算する。
+		float3 biNormal = cross(In.Normal, In.Tangent);
+		normal = g_normalMap.Sample(Sampler, In.TexCoord);
+		//0.0～1.0の範囲になっているタンジェントスペース法線を
+		//-1.0～1.0の範囲に変換する。
+		normal =(normal * 2.0f)- 1.0f;
+		//法線をタンジェントスペースから、ワールドスペースに変換する。
+		normal = In.Tangent * normal.x + biNormal * normal.y + In.Normal * normal.z;
+	}else{
+		//ない。
+		normal = In.Normal;
+	}
+*/
 	//ディレクションライトの拡散反射光を計算する。
 	float3 lig = 0.f;
 	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
 		lig += max(0.f, dot(In.Normal * -1.f, dligDirection[i])) * dligColor[i];
 	}
-
 	/*
+	if(isHasSpecMap == 1){
 	////鏡面反射////
-	//1 反射ベクトルRを求める。
+	//1 視点からライトを当てる物体に伸びるVectorEを求める
+	float3 E = normalize(In.worldPos-eyePos);
+	//2 反射ベクトルRを求める。
 	float3 R = 0.f;
 	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
 		R += dligDirection[i] + -2 * dot(In.Normal, -dligDirection[i]) * In.Normal;
 	}
 
-	//2 視点からライトを当てる物体に伸びるVectorEを求める
-	float3 E = normalize(In.worldPos - eyePos);
+	
 
 	//1と2で求まったVectorのない席を計算する。
 	//スペキュラ反射の強さを求める。
-	float specPower = max(0, dot(R, -E));
+	float specPower = max(0.0f, dot(R, -E));
 	
 	//3 スペキュラ反射をライトに加算する。
 	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
 		lig += dligColor[i].xyz * pow(specPower, specPow);
+	}}*/
+
+
+	////鏡面反射////
+	if(isHasSpecMap == 1){
+		//1 視点からライトを当てる物体に伸びるVectorEを求める
+		float3 E = normalize(eyePos-In.worldPos);
+		//2 反射ベクトルRを求める。
+		float3 R = 0.f;
+		for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
+			
+			//スペキュラ反射の強さを求める。
+			float specPower = max(0.0f, dot(R, E));
+			//↓同じ結果。
+			//R += reflect(dligDirection[i].xyz, In.Normal); + 2.0f * dot(In.Normal, -dligDirection[i].xyz) * In.Normal;
+
+			//1と2で求まったVectorのない席を計算する。
+			//スペキュラ反射の強さを求める。
+			float specPower = max(0.0f, dot(R, E));
+
+			float specMap = 0.0f;
+			specMap = g_specMap.Sample(Sampler, In.TexCoord);
+
+			//3 スペキュラ反射をライトに加算する。
+			lig += dligColor[i].xyz * pow(specPower, 5.0f) * specMap * dligColor[i].w;
+		}
+	}
+
+	/*
+	//スペキュラマップ。
+	if(isHasSpecMap == 1){
+		//1 反射ベクトルRを求める。
+		//スペキュラ反射の強さを求める。
+		float specMap = 0.0f;
+		specMap = g_specMap.Sample(Sampler, In.TexCoord);
+
+		for (int i = 0; i < 1; i++) {
+			float3 R = dligDirection[i] + -2.0f * dot(In.Normal, -dligDirection[i]) * In.Normal;
+			//2 視点からライトを当てる物体に伸びるVectorEを求める
+			float3 E = normalize(In.worldPos - eyePos);
+
+
+			//1と2で求まったVectorのない席を計算する。
+			//スペキュラ反射の強さを求める。
+			float spec = max(0, dot(R, -E));
+
+			//3 スペキュラ反射をライトに加算する。
+			lig += dligColor[i].xyz * pow(spec, 10.0f) *specMap;
+		}
+
 	}*/
-	
 
 	//環境光。
 	lig += ambientLight;
@@ -249,12 +321,12 @@ float4 PSMain( PSInput In ) : SV_Target0
 			}
 		}
 	}
-			/*
-			float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
-			float4 m_ShadowMap = g_shadowMap.Sample(Sampler, In.TexCoord);
-			finalColor.xyz = m_ShadowMap.xyz;
-			return finalColor;
-			*/
+	/*
+	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
+	float4 m_ShadowMap = g_shadowMap.Sample(Sampler, In.TexCoord);
+	finalColor.xyz = m_ShadowMap.xyz;
+	return finalColor;
+	*/
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 	finalColor.xyz = albedoColor.xyz * lig;
 	return finalColor;

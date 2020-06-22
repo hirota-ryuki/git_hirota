@@ -87,6 +87,14 @@ public:
 	{
 		return m_height;
 	}
+	/// <summary>
+	/// レンダリングターゲットとなっているテクスチャのフォーマットを取得。
+	/// </summary>
+	/// <returns></returns>
+	DXGI_FORMAT GetTextureFormat() const
+	{
+		return m_format;
+	}
 private:
 	float m_width = 0;										//!<レンダリングターゲットの幅。
 	float m_height = 0;										//!<レンダリングターゲットの高さ。
@@ -96,5 +104,6 @@ private:
 	ID3D11Texture2D*			m_depthStencilTex = nullptr;		//!<デプスステンシルとなるテクスチャ。
 	ID3D11DepthStencilView*		m_depthStencilView = nullptr;		//!<デプスステンシルビュー。
 	D3D11_VIEWPORT				m_viewport;							//!<ビューポート。
+	DXGI_FORMAT m_format = DXGI_FORMAT_UNKNOWN;						//レンダリングターゲットのフォーマット。
 };
 

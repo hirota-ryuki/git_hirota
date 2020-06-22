@@ -40,6 +40,16 @@ public:
 	*@param[in]	scale		モデルの拡大率。
 	*/
 	void UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVector3 scale);
+	/// <summary>
+	/// 法線マップの初期化処理。
+	/// </summary>
+	/// <param name="filePath">法線マップのファイルパス。</param>
+	void InitNormalMap(const wchar_t* filePath);
+	/// <summary>
+	/// スペキュラマップの初期化処理。
+	/// </summary>
+	/// <param name="filePath">スペキュラマップのファイルパス。</param>
+	void InitSpecMap(const wchar_t* filePath);
 	/*!
 	*@brief	ボーンを検索。
 	*@param[in]		boneName	ボーンの名前。
@@ -107,6 +117,37 @@ public:
 	{
 		m_isShadowReciever = flag;
 	}
+	/// <summary>
+	/// ディレクションライトの方向をセット。
+	/// </summary>
+	/// <param name="LDir">方向</param>
+	void SetDirectionLightDirection(CVector4 LDir ) {
+		m_light.directionLight.direction[0] = LDir;
+		m_light.directionLight.direction[0].Normalize();
+	}
+	/// <summary>
+	///ディレクションライトの色をセット。
+	/// </summary>
+	/// <param name="LColor">色</param>
+	void SetDirectionLightColor(CVector4 LColor ) {
+		m_light.directionLight.color[0] = LColor;
+	}
+	/// <summary>
+	/// スペキュラの累乗数をセット。
+	/// </summary>
+	/// <param name="spec">累乗数</param>
+	void SetSpec(float spec ) {
+		m_light.specPow = spec;
+
+	}
+	/// <summary>
+	/// アンビエントライトをセット。
+	/// </summary>
+	/// <param name="spec">アンビエントライト</param>
+	void SetAmbientLight(CVector3 ambientLight) {
+		m_light.ambientLight = ambientLight;
+
+	}
 private:
 	/*!
 	*@brief	サンプラステートの初期化。
@@ -135,6 +176,8 @@ private:
 		CMatrix mLightView;		//ライトビュー行列。
 		CMatrix mLightProj;		//ライトプロジェクション行列。
 		int isShadowReciever;	//シャドウレシーバーのフラグ。
+		int isHasNormalMap;		//法線マップを保持していかどうか。
+		int isHasSpecMap;		//法線マップを保持していかどうか。
 	};
 	/*!
 	*@brief	ディレクションライト。
@@ -167,4 +210,8 @@ private:
 	SLight				m_light;						//ライトクラス。
 	//影。
 	bool				m_isShadowReciever = false;		//シャドウレシーバーのフラグ。
+	//法線マップ。
+	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//法線マップのSRV。
+	//スペキュラマップ。
+	ID3D11ShaderResourceView* m_specMapSRV = nullptr;	//スペキュラマップのSRV。
 };

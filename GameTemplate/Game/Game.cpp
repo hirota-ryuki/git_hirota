@@ -61,7 +61,7 @@ bool Game::Start()
 	swprintf_s(floor, L"floor");
 	//レベル。
 	wchar_t levelname[50];
-	swprintf_s(levelname, L"level/level00.tkl");
+	swprintf_s(levelname, L"level/level01.tkl");
 	LevelObjectData floorObjData;
 	LevelObjectData ceilingObjData;
 	LevelObjectData playerObjData;
@@ -138,7 +138,7 @@ bool Game::Start()
 
 	//カメラを構築。
 	m_gamecamera = NewGO<GameCamera>(GOPrio_Defalut);
-
+	
 	//ゴールを構築。
 	m_goal = NewGO<Goal>(GOPrio_Defalut);
 	//配置情報から座標と回転をステージに渡す。
@@ -176,13 +176,13 @@ bool Game::Start()
 		m_bs->SetRot(objData.rotation);
 		//m_ball->SetNomber(_wtoi(&objData.name[11]));
 	}
-
+	
 	//ドアを構築。
 	m_rockdoor = NewGO<RockDoor>(GOPrio_Defalut);
 	//配置情報から座標と回転をステージに渡す。
 	m_rockdoor->SetPos(rockdoorObjData.position);
 	m_rockdoor->SetRot(rockdoorObjData.rotation);
-
+	
 	//ポーズを構築。
 	m_pose = NewGO<Pose>(GOPrio_Defalut);
 	

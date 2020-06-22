@@ -15,7 +15,6 @@ MapChip::MapChip(const LevelObjectData& objData)
 	m_model->SetData(objData.position, objData.rotation);
 	m_model->SetShadowCaster(true);
 	m_model->SetShadowReciever(true);
-	//m_model->NotModelMode();
 	//静的物理オブジェクトをメッシュコライダーから作成する。
 	m_physicsStaticObject.CreateMeshObject(m_model->GetModel(), objData.position, objData.rotation);
 	m_physicsStaticObject.SetUserIndex(enCollisionAttr_Map);

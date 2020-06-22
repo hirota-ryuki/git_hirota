@@ -13,10 +13,20 @@ public:
 	/// </summary>
 	void UpdateWorldMatrix();
 	/// <summary>
-	/// スキンモデルの初期化
+	/// スキンモデルの初期化。
 	/// </summary>
 	/// <param name="texFilePath">モデルのファイルパス</param>
 	void Init(const wchar_t* texFilePath);
+	/// <summary>
+	/// 法線マップの初期化処理。
+	/// </summary>
+	/// <param name="filePath">法線マップのファイルパス。</param>
+	void InitNormalMap(const wchar_t* filePath);
+	/// <summary>
+	/// スペキュラマップの初期化処理。
+	/// </summary>
+	/// <param name="filePath">スペキュラマップのファイルパス。</param>
+	void InitSpecMap(const wchar_t* filePath);
 	/// <summary>
 	/// 座標、回転を設定
 	/// 拡大率は触れないように
@@ -109,6 +119,34 @@ public:
 	void SetShadowReciever(bool flag)
 	{
 		m_model.SetShadowReciever(flag);
+	}
+	/// <summary>
+	/// ディレクションライトの方向をセット。
+	/// </summary>
+	/// <param name="LDir">方向</param>
+	void SetDirectionLightDirection(CVector4 LDir) {
+		m_model.SetDirectionLightDirection(LDir);
+	}
+	/// <summary>
+	///ディレクションライトの色をセット。
+	/// </summary>
+	/// <param name="LColor">色</param>
+	void SetDirectionLightColor(CVector4 LColor) {
+		m_model.SetDirectionLightColor(LColor);
+	}
+	/// <summary>
+	/// スペキュラの累乗数をセット。
+	/// </summary>
+	/// <param name="spec">累乗数</param>
+	void SetSpec(float spec) {
+		m_model.SetSpec(spec);
+	}
+	/// <summary>
+	/// アンビエントライトをセット。
+	/// </summary>
+	/// <param name="spec">アンビエントライト</param>
+	void SetAmbientLight(CVector3 ambientLight) {
+		m_model.SetAmbientLight(ambientLight);
 	}
 private:
 	SkinModel		m_model;								//スキンモデル。

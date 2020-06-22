@@ -11,10 +11,16 @@ Bloom::Bloom()
 	InitShader();
 	//αブレンドステートを初期化。
 	InitAlphaBlendState();
-	//定数バッファの初期化。
-	InitConstantBuffer();
 	//サンプラステートの初期化。
 	InitSamplerState();
+
+	//輝度テクスチャをぼかすためのガウシアンブラーを初期化する。
+	ID3D11ShaderResourceView* srcBlurTexture = m_luminanceRT.GetRenderTargetSRV();
+	for (int i = 0; i < NUM_DOWN_SAMPLE; i++){
+		m_gausianBlur[i].Init(srcBlurTexture, 25.0f);
+		//次のガウスブラーで使用するソーステクスチャを設定する。
+		srcBlurTexture = m_gausianBlur[i].GetResultTextureSRV();
+	}
 }
 
 
@@ -23,9 +29,7 @@ Bloom::~Bloom()
 	if (m_disableBlendState != nullptr) {
 		m_disableBlendState->Release();
 	}
-	if (m_blurParamCB != nullptr) {
-		m_blurParamCB->Release();
-	}
+
 	if (m_samplerState != nullptr) {
 		m_samplerState->Release();
 	}
@@ -33,17 +37,7 @@ Bloom::~Bloom()
 		m_finalBlendState->Release();
 	}
 }
-void Bloom::InitConstantBuffer()
-{
-	D3D11_BUFFER_DESC desc;
 
-	ZeroMemory(&desc, sizeof(desc));
-	desc.Usage = D3D11_USAGE_DEFAULT;
-	desc.ByteWidth = (((sizeof(SBlurParam) - 1) / 16) + 1) * 16;	//16バイトアライメントに切りあげる。
-	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	desc.CPUAccessFlags = 0;
-	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&desc, NULL, &m_blurParamCB);
-}
 void Bloom::InitSamplerState()
 {
 	D3D11_SAMPLER_DESC desc;
@@ -58,9 +52,6 @@ void Bloom::InitShader()
 {
 	m_vs.Load("shader/bloom.fx", "VSMain", Shader::EnType::VS);
 	m_psLuminance.Load("shader/bloom.fx", "PSSamplingLuminance", Shader::EnType::PS);
-	m_vsXBlur.Load("shader/bloom.fx", "VSXBlur", Shader::EnType::VS);
-	m_vsYBlur.Load("shader/bloom.fx", "VSYBlur", Shader::EnType::VS);
-	m_psBlur.Load("shader/bloom.fx", "PSBlur", Shader::EnType::PS);
 	m_psFinal.Load("shader/bloom.fx", "PSFinal", Shader::EnType::PS);
 }
 void Bloom::InitRenderTarget()
@@ -69,20 +60,6 @@ void Bloom::InitRenderTarget()
 	m_luminanceRT.Create(
 		FRAME_BUFFER_W,
 		FRAME_BUFFER_H,
-		DXGI_FORMAT_R16G16B16A16_FLOAT
-	);
-
-	//ブラーをかけるためのダウンサンプリング用のレンダリングターゲットを作成。
-	//横ブラー用。
-	m_downSamplingRT[0].Create(
-		FRAME_BUFFER_W * 0.5f,	//横の解像度をフレームバッファの半分にする。
-		FRAME_BUFFER_H,
-		DXGI_FORMAT_R16G16B16A16_FLOAT
-	);
-	//縦ブラー用。
-	m_downSamplingRT[1].Create(
-		FRAME_BUFFER_W * 0.5f,	//横の解像度をフレームバッファの半分にする。
-		FRAME_BUFFER_H * 0.5f,	//縦の解像度をフレームバッファの半分にする。
 		DXGI_FORMAT_R16G16B16A16_FLOAT
 	);
 }
@@ -102,21 +79,6 @@ void Bloom::InitAlphaBlendState()
 	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
 	device->CreateBlendState(&blendDesc, &m_finalBlendState);
 }
-void Bloom::Update()
-{
-	//ガウスフィルタの重みを更新する。
-	float total = 0;
-	for (int i = 0; i < NUM_WEIGHTS; i++) {
-		m_blurParam.weights[i] = expf(-0.5f*(float)(i*i) / m_blurDispersion);
-		total += 2.0f*m_blurParam.weights[i];
-
-	}
-	// 規格化。重みのトータルが1.0になるように、全体の重みで除算している。
-	for (int i = 0; i < NUM_WEIGHTS; i++) {
-		m_blurParam.weights[i] /= total;
-	}
-}
-
 void Bloom::Draw(PostEffect& postEffect)
 {
 	auto deviceContext = g_graphicsEngine->GetD3DDeviceContext();
@@ -140,54 +102,21 @@ void Bloom::Draw(PostEffect& postEffect)
 		//フルスクリーン描画。
 		postEffect.DrawFullScreenQuadPrimitive(deviceContext, m_vs, m_psLuminance);
 	}
-	
-	//輝度を抽出したテクスチャにXブラーをかける。
-	{
-		//Xブラー用のレンダリングターゲットに変更する。
-		g_graphicsEngine->ChangeRenderTarget(&m_downSamplingRT[0], m_downSamplingRT[0].GetViewport());
-		
-		//輝度テクスチャをt0レジスタに設定する。
-		auto luminanceTexSRV = m_luminanceRT.GetRenderTargetSRV();
-		deviceContext->VSSetShaderResources(0, 1, &luminanceTexSRV);
-		deviceContext->PSSetShaderResources(0, 1, &luminanceTexSRV);
-		// 定数バッファを更新。
-		m_blurParam.offset.x = 16.0f / m_luminanceRT.GetWidth();
-		m_blurParam.offset.y = 0.0f;
-		deviceContext->UpdateSubresource(m_blurParamCB, 0, nullptr, &m_blurParam, 0, 0);
-		//ブラー用の定数バッファを設定する。
-		deviceContext->PSSetConstantBuffers(0, 1, &m_blurParamCB);
-
-		//フルスクリーン描画。
-		postEffect.DrawFullScreenQuadPrimitive(deviceContext, m_vsXBlur, m_psBlur);
+	//続いて、輝度テクスチャをガウシアンブラーでぼかす。
+	for (int i = 0; i < NUM_DOWN_SAMPLE; i++ ) {
+		m_gausianBlur[i].Execute(postEffect);
 	}
-	//XブラーをかけたテクスチャにYブラーをかける。
-	{
-		//Yブラー用のレンダリングターゲットに変更する。
-		g_graphicsEngine->ChangeRenderTarget(&m_downSamplingRT[1], m_downSamplingRT[1].GetViewport());
-		
-		//Xブラーをかけたテクスチャをt0レジスタに設定する。
-		auto xBlurSRV = m_downSamplingRT[0].GetRenderTargetSRV();
-		deviceContext->VSSetShaderResources(0, 1, &xBlurSRV);
-		deviceContext->PSSetShaderResources(0, 1, &xBlurSRV);
 
-		// 定数バッファを更新。
-		m_blurParam.offset.x = 0.0f;
-		m_blurParam.offset.y = 16.0f / m_luminanceRT.GetHeight();
-		deviceContext->UpdateSubresource(m_blurParamCB, 0, nullptr, &m_blurParam, 0, 0);
-		//ブラー用の定数バッファを設定する。
-		deviceContext->PSSetConstantBuffers(0, 1, &m_blurParamCB);
-
-		//フルスクリーン描画。
-		postEffect.DrawFullScreenQuadPrimitive(deviceContext, m_vsYBlur, m_psBlur);
-	}
 	//最後にぼかした絵を加算合成でメインレンダリングターゲットに合成して終わり。
 	{
 		auto mainRT = GameObjectManager::GetInstance().GetMainRenderTarget();
 		g_graphicsEngine->ChangeRenderTarget(mainRT, mainRT->GetViewport());
 
-		//XYブラーをかけたテクスチャをt0レジスタに設定する。
-		auto srv = m_downSamplingRT[1].GetRenderTargetSRV();
-		deviceContext->PSSetShaderResources(0, 1, &srv);
+		//ガウシアンブラーをかけたテクスチャをt0～t3レジスタに設定する。
+		for (int registerNo = 0; registerNo < NUM_DOWN_SAMPLE; registerNo++) {
+			auto srv = m_gausianBlur[registerNo].GetResultTextureSRV();
+			deviceContext->PSSetShaderResources(registerNo, 1, &srv);
+		}
 
 		//加算合成用のブレンディングステートを設定する。
 		float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };

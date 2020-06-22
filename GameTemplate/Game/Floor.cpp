@@ -25,7 +25,6 @@ bool Floor::Start()
 	m_model->SetShadowReciever(true);
 	m_model->SetShadowCaster(false);
 	m_model->UpdateWorldMatrix();
-	
 	//ナビメッシュの生成。
 	m_navimesh = NewGO<Navimesh>(GOPrio_Defalut);
 	m_navimesh->Init(this);
