@@ -47,7 +47,14 @@ public:
 	{
 		m_pos = pos;
 	}
-
+	/// <summary>
+	/// ポジションを取得。
+	/// </summary>
+	/// <returns>座標。</returns>
+	CVector3 GetPos()
+	{
+		return m_pos;
+	}
 	/// <summary>
 	/// 回転を設定
 	/// </summary>
@@ -55,6 +62,14 @@ public:
 	void SetRot(CQuaternion rot)
 	{
 		m_rot = rot;
+	}
+	/// <summary>
+	/// 回転を取得。
+	/// </summary>
+	/// <returns>回転。</returns>
+	CQuaternion GetRot()
+	{
+		return m_rot;
 	}
 	/// <summary>
 	/// 描画するかどうか。

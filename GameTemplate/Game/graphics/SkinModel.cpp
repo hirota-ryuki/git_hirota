@@ -45,7 +45,7 @@ void SkinModel::InitDirectionLight()
 	m_light.directionLight.direction[0].Normalize();
 	m_light.directionLight.color[0] = { 1.2f, 1.2f, 1.2f, 0.2f };
 	m_light.ambientLight.Set(0.4f, 0.4f, 0.4f);
-	m_light.specPow = 200.0f;
+	m_light.specPow = 5.0f;
 }
 
 void SkinModel::InitSkeleton(const wchar_t* filePath)

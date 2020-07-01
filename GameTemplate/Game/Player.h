@@ -103,7 +103,7 @@ public:
 	/// <summary>
 	/// プレイヤーの回転をセット。
 	/// </summary>
-	/// <param name="rot">回転</param>
+	/// <param name="rot">回転。</param>
 	void SetRot(CQuaternion rot)
 	{
 		m_rotation = rot;
@@ -111,6 +111,7 @@ public:
 	/// <summary>
 	/// プレイヤーの回転を取得。
 	/// </summary>
+	/// <returns>回転。</returns>
 	CQuaternion GetRot()
 	{
 		return m_rotation;

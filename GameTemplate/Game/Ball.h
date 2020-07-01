@@ -4,7 +4,7 @@ class Player;
 class Pose;
 
 class Ball :
-	public IGameObject
+	public IItem
 {
 public:
 	Ball();
@@ -12,6 +12,7 @@ public:
 	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
+	void GettingItem(bool isGetItem) override;
 	/// <summary>
 	/// ボールのポジションをセット。
 	/// </summary>
@@ -37,7 +38,7 @@ public:
 		m_nomber = no;
 	}
 private:
-	SkinModelRender*	m_model;								//スキンモデル。
+	SkinModelRender*	m_model = nullptr;								//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
 	int					m_nomber = 0;							//識別番号。		

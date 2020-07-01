@@ -53,6 +53,7 @@
 #include "SpriteRender.h"
 #include "FontRender.h"
 #include "RenderTarget.h"
+#include "IItem.h"
 #include "Game.h"
 
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。

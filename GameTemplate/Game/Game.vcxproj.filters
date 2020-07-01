@@ -375,7 +375,9 @@
     <ClCompile Include="graphics\posteffect\bloom\Bloom.cpp">
       <Filter>Engine\graphics\posteffect\bloom</Filter>
     </ClCompile>
-    <ClCompile Include="IItem.cpp" />
+    <ClCompile Include="IItem.cpp">
+      <Filter>Game\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -600,7 +602,9 @@
     <ClInclude Include="graphics\posteffect\bloom\GaussianBlur.h">
       <Filter>Engine\graphics\posteffect\bloom</Filter>
     </ClInclude>
-    <ClInclude Include="IItem.h" />
+    <ClInclude Include="IItem.h">
+      <Filter>Game\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

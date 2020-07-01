@@ -26,7 +26,7 @@ bool Ball::Start()
 	swprintf_s(ballNo, L"modelData/ball/ball.cmo");
 	m_model->Init(ballNo);
 	m_model->SetData(m_position, m_rotation);
-	m_model->UpdateWorldMatrix();
+	IItem::SetName(L"Ball");
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
@@ -39,15 +39,13 @@ bool Ball::Start()
 void Ball::Update()
 {
 	CVector3 diff = m_player->GetPos() - m_position;
-	if (diff.Length() < 100.0f) {
-		//Bボタンを押したら。
-		if (g_pad[0].IsTrigger(enButtonB)){
-			//ワンショット再生のSE
-			CSoundSource* m_se = new CSoundSource;
-			m_se->Init(L"sound/story/decision.wav");
-			m_se->Play(false);
-			m_pose->AddItemCount();
-			DeleteGO(this);
-		}
+	GettingItem(IItem::IsGetItem(diff));
+}
+
+void Ball::GettingItem(bool isGetItem)
+{
+	if (isGetItem) {
+		m_pose->AddItemCount();
+		DeleteGO(this);
 	}
 }

@@ -222,41 +222,19 @@ float4 PSMain( PSInput In ) : SV_Target0
 	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
 		lig += max(0.f, dot(In.Normal * -1.f, dligDirection[i])) * dligColor[i];
 	}
-	/*
-	if(isHasSpecMap == 1){
-	////鏡面反射////
-	//1 視点からライトを当てる物体に伸びるVectorEを求める
-	float3 E = normalize(In.worldPos-eyePos);
-	//2 反射ベクトルRを求める。
-	float3 R = 0.f;
-	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
-		R += dligDirection[i] + -2 * dot(In.Normal, -dligDirection[i]) * In.Normal;
-	}
-
-	
-
-	//1と2で求まったVectorのない席を計算する。
-	//スペキュラ反射の強さを求める。
-	float specPower = max(0.0f, dot(R, -E));
-	
-	//3 スペキュラ反射をライトに加算する。
-	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
-		lig += dligColor[i].xyz * pow(specPower, specPow);
-	}}*/
-
 
 	////鏡面反射////
 	if(isHasSpecMap == 1){
 		//1 視点からライトを当てる物体に伸びるVectorEを求める
 		float3 E = normalize(eyePos-In.worldPos);
 		//2 反射ベクトルRを求める。
-		float3 R = 0.f;
+		float3 R = 0.0f;
 		for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
 			
 			//スペキュラ反射の強さを求める。
-			float specPower = max(0.0f, dot(R, E));
+			R += reflect(dligDirection[i].xyz, In.Normal);
 			//↓同じ結果。
-			//R += reflect(dligDirection[i].xyz, In.Normal); + 2.0f * dot(In.Normal, -dligDirection[i].xyz) * In.Normal;
+			//R += dligDirection[i].xyz + 2.0f * dot(In.Normal, -dligDirection[i].xyz) * In.Normal;
 
 			//1と2で求まったVectorのない席を計算する。
 			//スペキュラ反射の強さを求める。
@@ -266,33 +244,9 @@ float4 PSMain( PSInput In ) : SV_Target0
 			specMap = g_specMap.Sample(Sampler, In.TexCoord);
 
 			//3 スペキュラ反射をライトに加算する。
-			lig += dligColor[i].xyz * pow(specPower, 5.0f) * specMap * dligColor[i].w;
+			lig += dligColor[i].xyz * pow(specPower, specPow) * specMap * dligColor[i].w;
 		}
 	}
-
-	/*
-	//スペキュラマップ。
-	if(isHasSpecMap == 1){
-		//1 反射ベクトルRを求める。
-		//スペキュラ反射の強さを求める。
-		float specMap = 0.0f;
-		specMap = g_specMap.Sample(Sampler, In.TexCoord);
-
-		for (int i = 0; i < 1; i++) {
-			float3 R = dligDirection[i] + -2.0f * dot(In.Normal, -dligDirection[i]) * In.Normal;
-			//2 視点からライトを当てる物体に伸びるVectorEを求める
-			float3 E = normalize(In.worldPos - eyePos);
-
-
-			//1と2で求まったVectorのない席を計算する。
-			//スペキュラ反射の強さを求める。
-			float spec = max(0, dot(R, -E));
-
-			//3 スペキュラ反射をライトに加算する。
-			lig += dligColor[i].xyz * pow(spec, 10.0f) *specMap;
-		}
-
-	}*/
 
 	//環境光。
 	lig += ambientLight;

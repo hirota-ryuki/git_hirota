@@ -172,6 +172,7 @@ bool Game::Start()
 	for (auto& objData : bulletstackObjDatas) {
 		m_bs = NewGO<BulletStack>(GOPrio_Defalut, "bulletstack");
 		//配置情報から座標と回転をステージに渡す。
+		//m_bs->GetModel()->SetPos(objData.position);
 		m_bs->SetPos(objData.position);
 		m_bs->SetRot(objData.rotation);
 		//m_ball->SetNomber(_wtoi(&objData.name[11]));

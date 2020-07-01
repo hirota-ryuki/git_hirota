@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "BulletStack.h"
 #include "Player.h"
-#include "Pose.h"
 BulletStack::BulletStack()
 {
 }
@@ -27,14 +26,13 @@ bool BulletStack::Start()
 	m_model->SetDirectionLightColor(m_directionLightColor);
 	m_model->SetSpec(m_spec);
 	m_model->SetAmbientLight(m_ambientLight);
-	m_model->UpdateWorldMatrix();
+	IItem::SetName(L"BulletStack");
 
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。
 	m_player = m_game->GetPlayer();
-	m_pose = m_game->GetPose();
 	return true;
 }
 
@@ -45,18 +43,16 @@ void BulletStack::Update()
 	qAddRot.SetRotationDeg(CVector3::AxisY(), 2.0f);
 	m_rotation.Multiply(qAddRot, m_rotation);
 	m_model->SetRot(m_rotation);
-	m_model->UpdateWorldMatrix();	
+	m_model->UpdateWorldMatrix();
 
 	CVector3 diff = m_player->GetPos() - m_position;
-	if (diff.Length() < 100.0f) {
-		//Bボタンを押したら。
-		if (g_pad[0].IsTrigger(enButtonB)) {
-			//ワンショット再生のSE
-			CSoundSource* m_se = new CSoundSource;
-			m_se->Init(L"sound/story/decision.wav");
-			m_se->Play(false);
-			m_player->AddStack(m_bullet);
-			DeleteGO(this);
-		}
+	GettingItem(IItem::IsGetItem(diff));
+}
+
+void BulletStack::GettingItem(bool isGetItem)
+{
+	if (isGetItem) {
+		m_player->AddStack(m_bullet);
+		DeleteGO(this);
 	}
 }

@@ -5,32 +5,36 @@ class IItem :
 {
 public:
 	IItem();
-	~IItem();
+	virtual ~IItem() {}	
 	/// <summary>
-	/// 
+	/// アイテムがゲットされたかどうかを返す関数。
 	/// </summary>
-	/// <param name="texFilePath"></param>
-	void InitModel(const wchar_t* texFilePath);
+	/// <param name="diff">プレイヤーとアイテムとの距離</param>
+	/// <returns>プレイヤーにゲットされたかどうか。</returns>
+	bool IsGetItem(CVector3 diff);
 	/// <summary>
-	/// ポジションをセット。
+	/// ゲットされた時の処理。
 	/// </summary>
-	/// <param name="pos">座標。</param>
-	void SetPos(CVector3 pos)
+	virtual void GettingItem(bool isGetItem) {}
+	/// <summary>
+	/// 名前を設定。
+	/// </summary>
+	void SetName(wchar_t* name)
 	{
-		m_position = pos;
+		m_name = name;
 	}
 	/// <summary>
-	/// 回転をセット。
+	/// 名前を取得。
 	/// </summary>
-	/// <param name="pos">回転。</param>
-	void SetRot(CQuaternion rot)
+	wchar_t* GetName()
 	{
-		m_rotation = rot;
+		return m_name;
 	}
 private:
-	SkinModelRender*	m_model;								//スキンモデル。
-	CVector3			m_position = CVector3::Zero();			//座標。
-	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
-
+	//モデル関係。
+	SkinModelRender*	m_model = nullptr;				//スキンモデル。
+	CVector3			m_pos = CVector3::Zero();
+	wchar_t*			m_name = nullptr;
+	bool				m_isGetItem = false;				//Bボタンが押されたかどうか。
 };
 

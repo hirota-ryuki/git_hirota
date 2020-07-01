@@ -2,6 +2,7 @@
 #include "character/CharacterController.h"
 #include "AStar.h"
 #include "Navimesh.h"
+//#define DEBUG_MODE
 
 class Player;
 class Floor;
@@ -143,8 +144,8 @@ private:
 	//ステータス関係。
 	int				m_hp = 10;		//HP。
 
-	//デバッグ。
+#ifdef DEBUG_MODE
 	SkinModelRender*	m_debugModel = nullptr;						//スキンモデル。
 	CQuaternion			m_debugrotation = CQuaternion::Identity();	//回転。
-
+#endif //DEBUG_MODE
 };

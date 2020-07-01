@@ -19,7 +19,9 @@ Zombie::~Zombie()
 void Zombie::OnDestroy()
 {
 	DeleteGO(m_model);
+#ifdef DEBUG_MODE
 	DeleteGOs("debug");
+#endif //DEBUG_MODE
 }
 
 bool Zombie::Start()
@@ -45,11 +47,13 @@ bool Zombie::Start()
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
 	m_model->SetData(m_position, m_rotation);
 	
+#ifdef DEBUG_MODE
 	//debug cmoファイルの読み込み。
 	m_debugModel = NewGO<SkinModelRender>(GOPrio_Defalut, "debug");
 	m_debugModel->Init(L"modelData/debug/debugstick.cmo");
 	m_debugrotation.SetRotationDeg(CVector3::AxisY(), 180.f);
 	m_debugModel->SetData(m_position, m_debugrotation);
+#endif //DEBUG_MODE
 
 	//アニメーション。
 	//アニメーションクリップのロード。
@@ -172,6 +176,7 @@ void Zombie::Update()
 		f.z *= -1;*/
 		//f.Normalize();
 		//CVector3 dir = CVector3::One();
+#ifdef DEBUG_MODE
 		CVector3 dir;
 		dir.Set(0.0f, 0.0f, -1.0f);
 		m_rotation.Multiply(dir);
@@ -186,6 +191,8 @@ void Zombie::Update()
 		Rot.SetRotation(cross, acos(angle));
 		
 		m_debugModel->SetData(m_position, Rot);
+#endif //DEBUG_MODE
+
 	}
 }
 
