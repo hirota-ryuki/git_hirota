@@ -16,6 +16,7 @@ public:
 	/// ゲットされた時の処理。
 	/// </summary>
 	virtual void GettingItem(bool isGetItem) {}
+	void SpriteMove(SpriteRender* sprite, CVector3 diff);
 	/// <summary>
 	/// 名前を設定。
 	/// </summary>
@@ -31,10 +32,12 @@ public:
 		return m_name;
 	}
 private:
-	//モデル関係。
-	SkinModelRender*	m_model = nullptr;				//スキンモデル。
-	CVector3			m_pos = CVector3::Zero();
-	wchar_t*			m_name = nullptr;
-	bool				m_isGetItem = false;				//Bボタンが押されたかどうか。
+	wchar_t*	m_name = nullptr;							//アイテムの名前。
+	bool		m_isGetItem = false;						//Bボタンが押されたかどうか。
+	bool		m_isNearPlayer = false;						//プレイヤーが近くにいるかどうか。
+	CVector3	m_initialPos = { 650.0f,-200.0f,0.0f };		//画像の初期座標。
+	CVector3	m_addPos = { -5.0f,0.0f,0.0f };				//画像が動く量。
+	int			m_addCount = 0;								//画像を動かした回数。
+	const int	ADD_COUNT = 20;
 };
 

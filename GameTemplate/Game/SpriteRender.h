@@ -22,6 +22,14 @@ public:
 		m_pos = pos;
 	}
 	/// <summary>
+	/// 座標を取得。
+	/// </summary>
+	/// <param name="m_rot">座標。</param>
+	CVector3 GetPos()
+	{
+		return m_pos;
+	}
+	/// <summary>
 	/// 回転をセット。
 	/// </summary>
 	void SetRot(const CQuaternion rot)
