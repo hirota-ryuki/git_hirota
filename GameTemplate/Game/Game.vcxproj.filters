@@ -166,6 +166,9 @@
     <Filter Include="Game\Item\Ball">
       <UniqueIdentifier>{814a6cea-a4d6-4ed3-a046-6ea2cdcfd541}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\sprite\item">
+      <UniqueIdentifier>{e19c20dc-f329-4417-a529-c582bb1b625f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -695,5 +698,10 @@
     <MeshContentTask Include="Assets\modelData\zombie\zombie.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\sprite\item\item_message.png">
+      <Filter>Assets\sprite\item</Filter>
+    </Image>
   </ItemGroup>
 </Project>

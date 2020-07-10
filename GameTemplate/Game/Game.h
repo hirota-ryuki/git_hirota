@@ -24,7 +24,7 @@ public:
 	~Game();	
 	void OnDestroy() override;
 	bool Start() override;
-	void Update() override ;
+	void Update() override;
 	/// <summary>
 	/// ゲームのインスタンスを取得。
 	/// </summary>

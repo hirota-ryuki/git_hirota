@@ -72,7 +72,7 @@ bool Player::Start()
 	//照準画像関係。
 	//スプライト
 	m_aimSprite = NewGO<SpriteRender>(GOPrio_Sprite);
-	m_aimSprite->Init(L"sprite/aim.dds", 60, 60);
+	m_aimSprite->Init(L"sprite/aim.dds", 60.0f, 60.0f);
 	m_aimSprite->ActiveMode(false);
 
 	//ゲームのインスタンスを取得。

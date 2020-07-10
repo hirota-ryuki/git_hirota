@@ -28,7 +28,9 @@ bool BulletStack::Start()
 	m_model->SetAmbientLight(m_ambientLight);
 	IItem::SetName(L"BulletStack");
 
-
+	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
+	m_sprite->Init(L"sprite/item/item_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
+	m_sprite->SetPos(m_spritePos);
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。
@@ -46,13 +48,14 @@ void BulletStack::Update()
 	m_model->UpdateWorldMatrix();
 
 	CVector3 diff = m_player->GetPos() - m_position;
-	GettingItem(IItem::IsGetItem(diff));
+	IItem::SpriteMove(m_sprite, diff);
+	//GettingItem(IItem::IsGetItem(diff));
 }
 
 void BulletStack::GettingItem(bool isGetItem)
 {
 	if (isGetItem) {
-		m_player->AddStack(m_bullet);
+		m_player->AddStack(ADD_BULLET_STACK);
 		DeleteGO(this);
 	}
 }

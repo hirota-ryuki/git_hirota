@@ -8,26 +8,27 @@ public:
 	bool Start() override;
 	void Update() override;
 	void DrawHUD() override;
-	void SetData(const CVector3& pos, const CQuaternion rot, const CVector3 scale)
+	void SetData(const CVector2& pos, const CQuaternion rot, const CVector3 scale)
 	{
-		m_pos = pos;
+		m_pos = CVector3{ pos.x,pos.y, 0.0f };
 		m_rot = rot;
 		m_scale = scale;
 	}
 	/// <summary>
 	/// 座標をセット。
 	/// </summary>
-	void SetPos(const CVector3 pos)
+	void SetPos(const CVector2& pos)
 	{
-		m_pos = pos;
+		m_pos = CVector3{ pos.x,pos.y, 0.0f };
 	}
 	/// <summary>
 	/// 座標を取得。
 	/// </summary>
 	/// <param name="m_rot">座標。</param>
-	CVector3 GetPos()
+	CVector2 GetPos()
 	{
-		return m_pos;
+		CVector2 pos = { m_pos.x,m_pos.y };
+		return pos;
 	}
 	/// <summary>
 	/// 回転をセット。

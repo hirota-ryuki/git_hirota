@@ -46,6 +46,9 @@
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 
+const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
+const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
+
 #include "ShadowMap.h"
 #include "IGameObject.h"
 #include "GameObjectManager.h"
@@ -56,7 +59,6 @@
 #include "IItem.h"
 #include "Game.h"
 
-const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
-const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
+
 
 static const int MAX_BONE = 512;	//!<ボーンの最大数。

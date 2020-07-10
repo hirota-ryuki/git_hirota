@@ -21,7 +21,7 @@ bool Map::Start()
 	//マップの画像。
 	m_mapSprite = NewGO<SpriteRender>(GOPrio_Sprite);
 	m_mapSprite->Init(L"sprite/map.dds", m_mapSpriteSize.x, m_mapSpriteSize.y);
-	m_mapSprite->SetPos(CVector3{ m_mapSpritePos.x,m_mapSpritePos.y, 0.0f });
+	m_mapSprite->SetPos(m_mapSpritePos);
 	//画像を消しておく。
 	m_mapSprite->ActiveMode(false);
 	//プレイヤーの画像。
@@ -54,7 +54,7 @@ void Map::Update()
 		CVector2 ratio = { m_mapSize.x / m_mapSpriteSize.x,m_mapSize.y / m_mapSpriteSize.y };
 		playerSpritePosX /= ratio.x;
 		playerSpritePosY /= ratio.y;
-		CVector3 playerPos = CVector3::Zero();
+		CVector2 playerPos = CVector2::Zero();
 		//x座標は3dsMaxからの出力の際に反対になってるから-1をかけなくてよい。
 		//マップの画像は中心がずれているため最後にずらす。
 		playerPos.x = m_mapSpritePos.x + playerSpritePosX - 35.0f;
