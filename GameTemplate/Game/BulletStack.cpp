@@ -31,6 +31,8 @@ bool BulletStack::Start()
 	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
 	m_sprite->Init(L"sprite/item/item_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
 	m_sprite->SetPos(m_spritePos);
+	//m_sprite = IItem::SpriteLoad(L"sprite/item/item_message.dds");
+
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。

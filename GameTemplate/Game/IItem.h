@@ -7,6 +7,12 @@ const CVector2		FRAME_IN_POS =  { -(FRAME_BUFFER_W / 2 - ITEM_SPRITE_W / 2),-200
 const CVector2		FRAME_OUT_POS = { -(FRAME_BUFFER_W / 2 + ITEM_SPRITE_W / 2),-200.0f };
 const float			AMOUNT_OF_CHANGE = 5.0f;				//画像が移動する量、変化量。
 
+struct deleter_SpriteRender {
+	void operator()(SpriteRender** ptr) {
+		DeleteGO(*ptr);
+	}
+};
+
 class IItem :
 	public IGameObject
 {
@@ -27,7 +33,7 @@ public:
 	/// 画像をロードする関数。
 	/// </summary>
 	/// <param name="filePath">画像のファイルパス。</param>
-	void SpriteLoad(const wchar_t* filePath);
+	SpriteRender* SpriteLoad(const wchar_t* filePath);
 	/// <summary>
 	/// 画像を動かす関数。
 	/// </summary>
@@ -64,6 +70,6 @@ private:
 	//unordered_mapは順番がめちゃくちゃになるがmapより速い。
 	static std::unordered_map<
 		std::wstring,
-		std::unique_ptr<SpriteRender*>
+		std::unique_ptr<SpriteRender*/*, deleter_SpriteRender*/>
 	>	m_itemSpriteMap;
 };

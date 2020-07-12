@@ -21,21 +21,23 @@ bool IItem::IsGetItem(CVector3 diff)
 	return m_isGetItem;
 }
 
-void IItem::SpriteLoad(const wchar_t * filePath)
+SpriteRender* IItem::SpriteLoad(const wchar_t* filePath)
 {
 	SpriteRender* sprite = nullptr;
 	auto it = m_itemSpriteMap.find(filePath);
 	if (it == m_itemSpriteMap.end()) {
 		//ñ¢ìoò^Ç»ÇÃÇ≈ÅAêVãKÇ≈ÉçÅ[ÉhÇ∑ÇÈÅB
-		sprite = NewGO<SpriteRender>(GOPrio_Sprite);
-		sprite->Init(filePath, ITEM_SPRITE_W, ITEM_SPRITE_H);
-		sprite->SetPos(FRAME_OUT_POS);
-		m_itemSpriteMap.emplace(filePath, sprite);
+		SpriteRender* spriteData = NewGO<SpriteRender>(GOPrio_Sprite);
+		spriteData->Init(filePath, ITEM_SPRITE_W, ITEM_SPRITE_H);
+		spriteData->SetPos(FRAME_OUT_POS);
+		sprite = spriteData;
+		m_itemSpriteMap.emplace(filePath, std::move(spriteData));
 	}
 	else {
-		auto i = it->second.get();
-		sprite = *i;
+		auto mapData = it->second.get();
+		sprite = *mapData;
 	}
+	return nullptr;
 }
 
 void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
