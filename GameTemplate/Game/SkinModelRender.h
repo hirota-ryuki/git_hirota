@@ -163,6 +163,9 @@ public:
 	void SetAmbientLight(CVector3 ambientLight) {
 		m_model.SetAmbientLight(ambientLight);
 	}
+	CMatrix Get2DPos() {
+		return m_model2Dpos;
+	}
 private:
 	SkinModel		m_model;								//スキンモデル。
 	CVector3		m_pos = CVector3::Zero();
@@ -174,4 +177,5 @@ private:
 	CVector3		m_right = CVector3::Right();			//カメラの右。
 	CMatrix			m_viewMatrixInv = CMatrix::Identity();	//ビューの逆行列。
 	bool			m_isShadow = true;						//影を落とすかどうか。
+	CMatrix			m_model2Dpos = CMatrix::Identity();		//3Dモデルを2Dの座標に変換した座標。
 };

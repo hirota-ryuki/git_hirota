@@ -649,6 +649,7 @@
     <ImageContentTask Include="Assets\modelData\bulletstack\Metalness.tga">
       <Filter>Assets\map\spec</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\item\item_message.png" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -700,7 +701,7 @@
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\sprite\item\item_message.png">
+    <Image Include="Assets\sprite\item\mosaiku.jpg">
       <Filter>Assets\sprite\item</Filter>
     </Image>
   </ItemGroup>
