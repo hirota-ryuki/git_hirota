@@ -8,8 +8,8 @@ const CVector2		FRAME_OUT_POS = { -(FRAME_BUFFER_W / 2 + ITEM_SPRITE_W / 2),-200
 const float			AMOUNT_OF_CHANGE = 5.0f;				//画像が移動する量、変化量。
 
 struct deleter_SpriteRender {
-	void operator()(SpriteRender** ptr) {
-		DeleteGO(*ptr);
+	void operator()(SpriteRender* ptr) {
+		DeleteGO(ptr);
 	}
 };
 
@@ -18,7 +18,7 @@ class IItem :
 {
 public:
 	IItem();
-	virtual ~IItem() {}	
+	virtual ~IItem();
 	/// <summary>
 	/// アイテムがゲットされたかどうかを返す関数。
 	/// </summary>
@@ -41,6 +41,13 @@ public:
 	/// <param name="diff">プレイヤーとアイテムとの距離。</param>
 	void SpriteMove(SpriteRender* sprite, CVector3 diff);
 	/// <summary>
+	/// m_isFinishedMoveを取得。
+	/// </summary>
+	/// <returns>m_isFinishedMove</returns>
+	bool GetIsFinishedMove() {
+		return m_isFinishedMove;
+	}
+	/// <summary>
 	/// 名前を設定。
 	/// </summary>
 	void SetName(wchar_t* name)
@@ -58,7 +65,7 @@ private:
 	wchar_t*	m_name = nullptr;							//アイテムの名前。
 	bool		m_isGetItem = false;						//Bボタンが押されたかどうか。
 	bool		m_isNearPlayer = false;						//プレイヤーが近くにいるかどうか。
-	bool		m_isFinishedMove = false;
+	bool		m_isFinishedMove = false;					//動き終わったかどうか。
 	//ステート関係。
 	enum State {
 		enState_nearPlayer,
@@ -70,6 +77,6 @@ private:
 	//unordered_mapは順番がめちゃくちゃになるがmapより速い。
 	static std::unordered_map<
 		std::wstring,
-		std::unique_ptr<SpriteRender*/*, deleter_SpriteRender*/>
+		std::unique_ptr<SpriteRender, deleter_SpriteRender>
 	>	m_itemSpriteMap;
 };

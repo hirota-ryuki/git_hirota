@@ -1,7 +1,18 @@
 #include "stdafx.h"
 #include "IItem.h"
 
+//staticで定義したならcppで実体を書く必要がある。
+std::unordered_map<
+	std::wstring,
+	std::unique_ptr<SpriteRender, deleter_SpriteRender>
+> IItem::m_itemSpriteMap;
+
+
 IItem::IItem()
+{
+}
+
+IItem::~IItem()
 {
 }
 
@@ -25,19 +36,21 @@ SpriteRender* IItem::SpriteLoad(const wchar_t* filePath)
 {
 	SpriteRender* sprite = nullptr;
 	auto it = m_itemSpriteMap.find(filePath);
-	if (it == m_itemSpriteMap.end()) {
+	if (it == m_itemSpriteMap.end()) 
+	{
+	//if (m_itemSpriteMap.count(filePath) == 1) {
 		//未登録なので、新規でロードする。
 		SpriteRender* spriteData = NewGO<SpriteRender>(GOPrio_Sprite);
 		spriteData->Init(filePath, ITEM_SPRITE_W, ITEM_SPRITE_H);
 		spriteData->SetPos(FRAME_OUT_POS);
 		sprite = spriteData;
-		m_itemSpriteMap.emplace(filePath, std::move(spriteData));
+		m_itemSpriteMap.emplace(filePath, spriteData);
 	}
 	else {
 		auto mapData = it->second.get();
-		sprite = *mapData;
+		sprite = mapData;
 	}
-	return nullptr;
+	return sprite;
 }
 
 void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
@@ -49,6 +62,7 @@ void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 		if (diff.Length() < 100.0f) {
 			//フラグを立てる。
 			m_isNearPlayer = true;
+			m_isFinishedMove = false;
 		}
 		//フラグが立っていたら。
 		if (m_isNearPlayer) {
@@ -82,6 +96,7 @@ void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 		if (sprite->GetPos().x <= FRAME_OUT_POS.x) {
 			//最初のステップに戻る。
 			m_state = enState_nearPlayer;
+			m_isFinishedMove = true;
 		}
 		break;
 	default:
