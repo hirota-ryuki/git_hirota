@@ -33,7 +33,7 @@ public:
 	/// 画像をロードする関数。
 	/// </summary>
 	/// <param name="filePath">画像のファイルパス。</param>
-	SpriteRender* SpriteLoad(const wchar_t* filePath);
+	SpriteRender* SpriteLoad(const wchar_t* filePath, float w, float h);
 	/// <summary>
 	/// 画像を動かす関数。
 	/// </summary>

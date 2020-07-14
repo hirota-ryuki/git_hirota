@@ -344,7 +344,7 @@
     <ImageContentTask Include="Assets\sprite\item\item_message.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\item\mosaiku.jpg" />
+    <ImageContentTask Include="Assets\sprite\item\button.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

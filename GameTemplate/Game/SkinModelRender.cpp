@@ -39,10 +39,7 @@ void SkinModelRender::Draw()
 				g_camera3D.GetProjectionMatrix()
 			);
 		}
-	}
-	m_model2Dpos.Mul(m_model.GetWorldMatrix(),g_camera3D.GetViewMatrix());
-	m_model2Dpos.Mul(m_model2Dpos, g_camera3D.GetProjectionMatrix());
-	
+	}	
 	//ビュー行列の逆行列を計算。
 	m_viewMatrixInv.Inverse(g_camera3D.GetViewMatrix());
 	//モデルの前方向。

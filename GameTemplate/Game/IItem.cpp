@@ -32,7 +32,7 @@ bool IItem::IsGetItem(CVector3 diff)
 	return m_isGetItem;
 }
 
-SpriteRender* IItem::SpriteLoad(const wchar_t* filePath)
+SpriteRender* IItem::SpriteLoad(const wchar_t* filePath, float w, float h)
 {
 	SpriteRender* sprite = nullptr;
 	auto it = m_itemSpriteMap.find(filePath);
@@ -41,7 +41,7 @@ SpriteRender* IItem::SpriteLoad(const wchar_t* filePath)
 	//if (m_itemSpriteMap.count(filePath) == 1) {
 		//ñ¢ìoò^Ç»ÇÃÇ≈ÅAêVãKÇ≈ÉçÅ[ÉhÇ∑ÇÈÅB
 		SpriteRender* spriteData = NewGO<SpriteRender>(GOPrio_Sprite);
-		spriteData->Init(filePath, ITEM_SPRITE_W, ITEM_SPRITE_H);
+		spriteData->Init(filePath, w, h);
 		spriteData->SetPos(FRAME_OUT_POS);
 		sprite = spriteData;
 		m_itemSpriteMap.emplace(filePath, spriteData);

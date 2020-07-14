@@ -11,6 +11,7 @@ public:
 	bool Start() override;
 	void Update() override;
 	void GettingItem(bool isGetItem) override;
+	static void sp();
 	/// <summary>
 	/// ポジションをセット。
 	/// </summary>
@@ -20,6 +21,13 @@ public:
 		m_position = pos;
 	}
 	/// <summary>
+	/// ポジションを取得。
+	/// </summary>
+	CVector3 GetPos()
+	{
+		return m_position;
+	}
+	/// <summary>
 	/// 回転をセット。
 	/// </summary>
 	/// <param name="pos">回転。</param>
@@ -27,6 +35,7 @@ public:
 	{
 		m_rotation = rot;
 	}
+	
 private:
 	//モデル関係。
 	SkinModelRender*	m_model = nullptr;
@@ -48,6 +57,6 @@ private:
 	CVector2			m_spritePos = FRAME_OUT_POS;
 
 	SpriteRender*		m_spriteA = nullptr;
-	CVector4			m_model2Dpos = CVector4::Black();
+	CVector4			m_model2Dpos = CVector4::Black();		//3Dモデルを2Dの座標に変換した座標。
 };
 
