@@ -48,7 +48,9 @@ public:
 		return m_rot;
 	}
 	/// <summary>
-	/// 
+	/// 画像を反転させる関数。
+	/// 元の画像が反転されて描画されるため、
+	/// 一回だけ実行させなければならない。
 	/// </summary>
 	void RotMultiply()
 	{
@@ -81,7 +83,28 @@ public:
 	{
 		m_isActive = active;
 	}
+	/// <summary>
+	/// 初期化。
+	/// </summary>
+	/// <param name="texFilePath">ファイルパス。</param>
+	/// <param name="w">横幅。</param>
+	/// <param name="h">縦幅。</param>
 	void Init(const wchar_t* texFilePath, float w, float h);
+	/// <summary>
+	/// スプライトをセット。
+	/// </summary>
+	/// <param name="sprite">スプライト。</param>
+	void SetSprite(const Sprite& sprite) {
+		m_sprite = sprite;
+	}
+	/// <summary>
+	/// スプライトをゲット。
+	/// </summary>
+	/// <returns>スプライト。</returns>
+	Sprite GetSprite()
+	{
+		return m_sprite;
+	}
 private:
 	Sprite		m_sprite;
 	CVector3	m_pos = CVector3::Zero();
@@ -89,6 +112,6 @@ private:
 	CVector3	m_scale = CVector3::One();
 	float		m_alpha = 1.0f;					//スプライトのα値。
 	bool		m_isActive = true;				//画像がドローされているかどうか。
-	bool		m_isMulti = false;				//画像がドローされているかどうか。
+	bool		m_isMulti = false;				//画像を反転させたかどうか。
 };
 

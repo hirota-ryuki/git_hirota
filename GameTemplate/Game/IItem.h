@@ -33,8 +33,12 @@ public:
 	/// 画像をロードする関数。
 	/// </summary>
 	/// <param name="filePath">画像のファイルパス。</param>
+	/// <param name="w">横幅。</param>
+	/// <param name="h">縦幅。</param>
+	/// <returns>スプライトレンダー。</returns>
 	SpriteRender* SpriteLoad(const wchar_t* filePath, float w, float h);
-	/// <summary>
+	SpriteRender* ButtonSpriteLoad(SpriteRender* sprite);
+	/// /// <summary>
 	/// 画像を動かす関数。
 	/// </summary>
 	/// <param name="sprite">スプライトレンダー。</param>
@@ -79,4 +83,6 @@ private:
 		std::wstring,
 		std::unique_ptr<SpriteRender, deleter_SpriteRender>
 	>	m_itemSpriteMap;
+	static Sprite	m_sprite;
+	static bool		m_isCreateSprite;
 };

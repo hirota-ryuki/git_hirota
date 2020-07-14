@@ -11,7 +11,6 @@ public:
 	bool Start() override;
 	void Update() override;
 	void GettingItem(bool isGetItem) override;
-	static void sp();
 	/// <summary>
 	/// ポジションをセット。
 	/// </summary>

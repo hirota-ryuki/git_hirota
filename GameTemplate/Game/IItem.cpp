@@ -6,7 +6,8 @@ std::unordered_map<
 	std::wstring,
 	std::unique_ptr<SpriteRender, deleter_SpriteRender>
 > IItem::m_itemSpriteMap;
-
+Sprite	IItem::m_sprite;
+bool	IItem::m_isCreateSprite = false;
 
 IItem::IItem()
 {
@@ -49,6 +50,20 @@ SpriteRender* IItem::SpriteLoad(const wchar_t* filePath, float w, float h)
 	else {
 		auto mapData = it->second.get();
 		sprite = mapData;
+	}
+	return sprite;
+}
+
+SpriteRender* IItem::ButtonSpriteLoad(SpriteRender * sprite)
+{
+	sprite = NewGO<SpriteRender>(GOPrio_Sprite);
+	if (!m_isCreateSprite) {
+		sprite->Init(L"sprite/item/button.dds", 50.0f, 50.0f);
+		m_sprite = sprite->GetSprite();
+		m_isCreateSprite = true;
+	}
+	else {
+		sprite->SetSprite(m_sprite);
 	}
 	return sprite;
 }
