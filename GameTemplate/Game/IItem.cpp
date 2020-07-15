@@ -6,7 +6,7 @@ std::unordered_map<
 	std::wstring,
 	std::unique_ptr<SpriteRender>
 > IItem::m_itemSpriteMap;
-Sprite	IItem::m_sprite;
+std::unique_ptr<Sprite>	m_sprite;
 bool	IItem::m_isCreateSprite = false;
 
 IItem::IItem()
@@ -62,7 +62,7 @@ SpriteRender* IItem::ButtonSpriteLoad(SpriteRender * sprite)
 		m_isCreateSprite = true;
 	}
 	else {
-		sprite->SetSprite(m_sprite);
+		sprite->SetSprite(std::move(m_sprite));
 	}
 	return sprite;
 }

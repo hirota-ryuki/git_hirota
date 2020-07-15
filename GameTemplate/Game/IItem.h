@@ -92,7 +92,7 @@ private:
 		std::wstring,
 		std::unique_ptr<SpriteRender>
 	>	m_itemSpriteMap;
-	static Sprite	m_sprite;
+	static std::unique_ptr<Sprite>	m_sprite;
 	static bool		m_isCreateSprite;
 	CVector4		m_model2Dpos = CVector4::Black();		//3Dモデルを2Dの座標に変換した座標。
 
