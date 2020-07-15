@@ -15,6 +15,7 @@
 #include "UI.h"
 #include "Map.h"
 
+
 //静的メンバ変数を定義する。
 Game* Game::m_game = nullptr;
 
@@ -39,6 +40,7 @@ Game::~Game()
 
 void Game::OnDestroy()
 {
+	IItem::Release();
 	DeleteGOs("enemy");
 	DeleteGO(m_goal);
 	DeleteGO(m_gamecamera);

@@ -4,7 +4,7 @@
 //staticで定義したならcppで実体を書く必要がある。
 std::unordered_map<
 	std::wstring,
-	std::unique_ptr<SpriteRender, deleter_SpriteRender>
+	std::unique_ptr<SpriteRender>
 > IItem::m_itemSpriteMap;
 Sprite	IItem::m_sprite;
 bool	IItem::m_isCreateSprite = false;
@@ -56,7 +56,6 @@ SpriteRender* IItem::SpriteLoad(const wchar_t* filePath, float w, float h)
 
 SpriteRender* IItem::ButtonSpriteLoad(SpriteRender * sprite)
 {
-	sprite = NewGO<SpriteRender>(GOPrio_Sprite);
 	if (!m_isCreateSprite) {
 		sprite->Init(L"sprite/item/button.dds", 50.0f, 50.0f);
 		m_sprite = sprite->GetSprite();
@@ -66,6 +65,30 @@ SpriteRender* IItem::ButtonSpriteLoad(SpriteRender * sprite)
 		sprite->SetSprite(m_sprite);
 	}
 	return sprite;
+}
+
+void IItem::ButtonSpriteMove(SpriteRender * sprite, CVector3 diff, CVector3 position) 
+{
+	if (diff.Length() < 500.f) { //距離が1000以下になったら。
+		m_model2Dpos = { position.x, position.y, position.z, 1.0f };
+		g_camera3D.GetViewMatrix().Mul(m_model2Dpos);
+		g_camera3D.GetProjectionMatrix().Mul(m_model2Dpos);
+		m_model2Dpos.x /= m_model2Dpos.w;
+		m_model2Dpos.y /= m_model2Dpos.w;
+		sprite->SetPos({ m_model2Dpos.x*FRAME_BUFFER_W / 2 * -1,m_model2Dpos.y*FRAME_BUFFER_H / 2 });
+		sprite->ActiveMode(true);
+	}
+	else {
+		sprite->ActiveMode(false);
+	}
+}
+
+//staticだがいつも通りの記述でも実体を定義していることになる。
+//cppに書かれてあればok
+void IItem::Release()
+{
+	//mapを空にする。
+	m_itemSpriteMap.clear();
 }
 
 void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)

@@ -7,7 +7,7 @@ const CVector2		FRAME_IN_POS =  { -(FRAME_BUFFER_W / 2 - ITEM_SPRITE_W / 2),-200
 const CVector2		FRAME_OUT_POS = { -(FRAME_BUFFER_W / 2 + ITEM_SPRITE_W / 2),-200.0f };
 const float			AMOUNT_OF_CHANGE = 5.0f;				//画像が移動する量、変化量。
 
-struct deleter_SpriteRender {
+struct deleter_SpriteRender  {
 	void operator()(SpriteRender* ptr) {
 		DeleteGO(ptr);
 	}
@@ -37,13 +37,16 @@ public:
 	/// <param name="h">縦幅。</param>
 	/// <returns>スプライトレンダー。</returns>
 	SpriteRender* SpriteLoad(const wchar_t* filePath, float w, float h);
-	SpriteRender* ButtonSpriteLoad(SpriteRender* sprite);
+	
 	/// /// <summary>
 	/// 画像を動かす関数。
 	/// </summary>
 	/// <param name="sprite">スプライトレンダー。</param>
 	/// <param name="diff">プレイヤーとアイテムとの距離。</param>
 	void SpriteMove(SpriteRender* sprite, CVector3 diff);
+	SpriteRender* ButtonSpriteLoad(SpriteRender* sprite);
+	void ButtonSpriteMove(SpriteRender* sprite, CVector3 diff, CVector3 position);
+	
 	/// <summary>
 	/// m_isFinishedMoveを取得。
 	/// </summary>
@@ -65,6 +68,12 @@ public:
 	{
 		return m_name;
 	}
+	/// <summary>
+	/// 解放。
+	/// static関数はincrudeしていたら
+	/// どこでも使える。
+	/// </summary>
+	static void Release();
 private:
 	wchar_t*	m_name = nullptr;							//アイテムの名前。
 	bool		m_isGetItem = false;						//Bボタンが押されたかどうか。
@@ -81,8 +90,10 @@ private:
 	//unordered_mapは順番がめちゃくちゃになるがmapより速い。
 	static std::unordered_map<
 		std::wstring,
-		std::unique_ptr<SpriteRender, deleter_SpriteRender>
+		std::unique_ptr<SpriteRender>
 	>	m_itemSpriteMap;
 	static Sprite	m_sprite;
 	static bool		m_isCreateSprite;
+	CVector4		m_model2Dpos = CVector4::Black();		//3Dモデルを2Dの座標に変換した座標。
+
 };
