@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "IItem.h"
+#include "Game.h"
+#include "Player.h"
 
 //staticで定義したならcppで実体を書く必要がある。
 std::unordered_map<
@@ -14,6 +16,14 @@ IItem::IItem()
 IItem::~IItem()
 {
 	DeleteGO(m_buttonSprite);
+}
+
+void IItem::ItemCommonProcessing(SpriteRender * sprite, CVector3 pos)
+{
+	CVector3 diff = m_player->GetPos() - pos;
+	IItem::SpriteMove(sprite, diff);
+	IItem::GettingItem(IItem::IsGetItem(diff));
+	IItem::ButtonSpriteMove(diff, pos);
 }
 
 bool IItem::IsGetItem(CVector3 diff)
@@ -42,7 +52,7 @@ void IItem::GettingItem(bool isGetItem)
 		}
 		
 		//画像の動きが終わったか。
-		if (IItem::GetIsFinishedMove()) {
+		if (m_isFinishedMove) {
 			//このインスタンスを消す。
 			DeleteGO(this);
 		}
@@ -70,6 +80,15 @@ SpriteRender* IItem::SpriteLoad(const wchar_t* filePath, float w, float h)
 	return sprite;
 }
 
+void IItem::IItemInit()
+{
+	ButtonSpriteLoad();
+	//ゲームのインスタンスを取得。
+	m_game = GetGame();
+	//プレイヤーのインスタンスを取得。
+	m_player = m_game->GetPlayer();
+}
+
 void IItem::ButtonSpriteLoad()
 {
 	m_buttonSprite = NewGO<SpriteRender>(GOPrio_Sprite,"buttonsprite");
@@ -79,6 +98,7 @@ void IItem::ButtonSpriteLoad()
 void IItem::ButtonSpriteMove(CVector3 diff, CVector3 position) 
 {
 	if (diff.Length() < 500.f) { //距離が500以下になったら。
+		//3D座標から2D座標への変換。
 		m_model2Dpos = { position.x, position.y, position.z, 1.0f };
 		g_camera3D.GetViewMatrix().Mul(m_model2Dpos);
 		g_camera3D.GetProjectionMatrix().Mul(m_model2Dpos);

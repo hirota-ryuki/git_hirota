@@ -29,7 +29,7 @@ bool BulletStack::Start()
 	IItem::SetName(L"BulletStack");
 
 	m_sprite = IItem::SpriteLoad(L"sprite/item/magazine_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
-	IItem::ButtonSpriteLoad();
+	IItem::IItemInit();
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
@@ -47,10 +47,7 @@ void BulletStack::Update()
 	m_model->SetRot(m_rotation);
 	m_model->UpdateWorldMatrix();
 
-	CVector3 diff = m_player->GetPos() - m_position;
-	IItem::SpriteMove(m_sprite, diff);
-	IItem::GettingItem(IItem::IsGetItem(diff));
-	IItem::ButtonSpriteMove(diff, m_position);
+	IItem::ItemCommonProcessing(m_sprite, m_position);
 }
 
 void BulletStack::OnGet()
