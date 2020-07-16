@@ -12,7 +12,7 @@ public:
 	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
-	void GettingItem(bool isGetItem) override;
+	void OnGet() override;	
 	/// <summary>
 	/// ボールのポジションをセット。
 	/// </summary>
@@ -45,5 +45,9 @@ private:
 	Game*				m_game = nullptr;						//Gameのポインタ。
 	Player*				m_player = nullptr;						//プレイヤークラスのポインタ。
 	Pose*				m_pose = nullptr;
+
+	//ポップアップ画像関係。
+	SpriteRender*		m_sprite = nullptr;
+	CVector2			m_spritePos = FRAME_OUT_POS;
 };
 

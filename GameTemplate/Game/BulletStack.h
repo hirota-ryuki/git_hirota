@@ -10,7 +10,7 @@ public:
 	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
-	void GettingItem(bool isGetItem) override;
+	void OnGet() override;
 	/// <summary>
 	/// ポジションをセット。
 	/// </summary>

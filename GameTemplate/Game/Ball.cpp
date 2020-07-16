@@ -28,6 +28,9 @@ bool Ball::Start()
 	m_model->SetData(m_position, m_rotation);
 	IItem::SetName(L"Ball");
 
+	m_sprite = IItem::SpriteLoad(L"sprite/item/magazine_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
+	IItem::ButtonSpriteLoad();
+
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。
@@ -39,13 +42,12 @@ bool Ball::Start()
 void Ball::Update()
 {
 	CVector3 diff = m_player->GetPos() - m_position;
+	IItem::SpriteMove(m_sprite, diff);
 	GettingItem(IItem::IsGetItem(diff));
+	IItem::ButtonSpriteMove(diff, m_position);
 }
 
-void Ball::GettingItem(bool isGetItem)
+void Ball::OnGet()
 {
-	if (isGetItem) {
-		m_pose->AddItemCount();
-		DeleteGO(this);
-	}
+	m_pose->AddItemCount();
 }

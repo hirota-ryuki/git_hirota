@@ -28,8 +28,8 @@ bool BulletStack::Start()
 	m_model->SetAmbientLight(m_ambientLight);
 	IItem::SetName(L"BulletStack");
 
-	/*m_sprite = IItem::SpriteLoad(L"sprite/item/magazine_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
-	IItem::ButtonSpriteLoad();*/
+	m_sprite = IItem::SpriteLoad(L"sprite/item/magazine_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
+	IItem::ButtonSpriteLoad();
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
@@ -47,25 +47,15 @@ void BulletStack::Update()
 	m_model->SetRot(m_rotation);
 	m_model->UpdateWorldMatrix();
 
-	/*CVector3 diff = m_player->GetPos() - m_position;
+	CVector3 diff = m_player->GetPos() - m_position;
 	IItem::SpriteMove(m_sprite, diff);
-	GettingItem(IItem::IsGetItem(diff));
-	IItem::ButtonSpriteMove(diff, m_position);*/
+	IItem::GettingItem(IItem::IsGetItem(diff));
+	IItem::ButtonSpriteMove(diff, m_position);
 }
 
-void BulletStack::GettingItem(bool isGetItem)
+void BulletStack::OnGet()
 {
-	//アイテムをゲットしていたら。
-	if (isGetItem) {
-		if (!m_isAddBullet) {
-			//弾薬を増やす。
-			m_player->AddStack(ADD_BULLET_STACK);
-			m_isAddBullet = true;
-		}
-		//画像が動き終わったか。
-		if (IItem::GetIsFinishedMove()) {
-			//このインスタンスを消す。
-			DeleteGO(this);
-		}
-	}
+	//弾薬を増やす。
+	m_player->AddStack(ADD_BULLET_STACK);
+	m_isAddBullet = true;
 }

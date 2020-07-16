@@ -26,9 +26,13 @@ public:
 	/// <returns>プレイヤーにゲットされたかどうか。</returns>
 	bool IsGetItem(CVector3 diff);
 	/// <summary>
-	/// ゲットされた時の処理。
+	/// ゲットされた時の共通処理。
 	/// </summary>
-	virtual void GettingItem(bool isGetItem) {}
+	void GettingItem(bool isGetItem);
+	/// <summary>
+	/// ゲットされた時のアイテムごとの処理。
+	/// </summary>
+	virtual void OnGet() {}
 	/// <summary>
 	/// 画像をロードする関数。
 	/// </summary>
@@ -44,7 +48,15 @@ public:
 	/// <param name="sprite">スプライトレンダー。</param>
 	/// <param name="diff">プレイヤーとアイテムとの距離。</param>
 	void SpriteMove(SpriteRender* sprite, CVector3 diff);
+	/// <summary>
+	/// 
+	/// </summary>
 	void ButtonSpriteLoad();
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="diff"></param>
+	/// <param name="position"></param>
 	void ButtonSpriteMove(CVector3 diff, CVector3 position);
 	
 	/// <summary>
@@ -92,11 +104,11 @@ private:
 		std::wstring,
 		std::unique_ptr<SpriteRender>
 	>	m_itemSpriteMap;
-	static Sprite	m_sprite;
-	static bool		m_isCreateSprite;
-
+	
 	//Bボタン関係。
-	SpriteRender*		m_buttonSprite = nullptr;
+	SpriteRender*	m_buttonSprite = nullptr;
 	CVector4		m_model2Dpos = CVector4::Black();		//3Dモデルを2Dの座標に変換した座標。
 
+	//OnGet関数関係。
+	bool			m_isOnce = false;		//一回限りの処理を行うための判定。
 };

@@ -6,8 +6,6 @@ std::unordered_map<
 	std::wstring,
 	std::unique_ptr<SpriteRender>
 > IItem::m_itemSpriteMap;
-Sprite	IItem::m_sprite;
-bool	IItem::m_isCreateSprite = false;
 
 IItem::IItem()
 {
@@ -32,6 +30,23 @@ bool IItem::IsGetItem(CVector3 diff)
 		}
 	}
 	return m_isGetItem;
+}
+
+void IItem::GettingItem(bool isGetItem)
+{
+	//アイテムをゲットしていたら。
+	if (isGetItem) {
+		if (!m_isOnce) {
+			OnGet();
+			m_isOnce = true;
+		}
+		
+		//画像の動きが終わったか。
+		if (IItem::GetIsFinishedMove()) {
+			//このインスタンスを消す。
+			DeleteGO(this);
+		}
+	}
 }
 
 SpriteRender* IItem::SpriteLoad(const wchar_t* filePath, float w, float h)
@@ -59,16 +74,6 @@ void IItem::ButtonSpriteLoad()
 {
 	m_buttonSprite = NewGO<SpriteRender>(GOPrio_Sprite,"buttonsprite");
 	m_buttonSprite->Init(L"sprite/item/button.dds", 50.0f, 50.0f);
-
-	/*↓Sprite m_spriteを共通にしたい場合。
-	if (!m_isCreateSprite) {
-		sprite->Init(L"sprite/item/button.dds", 50.0f, 50.0f);
-		m_sprite = sprite->GetSprite();
-		m_isCreateSprite = true;
-	}
-	else {
-		sprite->SetSprite(m_sprite);
-	}*/
 }
 
 void IItem::ButtonSpriteMove(CVector3 diff, CVector3 position) 
