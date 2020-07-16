@@ -44,8 +44,9 @@ public:
 	/// <param name="sprite">スプライトレンダー。</param>
 	/// <param name="diff">プレイヤーとアイテムとの距離。</param>
 	void SpriteMove(SpriteRender* sprite, CVector3 diff);
-	SpriteRender* ButtonSpriteLoad(SpriteRender* sprite);
-	void ButtonSpriteMove(SpriteRender* sprite, CVector3 diff, CVector3 position);
+	//void ButtonSpriteLoad(SpriteRender* sprite);
+	void ButtonSpriteLoad();
+	void ButtonSpriteMove(CVector3 diff, CVector3 position);
 	
 	/// <summary>
 	/// m_isFinishedMoveを取得。
@@ -92,8 +93,11 @@ private:
 		std::wstring,
 		std::unique_ptr<SpriteRender>
 	>	m_itemSpriteMap;
-	static std::unique_ptr<Sprite>	m_sprite;
+	static Sprite	m_sprite;
 	static bool		m_isCreateSprite;
+
+	//Bボタン関係。
+	SpriteRender*		m_buttonSprite = nullptr;
 	CVector4		m_model2Dpos = CVector4::Black();		//3Dモデルを2Dの座標に変換した座標。
 
 };

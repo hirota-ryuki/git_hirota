@@ -17,28 +17,28 @@ void DebugWireframe::Prepare()
 	//構造体
 	//Description 意味:説明
 	D3D11_BUFFER_DESC desc{};
-	//使い方　読み方:ゆぅさぁじ
+	//使い方　
 	desc.Usage = D3D11_USAGE_DEFAULT;
-	//サイズ 読み方:バイトウィズ
+	//サイズ 
 	desc.ByteWidth = sizeof(Vertex) * 2;
 	//頂点用にする
 	desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	//0はCPUからアクセスできない。
-	//0なら書かなくって良い。
+	//0なら書かなくて良い。
 	desc.CPUAccessFlags = 0;
 	//仕上げ
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&desc, nullptr, &m_vertexBuffer);
-	////頂点終わりッッッ！！！////
+	////頂点終了////
 	
-	////定数「バッファ////」
+	////定数バッファ////
 	//ビュー行列とプロジェクション行列を送る用
-	//サイズ 読み方:バイトウィズ
+	//サイズ 
 	desc.ByteWidth = sizeof(CMatrix);
 	//定数（CONSTANT）用にする
 	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	//仕上げ
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&desc, nullptr, &m_constantBuffer);
-	////定数終わりッッッ！！！////
+	////定数終了////
 	
 	//シェーダーの設定
 	//wchar_tじゃないからLはいらない

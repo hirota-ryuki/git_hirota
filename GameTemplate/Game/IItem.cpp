@@ -6,7 +6,7 @@ std::unordered_map<
 	std::wstring,
 	std::unique_ptr<SpriteRender>
 > IItem::m_itemSpriteMap;
-std::unique_ptr<Sprite>	m_sprite;
+Sprite	IItem::m_sprite;
 bool	IItem::m_isCreateSprite = false;
 
 IItem::IItem()
@@ -15,6 +15,7 @@ IItem::IItem()
 
 IItem::~IItem()
 {
+	DeleteGO(m_buttonSprite);
 }
 
 bool IItem::IsGetItem(CVector3 diff)
@@ -54,32 +55,35 @@ SpriteRender* IItem::SpriteLoad(const wchar_t* filePath, float w, float h)
 	return sprite;
 }
 
-SpriteRender* IItem::ButtonSpriteLoad(SpriteRender * sprite)
+void IItem::ButtonSpriteLoad()
 {
+	m_buttonSprite = NewGO<SpriteRender>(GOPrio_Sprite,"buttonsprite");
+	m_buttonSprite->Init(L"sprite/item/button.dds", 50.0f, 50.0f);
+
+	/*↓Sprite m_spriteを共通にしたい場合。
 	if (!m_isCreateSprite) {
 		sprite->Init(L"sprite/item/button.dds", 50.0f, 50.0f);
 		m_sprite = sprite->GetSprite();
 		m_isCreateSprite = true;
 	}
 	else {
-		sprite->SetSprite(std::move(m_sprite));
-	}
-	return sprite;
+		sprite->SetSprite(m_sprite);
+	}*/
 }
 
-void IItem::ButtonSpriteMove(SpriteRender * sprite, CVector3 diff, CVector3 position) 
+void IItem::ButtonSpriteMove(CVector3 diff, CVector3 position) 
 {
-	if (diff.Length() < 500.f) { //距離が1000以下になったら。
+	if (diff.Length() < 500.f) { //距離が500以下になったら。
 		m_model2Dpos = { position.x, position.y, position.z, 1.0f };
 		g_camera3D.GetViewMatrix().Mul(m_model2Dpos);
 		g_camera3D.GetProjectionMatrix().Mul(m_model2Dpos);
 		m_model2Dpos.x /= m_model2Dpos.w;
 		m_model2Dpos.y /= m_model2Dpos.w;
-		sprite->SetPos({ m_model2Dpos.x*FRAME_BUFFER_W / 2 * -1,m_model2Dpos.y*FRAME_BUFFER_H / 2 });
-		sprite->ActiveMode(true);
+		m_buttonSprite->SetPos({ m_model2Dpos.x*FRAME_BUFFER_W / 2 * -1,m_model2Dpos.y*FRAME_BUFFER_H / 2 });
+		m_buttonSprite->ActiveMode(true);
 	}
 	else {
-		sprite->ActiveMode(false);
+		m_buttonSprite->ActiveMode(false);
 	}
 }
 
@@ -119,7 +123,7 @@ void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 	//プレイヤーがアイテムの近くにいる時。
 	case enState_stopPlayer:
 		//プレイヤーがアイテムから離れたら。
-		if (diff.Length() >= 100.0f) {
+		if (diff.Length() >= 100.0f || m_isGetItem) {
 			//次のステップに移行。
 			m_state = enState_farPlayer;
 		}

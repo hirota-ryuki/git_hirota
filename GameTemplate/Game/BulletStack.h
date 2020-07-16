@@ -50,12 +50,12 @@ private:
 	float				m_spec = 5.0f;
 	CVector3			m_ambientLight = CVector3::Zero();
 
-	//ポップアップ画像関係。
+	//アイテム情報関係。
 	const int			ADD_BULLET_STACK = 10;					//落ちている弾薬の数。		
+	bool				m_isAddBullet = false;					//銃弾が追加されたかどうか。
+
+	//ポップアップ画像関係。
 	SpriteRender*		m_sprite = nullptr;
 	CVector2			m_spritePos = FRAME_OUT_POS;
-
-	SpriteRender*		m_spriteA = nullptr;
-	CVector4			m_model2Dpos = CVector4::Black();		//3Dモデルを2Dの座標に変換した座標。
 };
 
