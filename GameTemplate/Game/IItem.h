@@ -44,7 +44,6 @@ public:
 	/// <param name="sprite">スプライトレンダー。</param>
 	/// <param name="diff">プレイヤーとアイテムとの距離。</param>
 	void SpriteMove(SpriteRender* sprite, CVector3 diff);
-	//void ButtonSpriteLoad(SpriteRender* sprite);
 	void ButtonSpriteLoad();
 	void ButtonSpriteMove(CVector3 diff, CVector3 position);
 	

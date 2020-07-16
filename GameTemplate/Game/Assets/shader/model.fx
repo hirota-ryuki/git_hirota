@@ -199,7 +199,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 {
 	//albedoテクスチャからカラーをフェッチする。
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
-/*
+
 	//法線を計算する。
 	float3 normal = 0;
 	if(isHasNormalMap == 1){
@@ -216,7 +216,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 		//ない。
 		normal = In.Normal;
 	}
-*/
+
 	//ディレクションライトの拡散反射光を計算する。
 	float3 lig = 0.f;
 	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {

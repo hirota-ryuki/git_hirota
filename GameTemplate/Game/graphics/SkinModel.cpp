@@ -202,7 +202,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		vsCb.isHasNormalMap = false;
 	}
 	//スペキュラマップを使用するかどうかのフラグを送る。
-	if (m_normalMapSRV != nullptr) {
+	if (m_specMapSRV != nullptr) {
 		vsCb.isHasSpecMap = true;
 	}
 	else {

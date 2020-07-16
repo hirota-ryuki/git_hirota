@@ -19,7 +19,7 @@ bool BulletStack::Start()
 	//弾薬。
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
 	m_model->Init(L"modelData/bulletstack/bulletstack.cmo");
-	m_model->InitNormalMap(L"modelData/bulletstackd/Normal.dds");
+	m_model->InitNormalMap(L"modelData/bulletstack/Normal.dds");
 	m_model->InitSpecMap(L"modelData/bulletstack/Metalness.dds");
 	m_model->SetData(m_position, m_rotation);
 	m_model->SetDirectionLightDirection(m_directionLightDirection);
@@ -28,10 +28,8 @@ bool BulletStack::Start()
 	m_model->SetAmbientLight(m_ambientLight);
 	IItem::SetName(L"BulletStack");
 
-	m_sprite = IItem::SpriteLoad(L"sprite/item/item_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
-	/*m_buttonSprite = NewGO<SpriteRender>(GOPrio_Sprite);
-	m_buttonSprite->Init(L"sprite/item/button.dds", 50.0f, 50.0f);
-	*/IItem::ButtonSpriteLoad();
+	/*m_sprite = IItem::SpriteLoad(L"sprite/item/magazine_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
+	IItem::ButtonSpriteLoad();*/
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
@@ -49,10 +47,10 @@ void BulletStack::Update()
 	m_model->SetRot(m_rotation);
 	m_model->UpdateWorldMatrix();
 
-	CVector3 diff = m_player->GetPos() - m_position;
+	/*CVector3 diff = m_player->GetPos() - m_position;
 	IItem::SpriteMove(m_sprite, diff);
 	GettingItem(IItem::IsGetItem(diff));
-	IItem::ButtonSpriteMove(diff, m_position);
+	IItem::ButtonSpriteMove(diff, m_position);*/
 }
 
 void BulletStack::GettingItem(bool isGetItem)
