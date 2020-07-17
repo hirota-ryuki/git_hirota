@@ -130,6 +130,7 @@ private:
 		std::wstring,
 		SpriteRender*
 	>	m_itemSpriteMap;
+	static bool		m_
 	
 	//Bƒ{ƒ^ƒ“ŠÖŒWB
 	SpriteRender*	m_buttonSprite = nullptr;

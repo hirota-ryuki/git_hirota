@@ -10,7 +10,7 @@
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	//メモ
-	//シャドウマップはいつも一つ！シングルトン
+	//シャドウマップはシングルトン
 	//順番↓
 	//Update->シャドウマップのDraw->Draw
 

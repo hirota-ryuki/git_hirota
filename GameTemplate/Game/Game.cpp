@@ -34,7 +34,6 @@ Game::Game()
 
 Game::~Game()
 {	
-	//
 	m_game = nullptr;
 }
 
@@ -162,14 +161,14 @@ bool Game::Start()
 	//Mapの構築。
 	m_map = NewGO<Map>(GOPrio_Defalut);
 	
-	////ボールを構築。
-	//for (auto& objData : ballObjDatas) {
-	//	m_ball = NewGO<Ball>(GOPrio_Defalut, "ball");
-	//	//配置情報から座標と回転をステージに渡す。
-	//	m_ball->SetPos(objData.position);
-	//	m_ball->SetRot(objData.rotation);
-	//	//m_ball->SetNomber(_wtoi(&objData.name[11]));
-	//}
+	//ボールを構築。
+	for (auto& objData : ballObjDatas) {
+		m_ball = NewGO<Ball>(GOPrio_Defalut, "ball");
+		//配置情報から座標と回転をステージに渡す。
+		m_ball->SetPos(objData.position);
+		m_ball->SetRot(objData.rotation);
+		//m_ball->SetNomber(_wtoi(&objData.name[11]));
+	}
 	
 	//弾薬を構築。
 	for (auto& objData : bulletstackObjDatas) {
