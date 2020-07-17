@@ -228,10 +228,10 @@ private:
 	//回復関係。
 	bool			m_isDamage = false;			//ダメージを受けたかどうか。
 	int 			m_healTimer = 0;			//回復するまでのタイマー。
-	int				m_healStartTime = 200;		//回復するまでの時間。
+	const int		m_healStartTime = 600;		//回復するまでの時間。
 	int 			m_heaIntervalTimer = 0;		//回復と回復の間のタイマー。徐々に回復するようにする。
 	int				m_healIntervalTime = 30;	//回復と回復の間の時間。徐々に回復するようにする。
 	//ステータス関係。
-	float			m_hp = 5.0f;		//体力。
+	float			m_hp = 0.0f;		//体力。
 	const float		m_maxhp = 5.0f;		//最大体力。
 };

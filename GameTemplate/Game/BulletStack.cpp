@@ -12,7 +12,6 @@ BulletStack::~BulletStack()
 void BulletStack::OnDestroy()
 {
 	DeleteGO(m_model);
-	DeleteGO(m_sprite);
 	IItem::Destroy();
 }
 
@@ -49,7 +48,7 @@ void BulletStack::Update()
 	m_model->SetRot(m_rotation);
 	m_model->UpdateWorldMatrix();
 
-	IItem::ItemCommonProcessing(m_sprite, m_position);
+	IItem::ItemCommonProcessing(m_sprite, m_position, m_model);
 }
 
 void BulletStack::OnGet()

@@ -5,10 +5,11 @@ const float			ITEM_SPRITE_W = 270.0f;
 const float			ITEM_SPRITE_H = 130.0f;
 const CVector2		FRAME_IN_POS =  { -(FRAME_BUFFER_W / 2 - ITEM_SPRITE_W / 2),-200.0f };
 const CVector2		FRAME_OUT_POS = { -(FRAME_BUFFER_W / 2 + ITEM_SPRITE_W / 2),-200.0f };
-const float			AMOUNT_OF_CHANGE = 5.0f;					//画像が移動する量、変化量。
+const float			AMOUNT_OF_CHANGE = 10.0f;					//画像が移動する量、変化量。
 const float			B_BUTTON_SIZE    = 40.0f;					//Bボタンのサイズ。
 const float			ENEMY_AND_PLAYER_DISTANCE_BUTTON = 500.0f;	//ボタンを表示する、敵とプレイヤーの距離の範囲。
 const float			ENEMY_AND_PLAYER_DISTANCE_MOVE   = 100.0f;	//画像を動かす、敵とプレイヤーの距離の範囲。
+const int			TIME_TO_STOP = 125;							//画像が止まっている時間。
 
 class Player;
 class Game;
@@ -46,7 +47,7 @@ public:
 	/// </summary>
 	/// <param name="sprite"></param>
 	/// <param name="pos"></param>
-	void ItemCommonProcessing(SpriteRender* sprite, CVector3 pos);
+	void ItemCommonProcessing(SpriteRender* sprite, CVector3 pos, SkinModelRender* model);
 	
 	/// <summary>
 	/// アイテムをゲットしたときの処理を自由に書ける関数。
@@ -69,7 +70,6 @@ public:
 		return m_name;
 	}
 
-
 	/// <summary>
 	/// 解放。
 	/// static関数はincrudeしていたら
@@ -87,7 +87,7 @@ private:
 	/// <summary>
 	/// ゲットされた時の共通処理。
 	/// </summary>
-	void GettingItem(bool isGetItem);
+	void GettingItem(bool isGetItem, SpriteRender* sprite, CVector3 diff, SkinModelRender* model);
 
 	/// <summary>
 	/// 画像を動かす関数。
@@ -116,18 +116,19 @@ private:
 	CVector2	m_movedPos = CVector2::Zero();				//1フレームで動いた後の座標。
 	bool		m_isNearPlayer = false;						//プレイヤーが近くにいるかどうか。
 	bool		m_isFinishedMove = false;					//動き終わったかどうか。
+	int			m_stopCount = 0;							//止まっている時間をカウント。
 	//ステート。
 	enum State {
-		enState_nearPlayer,
-		enState_stopPlayer,
-		enState_farPlayer
+		enState_startMove,
+		enState_stopMove,
+		enState_endMove
 	};
-	State		m_state = enState_nearPlayer;
+	State		m_state = enState_startMove;
 	
 	//unordered_mapは順番がめちゃくちゃになるがmapより速い。
 	static std::unordered_map<
 		std::wstring,
-		std::unique_ptr<SpriteRender>
+		SpriteRender*
 	>	m_itemSpriteMap;
 	
 	//Bボタン関係。

@@ -42,7 +42,7 @@ bool Ball::Start()
 
 void Ball::Update()
 {
-	IItem::ItemCommonProcessing(m_sprite, m_position);
+	IItem::ItemCommonProcessing(m_sprite, m_position, m_model);
 }
 
 void Ball::OnGet()

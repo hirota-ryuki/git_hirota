@@ -6,7 +6,7 @@
 //staticで定義したならcppで実体を書く必要がある。
 std::unordered_map<
 	std::wstring,
-	std::unique_ptr<SpriteRender>
+	SpriteRender*
 > IItem::m_itemSpriteMap;
 
 IItem::IItem()
@@ -23,13 +23,10 @@ void IItem::Destroy()
 	DeleteGO(m_buttonSprite);
 }
 
-void IItem::ItemCommonProcessing(SpriteRender * sprite, CVector3 pos)
+void IItem::ItemCommonProcessing(SpriteRender * sprite, CVector3 pos, SkinModelRender* model)
 {
-	int a;
 	CVector3 diff = m_player->GetPos() - pos;
-	//CVector3 diff = CVector3::Zero();
-	IItem::SpriteMove(sprite, diff);
-	IItem::GettingItem(IItem::IsGetItem(diff));
+	IItem::GettingItem(IItem::IsGetItem(diff), sprite, diff, model);
 	IItem::ButtonSpriteMove(diff, pos);
 }
 
@@ -49,15 +46,17 @@ bool IItem::IsGetItem(CVector3 diff)
 	return m_isGetItem;
 }
 
-void IItem::GettingItem(bool isGetItem)
+void IItem::GettingItem(bool isGetItem, SpriteRender* sprite, CVector3 diff, SkinModelRender* model)
 {
 	//アイテムをゲットしていたら。
 	if (isGetItem) {
 		if (!m_isOnce) {
+			model->ActiveMode(false);
+			m_buttonSprite->ActiveMode(false);
 			OnGet();
 			m_isOnce = true;
 		}
-		
+		IItem::SpriteMove(sprite, diff);
 		//画像の動きが終わったか。
 		if (m_isFinishedMove) {
 			//このインスタンスを消す。
@@ -78,11 +77,10 @@ SpriteRender* IItem::SpriteLoad(const wchar_t* filePath, float w, float h)
 		spriteData->Init(filePath, w, h);
 		spriteData->SetPos(FRAME_OUT_POS);
 		sprite = spriteData;
-		//m_itemSpriteMap.emplace(filePath, spriteData);
+		m_itemSpriteMap.emplace(filePath, spriteData);
 	}
 	else {
-		/*auto mapData = it->second.get();
-		sprite = mapData;*/
+		sprite = it->second;
 	}
 	return sprite;
 }
@@ -104,18 +102,26 @@ void IItem::ButtonSpriteLoad()
 
 void IItem::ButtonSpriteMove(CVector3 diff, CVector3 pos) 
 {
-	if (diff.Length() < ENEMY_AND_PLAYER_DISTANCE_BUTTON) { //距離が500以下になったら。
-		//3D座標から2D座標への変換。
-		m_model2Dpos = { pos.x, pos.y, pos.z, 1.0f };
-		g_camera3D.GetViewMatrix().Mul(m_model2Dpos);
-		g_camera3D.GetProjectionMatrix().Mul(m_model2Dpos);
-		m_model2Dpos.x /= m_model2Dpos.w;
-		m_model2Dpos.y /= m_model2Dpos.w;
-		m_buttonSprite->SetPos({ m_model2Dpos.x*FRAME_BUFFER_W / 2 * -1,m_model2Dpos.y*FRAME_BUFFER_H / 2 });
-		m_buttonSprite->ActiveMode(true);
-	}
-	else {
-		m_buttonSprite->ActiveMode(false);
+	if (!m_isGetItem) {
+		if (diff.Length() < ENEMY_AND_PLAYER_DISTANCE_BUTTON) { //距離が500以下になったら。
+			//3D座標から2D座標への変換。
+			m_model2Dpos = { pos.x, pos.y, pos.z, 1.0f };
+			g_camera3D.GetViewMatrix().Mul(m_model2Dpos);
+			g_camera3D.GetProjectionMatrix().Mul(m_model2Dpos);
+			m_model2Dpos.x /= m_model2Dpos.w;
+			m_model2Dpos.y /= m_model2Dpos.w;
+			m_buttonSprite->SetPos({ m_model2Dpos.x*FRAME_BUFFER_W / 2 * -1,m_model2Dpos.y*FRAME_BUFFER_H / 2 });
+			//オブジェクトがプレイヤーの後ろ側に来たら表示しない。
+			if (m_model2Dpos.w >= 0.0f) {
+				m_buttonSprite->ActiveMode(true);
+			}
+			else {
+				m_buttonSprite->ActiveMode(false);
+			}
+		}
+		else {
+			m_buttonSprite->ActiveMode(false);
+		}
 	}
 }
 
@@ -123,6 +129,10 @@ void IItem::ButtonSpriteMove(CVector3 diff, CVector3 pos)
 //cppに書かれてあればok
 void IItem::Release()
 {
+	for (auto itr = m_itemSpriteMap.begin(); itr != m_itemSpriteMap.end(); itr++) 
+	{
+		DeleteGO(itr->second);
+	}
 	//mapを空にする。
 	m_itemSpriteMap.clear();
 }
@@ -130,8 +140,8 @@ void IItem::Release()
 void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 {
 	switch (m_state) {
-	//プレイヤーが近くに来た時。
-	case enState_nearPlayer:
+	//画像が動き始める時。
+	case enState_startMove:
 		//プレイヤーとの距離が近くなったら。
 		if (diff.Length() < ENEMY_AND_PLAYER_DISTANCE_MOVE) {
 			//フラグを立てる。
@@ -147,21 +157,22 @@ void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 			//最終地点に達したら。
 			if (sprite->GetPos().x >= FRAME_IN_POS.x) {
 				//次のステップに移行。
-				m_state = enState_stopPlayer;
+				m_state = enState_stopMove;
 				m_isNearPlayer = false;
 			}
 		}
 		break;
-	//プレイヤーがアイテムの近くにいる時。
-	case enState_stopPlayer:
-		//プレイヤーがアイテムから離れたら。
-		if (diff.Length() >= ENEMY_AND_PLAYER_DISTANCE_MOVE || m_isGetItem) {
+	//画像が止まっている時。
+	case enState_stopMove:
+		m_stopCount++;
+		//時間がたったら。
+		if (m_stopCount > TIME_TO_STOP) {
 			//次のステップに移行。
-			m_state = enState_farPlayer;
+			m_state = enState_endMove;
 		}
 		break;
-	//プレイヤーがアイテムから離れた時。
-	case enState_farPlayer:
+	//画像が引いていく時。
+	case enState_endMove:
 		//画像を右に動かす。
 		m_movedPos.x = sprite->GetPos().x - AMOUNT_OF_CHANGE;
 		m_movedPos.y = FRAME_OUT_POS.y;
@@ -169,7 +180,7 @@ void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 		//最終地点に達したら。
 		if (sprite->GetPos().x <= FRAME_OUT_POS.x) {
 			//最初のステップに戻る。
-			m_state = enState_nearPlayer;
+			m_state = enState_startMove;
 			m_isFinishedMove = true;
 		}
 		break;

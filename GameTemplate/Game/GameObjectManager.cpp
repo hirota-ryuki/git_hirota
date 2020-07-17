@@ -58,8 +58,11 @@ void GameObjectManager::StartAndUpdate()
 				}
 			}
 			else {
-				go->Update();
+				if (!go->m_isDelete) {
+					go->Update();
+				}
 			}
+				
 		}
 	}
 	//âeÅB
@@ -162,7 +165,9 @@ void GameObjectManager::ForwordRender()
 	//ÉhÉçÅ[
 	for (int i = 0; i < GOPrio_num; i++) {
 		for (auto go : m_goList[i]) {
-			go->Draw();
+			if (!go->m_isDelete) {
+				go->Draw();
+			}
 		}
 	}
 }
@@ -200,7 +205,9 @@ void GameObjectManager::HudRender()
 {
 	for (int i = 0; i < GOPrio_num; i++) {
 		for (auto go : m_goList[i]) {
-			go->DrawHUD();
+			if (!go->m_isDelete) {
+				go->DrawHUD();
+			}
 		}
 	}
 }
@@ -209,7 +216,9 @@ void GameObjectManager::FontRender()
 {
 	for (int i = 0; i < GOPrio_num; i++) {
 		for (auto go : m_goList[i]) {
-			go->DrawFont();
+			if (!go->m_isDelete) {
+				go->DrawFont();
+			}
 		}
 	}
 }

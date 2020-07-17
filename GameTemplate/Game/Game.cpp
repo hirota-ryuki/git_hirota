@@ -34,12 +34,12 @@ Game::Game()
 
 Game::~Game()
 {	
+	//
 	m_game = nullptr;
 }
 
 void Game::OnDestroy()
 {
-	IItem::Release();
 	DeleteGOs("enemy");
 	DeleteGO(m_goal);
 	DeleteGO(m_gamecamera);
@@ -51,8 +51,10 @@ void Game::OnDestroy()
 	DeleteGO(m_ui);
 	DeleteGO(m_map);
 	DeleteGO(m_rockdoor);
+	
 	DeleteGOs("bulletstack");
 	DeleteGOs("ball");
+	IItem::Release();
 }
 
 bool Game::Start()
@@ -146,28 +148,28 @@ bool Game::Start()
 	m_goal->SetPos(goalObjData.position);
 	m_goal->SetRot(goalObjData.rotation);
 
-	//ゾンビを構築。
-	for (auto& objData : zombieObjDatas) {
-		m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
-		//配置情報から座標と回転をステージに渡す。
-		m_zombie->SetPos(objData.position);
-		m_zombie->SetRot(objData.rotation);
-	}
-	
+	////ゾンビを構築。
+	//for (auto& objData : zombieObjDatas) {
+	//	m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
+	//	//配置情報から座標と回転をステージに渡す。
+	//	m_zombie->SetPos(objData.position);
+	//	m_zombie->SetRot(objData.rotation);
+	//}
+	//
 	//UIの構築。
 	m_ui = NewGO<UI>(GOPrio_Defalut);
 	
 	//Mapの構築。
 	m_map = NewGO<Map>(GOPrio_Defalut);
 	
-	//ボールを構築。
-	for (auto& objData : ballObjDatas) {
-		m_ball = NewGO<Ball>(GOPrio_Defalut, "ball");
-		//配置情報から座標と回転をステージに渡す。
-		m_ball->SetPos(objData.position);
-		m_ball->SetRot(objData.rotation);
-		//m_ball->SetNomber(_wtoi(&objData.name[11]));
-	}
+	////ボールを構築。
+	//for (auto& objData : ballObjDatas) {
+	//	m_ball = NewGO<Ball>(GOPrio_Defalut, "ball");
+	//	//配置情報から座標と回転をステージに渡す。
+	//	m_ball->SetPos(objData.position);
+	//	m_ball->SetRot(objData.rotation);
+	//	//m_ball->SetNomber(_wtoi(&objData.name[11]));
+	//}
 	
 	//弾薬を構築。
 	for (auto& objData : bulletstackObjDatas) {
