@@ -28,7 +28,7 @@ bool Ball::Start()
 	m_model->SetData(m_position, m_rotation);
 	IItem::SetName(L"Ball");
 
-	m_sprite = IItem::SpriteLoad(L"sprite/item/magazine_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
+	m_sprite = IItem::SpriteLoad(L"sprite/item/item_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
 	IItem::IItemInit();
 
 	//ゲームのインスタンスを取得。

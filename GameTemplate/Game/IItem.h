@@ -5,7 +5,10 @@ const float			ITEM_SPRITE_W = 270.0f;
 const float			ITEM_SPRITE_H = 130.0f;
 const CVector2		FRAME_IN_POS =  { -(FRAME_BUFFER_W / 2 - ITEM_SPRITE_W / 2),-200.0f };
 const CVector2		FRAME_OUT_POS = { -(FRAME_BUFFER_W / 2 + ITEM_SPRITE_W / 2),-200.0f };
-const float			AMOUNT_OF_CHANGE = 5.0f;				//画像が移動する量、変化量。
+const float			AMOUNT_OF_CHANGE = 5.0f;					//画像が移動する量、変化量。
+const float			B_BUTTON_SIZE    = 25.0f;					//Bボタンのサイズ。
+const float			ENEMY_AND_PLAYER_DISTANCE_BUTTON = 500.0f;	//ボタンを表示する、敵とプレイヤーの距離の範囲。
+const float			ENEMY_AND_PLAYER_DISTANCE_MOVE   = 100.0f;	//画像を動かす、敵とプレイヤーの距離の範囲。
 
 class Player;
 class Game;

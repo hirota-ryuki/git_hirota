@@ -29,7 +29,7 @@ void IItem::ItemCommonProcessing(SpriteRender * sprite, CVector3 pos)
 bool IItem::IsGetItem(CVector3 diff)
 {
 	//距離が近かったら。
-	if (diff.Length() < 100.0f) {
+	if (diff.Length() < ENEMY_AND_PLAYER_DISTANCE_MOVE) {
 		//Bボタンを押したら。
 		if (g_pad[0].IsTrigger(enButtonB)) {
 			//ワンショット再生のSE。
@@ -92,12 +92,12 @@ void IItem::IItemInit()
 void IItem::ButtonSpriteLoad()
 {
 	m_buttonSprite = NewGO<SpriteRender>(GOPrio_Sprite,"buttonsprite");
-	m_buttonSprite->Init(L"sprite/item/button.dds", 50.0f, 50.0f);
+	m_buttonSprite->Init(L"sprite/item/button.dds", B_BUTTON_SIZE, B_BUTTON_SIZE);
 }
 
 void IItem::ButtonSpriteMove(CVector3 diff, CVector3 position) 
 {
-	if (diff.Length() < 500.f) { //距離が500以下になったら。
+	if (diff.Length() < ENEMY_AND_PLAYER_DISTANCE_BUTTON) { //距離が500以下になったら。
 		//3D座標から2D座標への変換。
 		m_model2Dpos = { position.x, position.y, position.z, 1.0f };
 		g_camera3D.GetViewMatrix().Mul(m_model2Dpos);
@@ -126,7 +126,7 @@ void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 	//プレイヤーが近くに来た時。
 	case enState_nearPlayer:
 		//プレイヤーとの距離が近くなったら。
-		if (diff.Length() < 100.0f) {
+		if (diff.Length() < ENEMY_AND_PLAYER_DISTANCE_MOVE) {
 			//フラグを立てる。
 			m_isNearPlayer = true;
 			m_isFinishedMove = false;
@@ -148,7 +148,7 @@ void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 	//プレイヤーがアイテムの近くにいる時。
 	case enState_stopPlayer:
 		//プレイヤーがアイテムから離れたら。
-		if (diff.Length() >= 100.0f || m_isGetItem) {
+		if (diff.Length() >= ENEMY_AND_PLAYER_DISTANCE_MOVE || m_isGetItem) {
 			//次のステップに移行。
 			m_state = enState_farPlayer;
 		}
