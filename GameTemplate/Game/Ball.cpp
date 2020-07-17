@@ -14,6 +14,7 @@ Ball::~Ball()
 void Ball::OnDestroy()
 {
 	DeleteGO(m_model);
+	IItem::Destroy();
 }
 
 bool Ball::Start()

@@ -6,6 +6,7 @@
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
+
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	//メモ
@@ -24,9 +25,13 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D.SetTarget({ 0.0f, 100.0f, 0.0f });
 	g_camera3D.SetFar(10000.0f);
 	
+#ifdef CREATE_MODE
+	//Gameクラス
+	NewGO<Game>(GOPrio_Defalut);	
+#else
 	//Titleクラス
 	NewGO<Title>(GOPrio_Defalut);
-	//NewGO<Game>(GOPrio_Defalut);
+#endif // CREATE_MODE
 
 	//デバッグモードのオンオフ
 	bool m_isDebug = false;

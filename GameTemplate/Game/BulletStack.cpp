@@ -12,6 +12,8 @@ BulletStack::~BulletStack()
 void BulletStack::OnDestroy()
 {
 	DeleteGO(m_model);
+	DeleteGO(m_sprite);
+	IItem::Destroy();
 }
 
 bool BulletStack::Start()

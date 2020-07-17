@@ -15,12 +15,19 @@ IItem::IItem()
 
 IItem::~IItem()
 {
+	
+}
+
+void IItem::Destroy()
+{
 	DeleteGO(m_buttonSprite);
 }
 
 void IItem::ItemCommonProcessing(SpriteRender * sprite, CVector3 pos)
 {
+	int a;
 	CVector3 diff = m_player->GetPos() - pos;
+	//CVector3 diff = CVector3::Zero();
 	IItem::SpriteMove(sprite, diff);
 	IItem::GettingItem(IItem::IsGetItem(diff));
 	IItem::ButtonSpriteMove(diff, pos);
@@ -71,11 +78,11 @@ SpriteRender* IItem::SpriteLoad(const wchar_t* filePath, float w, float h)
 		spriteData->Init(filePath, w, h);
 		spriteData->SetPos(FRAME_OUT_POS);
 		sprite = spriteData;
-		m_itemSpriteMap.emplace(filePath, spriteData);
+		//m_itemSpriteMap.emplace(filePath, spriteData);
 	}
 	else {
-		auto mapData = it->second.get();
-		sprite = mapData;
+		/*auto mapData = it->second.get();
+		sprite = mapData;*/
 	}
 	return sprite;
 }
@@ -95,11 +102,11 @@ void IItem::ButtonSpriteLoad()
 	m_buttonSprite->Init(L"sprite/item/button.dds", B_BUTTON_SIZE, B_BUTTON_SIZE);
 }
 
-void IItem::ButtonSpriteMove(CVector3 diff, CVector3 position) 
+void IItem::ButtonSpriteMove(CVector3 diff, CVector3 pos) 
 {
 	if (diff.Length() < ENEMY_AND_PLAYER_DISTANCE_BUTTON) { //距離が500以下になったら。
 		//3D座標から2D座標への変換。
-		m_model2Dpos = { position.x, position.y, position.z, 1.0f };
+		m_model2Dpos = { pos.x, pos.y, pos.z, 1.0f };
 		g_camera3D.GetViewMatrix().Mul(m_model2Dpos);
 		g_camera3D.GetProjectionMatrix().Mul(m_model2Dpos);
 		m_model2Dpos.x /= m_model2Dpos.w;

@@ -15,7 +15,6 @@
 #include "UI.h"
 #include "Map.h"
 
-
 //静的メンバ変数を定義する。
 Game* Game::m_game = nullptr;
 
@@ -189,8 +188,11 @@ bool Game::Start()
 	//ポーズを構築。
 	m_pose = NewGO<Pose>(GOPrio_Defalut);
 	
+#ifdef CREATE_MODE
+#else
 	//オープニングを構築。
 	m_op = NewGO<Opening>(GOPrio_Defalut);
+#endif // CREATE_MODE	
 
 	//BGM再生のSE。
 	CSoundSource* m_bgm = new CSoundSource;
