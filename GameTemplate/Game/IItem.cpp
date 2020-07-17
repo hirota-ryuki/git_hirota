@@ -8,6 +8,7 @@ std::unordered_map<
 	std::wstring,
 	SpriteRender*
 > IItem::m_itemSpriteMap;
+bool	IItem::m_isMove = false;
 
 IItem::IItem()
 {
@@ -140,16 +141,18 @@ void IItem::Release()
 void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 {
 	switch (m_state) {
-	//画像が動き始める時。
-	case enState_startMove:
-		//プレイヤーとの距離が近くなったら。
-		if (diff.Length() < ENEMY_AND_PLAYER_DISTANCE_MOVE) {
-			//フラグを立てる。
-			m_isNearPlayer = true;
-			m_isFinishedMove = false;
+	//画像を動かせる状態になるのを待っている状態。
+	case enState_waitMove:
+		//画像を動かしているインスタンスがなかったら。
+		if (!m_isMove) {
+			//画像が動いている状態にする。
+			m_isMove = true;
+			//次のステップに移行。
+			m_state = enState_startMove;
 		}
-		//フラグが立っていたら。
-		if (m_isNearPlayer) {
+		break;
+	//画像が動き始めた状態。
+	case enState_startMove:
 			//画像を左に動かす。
 			m_movedPos.x = sprite->GetPos().x + AMOUNT_OF_CHANGE;
 			m_movedPos.y = FRAME_IN_POS.y;
@@ -158,11 +161,9 @@ void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 			if (sprite->GetPos().x >= FRAME_IN_POS.x) {
 				//次のステップに移行。
 				m_state = enState_stopMove;
-				m_isNearPlayer = false;
 			}
-		}
 		break;
-	//画像が止まっている時。
+	//画像が止まっている状態。
 	case enState_stopMove:
 		m_stopCount++;
 		//時間がたったら。
@@ -171,7 +172,7 @@ void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 			m_state = enState_endMove;
 		}
 		break;
-	//画像が引いていく時。
+	//画像が戻っていく状態。
 	case enState_endMove:
 		//画像を右に動かす。
 		m_movedPos.x = sprite->GetPos().x - AMOUNT_OF_CHANGE;
@@ -179,9 +180,10 @@ void IItem::SpriteMove(SpriteRender* sprite, CVector3 diff)
 		sprite->SetPos(m_movedPos);
 		//最終地点に達したら。
 		if (sprite->GetPos().x <= FRAME_OUT_POS.x) {
-			//最初のステップに戻る。
-			m_state = enState_startMove;
+			//画像の移動は完了。
 			m_isFinishedMove = true;
+			//画像が動いていない状態にする。
+			m_isMove = false;
 		}
 		break;
 	default:

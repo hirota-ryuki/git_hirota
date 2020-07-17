@@ -113,12 +113,14 @@ private:
 	bool		m_isGetItem = false;						//Bボタンが押されたかどうか。
 	
 	//画像の移動関係。
-	CVector2	m_movedPos = CVector2::Zero();				//1フレームで動いた後の座標。
-	bool		m_isNearPlayer = false;						//プレイヤーが近くにいるかどうか。
-	bool		m_isFinishedMove = false;					//動き終わったかどうか。
-	int			m_stopCount = 0;							//止まっている時間をカウント。
+	CVector2		m_movedPos = CVector2::Zero();			//1フレームで動いた後の座標。
+	bool			m_isNearPlayer = false;					//プレイヤーが近くにいるかどうか。
+	bool			m_isFinishedMove = false;				//動き終わったかどうか。
+	static bool		m_isMove;								//動いている最中かどうか。
+	int				m_stopCount = 0;						//止まっている時間をカウント。
 	//ステート。
 	enum State {
+		enState_waitMove,
 		enState_startMove,
 		enState_stopMove,
 		enState_endMove
@@ -130,7 +132,6 @@ private:
 		std::wstring,
 		SpriteRender*
 	>	m_itemSpriteMap;
-	static bool		m_
 	
 	//Bボタン関係。
 	SpriteRender*	m_buttonSprite = nullptr;
