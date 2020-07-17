@@ -125,7 +125,7 @@ private:
 		enState_stopMove,
 		enState_endMove
 	};
-	State		m_state = enState_startMove;
+	State		m_state = enState_waitMove;
 	
 	//unordered_map‚Í‡”Ô‚ª‚ß‚¿‚á‚­‚¿‚á‚É‚È‚é‚ªmap‚æ‚è‘¬‚¢B
 	static std::unordered_map<
