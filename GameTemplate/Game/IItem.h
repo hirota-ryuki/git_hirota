@@ -129,8 +129,8 @@ private:
 	
 	//unordered_mapは順番がめちゃくちゃになるがmapより速い。
 	static std::unordered_map<
-		std::wstring,
-		SpriteRender*
+		std::wstring,			//画像のファイルパス。
+		SpriteRender*			//スプライトレンダー。
 	>	m_itemSpriteMap;
 	
 	//Bボタン関係。

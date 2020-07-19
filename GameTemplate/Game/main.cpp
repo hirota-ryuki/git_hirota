@@ -2,6 +2,7 @@
 #include "system/system.h"
 #include "Title.h"
 #include "Game.h"
+#include "Inventory.h"
 
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
@@ -32,6 +33,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//Titleクラス
 	NewGO<Title>(GOPrio_Defalut);
 #endif // CREATE_MODE
+
+	NewGO<Inventory>(GOPrio_Defalut);
 
 	//デバッグモードのオンオフ
 	bool m_isDebug = false;

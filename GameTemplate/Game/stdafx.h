@@ -56,6 +56,7 @@ const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 #include "SpriteRender.h"
 #include "FontRender.h"
 #include "RenderTarget.h"
+#include "Inventory.h"
 #include "IItem.h"
 #include "Game.h"
 

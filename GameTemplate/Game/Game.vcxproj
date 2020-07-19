@@ -117,6 +117,7 @@
     <ClCompile Include="graphics\posteffect\bloom\GaussianBlur.cpp" />
     <ClCompile Include="graphics\posteffect\PostEffect.cpp" />
     <ClCompile Include="IItem.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapCamera.cpp" />
     <ClCompile Include="Opening.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="graphics\posteffect\bloom\GaussianBlur.h" />
     <ClInclude Include="graphics\posteffect\PostEffect.h" />
     <ClInclude Include="IItem.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapCamera.h" />
     <ClInclude Include="Opening.h" />

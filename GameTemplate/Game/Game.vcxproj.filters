@@ -40,9 +40,6 @@
     <Filter Include="Game\Player">
       <UniqueIdentifier>{e6069f4e-0819-43e1-8657-55347c8ff83d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Pose">
-      <UniqueIdentifier>{7dd33e0c-65eb-49ff-992e-e96d1e64a534}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Result">
       <UniqueIdentifier>{1780fc67-dfc4-4595-ae52-c11e75df0a32}</UniqueIdentifier>
     </Filter>
@@ -168,6 +165,9 @@
     </Filter>
     <Filter Include="Assets\sprite\item">
       <UniqueIdentifier>{e19c20dc-f329-4417-a529-c582bb1b625f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Result\Pose">
+      <UniqueIdentifier>{7dd33e0c-65eb-49ff-992e-e96d1e64a534}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -307,7 +307,7 @@
       <Filter>Engine\sound</Filter>
     </ClCompile>
     <ClCompile Include="Pose.cpp">
-      <Filter>Game\Pose</Filter>
+      <Filter>Game\Result\Pose</Filter>
     </ClCompile>
     <ClCompile Include="Opening.cpp">
       <Filter>Game\OP</Filter>
@@ -381,6 +381,7 @@
     <ClCompile Include="IItem.cpp">
       <Filter>Game\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Inventory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -525,7 +526,7 @@
       <Filter>Engine\sound</Filter>
     </ClInclude>
     <ClInclude Include="Pose.h">
-      <Filter>Game\Pose</Filter>
+      <Filter>Game\Result\Pose</Filter>
     </ClInclude>
     <ClInclude Include="Opening.h">
       <Filter>Game\OP</Filter>
@@ -608,6 +609,7 @@
     <ClInclude Include="IItem.h">
       <Filter>Game\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Inventory.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
