@@ -1,5 +1,7 @@
 #pragma once
 #include "IGameObject.h"
+#include <unordered_map>
+
 //NewGOする必要があるのか検討
 class Inventory :
 	public IGameObject
@@ -13,11 +15,12 @@ public:
 		static Inventory inctance;
 		return inctance;
 	}
-	bool Start() override {};
+	bool Start() override { return true; };
 	void Update() override {};
 
 	/// <summary>
-	/// アイテムの個数を追加する関数。
+	/// アイテムを追加したり、
+	/// 個数の変動を行う関数。
 	/// </summary>
 	/// <param name="name">アイテムの名前。</param>
 	/// <param name="addnum">追加する関数。</param>
@@ -27,10 +30,31 @@ public:
 	/// </summary>
 	/// <returns>アイテムデータ。</returns>
 	std::unordered_map<
-		std::wstring,			//アイテムの名前。
-		int						//アイテムの個数。
-	>* GetItemDataMap() {
-		return &m_itemDataMap;
+		std::wstring,		
+		int					
+	> GetItemDataMap() {
+		return m_itemDataMap;
+	}
+	/// <summary>
+	/// アイテムデータが追加されたどうかを返す関数。
+	/// </summary>
+	/// <returns>m_isAddData</returns>
+	bool GetIsAddData() {
+		return m_isAddData;
+	}
+	/// <summary>
+	/// アイテムの個数が追加されたどうかを返す関数。
+	/// </summary>
+	/// <returns>m_isAddNum</returns>
+	bool GetIsAddNum() {
+		return m_isAddNum;
+	}
+	/// <summary>
+	/// 追加の有無の判定をリセットする関数。
+	/// </summary>
+	void ResetIsAddData() {
+		m_isAddData = false;
+		m_isAddNum = false;
 	}
 private:
 	//アイテムデータ。
@@ -38,6 +62,9 @@ private:
 		std::wstring,			//アイテムの名前。
 		int						//アイテムの個数。
 	>	m_itemDataMap;
+
+	bool	m_isAddData = false;	//アイテムデータが追加されたどうか。
+	bool	m_isAddNum = false;		//アイテムの個数が追加されたどうか。
 };
 
 static inline 	void AddItem(const wchar_t* name, int addnum) {
@@ -45,9 +72,20 @@ static inline 	void AddItem(const wchar_t* name, int addnum) {
 }
 
 static inline std::unordered_map<
-	std::wstring,			//アイテムの名前。
-	int						//アイテムの個数。
->* GetItemDataMap() {
+	std::wstring,			
+	int						
+> GetItemDataMap() {
 	return Inventory::GetInstance().GetItemDataMap();
 }
 
+static inline void ResetIsAddData() {
+	Inventory::GetInstance().ResetIsAddData();
+}
+
+static inline bool GetIsAddData() {
+	return Inventory::GetInstance().GetIsAddData();
+}
+
+static inline bool GetIsAddNum() {
+	return Inventory::GetInstance().GetIsAddNum();
+}

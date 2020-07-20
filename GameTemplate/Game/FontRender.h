@@ -33,6 +33,9 @@ public:
 		}
 
 	}
+	std::wstring GetText() {
+		return m_text;
+	}
 	/*!
 		* @brief	フォントを表示する座標を設定。
 		*@details

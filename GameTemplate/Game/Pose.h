@@ -9,6 +9,12 @@ struct ItemInfo {
 };
 #endif // BAG_MODE
 
+//アイテムのフォントデータ。
+struct ItemFontData {
+	FontRender* nameFR = nullptr;
+	FontRender* numFR = nullptr;
+};
+
 struct FontPos {
 	CVector2	namepos = CVector2::Zero();
 	CVector2	countpos = CVector2::Zero();
@@ -22,6 +28,7 @@ public:
 	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
+	void DrawFontRender();
 #ifdef BAG_MODE
 	/// <summary>
 	/// アイテムを追加する関数。
@@ -49,5 +56,6 @@ private:
 	std::vector<ItemInfo>	m_itemList;					//アイテムのリスト。
 	int						m_totalItemCount = 0;		//総アイテム数。
 #endif // BAG_MODE
+	std::vector<ItemFontData>	m_fontList;
 };
 

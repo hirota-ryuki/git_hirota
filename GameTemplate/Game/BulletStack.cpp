@@ -32,6 +32,8 @@ bool BulletStack::Start()
 	m_sprite = IItem::SpriteLoad(L"sprite/item/magazine_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
 	IItem::IItemInit();
 
+	AddItem(NAME, 24);
+
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。
@@ -55,5 +57,6 @@ void BulletStack::OnGet()
 {
 	//弾薬を増やす。
 	m_player->AddStack(ADD_BULLET_STACK);
+	AddItem(NAME, ADD);
 	m_isAddBullet = true;
 }

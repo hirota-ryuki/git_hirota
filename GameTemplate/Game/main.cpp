@@ -34,7 +34,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	NewGO<Title>(GOPrio_Defalut);
 #endif // CREATE_MODE
 
-	NewGO<Inventory>(GOPrio_Defalut);
+	Inventory::GetInstance();
 
 	//デバッグモードのオンオフ
 	bool m_isDebug = false;

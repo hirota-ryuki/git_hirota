@@ -57,5 +57,9 @@ private:
 	//ポップアップ画像関係。
 	SpriteRender*		m_sprite = nullptr;
 	CVector2			m_spritePos = FRAME_OUT_POS;
+
+	//アイテムデータ。
+	const wchar_t* NAME = L"bulletstack";
+	const int      ADD = 10;
 };
 

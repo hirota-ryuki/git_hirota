@@ -187,6 +187,7 @@ bool Game::Start()
 	m_rockdoor->SetRot(rockdoorObjData.rotation);
 	
 	//ポーズを構築。
+	//アイテムデータ追加の有無を判定するため一番最後に生成。
 	m_pose = NewGO<Pose>(GOPrio_Defalut);
 	
 #ifdef CREATE_MODE

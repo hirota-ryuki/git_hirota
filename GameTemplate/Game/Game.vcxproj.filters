@@ -166,7 +166,7 @@
     <Filter Include="Assets\sprite\item">
       <UniqueIdentifier>{e19c20dc-f329-4417-a529-c582bb1b625f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Result\Pose">
+    <Filter Include="Game\Pose">
       <UniqueIdentifier>{7dd33e0c-65eb-49ff-992e-e96d1e64a534}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -307,7 +307,7 @@
       <Filter>Engine\sound</Filter>
     </ClCompile>
     <ClCompile Include="Pose.cpp">
-      <Filter>Game\Result\Pose</Filter>
+      <Filter>Game\Pose</Filter>
     </ClCompile>
     <ClCompile Include="Opening.cpp">
       <Filter>Game\OP</Filter>
@@ -526,7 +526,7 @@
       <Filter>Engine\sound</Filter>
     </ClInclude>
     <ClInclude Include="Pose.h">
-      <Filter>Game\Result\Pose</Filter>
+      <Filter>Game\Pose</Filter>
     </ClInclude>
     <ClInclude Include="Opening.h">
       <Filter>Game\OP</Filter>

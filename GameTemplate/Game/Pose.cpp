@@ -55,6 +55,9 @@ void Pose::Update()
 #ifdef BAG_MODE
 		m_spriteMenu->ChangeActive();
 #endif // BAG_MODE
+
+		//データ追加の有無を初期化。
+		ResetIsAddData();
 	}
 
 #ifdef BAG_MODE
@@ -63,6 +66,62 @@ void Pose::Update()
 		
 	}
 #endif // BAG_MODE
+}
+void Pose::DrawFontRender()
+{
+	//何か追加もしくは値の変動が起きていたら。
+	if (GetIsAddData() || GetIsAddNum()) {
+		//アイテムのフォント
+		auto& itemMap = GetItemDataMap();
+		wchar_t string[50];
+		//アイテムデータマップのイテレータ。
+		for (auto itr = itemMap.begin(); itr != itemMap.end(); itr++) {
+			//フォントレンダーリストのイテレータ。
+			for (auto &itemdata : m_fontList) {
+				//アイテムが追加されていたら。
+				if (GetIsAddData()) {
+					//フォントレンダーのテキストとアイテムデータの名前の比較。
+					//フォントレンダーリストに登録されていなかったら。
+					if (itemdata.nameFR->GetText().compare(itr->first) != 0) {
+						//名前のフォントレンダー作成。
+						FontRender* namefr = NewGO<FontRender>(GOPrio_Sprite, "item");
+						swprintf_s(string, L"%ls", itr->first);
+						namefr->SetText(string);
+						//個数のフォントレンダー作成。
+						FontRender* numfr = NewGO<FontRender>(GOPrio_Sprite, "item");
+						swprintf_s(string, L"%d", itr->second);
+						numfr->SetText(string);
+						//アイテムフォントデータの構築。
+						ItemFontData ifd;
+						ifd.nameFR = namefr;
+						ifd.numFR = numfr;
+						//登録。
+						m_fontList.emplace_back(ifd);
+					}
+				}
+				//アイテムの個数が変動されていたら。
+				if (GetIsAddNum()) {
+					if (itemdata.numFR->GetText().compare(itr->first) != 0) {
+
+					}
+				}
+
+			}
+		}
+	}	
+	
+
+	//フォントを描画する。
+	for (auto &itemdata : m_fontList) {
+		itemdata.nameFR->ChangeActive();
+		itemdata.numFR->ChangeActive();
+	}
+
+
+
+
+
+
 }
 #ifdef BAG_MODE
 void Pose::AddItem(const wchar_t * name, const wchar_t * textureFIlePath)

@@ -49,5 +49,9 @@ private:
 	//ポップアップ画像関係。
 	SpriteRender*		m_sprite = nullptr;
 	CVector2			m_spritePos = FRAME_OUT_POS;
+
+	//アイテムデータ。
+	const wchar_t* NAME = L"ball";
+	const int      ADD = 1;
 };
 
