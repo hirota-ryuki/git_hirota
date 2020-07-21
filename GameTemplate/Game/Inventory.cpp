@@ -20,6 +20,7 @@ void Inventory::AddItem(const wchar_t * name, int addnum)
 		//V‹K’Ç‰ÁB
 		m_itemDataMap.emplace(name, addnum);
 		m_isAddData = true;
+		m_itemCount++;
 	}
 	else {
 		//‚·‚Å‚É’Ç‰Á‚³‚ê‚Ä‚¢‚½‚çŒÂ”‚Ì‚İ•Ï“®‚³‚¹‚éB

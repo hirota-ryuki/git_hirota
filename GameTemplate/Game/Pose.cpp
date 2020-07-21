@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Pose.h"
+#include <iostream>
+#include <string>
 
 Pose::Pose()
 {
@@ -69,11 +71,10 @@ void Pose::Update()
 }
 void Pose::DrawFontRender()
 {
-	//何か追加もしくは値の変動が起きていたら。
+	//追加もしくは値の変動が起きていたら。
 	if (GetIsAddData() || GetIsAddNum()) {
-		//アイテムのフォント
+		//アイテムデータの取得。
 		auto& itemMap = GetItemDataMap();
-		wchar_t string[50];
 		//アイテムデータマップのイテレータ。
 		for (auto itr = itemMap.begin(); itr != itemMap.end(); itr++) {
 			//フォントレンダーリストのイテレータ。
@@ -85,12 +86,11 @@ void Pose::DrawFontRender()
 					if (itemdata.nameFR->GetText().compare(itr->first) != 0) {
 						//名前のフォントレンダー作成。
 						FontRender* namefr = NewGO<FontRender>(GOPrio_Sprite, "item");
-						swprintf_s(string, L"%ls", itr->first);
-						namefr->SetText(string);
+						namefr->SetText(itr->first.c_str());
 						//個数のフォントレンダー作成。
 						FontRender* numfr = NewGO<FontRender>(GOPrio_Sprite, "item");
-						swprintf_s(string, L"%d", itr->second);
-						numfr->SetText(string);
+						std::wstring num = std::to_wstring(itr->second);
+						numfr->SetText(num.c_str());
 						//アイテムフォントデータの構築。
 						ItemFontData ifd;
 						ifd.nameFR = namefr;
@@ -101,27 +101,34 @@ void Pose::DrawFontRender()
 				}
 				//アイテムの個数が変動されていたら。
 				if (GetIsAddNum()) {
-					if (itemdata.numFR->GetText().compare(itr->first) != 0) {
-
+					//intからstd::wstringに変換。
+					std::wstring num = std::to_wstring(itr->second);
+					//まず同じ名前を見つける。
+					if (itemdata.nameFR->GetText().compare(itr->first) == 0) {
+						//文字列の比較。
+						if (itemdata.numFR->GetText().compare(num) != 0) {
+							itemdata.numFR->SetText(num.c_str());
+						}
 					}
 				}
 
 			}
 		}
+
+		auto& IMitr = m_fontList.begin();
+		//初期値から下に座標をずらしていく。
+		for (int i = 0; i < GetItemCount(); i++) {
+			
+		}
+
 	}	
-	
+
 
 	//フォントを描画する。
 	for (auto &itemdata : m_fontList) {
 		itemdata.nameFR->ChangeActive();
 		itemdata.numFR->ChangeActive();
 	}
-
-
-
-
-
-
 }
 #ifdef BAG_MODE
 void Pose::AddItem(const wchar_t * name, const wchar_t * textureFIlePath)

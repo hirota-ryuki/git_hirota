@@ -50,6 +50,13 @@ public:
 		return m_isAddNum;
 	}
 	/// <summary>
+	/// アイテムの総数を返す関数。
+	/// </summary>
+	/// <returns>m_itemCount</returns>
+	int GetItemCount() {
+		return m_itemCount;
+	}
+	/// <summary>
 	/// 追加の有無の判定をリセットする関数。
 	/// </summary>
 	void ResetIsAddData() {
@@ -65,6 +72,7 @@ private:
 
 	bool	m_isAddData = false;	//アイテムデータが追加されたどうか。
 	bool	m_isAddNum = false;		//アイテムの個数が追加されたどうか。
+	int		m_itemCount = 0;		//アイテムの総数。
 };
 
 static inline 	void AddItem(const wchar_t* name, int addnum) {
@@ -88,4 +96,8 @@ static inline bool GetIsAddData() {
 
 static inline bool GetIsAddNum() {
 	return Inventory::GetInstance().GetIsAddNum();
+}
+
+static inline int GetItemCount() {
+	return Inventory::GetInstance().GetItemCount();
 }
