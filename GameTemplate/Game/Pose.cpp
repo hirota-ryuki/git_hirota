@@ -45,15 +45,22 @@ bool Pose::Start()
 
 void Pose::Update()
 {
+	DrawFontRender();
 	//スタートボタンを押したら。
 	if (g_pad[0].IsTrigger(enButtonStart))
 	{
-		m_isStart = !m_isStart;
+		/*m_isStart = !m_isStart;
 		wchar_t allbullet[50];
 		swprintf_s(allbullet, L"%d", m_itemCount);
 		m_itemCountfont->SetText(allbullet);
 		m_itemNameFont->ChangeActive();
-		m_itemCountfont->ChangeActive();
+		m_itemCountfont->ChangeActive();*/
+
+		//フォントを描画する。
+		for (auto &itemdata : m_fontList) {
+			itemdata.nameFR->ChangeActive();
+			itemdata.numFR->ChangeActive();
+		}
 #ifdef BAG_MODE
 		m_spriteMenu->ChangeActive();
 #endif // BAG_MODE
@@ -111,24 +118,23 @@ void Pose::DrawFontRender()
 						}
 					}
 				}
-
 			}
 		}
 
-		auto& IMitr = m_fontList.begin();
+		auto& FRitr = m_fontList.begin();
 		//初期値から下に座標をずらしていく。
 		for (int i = 0; i < GetItemCount(); i++) {
-			
+			m_position = m_position+NAME_TOP_POS ;
+			FRitr->nameFR->SetPosition(m_position);
+			//m_position = NUM_TOP_POS + ADD_BELOW_POS * i;
+			FRitr->numFR->SetPosition(m_position);
+			FRitr++;
 		}
 
 	}	
 
 
-	//フォントを描画する。
-	for (auto &itemdata : m_fontList) {
-		itemdata.nameFR->ChangeActive();
-		itemdata.numFR->ChangeActive();
-	}
+	
 }
 #ifdef BAG_MODE
 void Pose::AddItem(const wchar_t * name, const wchar_t * textureFIlePath)

@@ -1,8 +1,9 @@
 #pragma once
 //#define BAG_MODE
 
-const CVector2 TOP_POS = CVector2::Zero();			//フォントが並ぶ一番上の座標。
-const CVector2 ADD_BELOW_POS = CVector2::Zero();	//項目の座標の追加量。この定数分座標が下がっていく。
+const CVector2 NAME_TOP_POS  = { 0.0f,0.0f };	//フォントが並ぶ一番上の名前の座標。
+const CVector2 NUM_TOP_POS   = { 10.0f,0.0f };	//フォントが並ぶ一番上の個数の座標。
+const CVector2 ADD_BELOW_POS = { 0.0f,5.0f };	//項目の座標の追加量。この定数分座標が下がっていく。
 
 #ifdef BAG_MODE
 struct ItemInfo {
@@ -60,6 +61,6 @@ private:
 	int						m_totalItemCount = 0;		//総アイテム数。
 #endif // BAG_MODE
 	std::vector<ItemFontData>	m_fontList;
-	CVector2	m_position = TOP_POS;
+	CVector2	m_position = CVector2::Zero();
 };
 
