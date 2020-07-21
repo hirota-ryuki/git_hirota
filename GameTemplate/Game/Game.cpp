@@ -50,7 +50,6 @@ void Game::OnDestroy()
 	DeleteGO(m_ui);
 	DeleteGO(m_map);
 	DeleteGO(m_rockdoor);
-	
 	DeleteGOs("bulletstack");
 	DeleteGOs("ball");
 	IItem::Release();
@@ -147,14 +146,14 @@ bool Game::Start()
 	m_goal->SetPos(goalObjData.position);
 	m_goal->SetRot(goalObjData.rotation);
 
-	////ゾンビを構築。
-	//for (auto& objData : zombieObjDatas) {
-	//	m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
-	//	//配置情報から座標と回転をステージに渡す。
-	//	m_zombie->SetPos(objData.position);
-	//	m_zombie->SetRot(objData.rotation);
-	//}
-	//
+	//ゾンビを構築。
+	for (auto& objData : zombieObjDatas) {
+		m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
+		//配置情報から座標と回転をステージに渡す。
+		m_zombie->SetPos(objData.position);
+		m_zombie->SetRot(objData.rotation);
+	}
+	
 	//UIの構築。
 	m_ui = NewGO<UI>(GOPrio_Defalut);
 	
