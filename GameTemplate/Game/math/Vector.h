@@ -42,6 +42,23 @@ public:
 		static const CVector2 zero = { 0.0f,  0.0f };
 		return zero;
 	}
+	/*!
+	 * @brief	ベクトルを加算。
+	 */
+	void Add(const CVector2& _v)
+	{
+		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&vec);
+		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&_v.vec);
+		DirectX::XMVECTOR xmvr = DirectX::XMVectorAdd(xmv0, xmv1);
+		DirectX::XMStoreFloat2(&vec, xmvr);
+	}
+	void Add(const CVector2& v0, const CVector2& v1)
+	{
+		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&v0.vec);
+		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&v1.vec);
+		DirectX::XMVECTOR xmvr = DirectX::XMVectorAdd(xmv0, xmv1);
+		DirectX::XMStoreFloat2(&vec, xmvr);
+	}
 };
 /*!
  * @brief	ベクトル。

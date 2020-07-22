@@ -124,9 +124,9 @@ void Pose::DrawFontRender()
 		auto& FRitr = m_fontList.begin();
 		//‰Šú’l‚©‚ç‰º‚ÉÀ•W‚ğ‚¸‚ç‚µ‚Ä‚¢‚­B
 		for (int i = 0; i < GetItemCount(); i++) {
-			m_position = m_position+NAME_TOP_POS ;
+			m_position = NAME_TOP_POS + ADD_BELOW_POS * i;
 			FRitr->nameFR->SetPosition(m_position);
-			//m_position = NUM_TOP_POS + ADD_BELOW_POS * i;
+			m_position = NUM_TOP_POS + ADD_BELOW_POS * i;
 			FRitr->numFR->SetPosition(m_position);
 			FRitr++;
 		}
