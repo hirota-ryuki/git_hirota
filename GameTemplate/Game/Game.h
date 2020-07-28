@@ -3,7 +3,7 @@
 //実装するときに不必要な手順を省略するためのモード。
 //GameではなくTitleを最初にNewGOする。
 //オープニングを省略する。
-//#define CREATE_MODE	
+#define CREATE_MODE	
 
 class GameCamera;
 class Floor;

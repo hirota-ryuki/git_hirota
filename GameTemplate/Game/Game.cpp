@@ -62,7 +62,7 @@ bool Game::Start()
 	swprintf_s(floor, L"floor");
 	//レベル。
 	wchar_t levelname[50];
-	swprintf_s(levelname, L"level/level00.tkl");
+	swprintf_s(levelname, L"level/level01.tkl");
 	LevelObjectData floorObjData;
 	LevelObjectData ceilingObjData;
 	LevelObjectData playerObjData;
@@ -146,13 +146,13 @@ bool Game::Start()
 	m_goal->SetPos(goalObjData.position);
 	m_goal->SetRot(goalObjData.rotation);
 
-	//ゾンビを構築。
-	for (auto& objData : zombieObjDatas) {
-		m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
-		//配置情報から座標と回転をステージに渡す。
-		m_zombie->SetPos(objData.position);
-		m_zombie->SetRot(objData.rotation);
-	}
+	////ゾンビを構築。
+	//for (auto& objData : zombieObjDatas) {
+	//	m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
+	//	//配置情報から座標と回転をステージに渡す。
+	//	m_zombie->SetPos(objData.position);
+	//	m_zombie->SetRot(objData.rotation);
+	//}
 	
 	//UIの構築。
 	m_ui = NewGO<UI>(GOPrio_Defalut);

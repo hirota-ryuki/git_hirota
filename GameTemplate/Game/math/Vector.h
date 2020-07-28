@@ -59,6 +59,15 @@ public:
 		DirectX::XMVECTOR xmvr = DirectX::XMVectorAdd(xmv0, xmv1);
 		DirectX::XMStoreFloat2(&vec, xmvr);
 	}
+	/*!
+	* @brief	拡大。
+	*/
+	void Scale(float s)
+	{
+		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat2(&vec);
+		xmv = DirectX::XMVectorScale(xmv, s);
+		DirectX::XMStoreFloat2(&vec, xmv);
+	}
 };
 /*!
  * @brief	ベクトル。

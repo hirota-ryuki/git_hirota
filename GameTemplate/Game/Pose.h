@@ -33,7 +33,7 @@ public:
 	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
-	void DrawFontRender();
+	void FontRenderUpdate();
 #ifdef BAG_MODE
 	/// <summary>
 	/// アイテムを追加する関数。

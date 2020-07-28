@@ -25,5 +25,6 @@ void Inventory::AddItem(const wchar_t * name, int addnum)
 	else {
 		//‚·‚Å‚É’Ç‰Á‚³‚ê‚Ä‚¢‚½‚çŒÂ”‚Ì‚Ý•Ï“®‚³‚¹‚éB
 		it->second += addnum;
+		m_isAddNum=true;
 	}
 }
