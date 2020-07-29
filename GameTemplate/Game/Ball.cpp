@@ -32,8 +32,6 @@ bool Ball::Start()
 	m_sprite = IItem::SpriteLoad(L"sprite/item/item_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
 	IItem::IItemInit();
 
-	AddItem(NAME, 0);
-
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。

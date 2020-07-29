@@ -82,12 +82,15 @@ void Pose::FontRenderUpdate()
 	if (GetIsAddData() || GetIsAddNum()) {
 		//何も入っていなかったら。
 		if (m_fontList.begin() == m_fontList.end()) {
+			auto& IDMap = GetItemDataMap();
+			auto itr = IDMap.begin();
 			//名前のフォントレンダー作成。
 			FontRender* namefr = NewGO<FontRender>(GOPrio_Sprite, "item");
-			namefr->SetText(IMitr->first.c_str());
+			int d = 0;
+			namefr->SetText(itr->first.c_str());
 			//個数のフォントレンダー作成。
 			FontRender* numfr = NewGO<FontRender>(GOPrio_Sprite, "item");
-			std::wstring num = std::to_wstring(IMitr->second);
+			std::wstring num = std::to_wstring(itr->second);
 			numfr->SetText(num.c_str());
 			//アイテムフォントデータの構築。
 			ItemFontData ifd;
@@ -101,7 +104,6 @@ void Pose::FontRenderUpdate()
 			auto& itemMap = GetItemDataMap();
 			//アイテムデータマップのイテレータ。
 			for (auto IMitr = itemMap.begin(); IMitr != itemMap.end(); IMitr++) {
-
 				//フォントレンダーリストのイテレータ。
 				for (auto FLitr = m_fontList.begin(); FLitr != m_fontList.end(); FLitr++) {
 					//アイテムが追加されていたら。
@@ -125,11 +127,11 @@ void Pose::FontRenderUpdate()
 						}
 					}
 					//アイテムの個数が変動されていたら。
-					if (GetIsAddNum()) {
-						//intからstd::wstringに変換。
-						std::wstring num = std::to_wstring(IMitr->second);
+					if (GetIsAddNum()) {						
 						//まず同じ名前を見つける。
 						if (FLitr->nameFR->GetText().compare(IMitr->first) == 0) {
+							//intからstd::wstringに変換。
+							std::wstring num = std::to_wstring(IMitr->second);
 							//文字列の比較。
 							if (FLitr->numFR->GetText().compare(num) != 0) {
 								FLitr->numFR->SetText(num.c_str());
