@@ -50,7 +50,6 @@ public:
 
 	/// <summary>
 	/// デバッグワイヤーフレームを描画する関数
-	/// たかPに名前をパクられました。＿|￣|○
 	/// </summary>
 	void DebugDraw();
 private:

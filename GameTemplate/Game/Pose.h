@@ -1,18 +1,9 @@
 #pragma once
-//#define BAG_MODE
 
 const CVector2 NAME_TOP_POS  = { 0.0f,0.0f };	//フォントが並ぶ一番上の名前の座標。
-const CVector2 NUM_TOP_POS   = { 10.0f,0.0f };	//フォントが並ぶ一番上の個数の座標。
-const CVector2 ADD_BELOW_POS = { 0.0f,5.0f };	//項目の座標の追加量。この定数分座標が下がっていく。
+const CVector2 NUM_TOP_POS   = { 250.0f,0.0f };	//フォントが並ぶ一番上の個数の座標。
+const CVector2 ADD_BELOW_POS = { 0.0f,50.0f };	//項目の座標の追加量。この定数分座標が下がっていく。
 const CVector3 ADD2_BELOW_POS = { 0.0f,5.0f,0.0f };	//項目の座標の追加量。この定数分座標が下がっていく。
-
-#ifdef BAG_MODE
-struct ItemInfo {
-	const wchar_t*		name;				//アイテムの名前。
-	SpriteRender*		sprite = nullptr;	//画像のポインタ。
-	int					nomber = 0;			//バッグの何番目にあるか。
-};
-#endif // BAG_MODE
 
 //アイテムのフォントデータ。
 struct ItemFontData {
@@ -33,16 +24,19 @@ public:
 	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
-	void FontRenderUpdate();
-#ifdef BAG_MODE
 	/// <summary>
-	/// アイテムを追加する関数。
-	/// すでに持っているアイテムなら、個数だけ追加する
+	/// フォントレンダーリストの更新関数。
+	/// フォントレンダーの追加や配置の整理を行う。
 	/// </summary>
-	/// <param name="name"></param>
-	/// <param name="textureFIlePath"></param>
-	void AddItem(const wchar_t* name, const wchar_t* textureFIlePath);
-#endif // BAG_MODE
+	void FontRenderUpdate();
+	/// <summary>
+	/// 文字列の配置を整理する関数。
+	/// </summary>
+	void SortingFontRnderPos();
+	/// <summary>
+	/// ResetIsAddData関数を呼ぶかどうかを判定している関数。
+	/// </summary>
+	void ResetIsAdd();
 
 	int GetItemCount(){
 		return m_itemCount;
@@ -56,12 +50,7 @@ private:
 	FontRender*		m_itemCountfont = nullptr;	//アイテムの個数のフォント。
 	int				m_itemCount = 0;			//このアイテムの個数。
 
-#ifdef BAG_MODE
-	SpriteRender*			m_spriteMenu = nullptr;		//メニュー画面の画像。
-	std::vector<ItemInfo>	m_itemList;					//アイテムのリスト。
-	int						m_totalItemCount = 0;		//総アイテム数。
-#endif // BAG_MODE
-	std::vector<ItemFontData>	m_fontList;
+	std::list<ItemFontData>	m_fontList;
 	CVector2	m_position = CVector2::Zero();
 	CVector3	m_position2 = CVector3::Zero();
 };
