@@ -18,6 +18,9 @@ void Pose::OnDestroy()
 
 bool Pose::Start()
 {
+	AddItem(L"弾薬", 25);
+	AddItem(L"回復薬", 25);
+	AddItem(L"強化薬", 25);
 	return true;
 }
 
@@ -34,7 +37,7 @@ void Pose::Update()
 		}
 	}
 
-	ResetIsAdd();
+	//ResetIsAdd();
 }
 void Pose::FontRenderUpdate()
 {
@@ -123,7 +126,7 @@ void Pose::ResetIsAdd()
 {
 	//追加もしくは値の変動が起きていたら。
 	if (GetIsAddData() || GetIsAddNum()) {
-		//フォントリストとアイテムデータのサイズが等しくなかったら。
+		//フォントリストとアイテムデータのサイズが等しくなったら。
 		if (m_fontList.size() == GetItemDataMap().size()) {
 			//データ追加の有無を初期化。
 			ResetIsAddData();
@@ -140,7 +143,7 @@ void Pose::ResetIsAdd()
 						//intからstd::wstringに変換。
 						std::wstring num = std::to_wstring(IMitr->second);
 						//文字列の比較。
-						if (FLitr->numFR->GetText().compare(num) != 0) {
+						if (FLitr->numFR->GetText().compare(num) == 0) {
 							//データ追加の有無を初期化。
 							ResetIsAddData();
 						}
