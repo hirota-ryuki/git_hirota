@@ -60,6 +60,23 @@ public:
 		DirectX::XMStoreFloat2(&vec, xmvr);
 	}
 	/*!
+	 * @brief	ベクトルを減算。
+	*/
+	void Subtract(const CVector2& _v)
+	{
+		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&vec);
+		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&_v.vec);
+		DirectX::XMVECTOR xmvr = DirectX::XMVectorSubtract(xmv0, xmv1);
+		DirectX::XMStoreFloat2(&vec, xmvr);
+	}
+	void Subtract(const CVector2& v0, const CVector2& v1)
+	{
+		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&v0.vec);
+		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&v1.vec);
+		DirectX::XMVECTOR xmvr = DirectX::XMVectorSubtract(xmv0, xmv1);
+		DirectX::XMStoreFloat2(&vec, xmvr);
+	}
+	/*!
 	* @brief	拡大。
 	*/
 	void Scale(float s)
