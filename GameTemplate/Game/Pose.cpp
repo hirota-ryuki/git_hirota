@@ -18,9 +18,9 @@ void Pose::OnDestroy()
 
 bool Pose::Start()
 {
-	AddItem(L"弾薬", 25);
-	AddItem(L"回復薬", 25);
-	AddItem(L"強化薬", 25);
+	Inv_AddItem(L"弾薬", 25);
+	Inv_AddItem(L"回復薬", 25);
+	/*Inv_AddItem(L"強化薬", 25);*/
 	return true;
 }
 
@@ -42,10 +42,10 @@ void Pose::Update()
 void Pose::FontRenderUpdate()
 {
 	//追加もしくは値の変動が起きていたら。
-	if (GetIsAddData() || GetIsAddNum()) {
+	if (Inv_GetIsAddData() || Inv_GetIsAddNum()) {
 		//何も入っていなかったら。
 		if (m_fontList.begin() == m_fontList.end()) {
-			auto& IDMap = GetItemDataMap();
+			auto IDMap = Inv_GetItemDataMap();
 			auto itr = IDMap.begin();
 			//アイテムフォントデータの構築。
 			ItemFontData ifd;
@@ -61,7 +61,7 @@ void Pose::FontRenderUpdate()
 		}
 		else {
 			//アイテムデータの取得。
-			auto itemMap = GetItemDataMap();
+			auto itemMap = Inv_GetItemDataMap();
 			//アイテムデータマップのイテレータ。
 			for (auto IMitr = itemMap.begin(); IMitr != itemMap.end(); IMitr++) {
 				auto FLitr = m_fontList.begin();
@@ -104,7 +104,7 @@ void Pose::SortingFontRnderPos()
 {
 	auto FRitr = m_fontList.begin();
 	//初期値から下に座標をずらしていく。
-	for (int i = 0; i < GetItemDataMap().size(); i++) {
+	for (int i = 0; i < Inv_GetItemDataMap().size(); i++) {
 		m_position = NAME_TOP_POS - ADD_BELOW_POS * i;
 		FRitr->nameFR->SetPosition(m_position);
 		m_position = NUM_TOP_POS - ADD_BELOW_POS * i;
@@ -118,12 +118,12 @@ void Pose::SortingFontRnderPos()
 void Pose::ResetIsAdd()
 {
 	//追加もしくは値の変動が起きていたら。
-	if (GetIsAddData() || GetIsAddNum()) {
+	if (Inv_GetIsAddData() || Inv_GetIsAddNum()) {
 		//フォントリストとアイテムデータのサイズが等しくなったら。
-		if (m_fontList.size() == GetItemDataMap().size()) {
+		if (m_fontList.size() == Inv_GetItemDataMap().size()) {
 			//個数が一致しているか確認。
 			//アイテムデータの取得。
-			auto itemMap = GetItemDataMap();
+			auto itemMap = Inv_GetItemDataMap();
 			//アイテムデータマップのイテレータ。
 			auto IMitr = itemMap.begin();
 			//初期値はリセットする状態。
@@ -133,7 +133,7 @@ void Pose::ResetIsAdd()
 				//GetItemDataMap()とm_fontListのデータの違いはなかったということ。
 				if (IMitr == itemMap.end()) {
 					//データ追加の有無を初期化。
-					ResetIsAddData();
+					Inv_ResetIsAddData();
 					break;
 				}
 				auto FLitr = m_fontList.begin();

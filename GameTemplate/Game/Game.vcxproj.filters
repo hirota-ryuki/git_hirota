@@ -169,6 +169,9 @@
     <Filter Include="Game\Pose">
       <UniqueIdentifier>{7dd33e0c-65eb-49ff-992e-e96d1e64a534}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Inventory">
+      <UniqueIdentifier>{0436680c-d621-49b6-9b46-e0a07c91613c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -381,7 +384,10 @@
     <ClCompile Include="IItem.cpp">
       <Filter>Game\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Game\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="IDoor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -609,7 +615,10 @@
     <ClInclude Include="IItem.h">
       <Filter>Game\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Inventory.h">
+      <Filter>Game\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="IDoor.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

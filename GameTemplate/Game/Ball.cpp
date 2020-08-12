@@ -48,5 +48,5 @@ void Ball::Update()
 void Ball::OnGet()
 {
 	m_pose->AddItemCount();
-	AddItem(NAME, ADD);
+	Inv_AddItem(NAME, ADD);
 }

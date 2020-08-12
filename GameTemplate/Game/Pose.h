@@ -37,10 +37,16 @@ public:
 	/// ResetIsAddDataŠÖ”‚ğŒÄ‚Ô‚©‚Ç‚¤‚©‚ğ”»’è‚µ‚Ä‚¢‚éŠÖ”B
 	/// </summary>
 	void ResetIsAdd();
-
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
 	int GetItemCount(){
 		return m_itemCount;
 	}
+	/// <summary>
+	/// 
+	/// </summary>
 	void AddItemCount(){
 		m_itemCount++;
 	}

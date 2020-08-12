@@ -116,6 +116,7 @@
     <ClCompile Include="graphics\posteffect\bloom\ConstantBufferGPU.cpp" />
     <ClCompile Include="graphics\posteffect\bloom\GaussianBlur.cpp" />
     <ClCompile Include="graphics\posteffect\PostEffect.cpp" />
+    <ClCompile Include="IDoor.cpp" />
     <ClCompile Include="IItem.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="graphics\posteffect\bloom\ConstantBufferGPU.h" />
     <ClInclude Include="graphics\posteffect\bloom\GaussianBlur.h" />
     <ClInclude Include="graphics\posteffect\PostEffect.h" />
+    <ClInclude Include="IDoor.h" />
     <ClInclude Include="IItem.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Map.h" />

@@ -55,6 +55,6 @@ void BulletStack::OnGet()
 {
 	//’e–ò‚ð‘‚â‚·B
 	m_player->AddStack(ADD_BULLET_STACK);
-	AddItem(NAME, ADD);
+	Inv_AddItem(NAME, ADD);
 	m_isAddBullet = true;
 }

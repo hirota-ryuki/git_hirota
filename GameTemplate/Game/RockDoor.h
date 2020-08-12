@@ -37,6 +37,5 @@ private:
 	Game*				m_game = nullptr;						//Gameのポインタ。
 	Player*				m_player = nullptr;						//プレイヤークラスのポインタ。
 	Pose*				m_pose = nullptr;
-
 };
 
