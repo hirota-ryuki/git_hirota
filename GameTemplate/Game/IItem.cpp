@@ -19,10 +19,24 @@ IItem::~IItem()
 	
 }
 
-void IItem::Destroy()
+bool IItem::Start()
+{
+	ItemStart();
+	IItemInit();
+	return true;
+}
+
+void IItem::Update()
+{
+	ItemUpdate();
+}
+
+void IItem::OnDestroy()
 {
 	DeleteGO(m_buttonSprite);
+	ItemDestroy();
 }
+
 
 void IItem::ItemCommonProcessing(SpriteRender * sprite, CVector3 pos, SkinModelRender* model)
 {

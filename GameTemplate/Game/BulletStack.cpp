@@ -9,13 +9,12 @@ BulletStack::~BulletStack()
 {
 }
 
-void BulletStack::OnDestroy()
+void BulletStack::ItemDestroy()
 {
 	DeleteGO(m_model);
-	IItem::Destroy();
 }
 
-bool BulletStack::Start()
+void BulletStack::ItemStart()
 {
 	//弾薬。
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
@@ -30,16 +29,14 @@ bool BulletStack::Start()
 	IItem::SetName(L"BulletStack");
 
 	m_sprite = IItem::SpriteLoad(L"sprite/item/magazine_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
-	IItem::IItemInit();
-
+	
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。
 	m_player = m_game->GetPlayer();
-	return true;
 }
 
-void BulletStack::Update()
+void BulletStack::ItemUpdate()
 {
 	//回転。
 	CQuaternion qAddRot;

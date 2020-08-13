@@ -11,13 +11,12 @@ Ball::~Ball()
 {
 }
 
-void Ball::OnDestroy()
+void Ball::ItemDestroy()
 {
 	DeleteGO(m_model);
-	IItem::Destroy();
 }
 
-bool Ball::Start()
+void Ball::ItemStart()
 {
 	//ボール。
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
@@ -30,17 +29,15 @@ bool Ball::Start()
 	IItem::SetName(L"Ball");
 
 	m_sprite = IItem::SpriteLoad(L"sprite/item/item_message.dds", ITEM_SPRITE_W, ITEM_SPRITE_H);
-	IItem::IItemInit();
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。
 	m_player = m_game->GetPlayer();
 	m_pose = m_game->GetPose();
-	return true;
 }
 
-void Ball::Update()
+void Ball::ItemUpdate()
 {
 	IItem::ItemCommonProcessing(m_sprite, m_position, m_model);
 }

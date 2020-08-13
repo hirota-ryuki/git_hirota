@@ -78,7 +78,7 @@ bool Player::Start()
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 
-	Inv_AddItem(L"ball", 0);
+	Inv_AddItem(L"ball", 3);
 	Inv_AddItem(L"bulletstack", 24);
 	return true;
 }

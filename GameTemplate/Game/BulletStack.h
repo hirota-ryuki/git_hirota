@@ -7,9 +7,9 @@ class BulletStack :
 public:
 	BulletStack();
 	~BulletStack();
-	void OnDestroy() override;
-	bool Start() override;
-	void Update() override;
+	void ItemDestroy() override;
+	void ItemStart() override;
+	void ItemUpdate() override;
 	void OnGet() override;
 	/// <summary>
 	/// ポジションをセット。

@@ -21,12 +21,14 @@ void IDoor::MoveDoor(const CVector3 & diff, SkinModelRender * model)
 				m_se->Init(L"sound/story/decision.wav");
 				m_se->Play(false);
 
-				////‰ñ“]B
-				//CQuaternion qAddRot;
-				//qAddRot.SetRotationDeg(CVector3::AxisY(), 2.0f);
-				//m_rotation.Multiply(qAddRot, m_rotation);
-				//model->SetRot(m_rotation);
-
+				//‰ñ“]B
+				if (m_maxRotate == 0.0f) {
+					CQuaternion qAddRot;
+					qAddRot.SetRotationDeg(CVector3::AxisY(), ADD_ROTATE);
+					m_maxRotate -= ADD_ROTATE;
+					m_rotation.Multiply(qAddRot, m_rotation);
+					model->SetRot(m_rotation);
+				}
 			}
 		}
 	}

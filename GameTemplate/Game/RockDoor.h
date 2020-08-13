@@ -1,6 +1,8 @@
 #pragma once
 #include "IGameObject.h"
 #include "physics/PhysicsStaticObject.h"
+#include "Physics/BoxCollider.h"
+
 
 class Player;
 class Pose;
@@ -37,5 +39,8 @@ private:
 	Game*				m_game = nullptr;						//Gameのポインタ。
 	Player*				m_player = nullptr;						//プレイヤークラスのポインタ。
 	Pose*				m_pose = nullptr;
+	float			m_maxRotate = 90.0f;					//回転の最大量。
+	bool iskokok = false;
+	BoxCollider			m_boxCollider;
+	
 };
-

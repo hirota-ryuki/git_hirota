@@ -37,20 +37,25 @@ void RockDoor::Update()
 	CVector3 diff = m_player->GetPos() - m_position;
 	if (diff.Length() < 100.0f) {
 		//Bボタンを押したら。
-		if (g_pad[0].IsTrigger(enButtonB)){
+		if (g_pad[0].IsTrigger(enButtonB)) {
 			if (Inv_FindItem(L"ball") >= 3) {
 				//ワンショット再生のSE
 				CSoundSource* m_se = new CSoundSource;
 				m_se->Init(L"sound/story/decision.wav");
 				m_se->Play(false);
-				DeleteGO(this);
-				////回転。
-				//CQuaternion qAddRot;
-				//qAddRot.SetRotationDeg(CVector3::AxisY(), 2.0f);
-				//m_rotation.Multiply(qAddRot, m_rotation);
-				//m_model->SetRot(m_rotation);
+				iskokok = true;
 
 			}
+		}
+	}
+	if (iskokok) {
+		//回転。
+		if (m_maxRotate > 0.0f) {
+			CQuaternion qAddRot;
+			qAddRot.SetRotationDeg(CVector3::AxisY(), -2.0f);
+			m_maxRotate -= 2.0f;
+			m_rotation.Multiply(qAddRot, m_rotation);
+			m_model->SetRot(m_rotation);
 		}
 	}
 }

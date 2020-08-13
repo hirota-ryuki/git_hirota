@@ -26,7 +26,10 @@ class IItem :
 public:
 	IItem();
 	virtual ~IItem();
-	void Destroy();
+	bool Start() override;
+	void Update() override;
+	void OnDestroy() override;
+	
 	/// <summary>
 	/// 画像をロードする関数。
 	/// </summary>
@@ -48,12 +51,22 @@ public:
 	/// <param name="sprite"></param>
 	/// <param name="pos"></param>
 	void ItemCommonProcessing(SpriteRender* sprite, CVector3 pos, SkinModelRender* model);
-	
+	/// <summary>
+	/// デリートの処理を自由に書ける関数。
+	/// </summary>
+	virtual void ItemDestroy() = 0;
+	/// <summary>
+	/// 開始処理を自由に書ける関数。
+	/// </summary>
+	virtual void ItemStart() = 0;
+	/// <summary>
+	/// 更新処理を自由に書ける関数。
+	/// </summary>
+	virtual void ItemUpdate() {}
 	/// <summary>
 	/// アイテムをゲットしたときの処理を自由に書ける関数。
 	/// </summary>
 	virtual void OnGet() {}
-
 	/// <summary>
 	/// 名前を設定。
 	/// </summary>
