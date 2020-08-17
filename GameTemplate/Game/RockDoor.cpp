@@ -1,11 +1,6 @@
 #include "stdafx.h"
 #include "RockDoor.h"
 #include "Player.h"
-#include "Pose.h"
-RockDoor::RockDoor()
-{
-}
-
 RockDoor::~RockDoor()
 {
 }
@@ -19,43 +14,37 @@ bool RockDoor::Start()
 {
 	//ドア。
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
-	m_model->Init(L"modelData/rockdoor/rockdoor.cmo");
+	m_model->Init(L"modelData/rockdoor/blood_door/door.cmo");
+
 	m_model->SetData(m_position, m_rotation);
 	m_model->UpdateWorldMatrix();
-	m_physicsStaticObject.CreateMeshObject(m_model->GetModel(), m_position, m_rotation);
+	m_PSOmodel = NewGO<SkinModelRender>(GOPrio_Defalut);
+	m_PSOmodel->Init(L"modelData/rockdoor/rockdoor.cmo");
+	m_PSOmodel->ActiveMode(false);
+	m_PSOmodel->SetShadowCaster(false);
+	m_PSOmodel->SetShadowReciever(false);
+
+	m_physicsStaticObject.CreateMeshObject(m_PSOmodel->GetModel(), m_position, m_rotation);
+	
+	/*std::wstring m_name;
+	m_name = IDoor::GetName();
+	if (m_name.c_str() == L"鍵無し") {
+
+		SkinModelRender* model;
+		model = NewGO<SkinModelRender>(GOPrio_Defalut);
+		model->Init(L"modelData/debug/debugbox.cmo");
+		model->SetData(m_centerPos, m_rotation);
+	}*/
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。
 	m_player = m_game->GetPlayer();
-	m_pose = m_game->GetPose();
 	return true;
 }
 
 void RockDoor::Update()
 {
-	CVector3 diff = m_player->GetPos() - m_position;
-	if (diff.Length() < 100.0f) {
-		//Bボタンを押したら。
-		if (g_pad[0].IsTrigger(enButtonB)) {
-			if (Inv_FindItem(L"ball") >= 3) {
-				//ワンショット再生のSE
-				CSoundSource* m_se = new CSoundSource;
-				m_se->Init(L"sound/story/decision.wav");
-				m_se->Play(false);
-				iskokok = true;
-
-			}
-		}
-	}
-	if (iskokok) {
-		//回転。
-		if (m_maxRotate > 0.0f) {
-			CQuaternion qAddRot;
-			qAddRot.SetRotationDeg(CVector3::AxisY(), -2.0f);
-			m_maxRotate -= 2.0f;
-			m_rotation.Multiply(qAddRot, m_rotation);
-			m_model->SetRot(m_rotation);
-		}
-	}
+	CVector3 diff = m_player->GetPos() - m_centerPos;
+	IDoor::MoveDoor(diff, m_model, m_PSOmodel, m_physicsStaticObject, m_rotation);
 }

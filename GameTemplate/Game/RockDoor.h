@@ -1,16 +1,10 @@
 #pragma once
-#include "IGameObject.h"
-#include "physics/PhysicsStaticObject.h"
-#include "Physics/BoxCollider.h"
 
-
-class Player;
-class Pose;
 class RockDoor :
-	public IGameObject
+	public IDoor
 {
 public:
-	RockDoor();
+	RockDoor(){}
 	~RockDoor();
 	void OnDestroy() override;
 	bool Start() override;
@@ -24,6 +18,14 @@ public:
 		m_position = pos;
 	}
 	/// <summary>
+	/// ドアのセンターポジションをセット。
+	/// </summary>
+	/// <param name="pos">中心座標。</param>
+	void SetCenterPos(CVector3 pos)
+	{
+		m_centerPos = pos;
+	}
+	/// <summary>
 	/// ドアの回転をセット。
 	/// </summary>
 	/// <param name="pos">回転。</param>
@@ -32,15 +34,13 @@ public:
 		m_rotation = rot;
 	}
 private:
-	SkinModelRender*	m_model;								//スキンモデル。
+	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
-	PhysicsStaticObject m_physicsStaticObject;			//床の当たり判定。
+	SkinModelRender*	m_PSOmodel = nullptr;					//当たり判定のスキンモデル。
+	PhysicsStaticObject m_physicsStaticObject;					//床の当たり判定。
 	Game*				m_game = nullptr;						//Gameのポインタ。
 	Player*				m_player = nullptr;						//プレイヤークラスのポインタ。
-	Pose*				m_pose = nullptr;
-	float			m_maxRotate = 90.0f;					//回転の最大量。
-	bool iskokok = false;
-	BoxCollider			m_boxCollider;
-	
+	const wchar_t*		m_name;
+	CVector3			m_centerPos = CVector3::Zero();
 };

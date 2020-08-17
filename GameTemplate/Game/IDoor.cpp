@@ -7,29 +7,60 @@ IDoor::IDoor()
 
 IDoor::~IDoor()
 {
+	
 }
 
-void IDoor::MoveDoor(const CVector3 & diff, SkinModelRender * model)
+void IDoor::MoveDoor(const CVector3 & diff, SkinModelRender * model, SkinModelRender* PSOmodel, PhysicsStaticObject & pso, CQuaternion & rot)
 {
-	//プレイヤーが近くに来たら。
-	if (diff.Length() < 100.0f) {
-		//Bボタンを押したら。
-		if (g_pad[0].IsTrigger(enButtonB)) {
-			if (Inv_FindItem(L"ball") >= 3) {
-				//ワンショット再生のSE
-				CSoundSource* m_se = new CSoundSource;
-				m_se->Init(L"sound/story/decision.wav");
-				m_se->Play(false);
-
-				//回転。
-				if (m_maxRotate == 0.0f) {
-					CQuaternion qAddRot;
-					qAddRot.SetRotationDeg(CVector3::AxisY(), ADD_ROTATE);
-					m_maxRotate -= ADD_ROTATE;
-					m_rotation.Multiply(qAddRot, m_rotation);
-					model->SetRot(m_rotation);
+	//ドアが開いていなかったら。
+	if (!m_isOpenDoor) {
+		if (diff.Length() < 150.0f) {
+			//Bボタンを押したら。
+			if (g_pad[0].IsTrigger(enButtonB)) {
+				//鍵不要のドアだったら。
+				if (wcscmp(L"鍵無し", m_name.c_str()) == 0) {
+					
+					Sound(L"sound/story/decision.wav", false);
+					Message(L"ドアを開けた。");
+					//ドアを開く。
+					m_isOpenDoor = true;
+					//回転させる。
+					m_isRotate = true;
+				}
+				else{
+					//鍵を持っていたら。
+					if (Inv_FindItem(m_name.c_str()) > 0) {
+						Sound(L"sound/story/decision.wav", false);
+						Message(L"鍵を使用した。");
+						//ドアを開く。
+						m_isOpenDoor = true;
+						//回転させる。
+						m_isRotate = true;
+					}
+					else {
+						Message(L"鍵を持っていない。");
+					}
 				}
 			}
+		}		
+	}
+
+	if (m_isRotate) {
+		//90度回転するまで。
+		if (m_maxRotate > 0.0f) {
+			//2度ずつ回転させていく。
+			CQuaternion qAddRot;
+			qAddRot.SetRotationDeg(CVector3::AxisY(), -2.0f);
+			m_maxRotate -= 2.0f;
+			rot.Multiply(qAddRot, rot);
+			model->SetRot(rot);
+		}
+		else {
+			//ドアが開く前の当たり判定を消す。
+			pso.ReMove();
+			//ドアが開いた後の当たり判定を作成。
+			m_physicsStaticObject.CreateMeshObject(PSOmodel->GetModel(), model->GetPos(), rot);
+			m_isRotate = false;
 		}
 	}
 }

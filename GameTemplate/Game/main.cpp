@@ -2,7 +2,6 @@
 #include "system/system.h"
 #include "Title.h"
 #include "Game.h"
-#include "Inventory.h"
 
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
@@ -35,6 +34,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 #endif // CREATE_MODE
 
 	Inventory::GetInstance();
+	NewGO<Serif>(GOPrio_Defalut);
 
 	//デバッグモードのオンオフ
 	bool m_isDebug = false;

@@ -7,12 +7,12 @@ FBXHeaderExtension:  {
 	CreationTimeStamp:  {
 		Version: 1000
 		Year: 2020
-		Month: 7
-		Day: 16
+		Month: 8
+		Day: 15
 		Hour: 18
-		Minute: 37
-		Second: 7
-		Millisecond: 743
+		Minute: 21
+		Second: 14
+		Millisecond: 899
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.0"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -34,13 +34,13 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "3ds Max"
 			P: "Original|ApplicationVersion", "KString", "", "", "2019"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "16/07/2020 09:37:07.742"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "15/08/2020 09:21:14.898"
 			P: "Original|FileName", "KString", "", "", "D:\git_hirota\GameTemplate\Game\Assets\modelData\rockdoor\rockdoor.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "3ds Max"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2019"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "16/07/2020 09:37:07.742"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "15/08/2020 09:21:14.898"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\GC201\OneDrive\ドキュメント\3dsMax"
 		}
 	}
@@ -76,7 +76,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1900245817344, "", "Scene" {
+	Document: 2456650909712, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", ""
@@ -96,7 +96,7 @@ References:  {
 
 Definitions:  {
 	Version: 100
-	Count: 15
+	Count: 8
 	ObjectType: "GlobalSettings" {
 		Count: 1
 	}
@@ -206,19 +206,6 @@ Definitions:  {
 			}
 		}
 	}
-	ObjectType: "Geometry" {
-		Count: 1
-		PropertyTemplate: "FbxMesh" {
-			Properties70:  {
-				P: "Color", "ColorRGB", "Color", "",0.8,0.8,0.8
-				P: "BBoxMin", "Vector3D", "Vector", "",0,0,0
-				P: "BBoxMax", "Vector3D", "Vector", "",0,0,0
-				P: "Primary Visibility", "bool", "", "",1
-				P: "Casts Shadows", "bool", "", "",1
-				P: "Receive Shadows", "bool", "", "",1
-			}
-		}
-	}
 	ObjectType: "Material" {
 		Count: 1
 		PropertyTemplate: "FbxSurfacePhong" {
@@ -271,25 +258,16 @@ Definitions:  {
 			}
 		}
 	}
-	ObjectType: "CollectionExclusive" {
-		Count: 3
-		PropertyTemplate: "FbxDisplayLayer" {
+	ObjectType: "Geometry" {
+		Count: 1
+		PropertyTemplate: "FbxMesh" {
 			Properties70:  {
 				P: "Color", "ColorRGB", "Color", "",0.8,0.8,0.8
-				P: "Show", "bool", "", "",1
-				P: "Freeze", "bool", "", "",0
-				P: "LODBox", "bool", "", "",0
-			}
-		}
-	}
-	ObjectType: "AnimationCurve" {
-		Count: 3
-	}
-	ObjectType: "AnimationCurveNode" {
-		Count: 1
-		PropertyTemplate: "FbxAnimCurveNode" {
-			Properties70:  {
-				P: "d", "Compound", "", ""
+				P: "BBoxMin", "Vector3D", "Vector", "",0,0,0
+				P: "BBoxMax", "Vector3D", "Vector", "",0,0,0
+				P: "Primary Visibility", "bool", "", "",1
+				P: "Casts Shadows", "bool", "", "",1
+				P: "Receive Shadows", "bool", "", "",1
 			}
 		}
 	}
@@ -326,18 +304,18 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1899486238960, "Geometry::", "Mesh" {
+	Geometry: 2455544537760, "Geometry::", "Mesh" {
 		Properties70:  {
-			P: "Color", "ColorRGB", "Color", "",0.105882352941176,0.105882352941176,0.694117647058824
+			P: "Color", "ColorRGB", "Color", "",0.650980392156863,0.898039215686275,0.898039215686275
 		}
 		Vertices: *24 {
-			a: -89.5279541015625,-25.9033699035645,0,89.5279541015625,-25.9033699035645,0,-89.5279541015625,25.9033699035645,0,89.5279541015625,25.9033699035645,0,-89.5279541015625,-25.9033699035645,217.261154174805,89.5279541015625,-25.9033699035645,217.261154174805,-89.5279541015625,25.9033699035645,217.261154174805,89.5279541015625,25.9033699035645,217.261154174805
+			a: -84.4666976928711,-153.648910522461,0,84.4666976928711,-153.648910522461,0,-84.4666976928711,153.648910522461,0,84.4666976928711,153.648910522461,0,-84.4666976928711,-153.648910522461,216.697845458984,84.4666976928711,-153.648910522461,216.697845458984,-84.4666976928711,153.648910522461,216.697845458984,84.4666976928711,153.648910522461,216.697845458984
 		} 
 		PolygonVertexIndex: *36 {
-			a: 2,3,-1,1,0,-4,7,6,-5,7,4,-6,5,4,-1,5,0,-2,5,1,-8,7,1,-4,6,7,-4,6,3,-3,6,2,-5,4,2,-1
+			a: 3,1,-1,0,2,-4,6,4,-8,7,4,-6,5,4,-1,5,0,-2,7,5,-2,7,1,-4,6,7,-4,6,3,-3,4,6,-3,4,2,-1
 		} 
 		Edges: *18 {
-			a: 0,1,2,3,5,6,7,8,10,11,13,14,17,19,23,26,29,31
+			a: 0,1,2,3,4,6,7,8,10,11,13,14,17,20,23,26,29,32
 		} 
 		GeometryVersion: 124
 		LayerElementNormal: 0 {
@@ -371,7 +349,7 @@ Objects:  {
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "Direct"
 			Tangents: *108 {
-				a: -1,-0,0,-1,-0,0,-1,-0,0,-1,-0,0,-1,-0,0,-1,-0,0,1,-0,-0,1,-0,-0,1,-0,-0,1,-0,-0,1,-0,-0,1,-0,-0,1,0,-0,1,0,-0,1,0,-0,1,0,-0,1,0,-0,1,0,-0,0,1,-0,0,1,-0,0,1,-0,0,1,-0,0,1,-0,-0,1,-0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,-0
+				a: -1,-0,0,-1,-0,0,-1,-0,0,-1,-0,0,-1,-0,0,-1,-0,0,1,-0,-0,1,-0,-0,1,-0,-0,1,-0,-0,1,-0,-0,1,-0,-0,1,0,-0,1,0,-0,1,0,-0,1,0,-0,1,0,-0,1,0,-0,-0,1,-0,-0,1,-0,-0,1,-0,-0,1,-0,-0,1,-0,-0,1,-0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,0,-1,-0,0,-1,-0,0,-1,-0,0,-1,-0,0,-1,-0,0,-1,-0
 			} 
 			TangentsW: *36 {
 				a: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
@@ -386,7 +364,7 @@ Objects:  {
 				a: 1,0,0,0,1,1,0,1,0,0,1,0,0,1,1,1,0,0,1,0,0,1,1,1,0,0,1,0,0,1,1,1,0,0,1,0,0,1,1,1,0,0,1,0,0,1,1,1
 			} 
 			UVIndex: *36 {
-				a: 2,3,0,1,0,3,7,6,4,7,4,5,11,10,8,11,8,9,14,12,15,15,12,13,19,18,16,19,16,17,22,20,23,23,20,21
+				a: 3,1,0,0,2,3,6,4,7,7,4,5,11,10,8,11,8,9,15,14,12,15,12,13,19,18,16,19,16,17,23,22,20,23,20,21
 			} 
 		}
 		LayerElementMaterial: 0 {
@@ -422,20 +400,20 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1900244925248, "Model::Box001", "Mesh" {
+	Model: 2456726134368, "Model::Box001", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
 			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
 			P: "DefaultAttributeIndex", "int", "Integer", "",0
-			P: "Lcl Translation", "Lcl Translation", "", "A",-89.5612411499023,7.0701904296875,0
-			P: "UDP3DSMAX", "KString", "", "U", "MapChannel:1 = UVChannel_1&cr;&lf;"
-			P: "MaxHandle", "int", "Integer", "UH",4
+			P: "Lcl Translation", "Lcl Translation", "", "A",-66.0505752563477,0.0238685607910156,0
+			P: "Lcl Scaling", "Lcl Scaling", "", "A",0.770044,0.038051,1.032605
+			P: "MaxHandle", "int", "Integer", "UH",79
 		}
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1900105341552, "Material::Material #26", "" {
+	Material: 2456733746368, "Material::Material #28", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -448,6 +426,7 @@ Objects:  {
 			P: "SpecularColor", "Color", "", "A",0.899999976158142,0.899999976158142,0.899999976158142
 			P: "SpecularFactor", "Number", "", "A",0
 			P: "ShininessExponent", "Number", "", "A",2
+			P: "有効", "Bool", "", "AU",0
 			P: "Emissive", "Vector3D", "Vector", "",0,0,0
 			P: "Ambient", "Vector3D", "Vector", "",0.587999999523163,0.587999999523163,0.587999999523163
 			P: "Diffuse", "Vector3D", "Vector", "",0.587999999523163,0.587999999523163,0.587999999523163
@@ -457,7 +436,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Video: 1900105342032, "Video::マップ #2", "Clip" {
+	Video: 2456733747808, "Video::マップ #4", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "D:\git_hirota\GameTemplate\Game\Assets\modelData\rockdoor\red.png"
@@ -467,15 +446,15 @@ Objects:  {
 		Filename: "D:\git_hirota\GameTemplate\Game\Assets\modelData\rockdoor\red.png"
 		RelativeFilename: "red.png"
 	}
-	Texture: 1900105339152, "Texture::マップ #2", "" {
+	Texture: 2456733748768, "Texture::マップ #4", "" {
 		Type: "TextureVideoClip"
 		Version: 202
-		TextureName: "Texture::マップ #2"
+		TextureName: "Texture::マップ #4"
 		Properties70:  {
 			P: "UVSet", "KString", "", "", "UVChannel_1"
 			P: "UseMaterial", "bool", "", "",1
 		}
-		Media: "Video::マップ #2"
+		Media: "Video::マップ #4"
 		FileName: "D:\git_hirota\GameTemplate\Game\Assets\modelData\rockdoor\red.png"
 		RelativeFilename: "red.png"
 		ModelUVTranslation: 0,0
@@ -483,98 +462,13 @@ Objects:  {
 		Texture_Alpha_Source: "Alpha_Black"
 		Cropping: 0,0,0,0
 	}
-	AnimationStack: 1899316369664, "AnimStack::Take 001", "" {
+	AnimationStack: 2455034417696, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",153953860000
 			P: "ReferenceStop", "KTime", "Time", "",153953860000
 		}
 	}
-	AnimationCurve: 1900245811696, "AnimCurve::", "" {
-		Default: 0
-		KeyVer: 4009
-		KeyTime: *1 {
-			a: 0
-		} 
-		KeyValueFloat: *1 {
-			a: 0
-		} 
-		;KeyAttrFlags: Cubic|TangeantUser|WeightedRight
-		KeyAttrFlags: *1 {
-			a: 16778248
-		} 
-		;KeyAttrDataFloat: RightSlope:0, NextLeftSlope:0, RightWeight:0.333233, NextLeftWeight:0.333333, RightVelocity:0, NextLeftVelocity:0
-		KeyAttrDataFloat: *4 {
-			a: 0,0,218434820,0
-		} 
-		KeyAttrRefCount: *1 {
-			a: 1
-		} 
-	}
-	AnimationCurve: 1900245810896, "AnimCurve::", "" {
-		Default: 0
-		KeyVer: 4009
-		KeyTime: *1 {
-			a: 0
-		} 
-		KeyValueFloat: *1 {
-			a: 0
-		} 
-		;KeyAttrFlags: Cubic|TangeantUser|WeightedRight
-		KeyAttrFlags: *1 {
-			a: 16778248
-		} 
-		;KeyAttrDataFloat: RightSlope:0, NextLeftSlope:0, RightWeight:0.333233, NextLeftWeight:0.333333, RightVelocity:0, NextLeftVelocity:0
-		KeyAttrDataFloat: *4 {
-			a: 0,0,218434820,0
-		} 
-		KeyAttrRefCount: *1 {
-			a: 1
-		} 
-	}
-	AnimationCurve: 1900245813136, "AnimCurve::", "" {
-		Default: 0
-		KeyVer: 4009
-		KeyTime: *1 {
-			a: 0
-		} 
-		KeyValueFloat: *1 {
-			a: 0
-		} 
-		;KeyAttrFlags: Cubic|TangeantUser|WeightedRight
-		KeyAttrFlags: *1 {
-			a: 16778248
-		} 
-		;KeyAttrDataFloat: RightSlope:0, NextLeftSlope:0, RightWeight:0.333233, NextLeftWeight:0.333333, RightVelocity:0, NextLeftVelocity:0
-		KeyAttrDataFloat: *4 {
-			a: 0,0,218434820,0
-		} 
-		KeyAttrRefCount: *1 {
-			a: 1
-		} 
-	}
-	AnimationCurveNode: 1899316370080, "AnimCurveNode::R", "" {
-		Properties70:  {
-			P: "d|X", "Number", "", "A",0
-			P: "d|Y", "Number", "", "A",0
-			P: "d|Z", "Number", "", "A",0
-		}
-	}
-	AnimationLayer: 1899315632192, "AnimLayer::BaseLayer", "" {
-	}
-	CollectionExclusive: 1900105116624, "DisplayLayer::Layer1101_hp", "DisplayLayer" {
-		Properties70:  {
-			P: "Color", "ColorRGB", "Color", "",0.882352941176471,0.337254901960784,0.772549019607843
-		}
-	}
-	CollectionExclusive: 1900105115280, "DisplayLayer::clip", "DisplayLayer" {
-		Properties70:  {
-			P: "Color", "ColorRGB", "Color", "",0.0235294117647059,0.52156862745098,0.0235294117647059
-		}
-	}
-	CollectionExclusive: 1900105114320, "DisplayLayer::hp", "DisplayLayer" {
-		Properties70:  {
-			P: "Color", "ColorRGB", "Color", "",0.333333333333333,0.882352941176471,0.768627450980392
-		}
+	AnimationLayer: 2456758075104, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -584,37 +478,22 @@ Objects:  {
 Connections:  {
 	
 	;Model::Box001, Model::RootNode
-	C: "OO",1900244925248,0
+	C: "OO",2456726134368,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1899315632192,1899316369664
+	C: "OO",2456758075104,2455034417696
 	
-	;AnimCurveNode::R, AnimLayer::BaseLayer
-	C: "OO",1899316370080,1899315632192
+	;Material::Material #28, Model::Box001
+	C: "OO",2456733746368,2456726134368
 	
 	;Geometry::, Model::Box001
-	C: "OO",1899486238960,1900244925248
+	C: "OO",2455544537760,2456726134368
 	
-	;Material::Material #26, Model::Box001
-	C: "OO",1900105341552,1900244925248
+	;Texture::マップ #4, Material::Material #28
+	C: "OP",2456733748768,2456733746368, "DiffuseColor"
 	
-	;AnimCurveNode::R, Model::Box001
-	C: "OP",1899316370080,1900244925248, "Lcl Rotation"
-	
-	;Texture::マップ #2, Material::Material #26
-	C: "OP",1900105339152,1900105341552, "DiffuseColor"
-	
-	;Video::マップ #2, Texture::マップ #2
-	C: "OO",1900105342032,1900105339152
-	
-	;AnimCurve::, AnimCurveNode::R
-	C: "OP",1900245811696,1899316370080, "d|X"
-	
-	;AnimCurve::, AnimCurveNode::R
-	C: "OP",1900245810896,1899316370080, "d|Y"
-	
-	;AnimCurve::, AnimCurveNode::R
-	C: "OP",1900245813136,1899316370080, "d|Z"
+	;Video::マップ #4, Texture::マップ #4
+	C: "OO",2456733747808,2456733748768
 }
 ;Takes section
 ;----------------------------------------------------

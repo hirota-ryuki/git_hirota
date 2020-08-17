@@ -1,6 +1,4 @@
 #pragma once
-class Player;
-class Pose;
 class BulletStack :
 	public IItem
 {
@@ -43,7 +41,6 @@ private:
 	//インスタンス関係。
 	Game*				m_game = nullptr;						//Gameのポインタ。
 	Player*				m_player = nullptr;						//プレイヤークラスのポインタ。
-	//Pose*				m_pose = nullptr;
 	//ライト関係。
 	CVector4			m_directionLightDirection = { 1.0f, -1.0f, 0.0f, 0.0f };
 	CVector4			m_directionLightColor = { 0.5f, 0.5f, 0.5f, 10.2f };

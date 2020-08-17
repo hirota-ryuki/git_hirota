@@ -12,8 +12,8 @@ private:
 public:
 	//シングルトン。
 	static Inventory& GetInstance() {
-		static Inventory inctance;
-		return inctance;
+		static Inventory instance;
+		return instance;
 	}
 	bool Start() override { return true; };
 	void Update() override {};

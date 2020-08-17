@@ -57,7 +57,9 @@ const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 #include "FontRender.h"
 #include "RenderTarget.h"
 #include "Inventory.h"
+#include "Serif.h"
 #include "IItem.h"
+#include "IDoor.h"
 #include "Game.h"
 
 static const int MAX_BONE = 512;	//!<ボーンの最大数。

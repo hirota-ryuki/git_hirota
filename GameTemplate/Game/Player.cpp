@@ -23,10 +23,17 @@ void Player::OnDestroy()
 
 bool Player::Start()
 {
+	////キャラコンの初期化
+	//m_charaCon.Init(
+	//	50.f,
+	//	80.f,
+	//	m_position
+	//);
+	
 	//キャラコンの初期化
 	m_charaCon.Init(
-		50.f,
-		80.f,
+		40.f,
+		90.f,
 		m_position
 	);
 
@@ -78,8 +85,8 @@ bool Player::Start()
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 
-	Inv_AddItem(L"ball", 3);
-	Inv_AddItem(L"bulletstack", 24);
+	Inv_AddItem(L"受付の鍵", 3);
+	Inv_AddItem(L"弾薬", 24);
 	return true;
 }
 

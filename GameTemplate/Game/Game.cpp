@@ -10,10 +10,13 @@
 #include "RockDoor.h"
 #include "BulletStack.h"
 #include "Result.h"
-#include "Pose.h"
+#include "Menu.h"
 #include "Opening.h"
 #include "UI.h"
 #include "Map.h"
+#include <string>
+#include <iostream>
+
 
 //静的メンバ変数を定義する。
 Game* Game::m_game = nullptr;
@@ -46,12 +49,12 @@ void Game::OnDestroy()
 	DeleteGO(m_ceiling);
 	DeleteGO(m_floor);
 	DeleteGOs("mapchip");
-	DeleteGO(m_pose);
+	DeleteGO(m_menu);
 	DeleteGO(m_ui);
 	DeleteGO(m_map);
-	DeleteGO(m_rockdoor);
+	DeleteGOs("door");
 	DeleteGOs("bulletstack");
-	DeleteGOs("ball");
+	DeleteGOs("key");
 	IItem::Release();
 }
 
@@ -67,10 +70,13 @@ bool Game::Start()
 	LevelObjectData ceilingObjData;
 	LevelObjectData playerObjData;
 	LevelObjectData goalObjData;
-	LevelObjectData rockdoorObjData;
+	std::vector<LevelObjectData> rockdoorObjDatas;
+	std::vector<LevelObjectData> doorboxObjDatas;
 	std::vector<LevelObjectData> zombieObjDatas;
 	std::vector<LevelObjectData> ballObjDatas;
 	std::vector<LevelObjectData> bulletstackObjDatas;
+	std::vector<std::wstring> names;
+	//std::vector<wchar_t*> names;
 	m_level.Init(
 		levelname,
 		[&](LevelObjectData& objData) {
@@ -100,14 +106,20 @@ bool Game::Start()
 			zombieObjDatas.push_back(objData);
 			return true;
 		}
-		if (objData.ForwardMatchName(L"ball")) {
-			//配置しようとしているオブジェクトはボール。
+		if (objData.ForwardMatchName(L"key")) {
+			//配置しようとしているオブジェクトは鍵。
 			ballObjDatas.push_back(objData);
 			return true;
 		}
-		if (objData.ForwardMatchName(L"rockdoor")) {
-			//配置しようとしているオブジェクトはボール。
-			rockdoorObjData = objData;
+		if (objData.ForwardMatchName(L"door")) {
+			//配置しようとしているオブジェクトはドア。
+			rockdoorObjDatas.push_back(objData);
+			names.push_back(objData.name);
+			return true;
+		}
+		if (objData.ForwardMatchName(L"centerdoorbox")) {
+			//このオブジェクトはドアの中心座標。
+			doorboxObjDatas.push_back(objData);
 			return true;
 		}
 		if (objData.ForwardMatchName(L"bulletstack")) {
@@ -121,19 +133,16 @@ bool Game::Start()
 
 	//床を構築。
 	m_floor = NewGO<Floor>(GOPrio_Defalut);
-	//配置情報から座標と回転をステージに渡す。
 	m_floor->SetPos(floorObjData.position);
 	m_floor->SetRot(floorObjData.rotation);
 	
 	//天井を構築。
 	m_ceiling = NewGO<Ceiling>(GOPrio_Defalut);
-	//配置情報から座標と回転をステージに渡す。
 	m_ceiling->SetPos(ceilingObjData.position);
 	m_ceiling->SetRot(ceilingObjData.rotation);
 	   
 	//プレイヤーを構築。
 	m_player = NewGO<Player>(GOPrio_Defalut);
-	//配置情報から座標と回転をステージに渡す。
 	m_player->SetPos(playerObjData.position);
 	m_player->SetRot(playerObjData.rotation);
 
@@ -142,17 +151,15 @@ bool Game::Start()
 	
 	//ゴールを構築。
 	m_goal = NewGO<Goal>(GOPrio_Defalut);
-	//配置情報から座標と回転をステージに渡す。
 	m_goal->SetPos(goalObjData.position);
 	m_goal->SetRot(goalObjData.rotation);
 
-	////ゾンビを構築。
-	//for (auto& objData : zombieObjDatas) {
-	//	m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
-	//	//配置情報から座標と回転をステージに渡す。
-	//	m_zombie->SetPos(objData.position);
-	//	m_zombie->SetRot(objData.rotation);
-	//}
+	//ゾンビを構築。
+	for (auto& objData : zombieObjDatas) {
+		m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
+		m_zombie->SetPos(objData.position);
+		m_zombie->SetRot(objData.rotation);
+	}
 	
 	//UIの構築。
 	m_ui = NewGO<UI>(GOPrio_Defalut);
@@ -162,8 +169,7 @@ bool Game::Start()
 	
 	//ボールを構築。
 	for (auto& objData : ballObjDatas) {
-		m_ball = NewGO<Ball>(GOPrio_Defalut, "ball");
-		//配置情報から座標と回転をステージに渡す。
+		m_ball = NewGO<Key>(GOPrio_Defalut, "key");
 		m_ball->SetPos(objData.position);
 		m_ball->SetRot(objData.rotation);
 		//m_ball->SetNomber(_wtoi(&objData.name[11]));
@@ -172,22 +178,62 @@ bool Game::Start()
 	//弾薬を構築。
 	for (auto& objData : bulletstackObjDatas) {
 		m_bs = NewGO<BulletStack>(GOPrio_Defalut, "bulletstack");
-		//配置情報から座標と回転をステージに渡す。
-		//m_bs->GetModel()->SetPos(objData.position);
 		m_bs->SetPos(objData.position);
 		m_bs->SetRot(objData.rotation);
 		//m_ball->SetNomber(_wtoi(&objData.name[11]));
 	}
-	
+
 	//ドアを構築。
-	m_rockdoor = NewGO<RockDoor>(GOPrio_Defalut);
-	//配置情報から座標と回転をステージに渡す。
-	m_rockdoor->SetPos(rockdoorObjData.position);
-	m_rockdoor->SetRot(rockdoorObjData.rotation);
+	auto itr = names.begin();	
+	for (auto& objData : rockdoorObjDatas) {
+		std::wstring name;
+		if (*itr == L"door") {
+			name = L"鍵無し";
+		}
+		else {
+			name = itr->substr(5);
+		}
+
+		if (name == L"reception") {
+			name = L"受付";
+		}
+		if (name == L"detective") {
+			name = L"刑事課";
+		}
+		if (name == L"traffic") {
+			name = L"交通課";
+		}
+		if (name == L"document") {
+			name = L"資料室";
+		}
+		if (name == L"chief") {
+			name = L"署長室";
+		}
+		if (name != L"鍵無し") {
+			name.append(L"の鍵");
+		}
+
+		m_rockdoor = NewGO<RockDoor>(GOPrio_Defalut, "door");
+		m_rockdoor->SetPos(objData.position);
+		m_rockdoor->SetRot(objData.rotation);
+		m_rockdoor->SetName(name);
+		//このドアに一番近い中心座標を取得。
+		float min = FLT_MAX;
+		LevelObjectData nearObj;
+		for (auto& boxdata : doorboxObjDatas) {
+			CVector3 diff = boxdata.position - objData.position;
+			if (diff.Length() < min) {
+				min = diff.Length();
+				nearObj = boxdata;
+			}
+		}
+		m_rockdoor->SetCenterPos(nearObj.position);
+		itr++;
+	}
 	
-	//ポーズを構築。
+	//メニューを構築。
 	//アイテムデータ追加の有無を判定するため一番最後に生成。
-	m_pose = NewGO<Pose>(GOPrio_Defalut);
+	m_menu = NewGO<Menu>(GOPrio_Defalut);
 	
 #ifdef CREATE_MODE
 #else

@@ -124,9 +124,6 @@
     <Filter Include="Engine\font">
       <UniqueIdentifier>{d44b41bc-418b-49e5-8f8b-3178f04fd8f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\RockDoor">
-      <UniqueIdentifier>{29c3b63b-d8c9-4ba0-9af5-c81ff6ea5ab9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Camera">
       <UniqueIdentifier>{3bc132de-25ab-496d-b3a5-216adeb3c59e}</UniqueIdentifier>
     </Filter>
@@ -166,11 +163,17 @@
     <Filter Include="Assets\sprite\item">
       <UniqueIdentifier>{e19c20dc-f329-4417-a529-c582bb1b625f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Pose">
-      <UniqueIdentifier>{7dd33e0c-65eb-49ff-992e-e96d1e64a534}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Inventory">
       <UniqueIdentifier>{0436680c-d621-49b6-9b46-e0a07c91613c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Door">
+      <UniqueIdentifier>{4731f832-e916-412f-8ede-27af4c42b7b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Door\RockDoor">
+      <UniqueIdentifier>{29c3b63b-d8c9-4ba0-9af5-c81ff6ea5ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Menu">
+      <UniqueIdentifier>{57ba9c85-35ac-4ddc-baf9-758645911c1a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -309,9 +312,6 @@
     <ClCompile Include="sound\SoundSource.cpp">
       <Filter>Engine\sound</Filter>
     </ClCompile>
-    <ClCompile Include="Pose.cpp">
-      <Filter>Game\Pose</Filter>
-    </ClCompile>
     <ClCompile Include="Opening.cpp">
       <Filter>Game\OP</Filter>
     </ClCompile>
@@ -337,7 +337,7 @@
       <Filter>Game\Item\BulletStack</Filter>
     </ClCompile>
     <ClCompile Include="RockDoor.cpp">
-      <Filter>Game\RockDoor</Filter>
+      <Filter>Game\Door\RockDoor</Filter>
     </ClCompile>
     <ClCompile Include="graphics\SkinModel.cpp">
       <Filter>Engine\graphics\SkinModel</Filter>
@@ -387,7 +387,13 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Game\Inventory</Filter>
     </ClCompile>
-    <ClCompile Include="IDoor.cpp" />
+    <ClCompile Include="IDoor.cpp">
+      <Filter>Game\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="Serif.cpp" />
+    <ClCompile Include="Menu.cpp">
+      <Filter>Game\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -531,9 +537,6 @@
     <ClInclude Include="sound\SoundSource.h">
       <Filter>Engine\sound</Filter>
     </ClInclude>
-    <ClInclude Include="Pose.h">
-      <Filter>Game\Pose</Filter>
-    </ClInclude>
     <ClInclude Include="Opening.h">
       <Filter>Game\OP</Filter>
     </ClInclude>
@@ -559,7 +562,7 @@
       <Filter>Game\Item\BulletStack</Filter>
     </ClInclude>
     <ClInclude Include="RockDoor.h">
-      <Filter>Game\RockDoor</Filter>
+      <Filter>Game\Door\RockDoor</Filter>
     </ClInclude>
     <ClInclude Include="graphics\SkinModel.h">
       <Filter>Engine\graphics\SkinModel</Filter>
@@ -618,7 +621,13 @@
     <ClInclude Include="Inventory.h">
       <Filter>Game\Inventory</Filter>
     </ClInclude>
-    <ClInclude Include="IDoor.h" />
+    <ClInclude Include="IDoor.h">
+      <Filter>Game\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="Serif.h" />
+    <ClInclude Include="Menu.h">
+      <Filter>Game\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
@@ -669,6 +678,12 @@
     <ImageContentTask Include="Assets\sprite\item\button.png">
       <Filter>Assets\sprite\item</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\serif.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -676,9 +691,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\ball\ball.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\battlefield\floor.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
@@ -712,10 +724,22 @@
     <MeshContentTask Include="Assets\modelData\player\player.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\zombie\zombie.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\ball\key.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\mapChip\new_stage_wall.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\rockdoor\rockdoor.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\zombie\zombie.fbx">
+    <MeshContentTask Include="Assets\modelData\rockdoor\blood_door\door.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\rockdoor\doorbox\doorbox.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>

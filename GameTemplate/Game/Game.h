@@ -11,11 +11,11 @@ class Ceiling;
 class Player;
 class Goal;
 class Zombie;
-class Ball;
+class Key;
 class RockDoor;
 class BulletStack;
 class Result;
-class Pose;
+class Menu;
 class Opening;
 class UI;
 class Map;
@@ -65,9 +65,9 @@ public:
 	/// ポーズメニューのインスタンスを取得。
 	/// </summary>
 	/// <returns>ポーズメニューのインスタンス</returns>
-	Pose* GetPose()
+	Menu* GetMenu()
 	{
-		return m_pose;
+		return m_menu;
 	}
 	/// <summary>
 	/// UIのインスタンスを取得。
@@ -119,10 +119,10 @@ private:
 	Player*			m_player = nullptr;		//Playerクラスのポインタ。
 	Goal*			m_goal = nullptr;		//Goalクラスのポインタ。
 	Zombie*			m_zombie = nullptr;		//Zombieクラスのポインタ。
-	Ball*			m_ball = nullptr;		//Ballクラスのポインタ。
+	Key*			m_ball = nullptr;		//Ballクラスのポインタ。
 	RockDoor*		m_rockdoor = nullptr;	//RockDoorクラスのポインタ。
 	BulletStack*	m_bs = nullptr;			//BulletStackクラスのポインタ。
-	Pose*			m_pose = nullptr;		//Poseクラスのポインタ。
+	Menu*			m_menu = nullptr;		//Menuクラスのポインタ。
 	Opening*		m_op = nullptr;			//Openingクラスのポインタ。
 	Result*			m_result = nullptr;		//Resultクラスのポインタ。
 	UI*				m_ui = nullptr;			//UIクラスのポインタ。

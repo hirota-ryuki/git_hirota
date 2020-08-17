@@ -11,8 +11,8 @@ const float			ENEMY_AND_PLAYER_DISTANCE_BUTTON = 500.0f;	//ƒ{ƒ^ƒ“‚ğ•\¦‚·‚éA“G‚
 const float			ENEMY_AND_PLAYER_DISTANCE_MOVE   = 100.0f;	//‰æ‘œ‚ğ“®‚©‚·A“G‚ÆƒvƒŒƒCƒ„[‚Ì‹——£‚Ì”ÍˆÍB
 const int			TIME_TO_STOP = 125;							//‰æ‘œ‚ª~‚Ü‚Á‚Ä‚¢‚éŠÔB
 
-class Player;
 class Game;
+class Player;
 
 struct deleter_SpriteRender  {
 	void operator()(SpriteRender* ptr) {

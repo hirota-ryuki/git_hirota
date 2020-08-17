@@ -35,6 +35,16 @@ public:
 	void SetUserIndex(int index){
 		m_rigidBody.GetBody()->setUserIndex(index);
 	}
+	void SetRotation(const CQuaternion& rot) {
+		btRigidBody* btBody = m_rigidBody.GetBody();
+		//剛体を動かす。
+		btBody->setActivationState(DISABLE_DEACTIVATION);
+		btTransform& trans = btBody->getWorldTransform();
+		trans.setRotation(btQuaternion(rot.x, rot.y, rot.z));
+	}
+	void ReMove() {
+		g_physics.RemoveRigidBody(m_rigidBody);
+	}
 private:
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。
 	RigidBody m_rigidBody;				//!<剛体。

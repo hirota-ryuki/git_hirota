@@ -1,14 +1,12 @@
 #pragma once
 #include "IGameObject.h"
-class Player;
-class Pose;
 
-class Ball :
+class Key :
 	public IItem
 {
 public:
-	Ball();
-	~Ball();
+	Key();
+	~Key();
 	void ItemDestroy() override;
 	void ItemStart() override;
 	void ItemUpdate() override;
@@ -44,14 +42,13 @@ private:
 	int					m_nomber = 0;							//識別番号。		
 	Game*				m_game = nullptr;						//Gameのポインタ。
 	Player*				m_player = nullptr;						//プレイヤークラスのポインタ。
-	Pose*				m_pose = nullptr;
 
 	//ポップアップ画像関係。
 	SpriteRender*		m_sprite = nullptr;
 	CVector2			m_spritePos = FRAME_OUT_POS;
 
 	//アイテムデータ。
-	const wchar_t* NAME = L"ball";
+	const wchar_t* NAME = L"鍵";
 	const int      ADD = 1;
 };
 

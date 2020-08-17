@@ -57,8 +57,8 @@ void Map::Update()
 		CVector2 playerPos = CVector2::Zero();
 		//x座標は3dsMaxからの出力の際に反対になってるから-1をかけなくてよい。
 		//マップの画像は中心がずれているため最後にずらす。
-		playerPos.x = m_mapSpritePos.x + playerSpritePosX - 35.0f;
-		playerPos.y = m_mapSpritePos.y + playerSpritePosY * -1 - 10.0f;
+		playerPos.x = m_mapSpritePos.x + playerSpritePosX /*- 35.0f*/;
+		playerPos.y = m_mapSpritePos.y + playerSpritePosY * -1/* - 10.0f*/;
 		m_playerSprite->SetPos(playerPos);
 
 		m_mapSprite->ChangeActive();
