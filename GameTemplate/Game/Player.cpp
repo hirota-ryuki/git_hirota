@@ -85,8 +85,8 @@ bool Player::Start()
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 
-	Inv_AddItem(L"受付の鍵", 3);
 	Inv_AddItem(L"弾薬", 24);
+	Inv_AddItem(L"受付の鍵", 1);
 	return true;
 }
 

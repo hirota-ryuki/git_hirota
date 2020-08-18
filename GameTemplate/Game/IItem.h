@@ -40,7 +40,7 @@ public:
 	SpriteRender* SpriteLoad(const wchar_t* filePath, float w, float h);
 	
 	/// <summary>
-	/// 
+	/// ‰Šú‰»ˆ—B
 	/// </summary>
 	void IItemInit();
 

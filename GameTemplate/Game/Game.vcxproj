@@ -100,7 +100,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AStar.cpp" />
-    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Key.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletStack.cpp" />
     <ClCompile Include="CameraCollisionSolver.cpp" />
@@ -184,7 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AStar.h" />
-    <ClInclude Include="Ball.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletStack.h" />
     <ClInclude Include="CameraCollisionSolver.h" />
@@ -297,9 +297,6 @@
     <ImageContentTask Include="Assets\sprite\player_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\ball\key.fbx">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\battlefield\battlefield.FBX">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
@@ -324,6 +321,7 @@
     <MeshContentTask Include="Assets\modelData\goal\goal.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\key\key.fbx" />
     <MeshContentTask Include="Assets\modelData\mapChip\new_stage_wall.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>

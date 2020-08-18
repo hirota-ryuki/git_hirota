@@ -157,9 +157,6 @@
     <Filter Include="Game\Item\BulletStack">
       <UniqueIdentifier>{557bc44e-5784-48b9-a4cf-0b32c24a0417}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Item\Ball">
-      <UniqueIdentifier>{814a6cea-a4d6-4ed3-a046-6ea2cdcfd541}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\sprite\item">
       <UniqueIdentifier>{e19c20dc-f329-4417-a529-c582bb1b625f}</UniqueIdentifier>
     </Filter>
@@ -174,6 +171,9 @@
     </Filter>
     <Filter Include="Game\Menu">
       <UniqueIdentifier>{57ba9c85-35ac-4ddc-baf9-758645911c1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Item\Key">
+      <UniqueIdentifier>{814a6cea-a4d6-4ed3-a046-6ea2cdcfd541}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -330,9 +330,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Game\Player\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Ball.cpp">
-      <Filter>Game\Item\Ball</Filter>
-    </ClCompile>
     <ClCompile Include="BulletStack.cpp">
       <Filter>Game\Item\BulletStack</Filter>
     </ClCompile>
@@ -393,6 +390,9 @@
     <ClCompile Include="Serif.cpp" />
     <ClCompile Include="Menu.cpp">
       <Filter>Game\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>Game\Item\Key</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -555,9 +555,6 @@
     <ClInclude Include="Player.h">
       <Filter>Game\Player\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Ball.h">
-      <Filter>Game\Item\Ball</Filter>
-    </ClInclude>
     <ClInclude Include="BulletStack.h">
       <Filter>Game\Item\BulletStack</Filter>
     </ClInclude>
@@ -627,6 +624,9 @@
     <ClInclude Include="Serif.h" />
     <ClInclude Include="Menu.h">
       <Filter>Game\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>Game\Item\Key</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -727,9 +727,6 @@
     <MeshContentTask Include="Assets\modelData\zombie\zombie.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\ball\key.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\mapChip\new_stage_wall.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
@@ -740,6 +737,9 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\rockdoor\doorbox\doorbox.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\key\key.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>

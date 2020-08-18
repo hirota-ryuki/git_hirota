@@ -35,6 +35,13 @@ public:
 	{
 		m_nomber = no;
 	}
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="name"></param>
+	void SetName(std::wstring name) {
+		m_name = name;
+	}
 private:
 	SkinModelRender*	m_model = nullptr;								//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
@@ -49,6 +56,8 @@ private:
 
 	//アイテムデータ。
 	const wchar_t* NAME = L"鍵";
+	std::wstring		m_name;
 	const int      ADD = 1;
+
 };
 

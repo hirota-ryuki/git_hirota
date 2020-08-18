@@ -1,7 +1,7 @@
 #pragma once
 #include "level/Level.h"
 //実装するときに不必要な手順を省略するためのモード。
-//GameではなくTitleを最初にNewGOする。
+//TitleではなくGameを最初にNewGOする。
 //オープニングを省略する。
 #define CREATE_MODE	
 
@@ -119,7 +119,7 @@ private:
 	Player*			m_player = nullptr;		//Playerクラスのポインタ。
 	Goal*			m_goal = nullptr;		//Goalクラスのポインタ。
 	Zombie*			m_zombie = nullptr;		//Zombieクラスのポインタ。
-	Key*			m_ball = nullptr;		//Ballクラスのポインタ。
+	Key*			m_key = nullptr;		//Ballクラスのポインタ。
 	RockDoor*		m_rockdoor = nullptr;	//RockDoorクラスのポインタ。
 	BulletStack*	m_bs = nullptr;			//BulletStackクラスのポインタ。
 	Menu*			m_menu = nullptr;		//Menuクラスのポインタ。

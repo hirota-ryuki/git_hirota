@@ -32,6 +32,37 @@ bool Menu::Start()
 void Menu::Update()
 {
 	FontRenderUpdate();
+	ResetIsAdd();
+	//追加済みのアイテムが0個になっていてアイテムデータから削除されていないか確認。
+	if (!Inv_GetIsAddData() && !Inv_GetIsAddNum()) {
+		if (Inv_GetIsDeleteItem()) {
+			//アイテムデータの取得。
+			auto itemMap = Inv_GetItemDataMap();
+			//フォントリストのイテレータ。
+			for (auto fitr = m_fontList.begin(); fitr != m_fontList.end();) {
+				auto iitr = itemMap.begin();
+				bool isContinue = false;
+				while (1) {
+					//イテレータが最後まで到達したら。
+					if (iitr == itemMap.end()) {
+						fitr = m_fontList.erase(fitr);
+						isContinue = true;
+						break;
+					}
+					//同じ名前がすでに存在していたら。
+					if (fitr->nameFR->GetText().compare(iitr->first) == 0) {
+						break;
+					}
+					iitr++;
+				}
+				if (!isContinue) {
+					fitr++;
+				}
+			}
+			SortingFontRnderPos();
+		}
+	}
+	
 	//スタートボタンを押したら。
 	if (g_pad[0].IsTrigger(enButtonStart))
 	{
@@ -43,7 +74,7 @@ void Menu::Update()
 		}
 	}
 
-	ResetIsAdd();
+	
 }
 void Menu::FontRenderUpdate()
 {
@@ -109,6 +140,7 @@ void Menu::FontRenderUpdate()
 		}
 		SortingFontRnderPos();
 	}
+	
 }
 void Menu::SortingFontRnderPos()
 {
@@ -130,15 +162,15 @@ void Menu::ResetIsAdd()
 	//追加もしくは値の変動が起きていたら。
 	if (Inv_GetIsAddData() || Inv_GetIsAddNum()) {
 		//フォントリストとアイテムデータのサイズが等しくなったら。
-		if (m_fontList.size() == Inv_GetItemDataMap().size()) {
+		if (m_fontList.size() >= Inv_GetItemDataMap().size()) {
 			//個数が一致しているか確認。
 			//アイテムデータの取得。
 			auto itemMap = Inv_GetItemDataMap();
 			//アイテムデータマップのイテレータ。
 			auto IMitr = itemMap.begin();
-			//初期値はリセットする状態。
-			bool isReset = true;
 			while (1) {
+				//初期値はリセットする状態。
+				bool isReset = true;
 				//イテレータが最後まで到達したら。
 				//GetItemDataMap()とm_fontListのデータの違いはなかったということ。
 				if (IMitr == itemMap.end()) {
@@ -146,6 +178,7 @@ void Menu::ResetIsAdd()
 					Inv_ResetIsAddData();
 					break;
 				}
+				//フォントリストの名前を確認。
 				auto FLitr = m_fontList.begin();
 				while (1) {
 					//イテレータが最後まで到達したら。
@@ -159,8 +192,11 @@ void Menu::ResetIsAdd()
 						//文字列の比較を行い、個数の変動が起きていないか確認。
 						//intからstd::wstringに変換。
 						std::wstring num = std::to_wstring(IMitr->second);
-						//個数が変わっているなら。
-						if (FLitr->numFR->GetText().compare(num) != 0) {
+						//個数が変わっていないなら。
+						if (FLitr->numFR->GetText().compare(num) == 0) {
+							break;
+						}
+						else {
 							isReset = false;
 							break;
 						}

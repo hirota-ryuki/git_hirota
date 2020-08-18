@@ -13,18 +13,29 @@ Inventory::~Inventory()
 
 void Inventory::AddItem(const wchar_t * name, int addnum)
 {
-	//nameをmapから見つける。
-	auto it = m_itemDataMap.find(name);
-	if (it == m_itemDataMap.end())
-	{
-		//新規追加。
-		m_itemDataMap.emplace(name, addnum);
-		m_isAddData = true;
-	}
-	else {
-		//すでに追加されていたら個数のみ変動させる。
-		it->second += addnum;
-		m_isAddNum=true;
+	//追加される個数が0でなかったら、処理を実行。
+	if (addnum != 0) {
+		//nameをmapから見つける。
+		auto it = m_itemDataMap.find(name);
+		if (it == m_itemDataMap.end())
+		{
+			//新規追加。
+			m_itemDataMap.emplace(name, addnum);
+			m_isAddData = true;
+		}
+		else {
+			//すでに追加されていたら個数のみ変動させる。
+			it->second += addnum;
+			m_isAddNum = true;
+			//個数が0になったら。
+			if (it->second <= 0) {
+				//アイテムデータマップから削除。
+				it = m_itemDataMap.erase(it);
+				//m_deleteItemDataMap.emplace(*it);
+				m_isDeleteItem = true;
+				m_isAddNum = false;
+			}
+		}
 	}
 }
 

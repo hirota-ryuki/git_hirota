@@ -44,8 +44,10 @@ public:
 	}
 	void ReMove() {
 		g_physics.RemoveRigidBody(m_rigidBody);
+		m_isReMove = true;
 	}
 private:
-	MeshCollider m_meshCollider;		//!<メッシュコライダー。
-	RigidBody m_rigidBody;				//!<剛体。
+	MeshCollider	m_meshCollider;			//!<メッシュコライダー。
+	RigidBody		m_rigidBody;			//!<剛体。
+	bool			m_isReMove = false;		//リムーブしたかどうか。
 };

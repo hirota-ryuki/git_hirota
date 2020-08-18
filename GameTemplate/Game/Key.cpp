@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Ball.h"
+#include "Key.h"
 #include "Player.h"
 
 Key::Key()
@@ -22,7 +22,7 @@ void Key::ItemStart()
 	//ƒ{[ƒ‹‚ÌŽ¯•Ê”Ô†B
 	wchar_t ballNo[60];
 	/*swprintf_s(ballNo, L"modelData/ball/ball%d.cmo", m_nomber);*/
-	swprintf_s(ballNo, L"modelData/ball/key.cmo");
+	swprintf_s(ballNo, L"modelData/key/key.cmo");
 	m_model->Init(ballNo);
 	m_model->SetData(m_position, m_rotation);
 	//IItem::SetName(L"Ball");
@@ -42,5 +42,5 @@ void Key::ItemUpdate()
 
 void Key::OnGet()
 {
-	Inv_AddItem(NAME, ADD);
+	Inv_AddItem(m_name.c_str(), ADD);
 }

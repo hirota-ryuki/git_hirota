@@ -69,15 +69,33 @@ public:
 		m_isAddData = false;
 		m_isAddNum = false;
 	}
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	bool GetIsDeleteItem() {
+		return m_isDeleteItem;
+	}
+	/// <summary>
+	/// 削除の有無の判定をリセットする関数。
+	/// </summary>
+	void ResetIsDeleteItem() {
+		m_isDeleteItem = false;
+	}
 private:
 	//アイテムデータ。
 	std::unordered_map<
 		std::wstring,			//アイテムの名前。
 		int						//アイテムの個数。
 	>	m_itemDataMap;
+	std::unordered_map<
+		std::wstring,			//アイテムの名前。
+		int						//アイテムの個数。
+	>	m_deleteItemDataMap;
 
-	bool	m_isAddData = false;	//アイテムデータが追加されたどうか。
-	bool	m_isAddNum = false;		//アイテムの個数が追加されたどうか。
+	bool	m_isAddData = false;		//アイテムデータが追加されたどうか。
+	bool	m_isAddNum = false;			//アイテムの個数が追加されたどうか。
+	bool	m_isDeleteItem = false;		//アイテムが削除されたどうか。
 };
 
 static inline void Inv_AddItem(const wchar_t* name, int addnum) {
@@ -105,6 +123,10 @@ static inline bool Inv_GetIsAddData() {
 
 static inline bool Inv_GetIsAddNum() {
 	return Inventory::GetInstance().GetIsAddNum();
+}
+
+static inline bool Inv_GetIsDeleteItem() {
+	return Inventory::GetInstance().GetIsDeleteItem();
 }
 
 static inline int Inv_GetItemCount() {

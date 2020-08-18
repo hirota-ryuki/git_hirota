@@ -88,7 +88,7 @@ private:
 
 };
 
-#define REBUILD_NAVIMESH_DATA		//これを定義するとナビメッシュのデータが再作成される。
+//#define REBUILD_NAVIMESH_DATA		//これを定義するとナビメッシュのデータが再作成される。
 
 #ifdef _DEBUG
 	//#define USE_NAVIMESH_DEBUG	//これを定義すると、ナビメッシュのデバッグ表示が有効になる。

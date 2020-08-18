@@ -19,7 +19,6 @@ void IDoor::MoveDoor(const CVector3 & diff, SkinModelRender * model, SkinModelRe
 			if (g_pad[0].IsTrigger(enButtonB)) {
 				//鍵不要のドアだったら。
 				if (wcscmp(L"鍵無し", m_name.c_str()) == 0) {
-					
 					Sound(L"sound/story/decision.wav", false);
 					Message(L"ドアを開けた。");
 					//ドアを開く。
@@ -32,6 +31,7 @@ void IDoor::MoveDoor(const CVector3 & diff, SkinModelRender * model, SkinModelRe
 					if (Inv_FindItem(m_name.c_str()) > 0) {
 						Sound(L"sound/story/decision.wav", false);
 						Message(L"鍵を使用した。");
+						Inv_AddItem(m_name.c_str(), -1);
 						//ドアを開く。
 						m_isOpenDoor = true;
 						//回転させる。
