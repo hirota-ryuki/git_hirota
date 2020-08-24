@@ -13,7 +13,7 @@
 #define USE_NAVIMESH_DEBUG	//Release.
 #endif
 
-const float COLLIDER_EXPANSION = 3.6f;	//コライダーの拡大倍率。元々は2.45f。
+const float COLLIDER_EXPANSION = 2.45f;	//コライダーの拡大倍率。元々は2.45f。
 
 class Game;
 
