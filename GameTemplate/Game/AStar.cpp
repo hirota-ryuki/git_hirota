@@ -140,7 +140,8 @@ struct CallBack : public btCollisionWorld::ConvexResultCallback
 	//è’ìÀÇµÇΩÇÁèüéËÇ…åƒÇÒÇ≈Ç≠ÇÍÇÈÅB
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
-		if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Map) {
+		if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Map
+			|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_RigidBody) {
 			//ìñÇΩÇ¡ÇΩÅB
 			isHit = true;
 		}

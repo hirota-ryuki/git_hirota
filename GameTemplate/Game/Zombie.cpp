@@ -52,7 +52,9 @@ bool Zombie::Start()
 	m_debugModel = NewGO<SkinModelRender>(GOPrio_Defalut, "debug");
 	m_debugModel->Init(L"modelData/debug/debugstick.cmo");
 	m_debugrotation.SetRotationDeg(CVector3::AxisY(), 180.f);
-	m_debugModel->SetData(m_position, m_debugrotation);
+	CVector3 pos = m_position;
+	pos.x += NOT_ASTAR_DISTANCE;
+	m_debugModel->SetData(pos, m_debugrotation);
 #endif //DEBUG_MODE
 
 	//アニメーション。
@@ -190,7 +192,10 @@ void Zombie::Update()
 		CQuaternion Rot;
 		Rot.SetRotation(cross, acos(angle));
 		
-		m_debugModel->SetData(m_position, Rot);
+		//m_debugModel->SetData(m_position, Rot);
+		CVector3 pos = m_position;
+		pos.x += NOT_ASTAR_DISTANCE;
+		m_debugModel->SetPos(pos);
 #endif //DEBUG_MODE
 
 	}
@@ -259,7 +264,23 @@ struct CallBack : public btCollisionWorld::ConvexResultCallback
 	//衝突したら勝手に呼んでくれる。
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
-		if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Map) {
+		if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Map){
+			//当たった。
+			isHit = true;
+		}
+		return 0;
+	}
+};
+
+struct AstarCallBack : public btCollisionWorld::ConvexResultCallback
+{
+	//障害物があるかないか判定。
+	bool isHit = false;
+	//衝突したら勝手に呼んでくれる。
+	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+	{
+		if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Map
+			|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_RigidBody) {
 			//当たった。
 			isHit = true;
 		}
@@ -297,7 +318,7 @@ void Zombie::ChangeState()
 		}
 	}
 	
-	if (diff.Length() < 100.0f) {
+	if (diff.Length() < ATTACK_DISTANCE) {
 		//攻撃状態に遷移。
 		m_state = enState_attack;
 	}
@@ -312,7 +333,7 @@ void Zombie::Move()
 	//プレイヤーとの距離が近かったら。
 	//A*をしない。
 	CVector3 diff = m_player->GetPos() - m_position;
-	if (diff.Length() < 400.0f ){
+	if (diff.Length() < NOT_ASTAR_DISTANCE){
 		//コリジョンの移動の始点と終点の設定。
 		btTransform start, end;
 		{
@@ -322,7 +343,7 @@ void Zombie::Move()
 			start.setOrigin(btVector3(m_position.x, m_position.y + 20.f, m_position.z));
 			end.setOrigin(btVector3(m_player->GetPos().x, m_position.y + 20.f, m_player->GetPos().z));
 		}
-		CallBack callback;
+		AstarCallBack callback;
 		//startからendまでコリジョンを移動させて当たり判定を取る。
 		g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
 		//コリジョンにヒットしなかったら。
@@ -485,7 +506,7 @@ void Zombie::Attack()
 	//視野角。
 	//float degree = CalcViewingAngleDeg(f, diff);
 	//距離が200以内かつ。
-	if (diff.Length() < 200.0f
+	if (diff.Length() < ATTACK_DISTANCE
 	//45度なら。
 	//内積に符号は無い。
 		&& degree < 45.0f) {

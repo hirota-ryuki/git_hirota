@@ -30,10 +30,18 @@ bool Player::Start()
 	//	m_position
 	//);
 	
-	//キャラコンの初期化
+	/*//今のキャラコンの初期化
 	m_charaCon.Init(
 		40.f,
 		90.f,
+		m_position
+	);
+*/
+
+//ゾンビキャラコンの初期化
+	m_charaCon.Init(
+		20.0f,
+		100.0f,
 		m_position
 	);
 
@@ -86,7 +94,6 @@ bool Player::Start()
 	m_game = GetGame();
 
 	Inv_AddItem(L"弾薬", 24);
-	Inv_AddItem(L"受付の鍵", 1);
 	return true;
 }
 

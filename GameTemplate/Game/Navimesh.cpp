@@ -95,7 +95,7 @@ private:
 #else
 	#define USE_NAVIMESH_DEBUG	//これを定義すると、ナビメッシュのデバッグ表示が有効になる。
 #endif
-struct CallBack : public btCollisionWorld::ConvexResultCallback
+struct NMCallBack : public btCollisionWorld::ConvexResultCallback
 {
 	/// <summary>
 	/// 備考
@@ -368,8 +368,10 @@ void Navimesh::Create(SkinModel& model)
 			}
 			//カプセルコライダーの半径を拡大
 			CVector3 halfSize;
-			halfSize.x = maxLength.Length() * 2.5f;
-			halfSize.z = maxLength.Length() * 2.5f;
+			halfSize.x = maxLength.Length() * 2.45f;
+			halfSize.z = maxLength.Length() * 2.45f;
+			//halfSize.x = maxLength.Length() * 2.5f;
+			//halfSize.z = maxLength.Length() * 2.5f;
 			halfSize.y = 30.0f;
 			m_collider.Create(halfSize);
 
@@ -384,10 +386,10 @@ void Navimesh::Create(SkinModel& model)
 				//座標の設定
 				//Origin 意味：原点
 				start.setOrigin(btVector3(cell->centerPos.x, cell->centerPos.y + 20.f, cell->centerPos.z));
-				end.setOrigin(btVector3(cell->centerPos.x, cell->centerPos.y + 30.f, cell->centerPos.z));
+				end.setOrigin(btVector3(cell->centerPos.x, cell->centerPos.y + 50.f, cell->centerPos.z));
 			}
 
-			CallBack callback;
+			NMCallBack callback;
 			//startからendまでコリジョンを移動させて当たり判定を取る
 			g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
 			

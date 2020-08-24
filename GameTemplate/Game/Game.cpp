@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "GameCamera.h"
 #include "Floor.h"
+#include "ObjRigidbody.h"
 #include "Ceiling.h"
 #include "Player.h"
 #include "Goal.h"
@@ -47,6 +48,7 @@ void Game::OnDestroy()
 	DeleteGO(m_gamecamera);
 	DeleteGO(m_player);
 	DeleteGO(m_ceiling);
+	DeleteGO(m_objrb);
 	DeleteGO(m_floor);
 	DeleteGOs("mapchip");
 	DeleteGO(m_menu);
@@ -67,6 +69,7 @@ bool Game::Start()
 	wchar_t levelname[50];
 	swprintf_s(levelname, L"level/level01.tkl");
 	LevelObjectData floorObjData;
+	LevelObjectData objrigidbodyObjData;
 	LevelObjectData ceilingObjData;
 	LevelObjectData playerObjData;
 	LevelObjectData goalObjData;
@@ -83,22 +86,22 @@ bool Game::Start()
 		//ステージ遷移する場合は背景と床の番号を送るように
 		if (wcscmp(objData.name, floor) == 0) {
 			floorObjData = objData;
-
+			return true;
+		}
+		if (objData.EqualObjectName(L"RB_obj")) {
+			objrigidbodyObjData = objData;
 			return true;
 		}
 		if (wcscmp(objData.name, L"ceiling") == 0) {
 			ceilingObjData = objData;
-
 			return true;
 		}
 		if (wcscmp(objData.name, L"player") == 0) {
 			playerObjData = objData;
-
 			return true;
 		}
 		if (wcscmp(objData.name, L"goal") == 0) {
 			goalObjData = objData;
-
 			return true;
 		}
 		//配置しようとしているオブジェクトはゾンビ。
@@ -131,7 +134,15 @@ bool Game::Start()
 		return false;
 	}
 	);
+	Inv_AddItem(L"受付の鍵", 1);
+	Inv_AddItem(L"刑事課の鍵", 1);
+	Inv_AddItem(L"資料室の鍵", 1);
+	Inv_AddItem(L"署長室の鍵", 1);
 
+	m_objrb = NewGO<ObjRigidbody>(GOPrio_Defalut);
+	m_objrb->SetPos(objrigidbodyObjData.position);
+	m_objrb->SetRot(objrigidbodyObjData.rotation);
+	
 	//床を構築。
 	m_floor = NewGO<Floor>(GOPrio_Defalut);
 	m_floor->SetPos(floorObjData.position);
@@ -155,12 +166,12 @@ bool Game::Start()
 	m_goal->SetPos(goalObjData.position);
 	m_goal->SetRot(goalObjData.rotation);
 
-	////ゾンビを構築。
-	//for (auto& objData : zombieObjDatas) {
-	//	m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
-	//	m_zombie->SetPos(objData.position);
-	//	m_zombie->SetRot(objData.rotation);
-	//}
+	//ゾンビを構築。
+	for (auto& objData : zombieObjDatas) {
+		m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
+		m_zombie->SetPos(objData.position);
+		m_zombie->SetRot(objData.rotation);
+	}
 	
 	//UIの構築。
 	m_ui = NewGO<UI>(GOPrio_Defalut);

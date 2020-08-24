@@ -3,7 +3,8 @@
 #include "Level.h"
 #include "physics/CollisionAttr.h"
 
-MapChip::MapChip(const LevelObjectData& objData)
+//MapChip::MapChip(const LevelObjectData& objData)
+MapChip::MapChip(LevelObjectData& objData)
 {
 	wchar_t filePath[256];
 	//swprintf_s(filePath, L"modelData/%s.cmo", objData.name);
@@ -15,6 +16,9 @@ MapChip::MapChip(const LevelObjectData& objData)
 	m_model->SetData(objData.position, objData.rotation);
 	m_model->SetShadowCaster(true);
 	m_model->SetShadowReciever(true);
+	if (objData.ForwardMatchName(L"RB")) {
+		m_model->ActiveMode(false);
+	}
 	//静的物理オブジェクトをメッシュコライダーから作成する。
 	m_physicsStaticObject.CreateMeshObject(m_model->GetModel(), objData.position, objData.rotation);
 	m_physicsStaticObject.SetUserIndex(enCollisionAttr_Map);

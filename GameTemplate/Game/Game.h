@@ -7,6 +7,7 @@
 
 class GameCamera;
 class Floor;
+class ObjRigidbody;
 class Ceiling;
 class Player;
 class Goal;
@@ -115,6 +116,7 @@ private:
 	GameCamera*		m_gamecamera = nullptr;	//GameCameraクラスのポインタ。
 	Level			m_level;				//レベル。
 	Floor*			m_floor = nullptr;		//Floorクラスのポインタ。
+	ObjRigidbody*	m_objrb = nullptr;		//ObjRigidbodyクラスのポインタ。
 	Ceiling*		m_ceiling = nullptr;	//Ceilingクラスのポインタ。
 	Player*			m_player = nullptr;		//Playerクラスのポインタ。
 	Goal*			m_goal = nullptr;		//Goalクラスのポインタ。
@@ -131,6 +133,10 @@ private:
 	bool m_isClear = false;				//クリアしたかどうか。
 	bool m_isGameOver = false;			//ゲームオーバーしたかどうか。
 	bool m_isPose = false;				//一時停止したかどうか。
+	SkinModelRender* m_PSOmodel;
+	SkinModelRender* model;
+	PhysicsStaticObject physicsStaticObject;			//床の当たり判定。
+
 };
 
 static inline Game* GetGame()

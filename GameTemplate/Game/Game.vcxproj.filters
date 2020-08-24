@@ -394,6 +394,7 @@
     <ClCompile Include="Key.cpp">
       <Filter>Game\Item\Key</Filter>
     </ClCompile>
+    <ClCompile Include="ObjRigidbody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -628,6 +629,7 @@
     <ClInclude Include="Key.h">
       <Filter>Game\Item\Key</Filter>
     </ClInclude>
+    <ClInclude Include="ObjRigidbody.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
@@ -740,6 +742,12 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\key\key.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\object\object.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\mapChip\RB_obj.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>

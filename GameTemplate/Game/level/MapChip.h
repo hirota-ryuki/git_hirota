@@ -14,7 +14,8 @@ public:
 	* @brief	コンストラクタ。
 	*@param[in] objData			オブジェクト情報。
 	*/
-	MapChip(const LevelObjectData& objData);
+	//MapChip(const LevelObjectData& objData);
+	MapChip(LevelObjectData& objData);
 	/*!
 	* @brief	描画。
 	*/

@@ -3,6 +3,8 @@
 #include "AStar.h"
 #include "Navimesh.h"
 //#define DEBUG_MODE
+const float NOT_ASTAR_DISTANCE = 200.0f;
+const float ATTACK_DISTANCE = 100.0f;
 
 class Player;
 class Floor;
@@ -124,7 +126,7 @@ private:
 	CVector3		m_moveSpeed = CVector3::Zero();			//移動速度。
 	float			m_speed = 200.f;						//キャラが歩くスピード。
 	BoxCollider		m_collider;								//セル用のボックスコライダー
-	CVector3		m_boxSize = CVector3::One() * 40.0f;	//コライダーのサイズ。
+	CVector3		m_boxSize = CVector3::One() * 35.0f;	//コライダーのサイズ。
 	bool			m_isFind = false;						//プレイヤーが見つかったかどうか。
 	int				m_aStarCount = 0;						//A*の無限計算ループの回避用のカウンタ。
 
