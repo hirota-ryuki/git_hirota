@@ -27,23 +27,23 @@ bool Player::Start()
 	//m_charaCon.Init(
 	//	50.f,
 	//	80.f,
-	//	m_position
+	//	m_positionm
 	//);
 	
-	/*//今のキャラコンの初期化
+	//今のキャラコンの初期化
 	m_charaCon.Init(
 		40.f,
 		90.f,
 		m_position
 	);
-*/
 
-//ゾンビキャラコンの初期化
-	m_charaCon.Init(
-		20.0f,
-		100.0f,
-		m_position
-	);
+
+////ゾンビキャラコンの初期化
+//	m_charaCon.Init(
+//		20.0f,
+//		100.0f,
+//		m_position
+//	);
 
 	//アニメーションクリップのロード。
 	m_animationClip[enAnimationClip_idle].Load(L"animData/player/idle.tka");

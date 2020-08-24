@@ -88,13 +88,7 @@ private:
 
 };
 
-//#define REBUILD_NAVIMESH_DATA		//これを定義するとナビメッシュのデータが再作成される。
 
-#ifdef _DEBUG
-	//#define USE_NAVIMESH_DEBUG	//これを定義すると、ナビメッシュのデバッグ表示が有効になる。
-#else
-	#define USE_NAVIMESH_DEBUG	//これを定義すると、ナビメッシュのデバッグ表示が有効になる。
-#endif
 struct NMCallBack : public btCollisionWorld::ConvexResultCallback
 {
 	/// <summary>
@@ -368,8 +362,8 @@ void Navimesh::Create(SkinModel& model)
 			}
 			//カプセルコライダーの半径を拡大
 			CVector3 halfSize;
-			halfSize.x = maxLength.Length() * 2.45f;
-			halfSize.z = maxLength.Length() * 2.45f;
+			halfSize.x = maxLength.Length() * COLLIDER_EXPANSION;
+			halfSize.z = maxLength.Length() * COLLIDER_EXPANSION;
 			//halfSize.x = maxLength.Length() * 2.5f;
 			//halfSize.z = maxLength.Length() * 2.5f;
 			halfSize.y = 30.0f;
