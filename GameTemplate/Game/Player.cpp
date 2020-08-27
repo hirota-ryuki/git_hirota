@@ -37,14 +37,6 @@ bool Player::Start()
 		m_position
 	);
 
-
-////ゾンビキャラコンの初期化
-//	m_charaCon.Init(
-//		20.0f,
-//		100.0f,
-//		m_position
-//	);
-
 	//アニメーションクリップのロード。
 	m_animationClip[enAnimationClip_idle].Load(L"animData/player/idle.tka");
 	m_animationClip[enAnimationClip_walk].Load(L"animData/player/walk.tka");

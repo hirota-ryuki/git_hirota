@@ -3,13 +3,8 @@
 #include <unordered_map>
 const float			ITEM_SPRITE_W = 270.0f;
 const float			ITEM_SPRITE_H = 130.0f;
-const CVector2		FRAME_IN_POS =  { -(FRAME_BUFFER_W / 2 - ITEM_SPRITE_W / 2),-200.0f };
 const CVector2		FRAME_OUT_POS = { -(FRAME_BUFFER_W / 2 + ITEM_SPRITE_W / 2),-200.0f };
-const float			AMOUNT_OF_CHANGE = 10.0f;					//画像が移動する量、変化量。
-const float			B_BUTTON_SIZE    = 40.0f;					//Bボタンのサイズ。
-const float			ENEMY_AND_PLAYER_DISTANCE_BUTTON = 500.0f;	//ボタンを表示する、敵とプレイヤーの距離の範囲。
-const float			ENEMY_AND_PLAYER_DISTANCE_MOVE   = 100.0f;	//画像を動かす、敵とプレイヤーの距離の範囲。
-const int			TIME_TO_STOP = 125;							//画像が止まっている時間。
+
 
 class Game;
 class Player;
@@ -156,4 +151,12 @@ private:
 	//インスタンス関係。
 	Game*				m_game = nullptr;						//Gameのポインタ。
 	Player*				m_player = nullptr;
+
+	//定数関係。
+	const CVector2		FRAME_IN_POS = { -(FRAME_BUFFER_W / 2 - ITEM_SPRITE_W / 2),-200.0f };
+	const float			AMOUNT_OF_CHANGE = 10.0f;					//画像が移動する量、変化量。
+	const float			B_BUTTON_SIZE = 40.0f;						//Bボタンのサイズ。
+	const float			ENEMY_AND_PLAYER_DISTANCE_BUTTON = 250.0f;	//ボタンを表示する、アイテムとプレイヤーの距離の範囲。
+	const float			ENEMY_AND_PLAYER_DISTANCE_MOVE = 100.0f;	//画像を動かす、アイテムとプレイヤーの距離の範囲。
+	const int			TIME_TO_STOP = 125;							//画像が止まっている時間。
 };

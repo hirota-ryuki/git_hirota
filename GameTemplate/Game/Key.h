@@ -43,7 +43,7 @@ public:
 		m_name = name;
 	}
 private:
-	SkinModelRender*	m_model = nullptr;								//スキンモデル。
+	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
 	int					m_nomber = 0;							//識別番号。		

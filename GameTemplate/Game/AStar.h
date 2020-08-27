@@ -39,6 +39,6 @@ private:
 	std::vector<CVector3>::iterator m_itr;			//m_moveCellListTmpのイテレータ。
 	std::vector<CVector3> m_moveCellList;			//最終的に移動するセルのリスト。
 	BoxCollider m_collider;							//セル用のボックスコライダー。
-	CVector3	m_boxSize = CVector3::One()*40.0f;	//コライダーのサイズ。
+	CVector3	m_boxSize = CVector3::One()*20.0f;	//コライダーのサイズ。
 	float		m_boxHeight = 40.0f;				//箱を設置する高さ。		
 };

@@ -135,7 +135,6 @@ private:
 	bool m_isPose = false;				//ˆê’â~‚µ‚½‚©‚Ç‚¤‚©B
 	SkinModelRender* m_PSOmodel;
 	SkinModelRender* model;
-	PhysicsStaticObject physicsStaticObject;			//°‚Ì“–‚½‚è”»’èB
 
 };
 

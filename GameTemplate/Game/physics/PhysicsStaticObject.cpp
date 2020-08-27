@@ -12,22 +12,26 @@ PhysicsStaticObject::PhysicsStaticObject()
 }
 PhysicsStaticObject::~PhysicsStaticObject()
 {
-	if (m_isReMove) {
+	if (m_isInit&&m_isReMove) {
 		g_physics.RemoveRigidBody(m_rigidBody);
 	}
+	
 }
 
 void PhysicsStaticObject::CreateMeshObject(SkinModel& skinModel, CVector3 pos, CQuaternion rot)
 {
-	//メッシュコライダーを作成。
-	m_meshCollider.CreateFromSkinModel(skinModel, nullptr);
-	//剛体を作成、
-	RigidBodyInfo rbInfo;
-	rbInfo.collider = &m_meshCollider; //剛体に形状(コライダー)を設定する。
-	rbInfo.mass = 0.0f;
-	rbInfo.pos = pos;
-	rbInfo.rot = rot;
-	m_rigidBody.Create(rbInfo);
-	//剛体を物理ワールドに追加する。
-	g_physics.AddRigidBody(m_rigidBody);
+	if (!m_isInit) {
+		//メッシュコライダーを作成。
+		m_meshCollider.CreateFromSkinModel(skinModel, nullptr);
+		//剛体を作成、
+		RigidBodyInfo rbInfo;
+		rbInfo.collider = &m_meshCollider; //剛体に形状(コライダー)を設定する。
+		rbInfo.mass = 0.0f;
+		rbInfo.pos = pos;
+		rbInfo.rot = rot;
+		m_rigidBody.Create(rbInfo);
+		//剛体を物理ワールドに追加する。
+		g_physics.AddRigidBody(m_rigidBody);
+		m_isInit = true;
+	}
 }

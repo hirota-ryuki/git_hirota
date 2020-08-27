@@ -118,7 +118,7 @@ void IItem::ButtonSpriteLoad()
 void IItem::ButtonSpriteMove(CVector3 diff, CVector3 pos) 
 {
 	if (!m_isGetItem) {
-		if (diff.Length() < ENEMY_AND_PLAYER_DISTANCE_BUTTON) { //距離が500以下になったら。
+		if (diff.Length() < ENEMY_AND_PLAYER_DISTANCE_BUTTON) { 
 			//3D座標から2D座標への変換。
 			m_model2Dpos = { pos.x, pos.y, pos.z, 1.0f };
 			g_camera3D.GetViewMatrix().Mul(m_model2Dpos);

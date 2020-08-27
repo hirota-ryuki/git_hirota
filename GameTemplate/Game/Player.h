@@ -232,6 +232,6 @@ private:
 	int 			m_heaIntervalTimer = 0;		//回復と回復の間のタイマー。徐々に回復するようにする。
 	int				m_healIntervalTime = 30;	//回復と回復の間の時間。徐々に回復するようにする。
 	//ステータス関係。
-	const float		m_maxhp = 5.0f;		//最大体力。
+	const float		m_maxhp = 0.0f;		//最大体力。
 	float			m_hp = m_maxhp;		//体力。
 };

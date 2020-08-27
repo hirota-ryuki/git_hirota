@@ -24,6 +24,8 @@ namespace {
 		{
 			if (convexResult.m_hitCollisionObject == me
 				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character
+				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_PassingWallCharacter
+
 				) {
 				//自分に衝突した。or キャラクタ属性のコリジョンと衝突した。
 				return 0.0f;
@@ -65,31 +67,55 @@ namespace {
 												//衝突したときに呼ばれるコールバック関数。
 		virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 		{
-			if (convexResult.m_hitCollisionObject == me) {
-				//自分に衝突した。or 地面に衝突した。
-				return 0.0f;
-			}
 			//衝突点の法線を引っ張ってくる。
 			CVector3 hitNormalTmp;
 			hitNormalTmp.Set(convexResult.m_hitNormalLocal);
 			//上方向と衝突点の法線のなす角度を求める。
 			float angle = fabsf(acosf(hitNormalTmp.Dot(CVector3::Up())));
-			if (angle >= CMath::PI * 0.3f		//地面の傾斜が54度以上なので壁とみなす。
-				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
-				) {
-				isHit = true;
-				CVector3 hitPosTmp;
-				hitPosTmp.Set(convexResult.m_hitPointLocal);
-				//交点との距離を調べる。
-				CVector3 vDist;
-				vDist.Subtract(hitPosTmp, startPos);
-				vDist.y = 0.0f;
-				float distTmp = vDist.Length();
-				if (distTmp < dist) {
-					//この衝突点の方が近いので、最近傍の衝突点を更新する。
-					hitPos = hitPosTmp;
-					dist = distTmp;
-					hitNormal = hitNormalTmp;
+			if (convexResult.m_hitCollisionObject == me) {
+				//自分に衝突した。or 地面に衝突した。
+				return 0.0f;
+			}
+
+			if (me->getUserIndex() == enCollisionAttr_PassingWallCharacter) {
+				if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。	
+					|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_PassingWallCharacter
+					) {
+					isHit = true;
+					CVector3 hitPosTmp;
+					hitPosTmp.Set(convexResult.m_hitPointLocal);
+					//交点との距離を調べる。
+					CVector3 vDist;
+					vDist.Subtract(hitPosTmp, startPos);
+					vDist.y = 0.0f;
+					float distTmp = vDist.Length();
+					if (distTmp < dist) {
+						//この衝突点の方が近いので、最近傍の衝突点を更新する。
+						hitPos = hitPosTmp;
+						dist = distTmp;
+						hitNormal = hitNormalTmp;
+					}
+				}
+			}
+			else {
+				if (angle >= CMath::PI * 0.3f		//地面の傾斜が54度以上なので壁とみなす。
+					|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
+					|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_PassingWallCharacter
+					) {
+					isHit = true;
+					CVector3 hitPosTmp;
+					hitPosTmp.Set(convexResult.m_hitPointLocal);
+					//交点との距離を調べる。
+					CVector3 vDist;
+					vDist.Subtract(hitPosTmp, startPos);
+					vDist.y = 0.0f;
+					float distTmp = vDist.Length();
+					if (distTmp < dist) {
+						//この衝突点の方が近いので、最近傍の衝突点を更新する。
+						hitPos = hitPosTmp;
+						dist = distTmp;
+						hitNormal = hitNormalTmp;
+					}
 				}
 			}
 			return 0.0f;
@@ -98,7 +124,7 @@ namespace {
 }
 
 
-void CharacterController::Init(float radius, float height, const CVector3& position)
+void CharacterController::Init(float radius, float height, const CVector3& position, bool isPassingWall)
 {
 	m_position = position;
 	//コリジョン作成。
@@ -117,7 +143,12 @@ void CharacterController::Init(float radius, float height, const CVector3& posit
 	//キャラコンをモデルに合わせる(基点を下げる)
 	trans.setOrigin(btVector3(position.x, position.y + m_height / 2.f + m_radius, position.z));
 	//@todo 未対応。trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
-	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Character);
+	if (!isPassingWall) {
+		m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Character);
+	}
+	else {
+		m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_PassingWallCharacter);
+	}
 	m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
 	g_physics.AddRigidBody(m_rigidBody);
 

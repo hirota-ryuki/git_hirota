@@ -124,7 +124,7 @@ private:
 
 	//移動関係。
 	CVector3		m_moveSpeed = CVector3::Zero();			//移動速度。
-	float			m_speed = 200.f;						//キャラが歩くスピード。
+	const float		m_speed = 150.f;						//キャラが歩くスピード。
 	BoxCollider		m_collider;								//セル用のボックスコライダー
 	CVector3		m_boxSize = CVector3::One() * 35.0f;	//コライダーのサイズ。
 	bool			m_isFind = false;						//プレイヤーが見つかったかどうか。

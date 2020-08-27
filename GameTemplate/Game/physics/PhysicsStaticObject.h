@@ -50,4 +50,5 @@ private:
 	MeshCollider	m_meshCollider;			//!<メッシュコライダー。
 	RigidBody		m_rigidBody;			//!<剛体。
 	bool			m_isReMove = false;		//リムーブしたかどうか。
+	bool			m_isInit = false;
 };

@@ -22,11 +22,12 @@ public:
 	}
 	/*!
 		* @brief	初期化。
-		*@param[in]	radius		カプセルコライダーの半径。
-		*@param[in]	height		カプセルコライダーの高さ。
-		*@param[in]	position	初期位置。
+		*@param[in]	radius			カプセルコライダーの半径。
+		*@param[in]	height			カプセルコライダーの高さ。
+		*@param[in]	position		初期位置。
+		*@param[in]	isPassingWall	衝突判定をキャラクタだけ行い、壁は行わないようにする設定。基本はfalse。
 		*/
-	void Init(float radius, float height, const CVector3& position);
+	void Init(float radius, float height, const CVector3& position, bool isPassingWall = false);
 	/*!
 		* @brief	実行。
 		*@param[in]	deltaTime		経過時間。単位は秒。

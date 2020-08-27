@@ -4,13 +4,13 @@
 #include "physics/BoxCollider.h"
 
 //これを定義するとナビメッシュのデータが再作成される。
-#define REBUILD_NAVIMESH_DATA		
+//#define REBUILD_NAVIMESH_DATA		
 
 //これを定義すると、ナビメッシュのデバッグ表示が有効になる。
 #ifdef _DEBUG
 //#define USE_NAVIMESH_DEBUG	//Debug。
 #else
-#define USE_NAVIMESH_DEBUG	//Release.
+//#define USE_NAVIMESH_DEBUG	//Release.
 #endif
 
 const float COLLIDER_EXPANSION = 2.45f;	//コライダーの拡大倍率。元々は2.45f。

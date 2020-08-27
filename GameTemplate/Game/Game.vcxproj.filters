@@ -175,6 +175,12 @@
     <Filter Include="Game\Item\Key">
       <UniqueIdentifier>{814a6cea-a4d6-4ed3-a046-6ea2cdcfd541}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\ObjRigidbody">
+      <UniqueIdentifier>{ea69e45e-d0e6-424d-8134-42ebeeecf96c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Serif">
+      <UniqueIdentifier>{b57ec7e3-d4ec-47fa-88ce-668ec8b384bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -387,14 +393,18 @@
     <ClCompile Include="IDoor.cpp">
       <Filter>Game\Door</Filter>
     </ClCompile>
-    <ClCompile Include="Serif.cpp" />
     <ClCompile Include="Menu.cpp">
       <Filter>Game\Menu</Filter>
     </ClCompile>
     <ClCompile Include="Key.cpp">
       <Filter>Game\Item\Key</Filter>
     </ClCompile>
-    <ClCompile Include="ObjRigidbody.cpp" />
+    <ClCompile Include="ObjRigidbody.cpp">
+      <Filter>Game\ObjRigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="Serif.cpp">
+      <Filter>Game\Serif</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -622,14 +632,18 @@
     <ClInclude Include="IDoor.h">
       <Filter>Game\Door</Filter>
     </ClInclude>
-    <ClInclude Include="Serif.h" />
     <ClInclude Include="Menu.h">
       <Filter>Game\Menu</Filter>
     </ClInclude>
     <ClInclude Include="Key.h">
       <Filter>Game\Item\Key</Filter>
     </ClInclude>
-    <ClInclude Include="ObjRigidbody.h" />
+    <ClInclude Include="ObjRigidbody.h">
+      <Filter>Game\ObjRigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="Serif.h">
+      <Filter>Game\Serif</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

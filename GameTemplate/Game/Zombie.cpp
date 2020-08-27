@@ -35,12 +35,13 @@ bool Zombie::Start()
 	//ナビメッシュを取得。
 	m_nav = m_floor->GetNavimesh();
 
-	////キャラコンの初期化
-	//m_charaCon.Init(
-	//	20.0f,
-	//	100.0f,
-	//	m_position
-	//);
+	//キャラコンの初期化
+	m_charaCon.Init(
+		20.0f,
+		100.0f,
+		m_position,
+		true
+	);
 	//cmoファイルの読み込み。
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
 	m_model->Init(L"modelData/zombie/zombie.cmo");
@@ -150,7 +151,7 @@ void Zombie::Update()
 			if (!m_animation.IsPlaying())
 			{
 				//DeleteGO(this);
-				//m_charaCon.RemoveRigidBoby();
+				m_charaCon.RemoveRigidBoby();
 			}
 			break;
 		default:
@@ -165,7 +166,7 @@ void Zombie::Update()
 			m_moveSpeed.x = 0.0f;
 			m_moveSpeed.z = 0.0f;
 			m_moveSpeed.y -= 240.0f * 1.0f / 60.0f;
-			m_position += m_moveSpeed * (1.0f / 60.0f);
+			m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 		}*/
 		//アニメーションの更新。
 		m_animation.Update(1.0f / 60.0f);
@@ -251,7 +252,7 @@ void Zombie::En_Bite()
 	if (!m_animation.IsPlaying()) {
 		//待機状態に遷移。
 		m_state = enState_idle;
-		//m_charaCon.ActiveMode(true);
+		m_charaCon.ActiveMode(true);
 		m_isBite = false;
 		m_coolTimer++;
 	}
@@ -355,7 +356,8 @@ void Zombie::Move()
 			m_moveSpeed = moveDirection * m_speed;		//移動速度を加算。
 
 			//キャラクターコントローラーを使用して、座標を更新。
-			m_position += m_moveSpeed * (1.0f / 60.0f);// m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+			//m_position += m_moveSpeed * (1.0f / 60.0f);
+			m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 
 			//回転。
 			Rotation();
@@ -397,7 +399,7 @@ void Zombie::Move_AStar()
 			m_moveSpeed = moveDirection * m_speed;		//移動速度を加算。
 
 			//キャラクターコントローラーを使用して、座標を更新。
-			m_position += m_moveSpeed * (1.0f / 60.0f);
+			m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 			//回転。
 			Rotation();
 

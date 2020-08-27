@@ -17,8 +17,8 @@
 		{
 			CVector3 normal;
 			normal.Set(convexResult.m_hitNormalLocal);
-
-			if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character) {
+			//ˆêŽž“I
+			if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character||convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_PassingWallCharacter) {
 				return 1.0f;
 			}
 			return btCollisionWorld::ClosestConvexResultCallback::addSingleResult(convexResult, normalInWorldSpace);
