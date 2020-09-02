@@ -15,6 +15,8 @@
 #include "Opening.h"
 #include "UI.h"
 #include "Map.h"
+#include "PointLight.h"
+#include "SpotLight.h"
 #include <string>
 #include <iostream>
 
@@ -74,12 +76,13 @@ bool Game::Start()
 	LevelObjectData playerObjData;
 	LevelObjectData goalObjData;
 	std::vector<LevelObjectData>	rockdoorObjDatas;
+	std::vector<std::wstring>		doorNames;
 	std::vector<LevelObjectData>	doorboxObjDatas;
 	std::vector<LevelObjectData>	zombieObjDatas;
-	std::vector<LevelObjectData>	ballObjDatas;
-	std::vector<LevelObjectData>	bulletstackObjDatas;
-	std::vector<std::wstring>		doorNames;
+	std::vector<LevelObjectData>	keyObjDatas;
 	std::vector<std::wstring>		keyNames;
+	std::vector<LevelObjectData>	bulletstackObjDatas;
+	std::vector<LevelObjectData>	pointlightObjDatas;
 	m_level.Init(
 		levelname,
 		[&](LevelObjectData& objData) {
@@ -104,31 +107,36 @@ bool Game::Start()
 			goalObjData = objData;
 			return true;
 		}
-		//配置しようとしているオブジェクトはゾンビ。
+		//ゾンビ。
 		if (wcscmp(objData.name, L"zombie") == 0) {
 			zombieObjDatas.push_back(objData);
 			return true;
 		}
-		//配置しようとしているオブジェクトは鍵。
+		//鍵。
 		if (objData.ForwardMatchName(L"key")) {
-			ballObjDatas.push_back(objData);
+			keyObjDatas.push_back(objData);
 			keyNames.push_back(objData.name);
 			return true;
 		}
-		//配置しようとしているオブジェクトはドア。
+		//ドア。
 		if (objData.ForwardMatchName(L"door")) {
 			rockdoorObjDatas.push_back(objData);
 			doorNames.push_back(objData.name);
 			return true;
 		}
-		//このオブジェクトはドアの中心座標。
+		//ドアの中心座標。
 		if (objData.ForwardMatchName(L"centerdoorbox")) {
 			doorboxObjDatas.push_back(objData);
 			return true;
 		}
-		//配置しようとしているオブジェクトはボール。
+		//弾薬。
 		if (objData.ForwardMatchName(L"bulletstack")) {
 			bulletstackObjDatas.push_back(objData);
+			return true;
+		}
+		//ポイントライト。
+		if (objData.ForwardMatchName(L"pointlight")) {
+			pointlightObjDatas.push_back(objData);
 			return true;
 		}
 		return false;
@@ -139,6 +147,19 @@ bool Game::Start()
 	Inv_AddItem(L"資料室の鍵", 1);
 	Inv_AddItem(L"署長室の鍵", 1);
 
+	m_pl = NewGO<PointLight>(GOPrio_Defalut);
+	int i = 0;
+	for (auto& objData : pointlightObjDatas) {
+		CVector3 color = {3.0f, 3.0f, 2.5f};
+		float range = 500.0f;
+		m_pl->SetLight(objData.position, color, range, i);
+		i++;
+	}
+
+
+	m_sl = NewGO<SpotLight>(GOPrio_Defalut);
+
+	//オブジェクトの当たり判定。
 	m_objrb = NewGO<ObjRigidbody>(GOPrio_Defalut);
 	m_objrb->SetPos(objrigidbodyObjData.position);
 	m_objrb->SetRot(objrigidbodyObjData.rotation);
@@ -167,11 +188,11 @@ bool Game::Start()
 	m_goal->SetRot(goalObjData.rotation);
 
 	//ゾンビを構築。
-	for (auto& objData : zombieObjDatas) {
+	/*for (auto& objData : zombieObjDatas) {
 		m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
 		m_zombie->SetPos(objData.position);
 		m_zombie->SetRot(objData.rotation);
-	}
+	}*/
 	
 	//UIの構築。
 	m_ui = NewGO<UI>(GOPrio_Defalut);
@@ -181,7 +202,7 @@ bool Game::Start()
 	
 	//鍵を構築。
 	auto knItr = keyNames.begin();
-	for (auto& objData : ballObjDatas) {
+	for (auto& objData : keyObjDatas) {
 		std::wstring name;
 		name = knItr->substr(4);
 
@@ -296,8 +317,5 @@ void Game::Update()
 		//Gameクラスを消去。
 		DeleteGO(this);
 	}
-	//Aボタンを押したら。
-	if (g_pad[0].IsTrigger(enButtonA))
-	{
-	}
+	
 }

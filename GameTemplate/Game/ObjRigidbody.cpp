@@ -23,6 +23,7 @@ bool ObjRigidbody::Start()
 	m_model->SetData(m_position, m_rotation);
 	m_model->UpdateWorldMatrix();
 	m_model->SetShadowCaster(true);
+	//m_model->ActiveMode(false);
 
 	m_PSOmodel = NewGO<SkinModelRender>(GOPrio_Defalut);
 	//m_PSOmodel->Init(L"modelData/object/obj_rigidbody/obj_rigidbody.cmo");

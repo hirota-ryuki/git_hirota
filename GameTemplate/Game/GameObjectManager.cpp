@@ -66,7 +66,7 @@ void GameObjectManager::StartAndUpdate()
 		}
 	}
 	//âeÅB
-	float p = 1000.0f;
+	float p = 500.0f;
 	auto pos = g_camera3D.GetPosition();
 	pos.x += p;
 	pos.y += p;

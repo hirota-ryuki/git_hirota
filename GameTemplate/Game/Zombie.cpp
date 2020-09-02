@@ -258,7 +258,7 @@ void Zombie::En_Bite()
 	}
 }
 
-struct CallBack : public btCollisionWorld::ConvexResultCallback
+struct FindCallBack : public btCollisionWorld::ConvexResultCallback
 {
 	//障害物があるかないか判定。
 	bool isHit = false;
@@ -309,7 +309,7 @@ void Zombie::ChangeState()
 				start.setOrigin(btVector3(m_position.x, m_position.y + 20.f, m_position.z));
 				end.setOrigin(btVector3(m_player->GetPos().x, m_position.y + 20.f, m_player->GetPos().z));
 			}
-			CallBack callback;
+			FindCallBack callback;
 			//startからendまでコリジョンを移動させて当たり判定を取る。
 			g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
 			//コリジョンにヒットしなかったら。
@@ -516,7 +516,7 @@ void Zombie::Attack()
 	//内積に符号は無い。
 		&& degree < 45.0f) {
 		//ダメージを与える。
-		m_player->Damage();
+		//m_player->Damage();
 	}
 	/*
 	//指の骨の読み込み。

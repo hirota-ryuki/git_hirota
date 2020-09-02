@@ -181,6 +181,15 @@
     <Filter Include="Game\Serif">
       <UniqueIdentifier>{b57ec7e3-d4ec-47fa-88ce-668ec8b384bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Light">
+      <UniqueIdentifier>{5cd651ea-b0ed-401d-8865-446d8b9d4521}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Light\Point">
+      <UniqueIdentifier>{42d81664-3c1b-4710-b0c3-6e6b95c23a22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Light\Spot">
+      <UniqueIdentifier>{49e3a42f-8d68-457c-8074-24bd66068569}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -404,6 +413,12 @@
     </ClCompile>
     <ClCompile Include="Serif.cpp">
       <Filter>Game\Serif</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>Game\Light\Point</Filter>
+    </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>Game\Light\Spot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -644,6 +659,16 @@
     <ClInclude Include="Serif.h">
       <Filter>Game\Serif</Filter>
     </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>Game\Light\Point</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
+      <Filter>Game\Light\Spot</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\LightNumData.h">
+      <Filter>Engine\graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

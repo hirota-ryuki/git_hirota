@@ -2,7 +2,11 @@
 #include "SkinModel.h"
 #include "SkinModelDataManager.h"
 #include "SkinModelEffect.h"
+#include <random>
 
+
+SSpotLight SkinModel::m_spotLight[NUM_SPOT_LIG];
+SPointLight SkinModel::m_pointLight[NUM_POINT_LIG];
 SkinModel::~SkinModel()
 {
 	if (m_cb != nullptr) {
@@ -28,7 +32,7 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 
 	//ディレクションライトの初期化。
 	InitDirectionLight();
-
+	//InitPointLight();
 	//サンプラステートの初期化。
 	InitSamplerState();
 
@@ -43,9 +47,58 @@ void SkinModel::InitDirectionLight()
 {
 	m_light.directionLight.direction[0] = { 1.0f, -1.0f, 0.0f, 0.0f };
 	m_light.directionLight.direction[0].Normalize();
-	m_light.directionLight.color[0] = { 1.2f, 1.2f, 1.2f, 0.2f };
-	m_light.ambientLight.Set(0.4f, 0.4f, 0.4f);
+	m_light.directionLight.color[0] = { 0.1f, 0.1f, 0.1f, 0.2f };
+	float light = 0.2f;
+	m_light.ambientLight.Set(light, light, light);
 	m_light.specPow = 5.0f;
+}
+
+//ポイントライトの初期化。
+void SkinModel::InitPointLight()
+{
+	std::random_device seed_gen;
+	std::mt19937 random(seed_gen());
+	//for (int i = 0; i < POINTLIGHT_NUMBER; i++)  {
+	//	m_pointLight[i].pos = CVector3::Zero();
+	//	//m_pointLight[i].color = CVector3{ 0.5f, 0.0f, 0.0f };
+	//	//m_pointLight[i].color.x = static_cast<float>(random() % 255) / 255.0f;
+	//	//m_pointLight[i].color.y = static_cast<float>(random() % 255) / 255.0f;
+	//	//m_pointLight[i].color.z = static_cast<float>(random() % 255) / 255.0f;
+	//	m_pointLight[i].color = CVector3{ 1.0f,0.0f,0.0f };
+	//	m_pointLight[i].range = 200.0f;
+	//}
+	for (auto& pt : m_pointLight) {
+		pt.pos.x = 0.0f;
+		pt.pos.y = 120.0f;
+		pt.pos.z = 0.0f;
+		//pt.pos = CVector3::Zero();
+		pt.range = 100.0f;
+		pt.color.x = 0.0f;
+		pt.color.y = 0.0f;
+		pt.color.z = 1.0f;
+	}
+}
+
+void SkinModel::InitSpotLight()
+{
+	for (auto& st : m_spotLight) {
+		st.pos.x = 0.0f;
+		st.pos.y = 120.0f;
+		st.pos.z = 0.0f;
+
+		CVector3 dir = CVector3::AxisZ();
+		st.direction.x = dir.x;
+		st.direction.y = dir.y;
+		st.direction.z = dir.z;
+		st.direction.w = 0.0f;
+
+		st.color.x = 0.0f;
+		st.color.y = 1.0f;
+		st.color.z = 0.0f;
+
+		st.range = 500.0f;
+
+	}
 }
 
 void SkinModel::InitSkeleton(const wchar_t* filePath)
@@ -92,7 +145,18 @@ void SkinModel::InitConstantBuffer()
 	bufferSize = sizeof(SLight);
 	bufferDesc.ByteWidth = (((bufferSize - 1) / 16) + 1) * 16;	//バッファは16バイトアライメントになっている必要がある。
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_lightCb);
+
+	//ポイントライト用の定数バッファ。
+	bufferSize = sizeof(SPointLight) * NUM_POINT_LIG;
+	bufferDesc.ByteWidth = (((bufferSize - 1) / 16) + 1) * 16;	//バッファは16バイトアライメントになっている必要がある。
+	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_pointlightCb);
+	
+	//スポットライト用の定数バッファ。
+	bufferSize = sizeof(SSpotLight) * NUM_SPOT_LIG;
+	bufferDesc.ByteWidth = (((bufferSize - 1) / 16) + 1) * 16;	//バッファは16バイトアライメントになっている必要がある。
+	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_spotlightCb);
 }
+
 void SkinModel::InitSamplerState()
 {
 	//テクスチャのサンプリング方法を指定するためのサンプラステートを作成。
@@ -212,10 +276,16 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 	//ライト用の定数バッファを更新。
 	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
+	//ポイントライト用の定数バッファを更新。
+	d3dDeviceContext->UpdateSubresource(m_pointlightCb, 0, nullptr, &m_pointLight, 0, 0);
+	//スポットライト用の定数バッファを更新。
+	d3dDeviceContext->UpdateSubresource(m_spotlightCb, 0, nullptr, &m_spotLight, 0, 0);
 	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
 	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
 	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
+	d3dDeviceContext->PSSetConstantBuffers(2, 1, &m_pointlightCb);
+	d3dDeviceContext->PSSetConstantBuffers(3, 1, &m_spotlightCb);
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。

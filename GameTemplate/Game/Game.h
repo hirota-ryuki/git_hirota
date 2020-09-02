@@ -20,6 +20,8 @@ class Menu;
 class Opening;
 class UI;
 class Map;
+class PointLight;
+class SpotLight;
 
 class Game :
 	public IGameObject
@@ -79,6 +81,20 @@ public:
 		return m_ui;
 	}
 	/// <summary>
+	/// PointLightのインスタンスを取得。
+	/// </summary>
+	/// <returns>PointLightのインスタンス</returns>
+	PointLight* GetPointLight() {
+		return m_pl;
+	}
+	/// <summary>
+	/// SpotLightのインスタンスを取得。
+	/// </summary>
+	/// <returns>SpotLightのインスタンス</returns>
+	SpotLight* GetSpotLight() {
+		return m_sl;
+	}
+	/// <summary>
 	/// クリアしたときに呼び出す関数。
 	/// </summary>
 	void Clear(){
@@ -129,6 +145,8 @@ private:
 	Result*			m_result = nullptr;		//Resultクラスのポインタ。
 	UI*				m_ui = nullptr;			//UIクラスのポインタ。
 	Map*			m_map = nullptr;		//Mapクラスのポインタ。
+	PointLight*		m_pl = nullptr;			//PointLightクラスのポインタ。
+	SpotLight*		m_sl = nullptr;			//SpotLightクラスのポインタ。
 	//状態関係。
 	bool m_isClear = false;				//クリアしたかどうか。
 	bool m_isGameOver = false;			//ゲームオーバーしたかどうか。

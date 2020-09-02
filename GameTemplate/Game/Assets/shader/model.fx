@@ -1,6 +1,8 @@
 /*!
  * @brief	モデルシェーダー。
  */
+//#include "..\..\graphics\LightNumData.h"
+#include "../../graphics\LightNumData.h"
 
 
 /////////////////////////////////////////////////////////////
@@ -36,19 +38,46 @@ cbuffer VSPSCb : register(b0){
 	int isHasSpecMap;		//スペキュラマップあるかどうか。
 };
 
-static const int NUM_DIRECTION_LIG = 1;
 /*!
  *@brief	ライト用の定数バッファ。
  */
 cbuffer LightCb : register(b1) {
-	float3 dligDirection[NUM_DIRECTION_LIG];
-	float4 dligColor[NUM_DIRECTION_LIG];
+    float3 dligDirection[NUM_DIRECTION_LIG];
+    float4 dligColor[NUM_DIRECTION_LIG];
 	float3 eyePos;									//カメラの視点。
 	float  specPow;									//スペキュラライトの絞り。
 	float3 ambientLight;							//環境光。
 };
 
+//ポイントライト。
+struct SPointLight
+{
+    float3 position;
+    float3 color;
+    float pad;
+    float range;	
+    float3 pad2;
+};
 
+//ポイントライト用の定数バッファ。
+cbuffer PointLightCB : register(b2){
+    SPointLight pointsLights[NUM_POINT_LIG];
+}
+
+//スポットライト。
+struct SSpotLight
+{
+    float3 position;
+    float3 color;
+	float3 direction;
+    float pad;
+    float range;	
+};
+
+//スポットライト用の定数バッファ。
+cbuffer SpotLightCB : register(b3){
+    SSpotLight spotLights[NUM_SPOT_LIG];
+}
 /////////////////////////////////////////////////////////////
 //各種構造体
 /////////////////////////////////////////////////////////////
@@ -179,7 +208,7 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	}
 	psInput.Normal = normalize( mul(skinning, In.Normal) );
 	psInput.Tangent = normalize( mul(skinning, In.Tangent) );
-	
+    psInput.worldPos = pos;
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
@@ -201,86 +230,121 @@ float4 PSMain( PSInput In ) : SV_Target0
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
 
 	//法線を計算する。
-	float3 normal = 0;
-	if(isHasNormalMap == 1){
+    float3 normal = 0;
+    if (isHasNormalMap == 1)
+    {
 		//法線マップがある。
 		//法線と接ベクトルの外積を計算して、従ベクトルを計算する。
-		float3 biNormal = cross(In.Normal, In.Tangent);
-		normal = g_normalMap.Sample(Sampler, In.TexCoord);
+        float3 biNormal = cross(In.Normal, In.Tangent);
+        normal = g_normalMap.Sample(Sampler, In.TexCoord);
 		//0.0～1.0の範囲になっているタンジェントスペース法線を
 		//-1.0～1.0の範囲に変換する。
-		normal =(normal * 2.0f)- 1.0f;
+        normal = (normal * 2.0f) - 1.0f;
 		//法線をタンジェントスペースから、ワールドスペースに変換する。
-		normal = In.Tangent * normal.x + biNormal * normal.y + In.Normal * normal.z;
-	}else{
+        normal = In.Tangent * normal.x + biNormal * normal.y + In.Normal * normal.z;
+    }
+    else
+    {
 		//ない。
-		normal = In.Normal;
-	}
+        normal = In.Normal;
+    }
 
-	//ディレクションライトの拡散反射光を計算する。
-	float3 lig = 0.f;
-	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
-		lig += max(0.f, dot(In.Normal * -1.f, dligDirection[i])) * dligColor[i];
-	}
+	////ディレクションライトの拡散反射光を計算する。
+	float3 lig = 0.0f;
+    for (int i = 0; i < NUM_DIRECTION_LIG; i++)
+    {
+        lig += max(0.f, dot(In.Normal * -1.f, dligDirection[i])) * dligColor[i];
+    }
 
 	////鏡面反射////
-	if(isHasSpecMap == 1){
+    if (isHasSpecMap == 1)
+    {
 		//1 視点からライトを当てる物体に伸びるVectorEを求める
-		float3 E = normalize(eyePos-In.worldPos);
+        float3 E = normalize(eyePos - In.worldPos);
 		//2 反射ベクトルRを求める。
-		float3 R = 0.0f;
-		for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
+        float3 R = 0.0f;
+        for (int i = 0; i < NUM_DIRECTION_LIG; i++)
+        {
 			
 			//スペキュラ反射の強さを求める。
-			R += reflect(dligDirection[i].xyz, In.Normal);
+            R += reflect(dligDirection[i].xyz, In.Normal);
 			//↓同じ結果。
 			//R += dligDirection[i].xyz + 2.0f * dot(In.Normal, -dligDirection[i].xyz) * In.Normal;
 
 			//1と2で求まったVectorのない席を計算する。
 			//スペキュラ反射の強さを求める。
-			float specPower = max(0.0f, dot(R, E));
+            float specPower = max(0.0f, dot(R, E));
 
-			float specMap = 0.0f;
-			specMap = g_specMap.Sample(Sampler, In.TexCoord);
+            float specMap = 0.0f;
+            specMap = g_specMap.Sample(Sampler, In.TexCoord);
 
 			//3 スペキュラ反射をライトに加算する。
-			lig += dligColor[i].xyz * pow(specPower, specPow) * specMap * dligColor[i].w;
-		}
-	}
+            lig += dligColor[i].xyz * pow(specPower, specPow) * specMap * dligColor[i].w;
+        }
+    }
 
+
+	
+	//ポイントライトから光によるランバート拡散反射を計算。
+    for (int i = 0; i < NUM_POINT_LIG; i++)
+    {
+        float3 ligDir = normalize(In.worldPos - pointsLights[i].position.xyz);
+        float distance = length(In.worldPos - pointsLights[i].position.xyz);
+        float t = max(0.0f, dot(-ligDir, In.Normal));
+        float affect = 1.0f - min(1.0f, distance / pointsLights[i].range/*100.0f*/);
+        lig += pointsLights[i].color.xyz * t * affect;
+    }
+	
+	//スポットライトから光によるランバート拡散反射を計算。
+    for (int i = 0; i < NUM_SPOT_LIG; i++)
+    {
+        float3 vec = normalize(In.worldPos - spotLights[i].position);
+
+        float Dot = dot(vec, spotLights[i].direction);
+        float angle = acos(Dot);
+        float degree = angle * 180.0f / 3.14f;
+		
+        if (degree < 45.0f)
+        {
+            float3 ligDir = normalize(In.worldPos - spotLights[i].position);
+            float distance = length(In.worldPos - spotLights[i].position);
+            float t = max(0.0f, dot(-ligDir, In.Normal));
+            float affect = 1.0f - min(1.0f, distance / spotLights[i].range);
+            lig += spotLights[i].color * t * affect;
+        }
+    }
+	
 	//環境光。
-	lig += ambientLight;
-
+    lig += ambientLight;
+   
 	//影。
-	if(isShadowReciever == 1 ){	//シャドウレシーバー。
+    if (isShadowReciever == 1)
+    { //シャドウレシーバー。
 		//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
-		float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;
-		shadowMapUV *= float2(0.5f, -0.5f);
-		shadowMapUV += 0.5f;
+        float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;
+        shadowMapUV *= float2(0.5f, -0.5f);
+        shadowMapUV += 0.5f;
 		//シャドウマップの範囲内かどうかを判定する。
-		if ( shadowMapUV.x < 1.0f 
-			&& shadowMapUV.x > 0.0f 
-			&& shadowMapUV.y < 1.0f 
+        if (shadowMapUV.x < 1.0f
+			&& shadowMapUV.x > 0.0f
+			&& shadowMapUV.y < 1.0f
 			&& shadowMapUV.y > 0.0f
-		) {
+		)
+        {
 			
 			///LVP空間での深度値を計算。
-			float zInLVP = In.posInLVP.z / In.posInLVP.w;
+            float zInLVP = In.posInLVP.z / In.posInLVP.w;
 			//シャドウマップに書き込まれている深度値を取得。
-			float zInShadowMap = g_shadowMap.Sample(Sampler, shadowMapUV);
+            float zInShadowMap = g_shadowMap.Sample(Sampler, shadowMapUV);
 
-			if (zInLVP > zInShadowMap + 0.01f) {
+            if (zInLVP > zInShadowMap + 0.01f)
+            {
 				//影が落ちているので、光を弱くする
-				lig *= 0.5f;
-			}
-		}
-	}
-	/*
-	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
-	float4 m_ShadowMap = g_shadowMap.Sample(Sampler, In.TexCoord);
-	finalColor.xyz = m_ShadowMap.xyz;
-	return finalColor;
-	*/
+                lig *= 0.5f;
+            }
+        }
+    }
+	
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 	finalColor.xyz = albedoColor.xyz * lig;
 	return finalColor;

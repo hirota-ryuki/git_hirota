@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "Zombie.h"
 #include "UI.h"
+#include "SpotLight.h"
 
 Player::Player()
 {	
@@ -84,6 +85,7 @@ bool Player::Start()
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
+	m_sl = m_game->GetSpotLight();
 
 	Inv_AddItem(L"弾薬", 24);
 	return true;
@@ -240,6 +242,8 @@ void Player::Update()
 		m_model->SetData(m_position, m_rotation);
 		//女優ライト。
 		ActressLight();
+		//懐中電灯。
+		SetLight();
 	}
 }
 
@@ -482,4 +486,26 @@ void Player::ActressLight()
 	dir.Normalize();
 	dir.y -= 0.2f;
 	m_model->SetLight(0, dir);
+}
+
+void Player::SetLight()
+{ 
+	CVector3 color;
+	CVector3 pos;
+	if (g_pad[0].IsTrigger(enButtonA)) {
+		m_isLight = !m_isLight;
+	}
+	if (m_isLight) {
+		color.x = 1.0f;
+		color.y = 1.0f;
+		color.z = 1.0f;
+		pos = m_position;
+		pos.y += 120.0f;
+	}
+	else {
+		color = CVector3::Zero();
+	}
+	for (int i = 0; i < NUM_SPOT_LIG; i++) {
+			m_sl->SetLight(pos, color, m_model->GetForward(), 600.0f, i);
+	}
 }

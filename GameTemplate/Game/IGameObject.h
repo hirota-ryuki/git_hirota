@@ -11,7 +11,7 @@ class IGameObject
 {
 public:
 	//基底クラスには仮想デストラクタが必要
-	//クソ
+	//忘れないように
 	virtual ~IGameObject() {}
 
 	/// <summary>

@@ -1,8 +1,29 @@
 #pragma once
 
 #include "Skeleton.h"
+#include "LightNumData.h"
+//#include "Light.h"
 
-const int NUM_DIRECTION_LIG = 1;
+/// <summary>
+///	ポイントライト用の構造体。
+/// </summary>
+struct SPointLight {
+	CVector4	pos;
+	CVector4	color;
+	float		range;
+	float		pad[3];
+};
+
+/// <summary>
+///	スポットライト用の構造体。
+/// </summary>
+struct SSpotLight {
+	CVector4	pos;
+	CVector4	color;
+	CVector4	direction;
+	float		range;
+	float		pad[3];
+};
 
 /*!
 *@brief	FBXの上方向。
@@ -146,8 +167,27 @@ public:
 	/// <param name="spec">アンビエントライト</param>
 	void SetAmbientLight(CVector3 ambientLight) {
 		m_light.ambientLight = ambientLight;
-
 	}
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="spotlist"></param>
+	void SetPointLight(SPointLight pointlist[NUM_POINT_LIG]) {
+		for (int i = 0; i < NUM_POINT_LIG; i++) {
+			m_pointLight[i] = pointlist[i];
+		}
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="spotlist"></param>
+	void SetSpotLight(SSpotLight spotlist[NUM_SPOT_LIG]) {
+		for (int i = 0; i < NUM_SPOT_LIG; i++) {
+			m_spotLight[i] = spotlist[i];
+		}
+	}
+	
 private:
 	/*!
 	*@brief	サンプラステートの初期化。
@@ -161,6 +201,14 @@ private:
 	/// ディレクションライトの初期化。
 	/// </summary>
 	void InitDirectionLight();
+	/// <summary>
+	/// ポイントライトの初期化。
+	/// </summary>
+	void InitPointLight();
+	/// <summary>
+	/// スポットライトの初期化。
+	/// </summary>
+	void InitSpotLight();
 	/*!
 	*@brief	スケルトンの初期化。
 	*@param[in]	filePath		ロードするcmoファイルのファイルパス。
@@ -196,9 +244,8 @@ private:
 		float				specPow;			//鏡面反射の絞り。
 		CVector3			ambientLight;		//環境光。
 	};
-	/// <summary>
-	/// 
-	/// </summary>
+
+	
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;					//定数バッファ。
 	Skeleton			m_skeleton;						//スケルトン。
@@ -208,6 +255,12 @@ private:
 	//ライト
 	ID3D11Buffer*		m_lightCb = nullptr;			//ライト用の定数バッファ。
 	SLight				m_light;						//ライトクラス。
+	//ポイントライト
+	ID3D11Buffer*		m_pointlightCb = nullptr;		//ポイントライト用の定数バッファ。
+	static SPointLight	m_pointLight[NUM_POINT_LIG];				//ポイントライトクラス。
+	//スポットライト
+	ID3D11Buffer*		m_spotlightCb = nullptr;		//スポットライト用の定数バッファ。
+	static SSpotLight	m_spotLight[NUM_SPOT_LIG];		//スポットライトクラス。
 	//影。
 	bool				m_isShadowReciever = false;		//シャドウレシーバーのフラグ。
 	//法線マップ。

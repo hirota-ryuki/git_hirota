@@ -3,6 +3,8 @@
 
 class Bullet;
 class UI;
+class SpotLight;
+class SkinModel;
 
 class Player : public IGameObject
 {
@@ -158,9 +160,17 @@ public:
 	void SetIsBite(bool flag) {
 		m_isBite = flag;
 	}
+	/// <summary>
+	/// キャラコンを返す関数。
+	/// </summary>
+	/// <returns>キャラコン。</returns>
 	CharacterController* GetCharaCon() {
 		return &m_charaCon;
 	}
+	/// <summary>
+	/// 懐中電灯。
+	/// </summary>
+	void SetLight();
 private:
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
@@ -169,6 +179,7 @@ private:
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
 	Game*				m_game = nullptr;						//Gameのポインタ。
 	UI*					m_ui = nullptr;							//UIのポインタ。
+	SpotLight*			m_sl = nullptr;							//UIのポインタ。
 	float m_speed = 210.0f;			//キャラが歩くスピード。
 	float m_runSpeed = 280.0f;		//キャラが走るスピード。
 	
@@ -232,6 +243,8 @@ private:
 	int 			m_heaIntervalTimer = 0;		//回復と回復の間のタイマー。徐々に回復するようにする。
 	int				m_healIntervalTime = 30;	//回復と回復の間の時間。徐々に回復するようにする。
 	//ステータス関係。
-	const float		m_maxhp = 0.0f;		//最大体力。
+	const float		m_maxhp = 5.0f;		//最大体力。
 	float			m_hp = m_maxhp;		//体力。
+	//ライト。
+	bool			m_isLight = false;			//ライトをつけているかどうか。
 };

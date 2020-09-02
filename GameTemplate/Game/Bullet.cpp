@@ -60,24 +60,26 @@ void Bullet::Update()
 
 void Bullet::Rotation()
 {
-	float angle = atan2(m_moveSpeed.x, m_moveSpeed.z);
-	m_rotation.SetRotation(CVector3::AxisY(), angle);
-	/*CVector3 dir;
-	dir.Set(0.0f, 0.0f, -1.0f);
-	m_rotation.Multiply(dir);
-	dir.Normalize();
-	float angle2 = dir.Dot(CVector3::AxisY());
+	if (m_moveSpeed.Length() > 0.1f) {
+		float angle = atan2(m_moveSpeed.x, m_moveSpeed.z);
+		m_rotation.SetRotation(CVector3::AxisY(), angle);
+		/*CVector3 dir;
+		dir.Set(0.0f, 0.0f, -1.0f);
+		m_rotation.Multiply(dir);
+		dir.Normalize();
+		float angle2 = dir.Dot(CVector3::AxisY());
 
-	CVector3 cross;
-	cross.Cross(dir, CVector3::AxisY());
-	cross.Normalize();
+		CVector3 cross;
+		cross.Cross(dir, CVector3::AxisY());
+		cross.Normalize();
 
-	CQuaternion Rot;
-	Rot.SetRotation(cross, acos(angle2));
+		CQuaternion Rot;
+		Rot.SetRotation(cross, acos(angle2));
 
-	CQuaternion Rot2;
-	Rot2.SetRotationDeg(CVector3::AxisX(), 90.0f);
-	Rot2.Multiply(Rot);*/
+		CQuaternion Rot2;
+		Rot2.SetRotationDeg(CVector3::AxisX(), 90.0f);
+		Rot2.Multiply(Rot);*/
 
-	m_model->SetRot(m_rotation);
+		m_model->SetRot(m_rotation);
+	}
 }

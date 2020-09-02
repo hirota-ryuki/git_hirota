@@ -59,7 +59,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CPP_</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -81,7 +81,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CPP_</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -125,6 +125,7 @@
     <ClCompile Include="ObjRigidbody.cpp" />
     <ClCompile Include="Opening.cpp" />
     <ClCompile Include="physics\BoxCollider.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="RockDoor.cpp" />
     <ClCompile Include="Serif.cpp" />
@@ -133,6 +134,7 @@
     <ClCompile Include="sound\WaveFile.cpp" />
     <ClCompile Include="sound\WaveFileBank.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="SpringCamera.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Zombie.cpp" />
@@ -185,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AStar.h" />
+    <ClInclude Include="graphics\LightNumData.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletStack.h" />
@@ -203,12 +206,14 @@
     <ClInclude Include="IDoor.h" />
     <ClInclude Include="IItem.h" />
     <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapCamera.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="ObjRigidbody.h" />
     <ClInclude Include="Opening.h" />
     <ClInclude Include="physics\BoxCollider.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="RockDoor.h" />
@@ -218,6 +223,7 @@
     <ClInclude Include="sound\WaveFile.h" />
     <ClInclude Include="sound\WaveFileBank.h" />
     <ClInclude Include="SphereCollider.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="SpringCamera.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Zombie.h" />

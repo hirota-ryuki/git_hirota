@@ -12,7 +12,7 @@ PhysicsStaticObject::PhysicsStaticObject()
 }
 PhysicsStaticObject::~PhysicsStaticObject()
 {
-	if (m_isInit&&m_isReMove) {
+	if (m_isInit&&!m_isReMove) {
 		g_physics.RemoveRigidBody(m_rigidBody);
 	}
 	
