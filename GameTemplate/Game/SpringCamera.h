@@ -194,14 +194,14 @@ class SpringCamera
 		*/
 		void UpdateCamera()
 		{
-			if (m_camera) {
+			if (m_camera != nullptr) {
 				m_camera->Update();
 			}
 		}
 	private:
 		Camera*		m_camera = nullptr;						//!<カメラ。
 		CVector3	m_target = CVector3::Zero();			//!<目標となる注視点。
-		CVector3	m_position = CVector3::Zero();			//!<目標となる視点。
+		CVector3	m_position = CVector3::One() * 500.0f;			//!<目標となる視点。
 		CVector3	m_targetMoveSpeed = CVector3::Zero();	//!<注視点の移動速度。
 		CVector3	m_positionMoveSpeed = CVector3::Zero();	//!<視点の移動速度。
 		float		m_maxMoveSpeed = 0.0f;					//!<最高移動速度。

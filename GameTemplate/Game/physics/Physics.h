@@ -1,5 +1,6 @@
 #pragma once
 #include "DebugWireframe.h"
+#include "character/CharacterController.h"
 
 class RigidBody;
 
@@ -47,11 +48,39 @@ public:
 	{
 		dynamicWorld->contactTest(colObj, resultCallback);
 	}
-
+	/*!
+		* @brief	コリジョンオブジェクトをワールドに登録。
+		*@param[in]	colliObj	コリジョンオブジェクト。
+		*/
+	void AddCollisionObject(btCollisionObject& colliObj)
+	{
+		dynamicWorld->addCollisionObject(&colliObj);
+	}
+	/*!
+	* @brief	コリジョンオブジェクトをワールドから削除。
+	*@param[in]	colliObj	コリジョンオブジェクト。
+	*/
+	void RemoveCollisionObject(btCollisionObject& colliObj)
+	{
+		dynamicWorld->removeCollisionObject(&colliObj);
+	}
 	/// <summary>
 	/// デバッグワイヤーフレームを描画する関数
 	/// </summary>
 	void DebugDraw();
+	void ContactTest(
+		btCollisionObject* colObj,
+		std::function<void(const btCollisionObject& contactCollisionObject)> cb
+	);
+	void ContactTest(
+		RigidBody& rb,
+		std::function<void(const btCollisionObject& contactCollisionObject)> cb
+	);
+
+	void ContactTest(
+		CharacterController& charaCon,
+		std::function<void(const btCollisionObject& contactCollisionObject)> cb
+	);
 private:
 	DebugWireframe dw;
 };

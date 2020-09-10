@@ -18,9 +18,6 @@ void Menu::OnDestroy()
 
 bool Menu::Start()
 {
-	//Inv_AddItem(L"’e–ò", 25);
-	Inv_AddItem(L"‰ñ•œ–ò", 3);
-	Inv_AddItem(L"‹­‰»–ò", 4);
 	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
 	m_sprite->Init(L"sprite/menu.dds", 360.0f, 480.0f);
 	CVector2 pos = { -350.0f,50.0f };

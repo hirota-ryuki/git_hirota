@@ -1,5 +1,5 @@
 #pragma once
-#include "SphereCollider.h"
+#include "physics/SphereCollider.h"
 
 	/*!
 	 *@brief	カメラのコリジョンソルバー。

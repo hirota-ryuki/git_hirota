@@ -67,6 +67,7 @@ bool Player::Start()
 	m_model->Init(L"modelData/player/player.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
 	m_model->SetData(m_position, m_rotation);
+	m_model->SetShadowCaster(false);
 
 	//アニメーション初期化。
 	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
@@ -176,7 +177,7 @@ void Player::Move()
 		m_moveSpeed += cameraRight * lStick_x * m_speed;		//右方向への移動速度を加算。
 		
 	}
-	
+	//m_moveSpeed = CVector3::Zero();
 	//キャラクターコントローラーを使用して、座標を更新。
 	m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
 }
@@ -426,6 +427,10 @@ void Player::Rotation()
 	CQuaternion qAddRot;
 	qAddRot.SetRotationDeg(CVector3::AxisY(), 2.0f*g_pad[0].GetRStickXF());
 	m_rotation.Multiply(qAddRot, m_rotation);
+	
+	m_forward = CVector3::AxisZ();
+	m_rotation.Multiply(m_forward);
+
 }
 
 void Player::Heal()
@@ -485,27 +490,33 @@ void Player::ActressLight()
 	dir.y = 0.0f;
 	dir.Normalize();
 	dir.y -= 0.2f;
-	m_model->SetLight(0, dir);
+	float color = 2.5f;
+	m_model->SetLight(0, dir,color);
 }
 
 void Player::SetLight()
 { 
 	CVector3 color;
-	CVector3 pos;
-	if (g_pad[0].IsTrigger(enButtonA)) {
+	CVector3 dir;
+	//ライト切り替え。
+	/*if (g_pad[0].IsTrigger(enButtonA)) {
 		m_isLight = !m_isLight;
-	}
+	}*/
 	if (m_isLight) {
-		color.x = 1.0f;
-		color.y = 1.0f;
-		color.z = 1.0f;
-		pos = m_position;
-		pos.y += 120.0f;
+		color.x = 2.0f;
+		color.y = 2.0f;
+		color.z = 2.0f;
+		m_shadowPos = m_position;
+		m_shadowPos.y += 120.0f;
+		dir = g_camera3D.GetForward();
+		m_shadowPos += dir * 20.0f;
+		dir.Normalize();
 	}
 	else {
 		color = CVector3::Zero();
+		dir = CVector3::AxisX();
 	}
 	for (int i = 0; i < NUM_SPOT_LIG; i++) {
-			m_sl->SetLight(pos, color, m_model->GetForward(), 600.0f, i);
+		m_sl->SetLight(m_shadowPos, color, dir, 600.0f, i);
 	}
 }

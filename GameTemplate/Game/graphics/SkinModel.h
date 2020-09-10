@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Skeleton.h"
-#include "LightNumData.h"
+#include "Assets/shader/LightNumData.h"
 //#include "Light.h"
 
 /// <summary>
@@ -108,9 +108,10 @@ public:
 			}
 		}
 	}
-	void SetLight(int light,CVector4 direction) {
+	void SetLight(int light, CVector4 direction, float color) {
 		m_light.directionLight.direction[light] = direction;
 		m_light.directionLight.direction[light].Normalize();
+		m_light.directionLight.color[0] = { color, color, color, 0.2f };
 	}
 	/*!
 	*@brief	SRVのレジスタ番号。
@@ -169,9 +170,9 @@ public:
 		m_light.ambientLight = ambientLight;
 	}
 	/// <summary>
-	/// 
+	/// ポイントライトを設定する関数。
 	/// </summary>
-	/// <param name="spotlist"></param>
+	/// <param name="spotlist">ポイントライト。</param>
 	void SetPointLight(SPointLight pointlist[NUM_POINT_LIG]) {
 		for (int i = 0; i < NUM_POINT_LIG; i++) {
 			m_pointLight[i] = pointlist[i];
@@ -179,9 +180,9 @@ public:
 	}
 	
 	/// <summary>
-	/// 
+	/// スポットライトを設定する関数。
 	/// </summary>
-	/// <param name="spotlist"></param>
+	/// <param name="spotlist">スポットライト。</param>
 	void SetSpotLight(SSpotLight spotlist[NUM_SPOT_LIG]) {
 		for (int i = 0; i < NUM_SPOT_LIG; i++) {
 			m_spotLight[i] = spotlist[i];

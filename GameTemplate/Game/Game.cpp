@@ -69,7 +69,11 @@ bool Game::Start()
 	swprintf_s(floor, L"floor");
 	//レベル。
 	wchar_t levelname[50];
-	swprintf_s(levelname, L"level/level01.tkl");
+#ifdef MOVIE_MODE	
+	swprintf_s(levelname, L"level/level_Movie.tkl");
+#else
+	swprintf_s(levelname, L"level/level_Game.tkl");
+#endif // CREATE_MODE	
 	LevelObjectData floorObjData;
 	LevelObjectData objrigidbodyObjData;
 	LevelObjectData ceilingObjData;
@@ -142,15 +146,16 @@ bool Game::Start()
 		return false;
 	}
 	);
+#ifdef MOVIE_MODE	
 	Inv_AddItem(L"受付の鍵", 1);
 	Inv_AddItem(L"刑事課の鍵", 1);
 	Inv_AddItem(L"資料室の鍵", 1);
 	Inv_AddItem(L"署長室の鍵", 1);
-
+#endif // CREATE_MODE	
 	m_pl = NewGO<PointLight>(GOPrio_Defalut);
 	int i = 0;
 	for (auto& objData : pointlightObjDatas) {
-		CVector3 color = {3.0f, 3.0f, 2.5f};
+		CVector3 color = {1.8f, 1.5f, 1.2f};
 		float range = 500.0f;
 		m_pl->SetLight(objData.position, color, range, i);
 		i++;
@@ -188,11 +193,11 @@ bool Game::Start()
 	m_goal->SetRot(goalObjData.rotation);
 
 	//ゾンビを構築。
-	/*for (auto& objData : zombieObjDatas) {
+	for (auto& objData : zombieObjDatas) {
 		m_zombie = NewGO<Zombie>(GOPrio_Defalut, "enemy");
 		m_zombie->SetPos(objData.position);
 		m_zombie->SetRot(objData.rotation);
-	}*/
+	}
 	
 	//UIの構築。
 	m_ui = NewGO<UI>(GOPrio_Defalut);

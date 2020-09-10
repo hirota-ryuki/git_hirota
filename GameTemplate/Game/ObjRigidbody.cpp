@@ -23,6 +23,7 @@ bool ObjRigidbody::Start()
 	m_model->SetData(m_position, m_rotation);
 	m_model->UpdateWorldMatrix();
 	m_model->SetShadowCaster(true);
+	m_model->SetShadowReciever(true);
 	//m_model->ActiveMode(false);
 
 	m_PSOmodel = NewGO<SkinModelRender>(GOPrio_Defalut);
@@ -30,6 +31,7 @@ bool ObjRigidbody::Start()
 	m_PSOmodel->Init(L"modelData/mapchip/RB_obj.cmo");
 	m_PSOmodel->SetData(m_position, m_rotation);
 	m_PSOmodel->ActiveMode(false);
+	m_PSOmodel->SetShadowCaster(false);
 	m_physicsStaticObject.CreateMeshObject(m_PSOmodel->GetModel(), m_position, m_rotation);
 	m_physicsStaticObject.SetUserIndex(enCollisionAttr_RigidBody);
 

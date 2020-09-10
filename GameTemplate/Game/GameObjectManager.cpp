@@ -2,6 +2,7 @@
 #include "GameObjectManager.h"
 #include "RenderState.h"
 #include "ShadowMap.h"
+#include "Player.h"
 
 GameObjectManager::GameObjectManager()
 {
@@ -21,6 +22,7 @@ GameObjectManager::GameObjectManager()
 		FRAME_BUFFER_W,
 		FRAME_BUFFER_H
 	);
+	
 }
 
 GameObjectManager::~GameObjectManager()
@@ -65,20 +67,51 @@ void GameObjectManager::StartAndUpdate()
 				
 		}
 	}
-	//影。
-	float p = 500.0f;
-	auto pos = g_camera3D.GetPosition();
-	pos.x += p;
-	pos.y += p;
-	pos.z += p;
-	//シャドウマップを更新。
-	ShadowMap::GetInstance().UpdateFromLightTarget(
-		pos,
-		g_camera3D.GetPosition()
-	);
+	//シャドウマップの更新。
+	ShadowUpdate();
 
 	//ポストエフェクトの更新。
 	m_postEffect.Update();
+}
+
+void GameObjectManager::ShadowUpdate()
+{
+	//影。
+	if (GetGame() != nullptr) {
+		if (GetGame()->GetPlayer() != nullptr) {
+			m_shadowPos = GetGame()->GetPlayer()->GetShadowPos();
+			//m_shadowTag = g_camera3D.GetTarget();
+			m_shadowTag = g_camera3D.GetForward();
+			m_shadowTag.Normalize();
+			//m_shadowTag *= 5.0f;
+			//m_shadowTag *= 50.0f;
+			m_shadowPos = m_shadowPos + m_shadowTag;
+			m_shadowTag += m_shadowPos;
+			////m_shadowTag *= 100.0f;
+		}
+	}
+	/*m_shadowPos = g_camera3D.GetPosition();
+	m_shadowTag = g_camera3D.GetTarget();*/
+
+	
+	//シャドウマップを更新。
+	ShadowMap::GetInstance().UpdateFromLightTarget(
+		m_shadowPos,
+		m_shadowTag
+		/*CVector3::Zero(),
+		CVector3::One()*/
+	);
+
+	//float p = 500.0f;
+	//auto pos = g_camera3D.GetPosition();
+	//pos.x += p;
+	//pos.y += p;
+	//pos.z += p;
+	////シャドウマップを更新。
+	//ShadowMap::GetInstance().UpdateFromLightTarget(
+	//	pos,
+	//	g_camera3D.GetPosition()
+	//);
 }
 
 void GameObjectManager::Delete()

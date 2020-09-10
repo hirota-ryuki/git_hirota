@@ -52,9 +52,7 @@ bool IItem::IsGetItem(CVector3 diff)
 		//Bボタンを押したら。
 		if (g_pad[0].IsTrigger(enButtonB)) {
 			//ワンショット再生のSE。
-			CSoundSource* m_se = new CSoundSource;
-			m_se->Init(L"sound/story/decision.wav");
-			m_se->Play(false);
+			Sound(L"sound/story/decision.wav", false);
 			m_isGetItem = true;
 		}
 	}
@@ -67,6 +65,8 @@ void IItem::GettingItem(bool isGetItem, SpriteRender* sprite, CVector3 diff, Ski
 	if (isGetItem) {
 		if (!m_isOnce) {
 			model->ActiveMode(false);
+			model->SetShadowCaster(false);
+			model->SetShadowReciever(false);
 			m_buttonSprite->ActiveMode(false);
 			OnGet();
 			m_isOnce = true;

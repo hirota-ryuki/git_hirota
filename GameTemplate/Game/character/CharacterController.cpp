@@ -208,7 +208,7 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 			if (callback.isHit) {
 				//当たった。
 				//壁。
-#if 1
+#if 0
 				//こちらを有効にすると衝突解決が衝突点に戻すになる。
 				nextPosition.x = callback.hitPos.x;
 				nextPosition.z = callback.hitPos.z;

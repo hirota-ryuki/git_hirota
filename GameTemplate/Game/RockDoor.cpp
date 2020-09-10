@@ -15,14 +15,15 @@ bool RockDoor::Start()
 	//ÉhÉAÅB
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
 	m_model->Init(L"modelData/rockdoor/blood_door/door.cmo");
+	m_model->SetShadowCaster(true);
+	m_model->SetShadowReciever(true);
 
 	m_model->SetData(m_position, m_rotation);
 	m_model->UpdateWorldMatrix();
 	m_PSOmodel = NewGO<SkinModelRender>(GOPrio_Defalut);
 	m_PSOmodel->Init(L"modelData/rockdoor/rockdoor.cmo");
 	m_PSOmodel->ActiveMode(false);
-	m_PSOmodel->SetShadowCaster(false);
-	m_PSOmodel->SetShadowReciever(false);
+	
 
 	m_physicsStaticObject.CreateMeshObject(m_PSOmodel->GetModel(), m_position, m_rotation);
 	

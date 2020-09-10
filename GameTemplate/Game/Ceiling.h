@@ -25,9 +25,10 @@ public:
 		m_rotation = rot;
 	}
 private:
-	SkinModelRender*	m_model;								//スキンモデル。
+	SkinModelRender*	m_model = nullptr;								//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
-
+	SkinModelRender* m_modelPos = nullptr;
+	SkinModelRender* m_modelTag = nullptr;
 };
 

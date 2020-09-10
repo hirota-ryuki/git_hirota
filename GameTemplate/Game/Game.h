@@ -4,6 +4,9 @@
 //TitleではなくGameを最初にNewGOする。
 //オープニングを省略する。
 #define CREATE_MODE	
+//撮影を行うためのモード。
+//レベルを簡易的なものに変更する。
+#define MOVIE_MODE	
 
 class GameCamera;
 class Floor;

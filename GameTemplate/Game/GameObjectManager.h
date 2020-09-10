@@ -3,7 +3,6 @@
 #include "util/Util.h"
 #include <list>
 #include "graphics/posteffect/PostEffect.h"
-
 class GameObjectManager
 {
 private:
@@ -43,6 +42,7 @@ public:
 	/// GameObjectの開始関数と更新関数。
 	/// </summary>
 	void StartAndUpdate();
+	void ShadowUpdate();
 	/// <summary>
 	/// GameObjectを消去する関数。
 	/// </summary>
@@ -155,6 +155,12 @@ public:
 	RenderTarget* GetMainRenderTarget(){
 		return &m_mainRenderTarget;
 	}
+	CVector3 GetPos() {
+		return m_shadowPos;
+	}
+	CVector3 GetTag() {
+		return m_shadowTag;
+	}
 
 	RenderTarget m_mainRenderTarget;				//メインレンダリングターゲット。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
@@ -164,10 +170,14 @@ public:
 
 	//ベクタは新しい道を別で作りつつ配列を更新していくが、
 	//リストは道を延長していくので今回の場合はリストのほうが良い。
-	std::list< IGameObject* > m_goList[GOPrio_num];		//ゲームオブジェクトのリスト。
-	std::list< IGameObject* > m_DeleteGOList;			//削除予定のゲームオブジェクトのリスト。
+	std::list< IGameObject* > m_goList[GOPrio_num];	//ゲームオブジェクトのリスト。
+	std::list< IGameObject* > m_DeleteGOList;		//削除予定のゲームオブジェクトのリスト。
 
-	PostEffect m_postEffect;				//ポストエフェクト。
+	PostEffect	m_postEffect;						//ポストエフェクト。
+	CVector3	m_shadowPos = CVector3::Zero();		//シャドウマップの視点。
+	CVector3	m_shadowTag = CVector3::One();		//シャドウマップの視点。
+
+	
 };
 
 //外部からアクセスするので、extern宣言も必要。

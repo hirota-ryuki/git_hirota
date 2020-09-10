@@ -190,6 +190,9 @@
     <Filter Include="Game\Light\Spot">
       <UniqueIdentifier>{49e3a42f-8d68-457c-8074-24bd66068569}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Gimmick">
+      <UniqueIdentifier>{6e037a17-cacb-4bf5-b1b0-17fca3965772}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -366,9 +369,6 @@
     <ClCompile Include="MapCamera.cpp">
       <Filter>Game\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="SphereCollider.cpp">
-      <Filter>Engine\physics</Filter>
-    </ClCompile>
     <ClCompile Include="CameraCollisionSolver.cpp">
       <Filter>Engine\graphics\Camera</Filter>
     </ClCompile>
@@ -420,6 +420,19 @@
     <ClCompile Include="SpotLight.cpp">
       <Filter>Game\Light\Spot</Filter>
     </ClCompile>
+    <ClCompile Include="physics\SphereCollider.cpp">
+      <Filter>Engine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\PhysicsObjectBase.cpp">
+      <Filter>Engine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\GhostObject.cpp">
+      <Filter>Engine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="IGimmick.cpp">
+      <Filter>Game\Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="Gimmick_Corridor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -501,9 +514,6 @@
       <Filter>Game\Enemy\Navmesh</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Main&amp;Game</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
       <Filter>Main&amp;Game</Filter>
     </ClInclude>
     <ClInclude Include="RenderState.h">
@@ -605,9 +615,6 @@
     <ClInclude Include="MapCamera.h">
       <Filter>Game\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="SphereCollider.h">
-      <Filter>Engine\physics</Filter>
-    </ClInclude>
     <ClInclude Include="GameTime.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -665,10 +672,28 @@
     <ClInclude Include="SpotLight.h">
       <Filter>Game\Light\Spot</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\LightNumData.h">
+    <ClInclude Include="Light.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Assets\shader\LightNumData.h">
       <Filter>Engine\graphics\SkinModel</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h" />
+    <ClInclude Include="physics\SphereCollider.h">
+      <Filter>Engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\GhostObject.h">
+      <Filter>Engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\PhysicsObjectBase.h">
+      <Filter>Engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Main&amp;Game</Filter>
+    </ClInclude>
+    <ClInclude Include="IGimmick.h">
+      <Filter>Game\Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="Gimmick_Corridor.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">
@@ -732,10 +757,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\battlefield\floor.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\battlefield\battlefield.FBX">
+    <MeshContentTask Include="Assets\modelData\battlefield\floor.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\bullet\bullet.fbx">
@@ -756,37 +778,28 @@
     <MeshContentTask Include="Assets\modelData\goal\goal.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\mapChip\wall.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\mapChip\stage1.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\player\player.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\zombie\zombie.fbx">
+    <MeshContentTask Include="Assets\modelData\key\key.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\mapChip\new_stage_wall.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\rockdoor\rockdoor.fbx">
+    <MeshContentTask Include="Assets\modelData\mapChip\RB_obj.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\player\player.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\rockdoor\blood_door\door.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\rockdoor\doorbox\doorbox.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\key\key.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\object\object.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\mapChip\RB_obj.fbx">
+    <MeshContentTask Include="Assets\modelData\rockdoor\rockdoor.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\zombie\zombie.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>

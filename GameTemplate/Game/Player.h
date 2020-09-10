@@ -167,10 +167,28 @@ public:
 	CharacterController* GetCharaCon() {
 		return &m_charaCon;
 	}
+	CharacterController GetCharaCon_Ghorst() {
+		return m_charaCon;
+	}
 	/// <summary>
 	/// 懐中電灯。
 	/// </summary>
 	void SetLight();
+	/// <summary>
+	/// モデルの前方向。
+	/// </summary>
+	/// <returns>モデルの前方向。</returns>
+	CVector3 GetForward() {
+		return m_forward;
+	}
+	/// <summary>
+	/// 影用の視点。
+	/// </summary>
+	/// <returns>影用の視点。</returns>
+	CVector3 GetShadowPos() {
+		return m_shadowPos;
+	}
+	
 private:
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
@@ -246,5 +264,9 @@ private:
 	const float		m_maxhp = 5.0f;		//最大体力。
 	float			m_hp = m_maxhp;		//体力。
 	//ライト。
-	bool			m_isLight = false;			//ライトをつけているかどうか。
+	bool			m_isLight = true;			//ライトをつけているかどうか。
+	CVector3		m_shadowPos = CVector3::One();
+
+	//モデルの前方向。
+	CVector3		m_forward = CVector3::AxisX();
 };

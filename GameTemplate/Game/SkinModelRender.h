@@ -109,8 +109,8 @@ public:
 	{
 		return m_right;
 	}
-	void SetLight(int light, CVector4 direction) {
-		m_model.SetLight(light, direction);
+	void SetLight(int light, CVector4 direction, float color) {
+		m_model.SetLight(light, direction, color);
 	}
 	/// <summary>
 	/// ‰e‚ğİ’è‚·‚éŠÖ”B

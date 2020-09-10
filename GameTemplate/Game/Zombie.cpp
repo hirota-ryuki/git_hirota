@@ -47,6 +47,7 @@ bool Zombie::Start()
 	m_model->Init(L"modelData/zombie/zombie.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
 	m_model->SetData(m_position, m_rotation);
+	m_model->SetShadowReciever(true);
 	
 #ifdef DEBUG_MODE
 	//debug cmoファイルの読み込み。
@@ -516,7 +517,7 @@ void Zombie::Attack()
 	//内積に符号は無い。
 		&& degree < 45.0f) {
 		//ダメージを与える。
-		//m_player->Damage();
+		m_player->Damage();
 	}
 	/*
 	//指の骨の読み込み。

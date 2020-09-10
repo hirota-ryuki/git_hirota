@@ -153,7 +153,7 @@ void SpringCamera::UpdateSpringCamera()
 		CVector3 target = CalcSpringVector(m_camera->GetTarget(), m_target, m_targetMoveSpeed, m_maxMoveSpeed, m_dampingRate);
 		CVector3 position = CalcSpringVector(m_camera->GetPosition(), m_position, m_positionMoveSpeed, m_maxMoveSpeed, m_dampingRate);
 		m_camera->SetTarget(m_target);
-		m_camera->SetPosition(position);
+		m_camera->SetPosition(m_position);
 	}
 }
 /*!

@@ -7,14 +7,14 @@ FBXHeaderExtension:  {
 	CreationTimeStamp:  {
 		Version: 1000
 		Year: 2020
-		Month: 1
-		Day: 16
-		Hour: 13
-		Minute: 51
-		Second: 55
-		Millisecond: 191
+		Month: 9
+		Day: 3
+		Hour: 14
+		Minute: 39
+		Second: 19
+		Millisecond: 395
 	}
-	Creator: "FBX SDK/FBX Plugins version 2018.1"
+	Creator: "FBX SDK/FBX Plugins version 2019.0"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
 		Type: "UserData"
 		Version: 100
@@ -28,21 +28,20 @@ FBXHeaderExtension:  {
 			Comment: ""
 		}
 		Properties70:  {
-			P: "DocumentUrl", "KString", "Url", "", "C:\Users\GC1824\Desktop\Git_Game\git_hirota\GameTemplate\Game\Assets\modelData\debug\debugbox.fbx"
-			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Users\GC1824\Desktop\Git_Game\git_hirota\GameTemplate\Game\Assets\modelData\debug\debugbox.fbx"
+			P: "DocumentUrl", "KString", "Url", "", "D:\git_hirota\GameTemplate\Game\Assets\modelData\debug\debugbox.fbx"
+			P: "SrcDocumentUrl", "KString", "Url", "", "D:\git_hirota\GameTemplate\Game\Assets\modelData\debug\debugbox.fbx"
 			P: "Original", "Compound", "", ""
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "3ds Max"
-			P: "Original|ApplicationVersion", "KString", "", "", "2018"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "16/01/2020 04:51:55.187"
-			P: "Original|FileName", "KString", "", "", "C:\Users\GC1824\Desktop\Git_Game\git_hirota\GameTemplate\Game\Assets\modelData\debug\debugbox.fbx"
+			P: "Original|ApplicationVersion", "KString", "", "", "2019"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "03/09/2020 05:39:19.394"
+			P: "Original|FileName", "KString", "", "", "D:\git_hirota\GameTemplate\Game\Assets\modelData\debug\debugbox.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "3ds Max"
-			P: "LastSaved|ApplicationVersion", "KString", "", "", "2018"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "16/01/2020 04:51:55.187"
-			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\GC1824\Documents\3dsMax"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\GC1824\Documents\3dsMax\scenes\Game\debug_box.max"
+			P: "LastSaved|ApplicationVersion", "KString", "", "", "2019"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "03/09/2020 05:39:19.394"
+			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\GC201\OneDrive\ドキュメント\3dsMax"
 		}
 	}
 }
@@ -77,7 +76,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1892127240656, "", "Scene" {
+	Document: 1353026764704, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", ""
@@ -97,7 +96,7 @@ References:  {
 
 Definitions:  {
 	Version: 100
-	Count: 8
+	Count: 12
 	ObjectType: "GlobalSettings" {
 		Count: 1
 	}
@@ -207,6 +206,19 @@ Definitions:  {
 			}
 		}
 	}
+	ObjectType: "Geometry" {
+		Count: 1
+		PropertyTemplate: "FbxMesh" {
+			Properties70:  {
+				P: "Color", "ColorRGB", "Color", "",0.8,0.8,0.8
+				P: "BBoxMin", "Vector3D", "Vector", "",0,0,0
+				P: "BBoxMax", "Vector3D", "Vector", "",0,0,0
+				P: "Primary Visibility", "bool", "", "",1
+				P: "Casts Shadows", "bool", "", "",1
+				P: "Receive Shadows", "bool", "", "",1
+			}
+		}
+	}
 	ObjectType: "Material" {
 		Count: 1
 		PropertyTemplate: "FbxSurfacePhong" {
@@ -259,16 +271,14 @@ Definitions:  {
 			}
 		}
 	}
-	ObjectType: "Geometry" {
+	ObjectType: "AnimationCurve" {
+		Count: 3
+	}
+	ObjectType: "AnimationCurveNode" {
 		Count: 1
-		PropertyTemplate: "FbxMesh" {
+		PropertyTemplate: "FbxAnimCurveNode" {
 			Properties70:  {
-				P: "Color", "ColorRGB", "Color", "",0.8,0.8,0.8
-				P: "BBoxMin", "Vector3D", "Vector", "",0,0,0
-				P: "BBoxMax", "Vector3D", "Vector", "",0,0,0
-				P: "Primary Visibility", "bool", "", "",1
-				P: "Casts Shadows", "bool", "", "",1
-				P: "Receive Shadows", "bool", "", "",1
+				P: "d", "Compound", "", ""
 			}
 		}
 	}
@@ -305,9 +315,9 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1892351100096, "Geometry::", "Mesh" {
+	Geometry: 1353030093936, "Geometry::", "Mesh" {
 		Properties70:  {
-			P: "Color", "ColorRGB", "Color", "",0.0235294117647059,0.529411764705882,0.443137254901961
+			P: "Color", "ColorRGB", "Color", "",0.0235294117647059,0.525490196078431,0.443137254901961
 		}
 		Vertices: *24 {
 			a: -5,-5,0,5,-5,0,-5,5,0,5,5,0,-5,-5,10,5,-5,10,-5,5,10,5,5,10
@@ -401,18 +411,20 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1892303534448, "Model::Box001", "Mesh" {
+	Model: 1353036610672, "Model::Box001", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
 			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
 			P: "DefaultAttributeIndex", "int", "Integer", "",0
+			P: "Lcl Translation", "Lcl Translation", "", "A",0,0,-4.97187519073486
+			P: "UDP3DSMAX", "KString", "", "U", "MapChannel:1 = UVChannel_1&cr;&lf;"
 			P: "MaxHandle", "int", "Integer", "UH",2
 		}
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1892354327792, "Material::Material #25", "" {
+	Material: 1352115120016, "Material::Material #26", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -434,39 +446,109 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Video: 1892354323472, "Video::マップ #1", "Clip" {
+	Video: 1352115128176, "Video::マップ #2", "Clip" {
 		Type: "Clip"
 		Properties70:  {
-			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1824\Desktop\Git_Game\git_hirota\GameTemplate\Game\Assets\modelData\debug\red.png"
+			P: "Path", "KString", "XRefUrl", "", "D:\git_hirota\GameTemplate\Game\Assets\modelData\debug\red.png"
 			P: "RelPath", "KString", "XRefUrl", "", "red.png"
 		}
 		UseMipMap: 0
-		Filename: "C:\Users\GC1824\Desktop\Git_Game\git_hirota\GameTemplate\Game\Assets\modelData\debug\red.png"
+		Filename: "D:\git_hirota\GameTemplate\Game\Assets\modelData\debug\red.png"
 		RelativeFilename: "red.png"
 	}
-	Texture: 1892354325872, "Texture::マップ #1", "" {
+	Texture: 1352115109936, "Texture::マップ #2", "" {
 		Type: "TextureVideoClip"
 		Version: 202
-		TextureName: "Texture::マップ #1"
+		TextureName: "Texture::マップ #2"
 		Properties70:  {
 			P: "UVSet", "KString", "", "", "UVChannel_1"
 			P: "UseMaterial", "bool", "", "",1
 		}
-		Media: "Video::マップ #1"
-		FileName: "C:\Users\GC1824\Desktop\Git_Game\git_hirota\GameTemplate\Game\Assets\modelData\debug\red.png"
+		Media: "Video::マップ #2"
+		FileName: "D:\git_hirota\GameTemplate\Game\Assets\modelData\debug\red.png"
 		RelativeFilename: "red.png"
 		ModelUVTranslation: 0,0
 		ModelUVScaling: 1,1
 		Texture_Alpha_Source: "Alpha_Black"
 		Cropping: 0,0,0,0
 	}
-	AnimationStack: 1892304210432, "AnimStack::Take 001", "" {
+	AnimationStack: 1352109188368, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",153953860000
 			P: "ReferenceStop", "KTime", "Time", "",153953860000
 		}
 	}
-	AnimationLayer: 1892113561488, "AnimLayer::BaseLayer", "" {
+	AnimationCurve: 1353028127216, "AnimCurve::", "" {
+		Default: 0
+		KeyVer: 4009
+		KeyTime: *1 {
+			a: 0
+		} 
+		KeyValueFloat: *1 {
+			a: 0
+		} 
+		;KeyAttrFlags: Cubic|TangeantUser|WeightedRight
+		KeyAttrFlags: *1 {
+			a: 16778248
+		} 
+		;KeyAttrDataFloat: RightSlope:0, NextLeftSlope:0, RightWeight:0.333233, NextLeftWeight:0.333333, RightVelocity:0, NextLeftVelocity:0
+		KeyAttrDataFloat: *4 {
+			a: 0,0,218434820,0
+		} 
+		KeyAttrRefCount: *1 {
+			a: 1
+		} 
+	}
+	AnimationCurve: 1353028127536, "AnimCurve::", "" {
+		Default: 0
+		KeyVer: 4009
+		KeyTime: *1 {
+			a: 0
+		} 
+		KeyValueFloat: *1 {
+			a: 0
+		} 
+		;KeyAttrFlags: Cubic|TangeantUser|WeightedRight
+		KeyAttrFlags: *1 {
+			a: 16778248
+		} 
+		;KeyAttrDataFloat: RightSlope:0, NextLeftSlope:0, RightWeight:0.333233, NextLeftWeight:0.333333, RightVelocity:0, NextLeftVelocity:0
+		KeyAttrDataFloat: *4 {
+			a: 0,0,218434820,0
+		} 
+		KeyAttrRefCount: *1 {
+			a: 1
+		} 
+	}
+	AnimationCurve: 1353028129456, "AnimCurve::", "" {
+		Default: 0
+		KeyVer: 4009
+		KeyTime: *1 {
+			a: 0
+		} 
+		KeyValueFloat: *1 {
+			a: 0
+		} 
+		;KeyAttrFlags: Cubic|TangeantUser|WeightedRight
+		KeyAttrFlags: *1 {
+			a: 16778248
+		} 
+		;KeyAttrDataFloat: RightSlope:0, NextLeftSlope:0, RightWeight:0.333233, NextLeftWeight:0.333333, RightVelocity:0, NextLeftVelocity:0
+		KeyAttrDataFloat: *4 {
+			a: 0,0,218434820,0
+		} 
+		KeyAttrRefCount: *1 {
+			a: 1
+		} 
+	}
+	AnimationCurveNode: 1352109190448, "AnimCurveNode::R", "" {
+		Properties70:  {
+			P: "d|X", "Number", "", "A",0
+			P: "d|Y", "Number", "", "A",0
+			P: "d|Z", "Number", "", "A",0
+		}
+	}
+	AnimationLayer: 1353031797248, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -476,22 +558,37 @@ Objects:  {
 Connections:  {
 	
 	;Model::Box001, Model::RootNode
-	C: "OO",1892303534448,0
+	C: "OO",1353036610672,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1892113561488,1892304210432
+	C: "OO",1353031797248,1352109188368
 	
-	;Material::Material #25, Model::Box001
-	C: "OO",1892354327792,1892303534448
+	;AnimCurveNode::R, AnimLayer::BaseLayer
+	C: "OO",1352109190448,1353031797248
 	
 	;Geometry::, Model::Box001
-	C: "OO",1892351100096,1892303534448
+	C: "OO",1353030093936,1353036610672
 	
-	;Texture::マップ #1, Material::Material #25
-	C: "OP",1892354325872,1892354327792, "DiffuseColor"
+	;Material::Material #26, Model::Box001
+	C: "OO",1352115120016,1353036610672
 	
-	;Video::マップ #1, Texture::マップ #1
-	C: "OO",1892354323472,1892354325872
+	;AnimCurveNode::R, Model::Box001
+	C: "OP",1352109190448,1353036610672, "Lcl Rotation"
+	
+	;Texture::マップ #2, Material::Material #26
+	C: "OP",1352115109936,1352115120016, "DiffuseColor"
+	
+	;Video::マップ #2, Texture::マップ #2
+	C: "OO",1352115128176,1352115109936
+	
+	;AnimCurve::, AnimCurveNode::R
+	C: "OP",1353028127216,1352109190448, "d|X"
+	
+	;AnimCurve::, AnimCurveNode::R
+	C: "OP",1353028127536,1352109190448, "d|Y"
+	
+	;AnimCurve::, AnimCurveNode::R
+	C: "OP",1353028129456,1352109190448, "d|Z"
 }
 ;Takes section
 ;----------------------------------------------------

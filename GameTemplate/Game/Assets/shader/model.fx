@@ -2,7 +2,7 @@
  * @brief	モデルシェーダー。
  */
 //#include "..\..\graphics\LightNumData.h"
-#include "../../graphics\LightNumData.h"
+#include "LightNumData.h"
 
 
 /////////////////////////////////////////////////////////////
@@ -128,6 +128,7 @@ struct PSInput{
 /// </summary>
 struct PSInput_ShadowMap {
 	float4 Position 			: SV_POSITION;	//座標。
+    float4 posInLVP : TEXCOORD0;
 };
 
 /*!
@@ -271,7 +272,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 			//↓同じ結果。
 			//R += dligDirection[i].xyz + 2.0f * dot(In.Normal, -dligDirection[i].xyz) * In.Normal;
 
-			//1と2で求まったVectorのない席を計算する。
+			//1と2で求まったVectorの内積を計算する。
 			//スペキュラ反射の強さを求める。
             float specPower = max(0.0f, dot(R, E));
 
@@ -295,28 +296,8 @@ float4 PSMain( PSInput In ) : SV_Target0
         lig += pointsLights[i].color.xyz * t * affect;
     }
 	
-	//スポットライトから光によるランバート拡散反射を計算。
-    for (int i = 0; i < NUM_SPOT_LIG; i++)
-    {
-        float3 vec = normalize(In.worldPos - spotLights[i].position);
-
-        float Dot = dot(vec, spotLights[i].direction);
-        float angle = acos(Dot);
-        float degree = angle * 180.0f / 3.14f;
-		
-        if (degree < 45.0f)
-        {
-            float3 ligDir = normalize(In.worldPos - spotLights[i].position);
-            float distance = length(In.worldPos - spotLights[i].position);
-            float t = max(0.0f, dot(-ligDir, In.Normal));
-            float affect = 1.0f - min(1.0f, distance / spotLights[i].range);
-            lig += spotLights[i].color * t * affect;
-        }
-    }
-	
-	//環境光。
-    lig += ambientLight;
-   
+	//スポットライトがさえぎられているかのフラグ。
+    int occlusionSpotLig = 0;
 	//影。
     if (isShadowReciever == 1)
     { //シャドウレシーバー。
@@ -337,13 +318,40 @@ float4 PSMain( PSInput In ) : SV_Target0
 			//シャドウマップに書き込まれている深度値を取得。
             float zInShadowMap = g_shadowMap.Sample(Sampler, shadowMapUV);
 
-            if (zInLVP > zInShadowMap + 0.01f)
+            if (zInLVP > zInShadowMap + 0.00001f)
             {
 				//影が落ちているので、光を弱くする
-                lig *= 0.5f;
+                //occlusionSpotLig = 1;
             }
         }
     }
+	
+	//スポットライトから光によるランバート拡散反射を計算。
+    if (occlusionSpotLig == 0)
+    {
+        for (int i = 0; i < NUM_SPOT_LIG; i++)
+        {
+            float3 vec = normalize(In.worldPos - spotLights[i].position);
+
+            float Dot = dot(vec, spotLights[i].direction);
+            float angle = acos(Dot);
+            float degree = angle * 180.0f / 3.14f;
+			//0度から45度以上0.0～1.0に変換する。
+			//22.5   0.5f
+            //0度は0.0f, 0.0625, 45度以上1.0
+            float hoge = 1.0f - pow(min(1.0f, degree / 45.0f), 5.0f);
+		
+            float3 ligDir = normalize(In.worldPos - spotLights[i].position);
+            float distance = length(In.worldPos - spotLights[i].position);
+            float t = max(0.0f, dot(-ligDir, In.Normal));
+            float affect = 1.0f - min(1.0f, distance / spotLights[i].range);
+            lig += spotLights[i].color * t * affect * hoge;
+        }
+    }
+	//環境光。
+    lig += ambientLight;
+   
+	
 	
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 	finalColor.xyz = albedoColor.xyz * lig;
@@ -361,6 +369,7 @@ PSInput_ShadowMap VSMain_ShadowMap(VSInputNmTxVcTangent In)
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
+    psInput.posInLVP = pos;
 	return psInput;
 }
 //スキンあり。
@@ -394,6 +403,7 @@ PSInput_ShadowMap VSMainSkin_ShadowMap( VSInputNmTxWeights In )
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInputS.Position = pos;
+    psInputS.posInLVP = pos;
     return psInputS;
 }
 /// <summary>
@@ -402,5 +412,5 @@ PSInput_ShadowMap VSMainSkin_ShadowMap( VSInputNmTxWeights In )
 float4 PSMain_ShadowMap(PSInput_ShadowMap In) : SV_Target0
 {
 	//射影空間でのZ値を返す。
-	return In.Position.z  / In.Position.w;
+    return In.posInLVP.z / In.posInLVP.w;
 }

@@ -26,6 +26,7 @@
 #include "math/Vector.h"
 
 #include "physics/Physics.h"
+
 #include "HID/Pad.h"
 
 #include "math/Matrix.h"
@@ -46,6 +47,7 @@
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 
+
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 
@@ -63,3 +65,4 @@ const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 #include "Game.h"
 
 static const int MAX_BONE = 512;	//!<ボーンの最大数。
+using namespace hrEngine;

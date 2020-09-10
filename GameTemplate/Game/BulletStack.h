@@ -56,7 +56,7 @@ private:
 	CVector2			m_spritePos = FRAME_OUT_POS;
 
 	//アイテムデータ。
-	const wchar_t* NAME = L"bulletstack";
+	const wchar_t* NAME = L"弾薬";
 	const int      ADD = 10;
 };
 

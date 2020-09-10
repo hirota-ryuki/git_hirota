@@ -32,19 +32,17 @@ public:
 	/// <param name="w">横幅。</param>
 	/// <param name="h">縦幅。</param>
 	/// <returns>スプライトレンダー。</returns>
-	SpriteRender* SpriteLoad(const wchar_t* filePath, float w, float h);
-	
+	SpriteRender* SpriteLoad(const wchar_t* filePath, float w, float h);	
 	/// <summary>
 	/// 初期化処理。
 	/// </summary>
 	void IItemInit();
-
 	/// <summary>
 	/// IItemクラスの共通処理。
 	/// 行わなければならない処理をまとめたもの。
 	/// </summary>
-	/// <param name="sprite"></param>
-	/// <param name="pos"></param>
+	/// <param name="sprite">画像。</param>
+	/// <param name="pos">ポジション。</param>
 	void ItemCommonProcessing(SpriteRender* sprite, CVector3 pos, SkinModelRender* model);
 	/// <summary>
 	/// デリートの処理を自由に書ける関数。
@@ -105,12 +103,12 @@ private:
 	void SpriteMove(SpriteRender* sprite, CVector3 diff);
 
 	/// <summary>
-	/// 
+	/// Bボタンをロードする関数。
 	/// </summary>
 	void ButtonSpriteLoad();
 	
 	/// <summary>
-	/// 
+	/// Bボタンを動かす関数。
 	/// </summary>
 	/// <param name="diff"></param>
 	/// <param name="position"></param>
@@ -157,6 +155,6 @@ private:
 	const float			AMOUNT_OF_CHANGE = 10.0f;					//画像が移動する量、変化量。
 	const float			B_BUTTON_SIZE = 40.0f;						//Bボタンのサイズ。
 	const float			ENEMY_AND_PLAYER_DISTANCE_BUTTON = 250.0f;	//ボタンを表示する、アイテムとプレイヤーの距離の範囲。
-	const float			ENEMY_AND_PLAYER_DISTANCE_MOVE = 100.0f;	//画像を動かす、アイテムとプレイヤーの距離の範囲。
+	const float			ENEMY_AND_PLAYER_DISTANCE_MOVE = 175.0f;	//画像を動かす、アイテムとプレイヤーの距離の範囲。
 	const int			TIME_TO_STOP = 125;							//画像が止まっている時間。
 };
