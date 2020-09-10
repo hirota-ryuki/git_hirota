@@ -9,7 +9,6 @@ enum CreateState {
 	enState_createCapsule,
 	enState_createSphere,
 };
-using namespace hirota;
 class IGimmick :
 	public IGameObject
 {
@@ -46,7 +45,7 @@ public:
 		m_state = state;
 	}
 private:
-	CPhysicsGhostObject		m_ghost;
+	hrEngine::CPhysicsGhostObject		m_ghost;
 	CVector3				m_position = CVector3::Zero();
 	CQuaternion				m_rotation = CQuaternion::Identity();
 	CVector3				m_size = CVector3::One();

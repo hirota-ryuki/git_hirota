@@ -65,4 +65,3 @@ const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 #include "Game.h"
 
 static const int MAX_BONE = 512;	//!<ボーンの最大数。
-using namespace hrEngine;
