@@ -193,6 +193,9 @@
     <Filter Include="Game\Gimmick">
       <UniqueIdentifier>{6e037a17-cacb-4bf5-b1b0-17fca3965772}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Gimmick\corridor">
+      <UniqueIdentifier>{f1106fb1-4ef7-40c6-b690-b21eb0fcb908}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -432,7 +435,9 @@
     <ClCompile Include="IGimmick.cpp">
       <Filter>Game\Gimmick</Filter>
     </ClCompile>
-    <ClCompile Include="Gimmick_Corridor.cpp" />
+    <ClCompile Include="Gimmick_Corridor.cpp">
+      <Filter>Game\Gimmick\corridor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -693,7 +698,9 @@
     <ClInclude Include="IGimmick.h">
       <Filter>Game\Gimmick</Filter>
     </ClInclude>
-    <ClInclude Include="Gimmick_Corridor.h" />
+    <ClInclude Include="Gimmick_Corridor.h">
+      <Filter>Game\Gimmick\corridor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

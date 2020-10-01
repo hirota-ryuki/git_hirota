@@ -12,12 +12,12 @@ bool IGimmick::Start()
 
 void IGimmick::Init()
 {
-	////ゴーストの作成。
-	//switch (m_state)
-	//{
-	//case enState_createBox:
+	//ゴーストの作成。
+	switch (m_state)
+	{
+	case enState_createBox:
 		m_ghost.CreateBox(m_position, m_rotation, m_size);
-	/*	break;
+		break;
 	case enState_createCapsule:
 		m_ghost.CreateCapsule(m_position, m_rotation, m_radius, m_height);
 		break;
@@ -26,7 +26,7 @@ void IGimmick::Init()
 		break;
 	default:
 		break;
-	}*/
+	}
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
 	//プレイヤーのインスタンスを取得。

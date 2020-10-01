@@ -321,7 +321,7 @@ float4 PSMain( PSInput In ) : SV_Target0
             if (zInLVP > zInShadowMap + 0.00001f)
             {
 				//‰e‚ª—Ž‚¿‚Ä‚¢‚é‚Ì‚ÅAŒõ‚ðŽã‚­‚·‚é
-                //occlusionSpotLig = 1;
+                occlusionSpotLig = 1;
             }
         }
     }
