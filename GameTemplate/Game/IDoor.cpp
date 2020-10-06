@@ -31,6 +31,7 @@ void IDoor::MoveDoor(const CVector3 & diff, SkinModelRender * model, SkinModelRe
 					if (Inv_FindItem(m_name.c_str()) > 0) {
 						Sound(L"sound/story/decision.wav", false);
 						Message(L"鍵を使用した。");
+						//鍵の個数を減らす。
 						Inv_AddItem(m_name.c_str(), -1);
 						//ドアを開く。
 						m_isOpenDoor = true;
@@ -50,8 +51,8 @@ void IDoor::MoveDoor(const CVector3 & diff, SkinModelRender * model, SkinModelRe
 		if (m_maxRotate > 0.0f) {
 			//2度ずつ回転させていく。
 			CQuaternion qAddRot;
-			qAddRot.SetRotationDeg(CVector3::AxisY(), -2.0f);
-			m_maxRotate -= 2.0f;
+			qAddRot.SetRotationDeg(CVector3::AxisY(), ADD_ROTATE);
+			m_maxRotate += ADD_ROTATE;
 			rot.Multiply(qAddRot, rot);
 			model->SetRot(rot);
 		}

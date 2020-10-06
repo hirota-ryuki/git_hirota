@@ -83,124 +83,124 @@ bool Zombie::Start()
 }
 
 void Zombie::Update()
+{		
+}
+
+void Zombie::Update_NotPause()
 {
-	//一時停止していなかったら。
-	if (!m_game->GetIsPose()) {
-		switch (m_state) {
-		case enState_idle:
-			//アニメーションの再生。
-			m_animation.Play(enAnimationClip_idle, 0.2f);
+	switch (m_state) {
+	case enState_idle:
+		//アニメーションの再生。
+		m_animation.Play(enAnimationClip_idle, 0.2f);
 
-			//攻撃後とノックバック後のクールタイム。
-			if (m_coolTimer > 0) {
-				m_coolTimer++;
-				if (m_coolTimer > 50) {
-					//タイマーのリセット。
-					m_coolTimer = 0;
-				}
+		//攻撃後とノックバック後のクールタイム。
+		if (m_coolTimer > 0) {
+			m_coolTimer++;
+			if (m_coolTimer > 50) {
+				//タイマーのリセット。
+				m_coolTimer = 0;
 			}
-			else {
-				ChangeState();
-			}
-			break;
-		case enState_walk:
-			//アニメーションの再生。
-			if (m_aStarCount > 100) {
-				m_animation.Play(enAnimationClip_idle, 0.2f);
-			}
-			else {
-				m_animation.Play(enAnimationClip_walk, 0.2f);
-			}
-			Move();
-			ChangeState();
-			break;
-		case enState_attack:
-			//アニメーションの再生。
-			m_animation.Play(enAnimationClip_attack, 0.2f);
-			m_atkTimer++;
-			if (m_atkTimer >= 60 && !m_isAttack) {
-				//攻撃。
-				Attack();
-				m_isAttack = true;
-			}
-			//アニメーションの再生中じゃなかったら。
-			if (!m_animation.IsPlaying()) {
-				//待機状態に遷移。
-				m_state = enState_idle;
-				m_coolTimer++;
-				m_atkTimer = 0;
-				m_isAttack = false;
-			}
-			break; 
-		case enState_bite:
-			En_Bite();
-			break;
-		case enState_knockback:
-			//アニメーションの再生。
-			m_animation.Play(enAnimationClip_knockback, 0.1f);
-			//アニメーションの再生中じゃなかったら。
-			if (!m_animation.IsPlaying()) {
-				//待機状態に遷移。
-				m_state = enState_idle;
-				m_coolTimer++;
-			}
-			break;
-		case enState_death:
-			//アニメーションの再生。
-			m_animation.Play(enAnimationClip_death, 0.2f);
-			//アニメーションの再生中じゃなかったら。
-			if (!m_animation.IsPlaying())
-			{
-				//DeleteGO(this);
-				m_charaCon.RemoveRigidBoby();
-			}
-			break;
-		default:
-			break;
 		}
-		//ダメージを受ける。
-		Damage();
-		//死ぬ判定。
-		Death();
-		//重力。
-		/*if (!m_isBite) {
-			m_moveSpeed.x = 0.0f;
-			m_moveSpeed.z = 0.0f;
-			m_moveSpeed.y -= 240.0f * 1.0f / 60.0f;
-			m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
-		}*/
-		//アニメーションの更新。
-		m_animation.Update(1.0f / 60.0f);
-		//座標の更新。
-		m_model->SetData(m_position, m_rotation);
-
-
-		//プレイヤーと敵の角度を求める。
-		/*CVector3 f = m_model->GetForward();
-		f.z *= -1;*/
-		//f.Normalize();
-		//CVector3 dir = CVector3::One();
-#ifdef DEBUG_MODE
-		CVector3 dir;
-		dir.Set(0.0f, 0.0f, -1.0f);
-		m_rotation.Multiply(dir);
-		dir.Normalize();
-		float angle = dir.Dot(CVector3::AxisY());
-
-		CVector3 cross;
-		cross.Cross(dir, CVector3::AxisY());
-		cross.Normalize();
-
-		CQuaternion Rot;
-		Rot.SetRotation(cross, acos(angle));
-		
-		//m_debugModel->SetData(m_position, Rot);
-		CVector3 pos = m_position;
-		pos.x += NOT_ASTAR_DISTANCE;
-		m_debugModel->SetPos(pos);
-#endif //DEBUG_MODE
-
+		else {
+			ChangeState();
+		}
+		break;
+	case enState_walk:
+		//アニメーションの再生。
+		if (m_aStarCount > 100) {
+			m_animation.Play(enAnimationClip_idle, 0.2f);
+		}
+		else {
+			m_animation.Play(enAnimationClip_walk, 0.2f);
+		}
+		Move();
+		ChangeState();
+		break;
+	case enState_attack:
+		//アニメーションの再生。
+		m_animation.Play(enAnimationClip_attack, 0.2f);
+		m_atkTimer++;
+		if (m_atkTimer >= 60 && !m_isAttack) {
+			//攻撃。
+			Attack();
+			m_isAttack = true;
+		}
+		//アニメーションの再生中じゃなかったら。
+		if (!m_animation.IsPlaying()) {
+			//待機状態に遷移。
+			m_state = enState_idle;
+			m_coolTimer++;
+			m_atkTimer = 0;
+			m_isAttack = false;
+		}
+		break;
+	case enState_bite:
+		En_Bite();
+		break;
+	case enState_knockback:
+		//アニメーションの再生。
+		m_animation.Play(enAnimationClip_knockback, 0.1f);
+		//アニメーションの再生中じゃなかったら。
+		if (!m_animation.IsPlaying()) {
+			//待機状態に遷移。
+			m_state = enState_idle;
+			m_coolTimer++;
+		}
+		break;
+	case enState_death:
+		//アニメーションの再生。
+		m_animation.Play(enAnimationClip_death, 0.2f);
+		//アニメーションの再生中じゃなかったら。
+		if (!m_animation.IsPlaying())
+		{
+			//DeleteGO(this);
+			m_charaCon.RemoveRigidBoby();
+		}
+		break;
+	default:
+		break;
 	}
+	//ダメージを受ける。
+	Damage();
+	//死ぬ判定。
+	Death();
+	//重力。
+	/*if (!m_isBite) {
+		m_moveSpeed.x = 0.0f;
+		m_moveSpeed.z = 0.0f;
+		m_moveSpeed.y -= 240.0f * 1.0f / 60.0f;
+		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+	}*/
+	//アニメーションの更新。
+	m_animation.Update(1.0f / 60.0f);
+	//座標の更新。
+	m_model->SetData(m_position, m_rotation);
+
+
+	//プレイヤーと敵の角度を求める。
+	/*CVector3 f = m_model->GetForward();
+	f.z *= -1;*/
+	//f.Normalize();
+	//CVector3 dir = CVector3::One();
+#ifdef DEBUG_MODE
+	CVector3 dir;
+	dir.Set(0.0f, 0.0f, -1.0f);
+	m_rotation.Multiply(dir);
+	dir.Normalize();
+	float angle = dir.Dot(CVector3::AxisY());
+
+	CVector3 cross;
+	cross.Cross(dir, CVector3::AxisY());
+	cross.Normalize();
+
+	CQuaternion Rot;
+	Rot.SetRotation(cross, acos(angle));
+
+	//m_debugModel->SetData(m_position, Rot);
+	CVector3 pos = m_position;
+	pos.x += NOT_ASTAR_DISTANCE;
+	m_debugModel->SetPos(pos);
+#endif //DEBUG_MODE
 }
 
 void Zombie::En_Bite()

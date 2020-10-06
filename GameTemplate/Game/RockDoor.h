@@ -13,7 +13,7 @@ public:
 	/// ドアのポジションをセット。
 	/// </summary>
 	/// <param name="pos">座標。</param>
-	void SetPos(CVector3 pos)
+	void SetPos(const CVector3& pos)
 	{
 		m_position = pos;
 	}
@@ -21,7 +21,7 @@ public:
 	/// ドアのセンターポジションをセット。
 	/// </summary>
 	/// <param name="pos">中心座標。</param>
-	void SetCenterPos(CVector3 pos)
+	void SetCenterPos(const CVector3& pos)
 	{
 		m_centerPos = pos;
 	}
@@ -29,7 +29,7 @@ public:
 	/// ドアの回転をセット。
 	/// </summary>
 	/// <param name="pos">回転。</param>
-	void SetRot(CQuaternion rot)
+	void SetRot(const CQuaternion& rot)
 	{
 		m_rotation = rot;
 	}
@@ -41,6 +41,5 @@ private:
 	PhysicsStaticObject m_physicsStaticObject;					//床の当たり判定。
 	Game*				m_game = nullptr;						//Gameのポインタ。
 	Player*				m_player = nullptr;						//プレイヤークラスのポインタ。
-	const wchar_t*		m_name;
-	CVector3			m_centerPos = CVector3::Zero();
+	CVector3			m_centerPos = CVector3::Zero();			//ドアの中心座標。
 };

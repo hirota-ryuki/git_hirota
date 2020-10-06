@@ -3,7 +3,7 @@
 //実装するときに不必要な手順を省略するためのモード。
 //TitleではなくGameを最初にNewGOする。
 //オープニングを省略する。
-#define CREATE_MODE	
+//#define CREATE_MODE	
 //撮影を行うためのモード。
 //レベルを簡易的なものに変更する。
 #define MOVIE_MODE	
@@ -109,26 +109,6 @@ public:
 	void GameOver(){
 		m_isGameOver = true;
 	}
-	/// <summary>
-	/// 一時停止したいときに呼び出す関数。
-	/// </summary>
-	void ChangePose(){
-		m_isPose = !m_isPose;
-	}
-	/// <summary>
-	/// 一時停止したいときに呼び出す関数。
-	/// trueなら一時停止、falseなら一時停止解除。
-	/// </summary>
-	void IsPose(bool flag){
-		m_isPose = flag;
-	}
-	/// <summary>
-	/// 一時停止しているかどうかを取得。
-	/// </summary>
-	/// <returns>一時停止しているかどうか。</returns>
-	bool GetIsPose() {
-		return m_isPose;
-	}
 private:
 	//インスタンス関係。
 	static Game*	m_game;					//Gameクラスのインスタンス。
@@ -153,9 +133,8 @@ private:
 	//状態関係。
 	bool m_isClear = false;				//クリアしたかどうか。
 	bool m_isGameOver = false;			//ゲームオーバーしたかどうか。
-	bool m_isPose = false;				//一時停止したかどうか。
-	SkinModelRender* m_PSOmodel;
-	SkinModelRender* model;
+	SkinModelRender* m_PSOmodel = nullptr;
+	SkinModelRender* model = nullptr;
 
 };
 

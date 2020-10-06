@@ -19,6 +19,5 @@ bool SpotLight::Start()
 
 void SpotLight::Update()
 {
-	SkinModel model;
-	model.SetSpotLight(m_spotList);
+	SkinModel::SetSpotLight(m_spotList);
 }

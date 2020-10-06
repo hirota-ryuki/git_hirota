@@ -88,7 +88,10 @@ public:
 	*@param[in]	projMatrix		プロジェクション行列。
 	*  カメラ座標系の3Dモデルをスクリーン座標系に変換する行列です。
 	*/
-	void Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix );
+	void Draw(
+		EnRenderMode renderMode, 
+		const CMatrix& viewMatrix, 
+		const CMatrix& projMatrix );
 	/*!
 	*@brief	スケルトンの取得。
 	*/
@@ -108,7 +111,7 @@ public:
 			}
 		}
 	}
-	void SetLight(int light, CVector4 direction, float color) {
+	void SetLight(int light, const CVector4& direction, float color) {
 		m_light.directionLight.direction[light] = direction;
 		m_light.directionLight.direction[light].Normalize();
 		m_light.directionLight.color[0] = { color, color, color, 0.2f };
@@ -120,7 +123,7 @@ public:
 		enSkinModelSRVReg_DiffuseTexture = 0,		//!<ディフューズテクスチャ。
 		enSkinModelSRVReg_BoneMatrix,				//!<ボーン行列。
 	};
-	CMatrix& GetWorldMatrix()
+	const CMatrix& GetWorldMatrix() const
 	{
 		return m_worldMatrix;
 	}
@@ -143,7 +146,7 @@ public:
 	/// ディレクションライトの方向をセット。
 	/// </summary>
 	/// <param name="LDir">方向</param>
-	void SetDirectionLightDirection(CVector4 LDir ) {
+	void SetDirectionLightDirection(const CVector4& LDir ) {
 		m_light.directionLight.direction[0] = LDir;
 		m_light.directionLight.direction[0].Normalize();
 	}
@@ -151,7 +154,7 @@ public:
 	///ディレクションライトの色をセット。
 	/// </summary>
 	/// <param name="LColor">色</param>
-	void SetDirectionLightColor(CVector4 LColor ) {
+	void SetDirectionLightColor(const CVector4& LColor ) {
 		m_light.directionLight.color[0] = LColor;
 	}
 	/// <summary>
@@ -166,14 +169,14 @@ public:
 	/// アンビエントライトをセット。
 	/// </summary>
 	/// <param name="spec">アンビエントライト</param>
-	void SetAmbientLight(CVector3 ambientLight) {
+	void SetAmbientLight(const CVector3& ambientLight) {
 		m_light.ambientLight = ambientLight;
 	}
 	/// <summary>
 	/// ポイントライトを設定する関数。
 	/// </summary>
 	/// <param name="spotlist">ポイントライト。</param>
-	void SetPointLight(SPointLight pointlist[NUM_POINT_LIG]) {
+	static void SetPointLight(SPointLight pointlist[NUM_POINT_LIG]) {
 		for (int i = 0; i < NUM_POINT_LIG; i++) {
 			m_pointLight[i] = pointlist[i];
 		}
@@ -183,7 +186,7 @@ public:
 	/// スポットライトを設定する関数。
 	/// </summary>
 	/// <param name="spotlist">スポットライト。</param>
-	void SetSpotLight(SSpotLight spotlist[NUM_SPOT_LIG]) {
+	static void SetSpotLight(SSpotLight spotlist[NUM_SPOT_LIG]) {
 		for (int i = 0; i < NUM_SPOT_LIG; i++) {
 			m_spotLight[i] = spotlist[i];
 		}

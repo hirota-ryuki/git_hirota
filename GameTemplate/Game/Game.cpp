@@ -161,7 +161,6 @@ bool Game::Start()
 		i++;
 	}
 
-
 	m_sl = NewGO<SpotLight>(GOPrio_Defalut);
 
 	//オブジェクトの当たり判定。
@@ -310,7 +309,7 @@ void Game::Update()
 		|| g_pad[0].IsTrigger(enButtonY))
 	{
 		//一時停止。
-		ChangePose();
+		GameObjectManager::GetInstance().ChangePause();
 	}
 
 	if (m_isClear || m_isGameOver) {

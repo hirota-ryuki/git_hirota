@@ -11,18 +11,18 @@ Opening::~Opening()
 
 void Opening::OnDestroy()
 {
-	DeleteGO(m_sprite[0]);
-	DeleteGO(m_sprite[1]);
+	DeleteGO(m_commentSprite[eSprite_Comment_1]);
+	DeleteGO(m_commentSprite[eSprite_Comment_2]);
 }
 
 bool Opening::Start()
 {
 	//画像。
-	m_sprite[0] = NewGO<SpriteRender>(GOPrio_DrawAfter);
-	m_sprite[0]->Init(L"sprite/event1.dds", 1280.f, 720.f);
-	m_sprite[1] = NewGO<SpriteRender>(GOPrio_DrawAfter);
-	m_sprite[1]->Init(L"sprite/event2.dds", 1280.f, 720.f);
-	m_sprite[1]->ActiveMode(false);
+	m_commentSprite[eSprite_Comment_1] = NewGO<SpriteRender>(GOPrio_DrawAfter);
+	m_commentSprite[eSprite_Comment_1]->Init(L"sprite/event1.dds", 1280.f, 720.f);
+	m_commentSprite[eSprite_Comment_2] = NewGO<SpriteRender>(GOPrio_DrawAfter);
+	m_commentSprite[eSprite_Comment_2]->Init(L"sprite/event2.dds", 1280.f, 720.f);
+	m_commentSprite[eSprite_Comment_2]->ActiveMode(false);
 
 	//ゲームのインスタンスを取得。
 	m_game = GetGame();
@@ -31,35 +31,33 @@ bool Opening::Start()
 
 void Opening::Update()
 {
-	m_poseTimer++;
-	if (m_poseTimer >= 10) {
-		m_game->IsPose(true);
-	}
-
-	if (m_game->GetIsPose()) {
-		if (m_isButton) {
-			//Aボタンを押したら。
-			if (g_pad[0].IsTrigger(enButtonA))
-			{
-				//ワンショット再生のSE
-				m_se.Init(L"sound/story/decision.wav");
-				//Aボタンが押されたらSEを鳴らす。
-				m_se.Play(false);
-				m_sprite[1]->ActiveMode(false);
-				m_game->IsPose(false);
-				DeleteGO(this);
-			}
-		}
+	
+	if (m_isButton) {
 		//Aボタンを押したら。
-		else if (g_pad[0].IsTrigger(enButtonA))
+		if (g_pad[0].IsTrigger(enButtonA))
 		{
-			m_sprite[0]->ActiveMode(false);
-			m_sprite[1]->ActiveMode(true);
-			//ワンショット再生のSE
-			m_se.Init(L"sound/story/decision.wav");
-			//Aボタンが押されたらSEを鳴らす。
-			m_se.Play(false);
-			m_isButton = true;
+			Sound(L"sound/story/decision.wav", false);
+			m_commentSprite[eSprite_Comment_2]->ActiveMode(false);
+			GameObjectManager::GetInstance().SetPause(false);
+			DeleteGO(this);
 		}
+	}
+	//Aボタンを押したら。
+	else if (g_pad[0].IsTrigger(enButtonA))
+	{
+		m_commentSprite[eSprite_Comment_1]->ActiveMode(false);
+		m_commentSprite[eSprite_Comment_2]->ActiveMode(true);
+		Sound(L"sound/story/decision.wav", false);
+		m_isButton = true;
+	}
+}
+
+void Opening::Update_NotPause()
+{
+	if (m_poseTimer < POSE_TIME_LIMIT) {
+		m_poseTimer++;
+	}
+	if (m_poseTimer >= POSE_TIME_LIMIT) {
+		GameObjectManager::GetInstance().SetPause(true);
 	}
 }

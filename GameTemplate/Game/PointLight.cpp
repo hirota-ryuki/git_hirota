@@ -16,8 +16,7 @@ void PointLight::OnDestroy()
 
 bool PointLight::Start()
 {
-	SkinModel model;
-	model.SetPointLight(m_pointList);
+	SkinModel::SetPointLight(m_pointList);
 	return true;
 }
 

@@ -12,6 +12,7 @@ public:
 	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
+	void Update_NotPause() override;
 	/// <summary>
 	/// 視点をセット。
 	/// </summary>
@@ -23,7 +24,7 @@ public:
 	/// 視点を取得。
 	/// </summary>
 	/// <returns>視点。</returns>
-	CVector3 GetPos()
+	const CVector3& GetPos() const
 	{
 		return m_pos;
 	}
@@ -38,7 +39,7 @@ public:
 	/// 注視点を取得。
 	/// </summary>
 	/// <returns>注視点。</returns>
-	CVector3 GetTarget()
+	const CVector3& GetTarget() const
 	{
 		return m_target;
 	}
@@ -53,7 +54,7 @@ public:
 	/// プレイヤーから注視点を取得。
 	/// </summary>
 	/// <returns>プレイヤーから注視点。</returns>
-	float GetTargetFromPlayer()
+	const float& GetTargetFromPlayer() const
 	{
 		return m_targetFromPlayer;
 	}
@@ -68,7 +69,7 @@ public:
 	/// 注視点から視点を取得。
 	/// </summary>
 	/// <returns>注視点から視点。</returns>
-	float GetPosFromTarget()
+	const float& GetPosFromTarget() const
 	{
 		return m_posFromTarget;
 	}
@@ -83,7 +84,7 @@ public:
 	/// 視点を地面から上昇させる量を取得。
 	/// </summary>
 	/// <returns>視点を地面から上昇させる量。</returns>
-	float GetAddY()
+	const float& GetAddY() const
 	{
 		return m_playerPosAddY;
 	}
@@ -98,6 +99,8 @@ private:
 	CVector3		m_pos = CVector3::Zero();				//視点。
 	float			m_toCameraPosRotAngle = 0.f;			//視点の角度。
 	float			m_toCameraTargetRotAngle = 0.f;			//注視点の角度。
+	const float		POS_ANGLE_UP_LIMIT = 60.0f;				//視点の上の限界値。
+	const float		POS_ANGLE_DOWN_LIMIT = -70.0f;			//視点の下の限界値。
 	float			m_targetFromPlayer = 100.0f;			//プレイヤーから注視点。
 	float			m_posFromTarget = -200.0f;				//注視点から視点。
 	float			m_playerPosAddY = 150.0f;				//視点を地面から上昇させる量。

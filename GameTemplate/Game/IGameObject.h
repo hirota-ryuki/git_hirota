@@ -23,7 +23,14 @@ public:
 	/// 更新関数。
 	/// </summary>
 	virtual void Update() = 0;
-
+	/// <summary>
+	/// ポーズされていない時だけ呼ばれる更新関数
+	/// </summary>
+	/// <remarks>
+	/// この関数はゲームがポーズ状態になると呼ばれなくなります。
+	/// ポーズ中に止めたい更新処理などは、この関数をオーバーライドして実装してください。
+	/// </remarks>
+	virtual void Update_NotPause() {}
 	/// <summary>
 	/// 削除の直前に呼ばれる関数。
 	/// </summary>

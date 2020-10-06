@@ -155,11 +155,31 @@ public:
 	RenderTarget* GetMainRenderTarget(){
 		return &m_mainRenderTarget;
 	}
-	CVector3 GetPos() {
+	const CVector3& GetPos() {
 		return m_shadowPos;
 	}
-	CVector3 GetTag() {
+	const CVector3& GetTag() {
 		return m_shadowTag;
+	}
+	/// <summary>
+	/// 一時停止を設定する関数。
+	/// </summary>
+	/// <param name="pause">一時停止の有無</param>
+	void SetPause(const bool pause) {
+		m_isPause = pause;
+	}
+	/// <summary>
+	/// 一時停止状態を変更する関数。
+	/// </summary>
+	void ChangePause() {
+		m_isPause = !m_isPause;
+	}
+	/// <summary>
+	/// 一時停止状態情報を取得。
+	/// </summary>
+	/// <returns>一時停止の有無</returns>
+	const bool& GetPause() {
+		return m_isPause;
 	}
 
 	RenderTarget m_mainRenderTarget;				//メインレンダリングターゲット。
@@ -176,7 +196,7 @@ public:
 	PostEffect	m_postEffect;						//ポストエフェクト。
 	CVector3	m_shadowPos = CVector3::Zero();		//シャドウマップの視点。
 	CVector3	m_shadowTag = CVector3::One();		//シャドウマップの視点。
-
+	bool m_isPause = false;
 	
 };
 

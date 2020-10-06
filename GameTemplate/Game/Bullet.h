@@ -9,6 +9,7 @@ public:
 	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
+	void Update_NotPause() override;
 	/// <summary>
 	/// ‰ñ“]‚·‚éŠÖ”B
 	/// </summary>

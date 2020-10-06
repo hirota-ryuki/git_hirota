@@ -27,7 +27,7 @@ public:
 	/// セルのリストを返す関数。
 	/// </summary>
 	/// <returns>m_moveCellList</returns>
-	std::vector<CVector3> GetMoveList()
+	const std::vector<CVector3>& GetMoveList() const
 	{
 		return m_moveCellList;
 	}

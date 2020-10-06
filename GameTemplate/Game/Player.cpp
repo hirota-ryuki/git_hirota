@@ -182,6 +182,47 @@ void Player::Move()
 	m_position = m_charaCon.Execute(1.f / 60.f, m_moveSpeed);
 }
 
+void Player::Update_NotPause()
+{
+	m_timer++;
+	switch (m_state) {
+	case enState_idle:
+		En_Idle();
+		break;
+	case enState_walk:
+		En_Walk();
+		break;
+	case enState_run:
+		En_Run();
+		break;
+	case enState_aim:
+		En_Aim();
+		break;
+	case enState_shot:
+		En_Shot();
+		break;
+	case enState_reload:
+		En_Reload();
+		break;
+	case enState_lie:
+		En_Lie();
+		break;
+	default:
+		break;
+	}
+	//回復。
+	Heal();
+	//HPがなくなったら死ぬ。
+	Death();
+	//アニメーションの更新。
+	m_animation.Update(1.f / 60.f);
+	//ワールド行列の更新。
+	m_model->SetData(m_position, m_rotation);
+	//女優ライト。
+	ActressLight();
+	//懐中電灯。
+	SetLight();
+}
 void Player::Update()
 {	
 	//m_state = enState_lie;
@@ -204,47 +245,6 @@ void Player::Update()
 	}
 	if (m_isBite) {
 		m_state = enState_lie;
-	}
-	//一時停止していなかったら。
-	if (!m_game->GetIsPose()) {
-		m_timer++;
-		switch (m_state) {
-		case enState_idle:
-			En_Idle();
-			break;
-		case enState_walk:
-			En_Walk();
-			break;
-		case enState_run:
-			En_Run();
-			break;
-		case enState_aim:
-			En_Aim();
-			break;
-		case enState_shot:
-			En_Shot();
-			break;
-		case enState_reload:
-			En_Reload();
-			break;
-		case enState_lie:
-			En_Lie();
-			break;
-		default:
-			break;
-		}
-		//回復。
-		Heal();
-		//HPがなくなったら死ぬ。
-		Death();
-		//アニメーションの更新。
-		m_animation.Update(1.f / 60.f);
-		//ワールド行列の更新。
-		m_model->SetData(m_position, m_rotation);
-		//女優ライト。
-		ActressLight();
-		//懐中電灯。
-		SetLight();
 	}
 }
 

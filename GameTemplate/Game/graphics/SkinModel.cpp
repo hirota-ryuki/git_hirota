@@ -215,7 +215,11 @@ void SkinModel::InitSpecMap(const wchar_t * filePath)
 	);
 }
 
-void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix)
+void SkinModel::Draw(
+	EnRenderMode renderMode, 
+	const CMatrix& viewMatrix, 
+	const CMatrix& projMatrix
+)
 {
 	//ƒ‰ƒCƒg‚ğ‰ñ‚·B
 	/*CQuaternion qRot;

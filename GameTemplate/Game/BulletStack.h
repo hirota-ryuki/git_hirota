@@ -13,14 +13,14 @@ public:
 	/// ポジションをセット。
 	/// </summary>
 	/// <param name="pos">座標。</param>
-	void SetPos(CVector3 pos)
+	void SetPos(const CVector3& pos)
 	{
 		m_position = pos;
 	}
 	/// <summary>
 	/// ポジションを取得。
 	/// </summary>
-	CVector3 GetPos()
+	const CVector3& GetPos() const
 	{
 		return m_position;
 	}
@@ -28,7 +28,7 @@ public:
 	/// 回転をセット。
 	/// </summary>
 	/// <param name="pos">回転。</param>
-	void SetRot(CQuaternion rot)
+	void SetRot(const CQuaternion& rot)
 	{
 		m_rotation = rot;
 	}

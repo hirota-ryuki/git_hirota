@@ -35,31 +35,31 @@ public:
 	/// アイテムデータを返してくる関数。
 	/// </summary>
 	/// <returns>アイテムデータ。</returns>
-	std::unordered_map<
+	const std::unordered_map<
 		std::wstring,		
 		int					
-	> GetItemDataMap() {
+	>& GetItemDataMap() const{
 		return m_itemDataMap;
 	}
 	/// <summary>
 	/// アイテムデータが追加されたどうかを返す関数。
 	/// </summary>
 	/// <returns>m_isAddData</returns>
-	bool GetIsAddData() {
+	bool GetIsAddData() const{
 		return m_isAddData;
 	}
 	/// <summary>
 	/// アイテムの個数が追加されたどうかを返す関数。
 	/// </summary>
 	/// <returns>m_isAddNum</returns>
-	bool GetIsAddNum() {
+	bool GetIsAddNum() const{
 		return m_isAddNum;
 	}
 	/// <summary>
 	/// アイテムの総数を返す関数。
 	/// </summary>
 	/// <returns>m_itemCount</returns>
-	int GetItemCount() {
+	int GetItemCount() const {
 		return m_itemDataMap.size();
 	}
 	/// <summary>

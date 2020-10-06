@@ -22,16 +22,9 @@ bool Ceiling::Start()
 	m_model->SetData(m_position, m_rotation);
 	m_model->UpdateWorldMatrix();
 	m_model->SetShadowCaster(false);
-
-	/*m_modelPos = NewGO<SkinModelRender>(GOPrio_Defalut, "debug");
-	m_modelPos->Init(L"modelData/debug/debugbox.cmo");
-	m_modelTag = NewGO<SkinModelRender>(GOPrio_Defalut, "debug");
-	m_modelTag->Init(L"modelData/debug/debugbox2.cmo");*/
 	return true;
 }
 
 void Ceiling::Update()
 {
-	/*m_modelPos->SetPos(GameObjectManager::GetInstance().GetPos());
-	m_modelTag->SetPos(GameObjectManager::GetInstance().GetTag());*/
 }

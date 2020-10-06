@@ -1,6 +1,7 @@
 #pragma once
 #include "IGameObject.h"
 #include <unordered_map>
+
 const float			ITEM_SPRITE_W = 270.0f;
 const float			ITEM_SPRITE_H = 130.0f;
 const CVector2		FRAME_OUT_POS = { -(FRAME_BUFFER_W / 2 + ITEM_SPRITE_W / 2),-200.0f };
@@ -71,7 +72,7 @@ public:
 	/// <summary>
 	/// ñºëOÇéÊìæÅB
 	/// </summary>
-	wchar_t* GetName()
+	wchar_t* GetName() const
 	{
 		return m_name;
 	}

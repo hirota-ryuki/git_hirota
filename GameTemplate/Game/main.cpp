@@ -66,7 +66,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 			//デバッグモード
 			g_physics.DebugDraw();
 		}
-
+		//ボタンで切り替え
+		if (g_pad[0].IsTrigger(enButtonA))
+		{
+			GameObjectManager::GetInstance().ChangePause();
+		}
 		//描画終了。
 		g_graphicsEngine->EndRender();
 	}

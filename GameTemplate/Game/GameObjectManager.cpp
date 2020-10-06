@@ -62,6 +62,10 @@ void GameObjectManager::StartAndUpdate()
 			else {
 				if (!go->m_isDelete) {
 					go->Update();
+					if (!m_isPause) {
+						//ƒ|[ƒY’†‚Å‚È‚¯‚ê‚Î
+						go->Update_NotPause();
+					}
 				}
 			}
 				

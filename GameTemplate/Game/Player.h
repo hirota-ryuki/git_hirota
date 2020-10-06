@@ -14,6 +14,7 @@ public:
 	void OnDestroy() override;
 	bool Start() override;
 	void Update() override;
+	void Update_NotPause() override;
 	/// <summary>
 	/// GameCameraのインスタンスを取得する関数。
 	/// </summary>
@@ -164,10 +165,10 @@ public:
 	/// キャラコンを返す関数。
 	/// </summary>
 	/// <returns>キャラコン。</returns>
-	CharacterController* GetCharaCon() {
+	CharacterController* GetCharaCon()  {
 		return &m_charaCon;
 	}
-	CharacterController GetCharaCon_Ghorst() {
+	CharacterController& GetCharaCon_Ghorst()  {
 		return m_charaCon;
 	}
 	/// <summary>
@@ -178,17 +179,16 @@ public:
 	/// モデルの前方向。
 	/// </summary>
 	/// <returns>モデルの前方向。</returns>
-	CVector3 GetForward() {
+	const CVector3& GetForward() const{
 		return m_forward;
 	}
 	/// <summary>
 	/// 影用の視点。
 	/// </summary>
 	/// <returns>影用の視点。</returns>
-	CVector3 GetShadowPos() {
+	const CVector3& GetShadowPos() const{
 		return m_shadowPos;
 	}
-	
 private:
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。

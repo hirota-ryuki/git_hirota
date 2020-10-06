@@ -369,9 +369,6 @@
     <ClCompile Include="SkinModelRender.cpp">
       <Filter>Engine\graphics\SkinModel</Filter>
     </ClCompile>
-    <ClCompile Include="MapCamera.cpp">
-      <Filter>Game\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="CameraCollisionSolver.cpp">
       <Filter>Engine\graphics\Camera</Filter>
     </ClCompile>
@@ -616,9 +613,6 @@
     </ClInclude>
     <ClInclude Include="graphics\SkinModelShaderConst.h">
       <Filter>Engine\graphics\SkinModel</Filter>
-    </ClInclude>
-    <ClInclude Include="MapCamera.h">
-      <Filter>Game\Camera</Filter>
     </ClInclude>
     <ClInclude Include="GameTime.h">
       <Filter>Engine</Filter>
