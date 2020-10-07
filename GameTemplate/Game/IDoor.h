@@ -1,7 +1,7 @@
 #pragma once
 #include "physics/PhysicsStaticObject.h"
 class Player;
-//拡張予定の名残の基底クラス。
+//拡張予定だった名残の基底クラス。
 class IDoor :
 	public IGameObject
 {
@@ -16,12 +16,12 @@ public:
 	/// <param name="PSOmodel"></param>
 	/// <param name="pso"></param>
 	/// <param name="rot"></param>
-	void MoveDoor(const CVector3& diff, SkinModelRender* model, SkinModelRender* PSOmodel, PhysicsStaticObject& pso, CQuaternion& rot);
+	void MoveDoor(const CVector3& diff, SkinModelRender* model, SkinModelRender* PSOmodel, const PhysicsStaticObject& pso, const CQuaternion& rot);
 	/// <summary>
 	/// 部屋の名前を設定。
 	/// </summary>
 	/// <param name="name">名前</param>
-	void SetName(std::wstring name) {
+	void SetName(const std::wstring& name) {
 		m_name = name;
 	}
 private:

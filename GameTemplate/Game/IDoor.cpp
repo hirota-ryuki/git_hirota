@@ -10,7 +10,7 @@ IDoor::~IDoor()
 	
 }
 
-void IDoor::MoveDoor(const CVector3 & diff, SkinModelRender * model, SkinModelRender* PSOmodel, PhysicsStaticObject & pso, CQuaternion & rot)
+void IDoor::MoveDoor(const CVector3& diff, SkinModelRender* model, SkinModelRender* PSOmodel, const PhysicsStaticObject& pso, const CQuaternion& rot)
 {
 	//ドアが開いていなかったら。
 	if (!m_isOpenDoor) {

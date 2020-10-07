@@ -303,9 +303,6 @@
     <ClCompile Include="Floor.cpp">
       <Filter>Game\Floor</Filter>
     </ClCompile>
-    <ClCompile Include="LoadLevel.cpp">
-      <Filter>Game\LoadLevel</Filter>
-    </ClCompile>
     <ClCompile Include="Zombie.cpp">
       <Filter>Game\Enemy</Filter>
     </ClCompile>
@@ -547,9 +544,6 @@
     </ClInclude>
     <ClInclude Include="Floor.h">
       <Filter>Game\Floor</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadLevel.h">
-      <Filter>Game\LoadLevel</Filter>
     </ClInclude>
     <ClInclude Include="Zombie.h">
       <Filter>Game\Enemy</Filter>

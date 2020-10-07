@@ -17,9 +17,9 @@ bool RockDoor::Start()
 	m_model->Init(L"modelData/rockdoor/blood_door/door.cmo");
 	m_model->SetShadowCaster(true);
 	m_model->SetShadowReciever(true);
-
 	m_model->SetData(m_position, m_rotation);
 	m_model->UpdateWorldMatrix();
+
 	m_PSOmodel = NewGO<SkinModelRender>(GOPrio_Defalut);
 	m_PSOmodel->Init(L"modelData/rockdoor/rockdoor.cmo");
 	m_PSOmodel->ActiveMode(false);	
