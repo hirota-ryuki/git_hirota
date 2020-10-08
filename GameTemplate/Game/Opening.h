@@ -22,6 +22,6 @@ private:
 	Game*			m_game = nullptr;		//Gameのポインタ。
 	bool			m_isButton = false;		//ボタンを押したかどうか。
 	int				m_poseTimer = 0;		//一時停止させるまでのタイマー。
-	const int		POSE_TIME_LIMIT = 10;	//10秒経ったら一時停止させる。
+	const int		POSE_TIME_LIMIT = 30;	//時間をおいて一時停止させる。
 	CSoundSource	m_se;
 };

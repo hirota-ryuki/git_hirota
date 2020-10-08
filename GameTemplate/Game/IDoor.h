@@ -12,15 +12,15 @@ public:
 	/// ドアを動かす関数。
 	/// </summary>
 	/// <param name="diff">プレイヤーとドアとの距離。</param>
-	/// <param name="model"></param>
-	/// <param name="PSOmodel"></param>
-	/// <param name="pso"></param>
-	/// <param name="rot"></param>
-	void MoveDoor(const CVector3& diff, SkinModelRender* model, SkinModelRender* PSOmodel, const PhysicsStaticObject& pso, const CQuaternion& rot);
+	/// <param name="model">ドアのスキンモデルレンダー。</param>
+	/// <param name="PSOmodel">ドアの当たり判定のモデルレンダー。</param>
+	/// <param name="pso">ドアのスタティックオブジェクト。</param>
+	/// <param name="rot">モデルの回転情報。</param>
+	void MoveDoor(const CVector3& diff, SkinModelRender* model, SkinModelRender* PSOmodel, PhysicsStaticObject& pso, CQuaternion rot);
 	/// <summary>
 	/// 部屋の名前を設定。
 	/// </summary>
-	/// <param name="name">名前</param>
+	/// <param name="name">名前。</param>
 	void SetName(const std::wstring& name) {
 		m_name = name;
 	}

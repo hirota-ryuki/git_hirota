@@ -246,7 +246,7 @@ void Navimesh::BuildLinkCellInfo(int startCellNo, int endCellNo)
 	}
 }
 
-void Navimesh::Create(SkinModel& model)
+void Navimesh::Create(const SkinModel& model)
 {
 	CMatrix mBias = model.GetWorldMatrix();
 	

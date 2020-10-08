@@ -54,10 +54,12 @@ void Opening::Update()
 
 void Opening::Update_NotPause()
 {
-	if (m_poseTimer < POSE_TIME_LIMIT) {
-		m_poseTimer++;
-	}
-	if (m_poseTimer >= POSE_TIME_LIMIT) {
-		GameObjectManager::GetInstance().SetPause(true);
+	if (!m_isButton) {
+		if (m_poseTimer < POSE_TIME_LIMIT) {
+			m_poseTimer++;
+		}
+		if (m_poseTimer >= POSE_TIME_LIMIT) {
+			GameObjectManager::GetInstance().SetPause(true);
+		}
 	}
 }

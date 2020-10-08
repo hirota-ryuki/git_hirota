@@ -182,8 +182,8 @@ void AStar::Smoothing()
 			end.setIdentity();
 			//座標の設定。
 			CVector3 endPos = *m_itr;
-			start.setOrigin(btVector3(startPos.x, startPos.y + m_boxHeight, startPos.z));
-			end.setOrigin(btVector3(endPos.x, startPos.y + m_boxHeight, endPos.z));
+			start.setOrigin(btVector3(startPos.x, startPos.y + BOX_HEIGHT, startPos.z));
+			end.setOrigin(btVector3(endPos.x, startPos.y + BOX_HEIGHT, endPos.z));
 		}
 		CallBack callback;
 		//startからendまでコリジョンを移動させて当たり判定を取る。

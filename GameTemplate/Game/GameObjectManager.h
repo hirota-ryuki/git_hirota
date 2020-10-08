@@ -196,7 +196,7 @@ public:
 	PostEffect	m_postEffect;						//ポストエフェクト。
 	CVector3	m_shadowPos = CVector3::Zero();		//シャドウマップの視点。
 	CVector3	m_shadowTag = CVector3::One();		//シャドウマップの視点。
-	bool m_isPause = false;
+	bool		m_isPause = false;					//一時停止用の真偽。
 	
 };
 
@@ -237,5 +237,5 @@ static inline void DeleteGOs(const char* objectName)
 	QueryGOs<IGameObject>(objectName, [](auto go) {
 		DeleteGO(go);
 		return true;
-		});
+	});
 }

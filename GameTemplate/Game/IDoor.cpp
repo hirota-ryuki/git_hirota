@@ -10,11 +10,11 @@ IDoor::~IDoor()
 	
 }
 
-void IDoor::MoveDoor(const CVector3& diff, SkinModelRender* model, SkinModelRender* PSOmodel, const PhysicsStaticObject& pso, const CQuaternion& rot)
+void IDoor::MoveDoor(const CVector3& diff, SkinModelRender* model, SkinModelRender* PSOmodel, PhysicsStaticObject& pso,  CQuaternion rot)
 {
 	//ドアが開いていなかったら。
 	if (!m_isOpenDoor) {
-		if (diff.Length() < 150.0f) {
+		if (diff.Length() < ACTION_DISTANCE) {
 			//Bボタンを押したら。
 			if (g_pad[0].IsTrigger(enButtonB)) {
 				//鍵不要のドアだったら。

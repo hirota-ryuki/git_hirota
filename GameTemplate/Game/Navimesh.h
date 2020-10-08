@@ -12,11 +12,7 @@
 #else
 //#define USE_NAVIMESH_DEBUG	//Release.
 #endif
-
-const float COLLIDER_EXPANSION = 2.45f;	//コライダーの拡大倍率。元々は2.45f。
-
 class Game;
-
 struct CellBinary {
 
 	CVector3 vertexPos[3];	//セルの頂点のポジション
@@ -47,11 +43,11 @@ class Navimesh :
 public:
 	Navimesh();
 	~Navimesh();
-	void Init(Floor* floor);
-	void Create(SkinModel& model);
-	void Update() override;
 	bool Start() override { return true; };
-	std::vector<Cell*> GetCell()
+	void Update() override;
+	void Init(Floor* floor);
+	void Create(const SkinModel& model);
+	const std::vector<Cell*>& GetCell() const
 	{
 		return m_cells;
 	}
@@ -72,8 +68,9 @@ private:
 	std::vector<VertexBufferPtr>					m_vertexBufferArray;	//頂点バッファの配列。
 	std::vector<IndexBufferPtr>						m_indexBufferArray;		//インデックスバッファの配列。
 	
-	BoxCollider			m_collider;					//セル用のカプセルコライダー。
-	std::vector<Cell*>	m_cells;					//セルの配列。
+	BoxCollider			m_collider;						//セル用のカプセルコライダー。
+	const float			COLLIDER_EXPANSION = 2.45f;		//コライダーの拡大倍率。元々は2.45f。
+	std::vector<Cell*>	m_cells;						//セルの配列。
 	
 	//デバッグ関係。
 	SkinModelRender*				m_debugModel = nullptr;			//デバッグモデル。
