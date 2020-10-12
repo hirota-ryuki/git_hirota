@@ -65,7 +65,7 @@ public:
 	/// ゾンビのポジションをセット。
 	/// </summary>
 	/// <param name="pos">座標</param>
-	void SetPos(CVector3 pos)
+	void SetPos(const CVector3& pos)
 	{
 		m_position = pos;
 		m_charaCon.SetPosition(m_position);
@@ -74,7 +74,7 @@ public:
 	/// ゾンビの回転をセット。
 	/// </summary>
 	/// <param name="pos">回転</param>
-	void SetRot(CQuaternion rot)
+	void SetRot(const CQuaternion& rot)
 	{
 		m_rotation = rot;
 	}
@@ -90,7 +90,7 @@ private:
 	Floor*			m_floor = nullptr;			//床クラスのポインタ。
 	AStar			m_aStar;					//A*クラスのインスタンス。
 	Navimesh*		m_nav = nullptr;			//ナビメッシュクラスのポインタ。
-	std::vector<CVector3> m_moveList;			//A*後に算出されたゴールまでのルートリスト。
+	std::vector<CVector3>			m_moveList;	//A*後に算出されたゴールまでのルートリスト。
 	std::vector<CVector3>::iterator m_itr;		//m_moveListのイテレータ。
 	bool			m_isAstar = false;			//ゴールしているかどうか。
 	bool			m_isPoint = false;			//各*itrに到達したかどうか。
@@ -125,7 +125,7 @@ private:
 
 	//移動関係。
 	CVector3		m_moveSpeed = CVector3::Zero();			//移動速度。
-	const float		m_speed = 150.f;						//キャラが歩くスピード。
+	const float		WALK_SPEED = 150.f;						//キャラが歩くスピード。
 	BoxCollider		m_collider;								//セル用のボックスコライダー
 	CVector3		m_boxSize = CVector3::One() * 30.0f;	//コライダーのサイズ。
 	bool			m_isFind = false;						//プレイヤーが見つかったかどうか。
@@ -134,7 +134,8 @@ private:
 	//攻撃関係。
 	int				m_atkTimer = 0;
 	bool			m_isAttack = false;//攻撃したかどうか。
-
+	const int		ATK_INTERVAL = 60;
+	  
 	//骨データ。
 	//ヘッドショットの判定と噛みつき攻撃の判定に使用する。	
 	CVector3		m_bonePos = CVector3::Zero();			//骨の座標。

@@ -15,9 +15,9 @@
 class Game;
 struct CellBinary {
 
-	CVector3 vertexPos[3];	//セルの頂点のポジション
-	int linkCellNo[3];		//セルに隣接しているセル
-	CVector3 centerPos;		//セルの真ん中のポジション
+	CVector3	vertexPos[3];	//セルの頂点のポジション
+	int			linkCellNo[3];	//セルに隣接しているセル
+	CVector3	centerPos;		//セルの真ん中のポジション
 };
 //セルクラス
 struct Cell {
@@ -26,14 +26,14 @@ struct Cell {
 		State_Opened,
 		State_Closed,
 	};
-	CVector3 vertexPos[3];	//セルの頂点のポジション
-	Cell* linkCells[3];		//セルに隣接しているセル
-	CVector3 centerPos;		//セルの真ん中のポジション
-	int linkMax = 0;		//隣接しているセルの個数
-	float costFromStart;
-	float costToGoal;
-	Cell* parentCell;
-	State state = State_NotResearch; 
+	CVector3	vertexPos[3];	//セルの頂点のポジション。
+	Cell*		linkCells[3];	//セルに隣接しているセル。
+	CVector3	centerPos;		//セルの真ん中のポジション。
+	int			linkMax = 0;	//隣接しているセルの個数。
+	float		costFromStart;
+	float		costToGoal;
+	Cell*		parentCell;
+	State		state = State_NotResearch; 
 };
 
 class Floor;

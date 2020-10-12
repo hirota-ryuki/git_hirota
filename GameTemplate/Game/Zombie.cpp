@@ -120,7 +120,7 @@ void Zombie::Update_NotPause()
 		//アニメーションの再生。
 		m_animation.Play(enAnimationClip_attack, 0.2f);
 		m_atkTimer++;
-		if (m_atkTimer >= 60 && !m_isAttack) {
+		if (m_atkTimer >= ATK_INTERVAL && !m_isAttack) {
 			//攻撃。
 			Attack();
 			m_isAttack = true;
@@ -354,7 +354,7 @@ void Zombie::Move()
 			CVector3 moveDirection = m_player->GetPos() - m_position;
 			moveDirection.y = 0.0f;
 			moveDirection.Normalize();
-			m_moveSpeed = moveDirection * m_speed;		//移動速度を加算。
+			m_moveSpeed = moveDirection * WALK_SPEED;		//移動速度を加算。
 
 			//キャラクターコントローラーを使用して、座標を更新。
 			//m_position += m_moveSpeed * (1.0f / 60.0f);
@@ -397,7 +397,7 @@ void Zombie::Move_AStar()
 			CVector3 moveDirection = *m_itr - m_position;
 			moveDirection.y = 0.0f;
 			moveDirection.Normalize();
-			m_moveSpeed = moveDirection * m_speed;		//移動速度を加算。
+			m_moveSpeed = moveDirection * WALK_SPEED;		//移動速度を加算。
 
 			//キャラクターコントローラーを使用して、座標を更新。
 			m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
