@@ -405,7 +405,7 @@ void Zombie::Move_AStar()
 			Rotation();
 
 			CVector3 diff = *m_itr - m_position;
-			if (diff.Length() < 50.0f) { //todo バグの元
+			if (diff.Length() < ARRIVAL_DISTANCE) { //todo バグの元
 				m_isPoint = true;
 			}
 			//プレイヤーの近くに来たらA*強制終了。

@@ -130,7 +130,8 @@ private:
 	CVector3		m_boxSize = CVector3::One() * 30.0f;	//コライダーのサイズ。
 	bool			m_isFind = false;						//プレイヤーが見つかったかどうか。
 	int				m_aStarCount = 0;						//A*の無限計算ループの回避用のカウンタ。
-
+	const float		ARRIVAL_DISTANCE = 50.0f;				//到着したかどうか判定するための距離。
+	const float		END_ASTSR_OF_NEER_PLAYER = 200.0f;		//プレイヤーの近くに来たらA*を終了させる時の距離。
 	//攻撃関係。
 	int				m_atkTimer = 0;
 	bool			m_isAttack = false;//攻撃したかどうか。
