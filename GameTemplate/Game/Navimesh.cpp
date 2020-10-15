@@ -123,16 +123,8 @@ Navimesh::~Navimesh()
 {
 	m_isCreateModel = false;
 }
-
-void Navimesh::Init(Floor* floor)
+void Navimesh::BuildNavimeshFromBinary()
 {
-	//セルの当たり判定用のカプセルコライダー
-	//初期化
-	//半径が1であるのは後々に三角形の一番長い重心頂点間に拡大するため
-//	m_collider.Create(1.f, 30.f);
-#ifdef REBUILD_NAVIMESH_DATA
-	Create(floor->GetSkinModelRender()->GetModel());
-#else
 	//アセットフォルダからナビメッシュのデータをロードする。
 	FILE* fp = fopen("stage.hnv", "rb");
 	if (fp == nullptr) {
@@ -169,6 +161,18 @@ void Navimesh::Init(Floor* floor)
 	}
 	delete[] cellBinarys;
 	fclose(fp);
+}
+void Navimesh::Init(Floor* floor)
+{
+	//セルの当たり判定用のカプセルコライダー
+	//初期化
+	//半径が1であるのは後々に三角形の一番長い重心頂点間に拡大するため
+//	m_collider.Create(1.f, 30.f);
+#ifdef REBUILD_NAVIMESH_DATA
+	Create(floor->GetSkinModelRender()->GetModel());
+#else
+	//保存されたバイナリデータからナビメッシュを構築。
+	BuildNavimeshFromBinary();
 #endif
 #ifdef USE_NAVIMESH_DEBUG
 	if (!m_isCreateModel) {
@@ -245,11 +249,9 @@ void Navimesh::BuildLinkCellInfo(int startCellNo, int endCellNo)
 		}
 	}
 }
-
-void Navimesh::Create(const SkinModel& model)
+void Navimesh::BuildVertexBufferAndIndexBufferFrom(const SkinModel& model)
 {
 	CMatrix mBias = model.GetWorldMatrix();
-	
 	//コールバック関数
 	model.FindMesh([&](const auto& mesh) {
 		ID3D11DeviceContext* deviceContext = g_graphicsEngine->GetD3DDeviceContext();
@@ -300,9 +302,11 @@ void Navimesh::Create(const SkinModel& model)
 			deviceContext->Unmap(mesh->indexBuffer.Get(), 0);
 			m_indexBufferArray.push_back(std::move(indexBuffer));
 		}
-		}
+	}
 	);
-
+}
+void Navimesh::BuildCells()
+{
 	//セルに頂点3つと重心を設定し、セルに登録
 	//m_vertexBufferArrayとm_indexBufferArrayの要素数は同じ
 	for (int i = 0; i < m_indexBufferArray.size(); i++) {
@@ -312,7 +316,7 @@ void Navimesh::Create(const SkinModel& model)
 		//頂点バッファの配列
 		//一つの頂点バッファにつき1パーツ
 		auto& vertexBuffer = m_vertexBufferArray[i];
-		
+
 		//ポリゴンの数
 		//ポリゴンは頂点3つで形成されるので3で割っている
 		int numPoly = indexBuffer->size() / 3;
@@ -342,7 +346,7 @@ void Navimesh::Create(const SkinModel& model)
 
 			//カプセルコライダーの半径を
 			//三角形の一番長い重心頂点間の長さに拡大
-			
+
 			//重心から頂点までの長さを求める
 			//これがカプセルコライダーの半径になる
 			CVector3 radius[3];
@@ -386,14 +390,13 @@ void Navimesh::Create(const SkinModel& model)
 			NMCallBack callback;
 			//startからendまでコリジョンを移動させて当たり判定を取る
 			g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
-			
+
 			if (callback.isHit == false) {
 				//セルに登録
 				m_cells.push_back(cell);
 			}
 		}
 	}
-
 	for (auto &all : m_cells)
 	{
 		for (int i = 0; i < 3; i++)
@@ -404,11 +407,16 @@ void Navimesh::Create(const SkinModel& model)
 			all->parentCell = nullptr;
 		}
 	}
+}
+void Navimesh::BuildLinkCellInfo()
+{
+#ifdef _DEBUG
 	//一つのスレッドで調べるセルの数を計算。
 	CStopwatch sw;
 	sw.Start();
+#endif//
 	int numCellOneThread = m_cells.size() / 3;
-#if 1
+#if 1 //これを0にするとシングルスレッドでの隣接セルの構築になります。
 	//4スレッドに分担して隣接セル情報を構築する。
 	//並列。
 	std::thread buildLinkCellThread00([&] {
@@ -416,14 +424,14 @@ void Navimesh::Create(const SkinModel& model)
 	});
 
 	std::thread buildLinkCellThread01([&] {
-		BuildLinkCellInfo(numCellOneThread, numCellOneThread*2);
+		BuildLinkCellInfo(numCellOneThread, numCellOneThread * 2);
 	});
 
 	std::thread buildLinkCellThread02([&] {
-		BuildLinkCellInfo(numCellOneThread*2, numCellOneThread*3);
+		BuildLinkCellInfo(numCellOneThread * 2, numCellOneThread * 3);
 	});
 	std::thread buildLinkCellThread03([&] {
-		BuildLinkCellInfo(numCellOneThread*3, numCellOneThread*4);
+		BuildLinkCellInfo(numCellOneThread * 3, numCellOneThread * 4);
 	});
 
 	buildLinkCellThread00.join();
@@ -444,46 +452,10 @@ void Navimesh::Create(const SkinModel& model)
 	sprintf(text, "build time = %f\n", sw.GetElapsed());
 	OutputDebugString(text);
 #endif
-#ifdef USE_NAVIMESH_DEBUG
-	if (!m_isCreateModel) {
-		for (auto &all : m_cells)
-		{
-			m_debugModel = NewGO<SkinModelRender>(GOPrio_Defalut);
-			m_debugModel->Init(L"modelData/debug/debugbox.cmo");
-			m_debugModel->SetPos(all->centerPos);
-			int No = 0;
-			if (all->linkCells[No] != NULL)
-			{
-				//float dot = all->centerPos.Dot(all->linkCells[2]->centerPos);
-				float dot = all->centerPos.x*all->linkCells[No]->centerPos.x +
-					all->centerPos.y*all->linkCells[No]->centerPos.y +
-					all->centerPos.z*all->linkCells[No]->centerPos.z;
-				float k = atan(dot);
-				CQuaternion g;
-				//g.SetRotationDeg(CVector3::AxisX(), 45.f);
-				g.SetRotation(CVector3::AxisY(), k);
-				m_debugModel->SetRot(g);
-			}
-			m_debugModel->ActiveMode(false);
-			m_debugModelList.emplace_back(m_debugModel);
-			/*for (int i = 0; i < 3; i++) {
-				if (all->linkCells[i] != nullptr) {
-					auto dir = all->linkCells[i]->centerPos - all->centerPos;
-					dir.Normalize();
-					auto hoge = NewGO<SkinModelRender>(GOPrio_Defalut);
-					m_model->Init(L"modelData/zombie/zombie.cmo");
-					hoge->SetPos(all->centerPos);
-					CQuaternion rot;
-					rot.SetRotation({ 0.0f, 1.0f, 0.0f }, dir);
-					hoge->SetRot(rot);
-				}
-			}*/
-		}
-		m_isCreateModel = true;
-	}
-#endif //
-
-	FILE* fp = fopen( "stage.hnv", "wb");
+}
+void Navimesh::Save()
+{
+	FILE* fp = fopen("stage.hnv", "wb");
 	if (fp == nullptr) {
 		//ファイルオープンに失敗
 		MessageBox(nullptr, "エラー", "stage.hnvが開けませんでした。", MB_OK);
@@ -493,17 +465,6 @@ void Navimesh::Create(const SkinModel& model)
 	for (auto &cell : m_cells)
 	{
 		CellBinary cellBinary;
-		//for (int i = 0; i < 3; i++) {
-		//	auto itr = std::find(m_cells.begin(), m_cells.end(), cell->linkCells[i]);
-		//	//size_t index = std::distance(m_cells.begin(), itr);
-		//	/*if (index != m_cells.size()) {
-		//		cellBinary.linkCellNo[i] = index;
-		//	}
-		//	else {
-		//		cellBinary.linkCellNo[i] = -1;
-		//	}*/
-		//}
-
 		//頂点。
 		for (int i = 0; i < 3; i++) {
 			cellBinary.vertexPos[i] = cell->vertexPos[i];
@@ -534,6 +495,49 @@ void Navimesh::Create(const SkinModel& model)
 		fwrite(&cellBinary, sizeof(cellBinary), 1, fp);
 	}
 	fclose(fp);
+}
+void Navimesh::Create(const SkinModel& model)
+{
+	
+	//モデルから頂点バッファとインデックスバッファを構築する。
+	BuildVertexBufferAndIndexBufferFrom(model);
+	
+	//ナビメッシュのセルを構築する。
+	BuildCells();
+
+	//セルのリンク情報を構築。
+	BuildLinkCellInfo();
+
+#ifdef USE_NAVIMESH_DEBUG
+	if (!m_isCreateModel) {
+		for (auto &all : m_cells)
+		{
+			m_debugModel = NewGO<SkinModelRender>(GOPrio_Defalut);
+			m_debugModel->Init(L"modelData/debug/debugbox.cmo");
+			m_debugModel->SetPos(all->centerPos);
+			int No = 0;
+			if (all->linkCells[No] != NULL)
+			{
+				//float dot = all->centerPos.Dot(all->linkCells[2]->centerPos);
+				float dot = all->centerPos.x*all->linkCells[No]->centerPos.x +
+					all->centerPos.y*all->linkCells[No]->centerPos.y +
+					all->centerPos.z*all->linkCells[No]->centerPos.z;
+				float k = atan(dot);
+				CQuaternion g;
+				//g.SetRotationDeg(CVector3::AxisX(), 45.f);
+				g.SetRotation(CVector3::AxisY(), k);
+				m_debugModel->SetRot(g);
+			}
+			m_debugModel->ActiveMode(false);
+			m_debugModelList.emplace_back(m_debugModel);
+			
+		}
+		m_isCreateModel = true;
+	}
+#endif //
+	//構築したナビメッシュの外部データとしてデータを保存する。
+	//2回目からロードを高速にするため。
+	Save();
 }
 
 void Navimesh::Update()

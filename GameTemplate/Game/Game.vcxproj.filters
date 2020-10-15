@@ -106,20 +106,8 @@
     <Filter Include="Game\Goal">
       <UniqueIdentifier>{8f4fb70b-55af-4cfd-8726-500a494773c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Enemy\AStar">
-      <UniqueIdentifier>{683f2e8b-9ce1-4e8a-8a39-a39d527afaac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Enemy\Navmesh">
-      <UniqueIdentifier>{401a9ca0-5080-4020-87ef-a4c6550598cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\UI">
       <UniqueIdentifier>{8a451f2c-c8f5-4e6c-988a-a5481d8c811c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Player\Bullet">
-      <UniqueIdentifier>{fea57c69-62e0-4740-bc38-ec5e2243e5a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Player\Player">
-      <UniqueIdentifier>{4eaee890-9916-4309-9d9b-e39d858a5f5a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\font">
       <UniqueIdentifier>{d44b41bc-418b-49e5-8f8b-3178f04fd8f0}</UniqueIdentifier>
@@ -154,9 +142,6 @@
     <Filter Include="Game\Item">
       <UniqueIdentifier>{585ae1be-cc80-46ff-86eb-b4389d06733c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Item\BulletStack">
-      <UniqueIdentifier>{557bc44e-5784-48b9-a4cf-0b32c24a0417}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\sprite\item">
       <UniqueIdentifier>{e19c20dc-f329-4417-a529-c582bb1b625f}</UniqueIdentifier>
     </Filter>
@@ -166,14 +151,8 @@
     <Filter Include="Game\Door">
       <UniqueIdentifier>{4731f832-e916-412f-8ede-27af4c42b7b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Door\RockDoor">
-      <UniqueIdentifier>{29c3b63b-d8c9-4ba0-9af5-c81ff6ea5ab9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Menu">
       <UniqueIdentifier>{57ba9c85-35ac-4ddc-baf9-758645911c1a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Item\Key">
-      <UniqueIdentifier>{814a6cea-a4d6-4ed3-a046-6ea2cdcfd541}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\ObjRigidbody">
       <UniqueIdentifier>{ea69e45e-d0e6-424d-8134-42ebeeecf96c}</UniqueIdentifier>
@@ -184,17 +163,11 @@
     <Filter Include="Game\Light">
       <UniqueIdentifier>{5cd651ea-b0ed-401d-8865-446d8b9d4521}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Light\Point">
-      <UniqueIdentifier>{42d81664-3c1b-4710-b0c3-6e6b95c23a22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Light\Spot">
-      <UniqueIdentifier>{49e3a42f-8d68-457c-8074-24bd66068569}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Gimmick">
       <UniqueIdentifier>{6e037a17-cacb-4bf5-b1b0-17fca3965772}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Gimmick\corridor">
-      <UniqueIdentifier>{f1106fb1-4ef7-40c6-b690-b21eb0fcb908}</UniqueIdentifier>
+    <Filter Include="Game\Enemy\PathFinding">
+      <UniqueIdentifier>{af985657-d2a5-4e24-9379-74d768cfe6c0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -261,9 +234,6 @@
     <ClCompile Include="GameObjectManager.cpp">
       <Filter>Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Navimesh.cpp">
-      <Filter>Game\Enemy\Navmesh</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Main&amp;Game</Filter>
     </ClCompile>
@@ -294,17 +264,11 @@
     <ClCompile Include="graphics\Skeleton.cpp">
       <Filter>Engine\graphics\Skeleton</Filter>
     </ClCompile>
-    <ClCompile Include="AStar.cpp">
-      <Filter>Game\Enemy\AStar</Filter>
-    </ClCompile>
     <ClCompile Include="ShadowMap.cpp">
       <Filter>Engine\shadowMap</Filter>
     </ClCompile>
     <ClCompile Include="Floor.cpp">
       <Filter>Game\Floor</Filter>
-    </ClCompile>
-    <ClCompile Include="Zombie.cpp">
-      <Filter>Game\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="physics\BoxCollider.cpp">
       <Filter>Engine\physics</Filter>
@@ -341,18 +305,6 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>Game\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Game\Player\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Game\Player\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletStack.cpp">
-      <Filter>Game\Item\BulletStack</Filter>
-    </ClCompile>
-    <ClCompile Include="RockDoor.cpp">
-      <Filter>Game\Door\RockDoor</Filter>
     </ClCompile>
     <ClCompile Include="graphics\SkinModel.cpp">
       <Filter>Engine\graphics\SkinModel</Filter>
@@ -402,20 +354,11 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Game\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="Key.cpp">
-      <Filter>Game\Item\Key</Filter>
-    </ClCompile>
     <ClCompile Include="ObjRigidbody.cpp">
       <Filter>Game\ObjRigidbody</Filter>
     </ClCompile>
     <ClCompile Include="Serif.cpp">
       <Filter>Game\Serif</Filter>
-    </ClCompile>
-    <ClCompile Include="PointLight.cpp">
-      <Filter>Game\Light\Point</Filter>
-    </ClCompile>
-    <ClCompile Include="SpotLight.cpp">
-      <Filter>Game\Light\Spot</Filter>
     </ClCompile>
     <ClCompile Include="physics\SphereCollider.cpp">
       <Filter>Engine\physics</Filter>
@@ -429,9 +372,50 @@
     <ClCompile Include="IGimmick.cpp">
       <Filter>Game\Gimmick</Filter>
     </ClCompile>
-    <ClCompile Include="Gimmick_Corridor.cpp">
-      <Filter>Game\Gimmick\corridor</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Game\Player</Filter>
     </ClCompile>
+    <ClCompile Include="RockDoor.cpp">
+      <Filter>Game\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="Navimesh.cpp">
+      <Filter>Game\Enemy\PathFinding</Filter>
+    </ClCompile>
+    <ClCompile Include="AStar.cpp">
+      <Filter>Game\Enemy\PathFinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Gimmick_Corridor.cpp">
+      <Filter>Game\Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>Game\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletStack.cpp">
+      <Filter>Game\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>Game\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>Game\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieMove.cpp">
+      <Filter>Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieDamage.cpp">
+      <Filter>Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="IZombieComponent.cpp">
+      <Filter>Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieDeath.cpp" />
+    <ClCompile Include="ZombieStateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -509,9 +493,6 @@
     <ClInclude Include="GameObjectManager.h">
       <Filter>Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Navimesh.h">
-      <Filter>Game\Enemy\Navmesh</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Main&amp;Game</Filter>
     </ClInclude>
@@ -535,9 +516,6 @@
     </ClInclude>
     <ClInclude Include="graphics\Skeleton.h">
       <Filter>Engine\graphics\Skeleton</Filter>
-    </ClInclude>
-    <ClInclude Include="AStar.h">
-      <Filter>Game\Enemy\AStar</Filter>
     </ClInclude>
     <ClInclude Include="ShadowMap.h">
       <Filter>Engine\shadowMap</Filter>
@@ -580,18 +558,6 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Game\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Game\Player\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Game\Player\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletStack.h">
-      <Filter>Game\Item\BulletStack</Filter>
-    </ClInclude>
-    <ClInclude Include="RockDoor.h">
-      <Filter>Game\Door\RockDoor</Filter>
     </ClInclude>
     <ClInclude Include="graphics\SkinModel.h">
       <Filter>Engine\graphics\SkinModel</Filter>
@@ -650,20 +616,11 @@
     <ClInclude Include="Menu.h">
       <Filter>Game\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="Key.h">
-      <Filter>Game\Item\Key</Filter>
-    </ClInclude>
     <ClInclude Include="ObjRigidbody.h">
       <Filter>Game\ObjRigidbody</Filter>
     </ClInclude>
     <ClInclude Include="Serif.h">
       <Filter>Game\Serif</Filter>
-    </ClInclude>
-    <ClInclude Include="PointLight.h">
-      <Filter>Game\Light\Point</Filter>
-    </ClInclude>
-    <ClInclude Include="SpotLight.h">
-      <Filter>Game\Light\Spot</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>Engine</Filter>
@@ -686,9 +643,47 @@
     <ClInclude Include="IGimmick.h">
       <Filter>Game\Gimmick</Filter>
     </ClInclude>
-    <ClInclude Include="Gimmick_Corridor.h">
-      <Filter>Game\Gimmick\corridor</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>Game\Player</Filter>
     </ClInclude>
+    <ClInclude Include="RockDoor.h">
+      <Filter>Game\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="Navimesh.h">
+      <Filter>Game\Enemy\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="AStar.h">
+      <Filter>Game\Enemy\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Gimmick_Corridor.h">
+      <Filter>Game\Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>Game\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletStack.h">
+      <Filter>Game\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>Game\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
+      <Filter>Game\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieMove.h">
+      <Filter>Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieDamage.h">
+      <Filter>Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="IZombieComponent.h">
+      <Filter>Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieDeath.h" />
+    <ClInclude Include="ZombieStateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

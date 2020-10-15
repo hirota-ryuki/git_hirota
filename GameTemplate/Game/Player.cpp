@@ -24,21 +24,45 @@ void Player::OnDestroy()
 
 bool Player::Start()
 {
-	////キャラコンの初期化
-	//m_charaCon.Init(
-	//	50.f,
-	//	80.f,
-	//	m_positionm
-	//);
-	
 	//今のキャラコンの初期化
 	m_charaCon.Init(
 		40.f,
 		90.f,
 		m_position
 	);
+	//アニメーションクリップを初期化。。
+	InitAnimationClips();
+	//cmoファイルの読み込み。
+	InitModel();
+	//アニメーション初期化。
+	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
+	//ダメージ表現の2Dを初期化。
+	InitDamageSprite();
+	//照準画像関係。
+	InitAimSprite();
+	
+	//ゲームのインスタンスを取得。
+	m_game = GetGame();
+	m_sl = m_game->GetSpotLight();
 
-	//アニメーションクリップのロード。
+	Inv_AddItem(L"弾薬", 24);
+	return true;
+}
+void Player::InitAimSprite()
+{
+	//スプライト
+	m_aimSprite = NewGO<SpriteRender>(GOPrio_Sprite);
+	m_aimSprite->Init(L"sprite/aim.dds", 60.0f, 60.0f);
+	m_aimSprite->ActiveMode(false);
+}
+void Player::InitDamageSprite()
+{
+	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
+	m_sprite->Init(L"sprite/damage.dds", 1280.f, 720.f);
+	m_sprite->SetAlpha(m_alpha);
+}
+void Player::InitAnimationClips()
+{
 	m_animationClip[enAnimationClip_idle].Load(L"animData/player/idle.tka");
 	m_animationClip[enAnimationClip_walk].Load(L"animData/player/walk.tka");
 	m_animationClip[enAnimationClip_walk_left].Load(L"animData/player/walk_left.tka");
@@ -62,36 +86,15 @@ bool Player::Start()
 	m_animationClip[enAnimationClip_reload].SetLoopFlag(false);
 	m_animationClip[enAnimationClip_lie].SetLoopFlag(false);
 
-	//cmoファイルの読み込み。
+}
+void Player::InitModel()
+{
 	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
 	m_model->Init(L"modelData/player/player.cmo");
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
 	m_model->SetData(m_position, m_rotation);
 	m_model->SetShadowCaster(false);
-
-	//アニメーション初期化。
-	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
-
-	//ダメージ画像。
-	m_sprite = NewGO<SpriteRender>(GOPrio_Sprite);
-	m_sprite->Init(L"sprite/damage.dds", 1280.f, 720.f);
-	m_sprite->SetAlpha(m_alpha);
-	//m_sprite->ActiveMode(false);
-
-	//照準画像関係。
-	//スプライト
-	m_aimSprite = NewGO<SpriteRender>(GOPrio_Sprite);
-	m_aimSprite->Init(L"sprite/aim.dds", 60.0f, 60.0f);
-	m_aimSprite->ActiveMode(false);
-
-	//ゲームのインスタンスを取得。
-	m_game = GetGame();
-	m_sl = m_game->GetSpotLight();
-
-	Inv_AddItem(L"弾薬", 24);
-	return true;
 }
-
 void Player::ChangeState()
 {
 	//L3を押したら走る。

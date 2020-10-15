@@ -25,7 +25,40 @@ bool Menu::Start()
 	m_sprite->ActiveMode(false);
 	return true;
 }
-
+void Menu::DeleteFontRendererOnZeroItem()
+{
+	auto itemMap = Inv_GetItemDataMap();
+	//フォントリストのイテレータ。
+	for (auto fitr = m_fontList.begin(); fitr != m_fontList.end();) {
+		auto iitr = itemMap.begin();
+		bool isContinue = false;
+		while (true) {
+			//イテレータが最後まで到達したら。
+			if (iitr == itemMap.end()) {
+				fitr = m_fontList.erase(fitr);
+				isContinue = true;
+				break;
+			}
+			//同じ名前がすでに存在していたら。
+			if (fitr->nameFR->GetText().compare(iitr->first) == 0) {
+				break;
+			}
+			iitr++;
+		}
+		if (!isContinue) {
+			fitr++;
+		}
+	}
+}
+void Menu::ActivateDispItemList()
+{
+	m_sprite->ChangeActive();
+	//フォントを描画する。
+	for (auto& itemdata : m_fontList) {
+		itemdata.nameFR->ChangeActive();
+		itemdata.numFR->ChangeActive();
+	}
+}
 void Menu::Update()
 {
 	FontRenderUpdate();
@@ -34,28 +67,9 @@ void Menu::Update()
 	if (!Inv_GetIsAddData() && !Inv_GetIsAddNum()) {
 		if (Inv_GetIsDeleteItem()) {
 			//アイテムデータの取得。
-			auto itemMap = Inv_GetItemDataMap();
-			//フォントリストのイテレータ。
-			for (auto fitr = m_fontList.begin(); fitr != m_fontList.end();) {
-				auto iitr = itemMap.begin();
-				bool isContinue = false;
-				while (1) {
-					//イテレータが最後まで到達したら。
-					if (iitr == itemMap.end()) {
-						fitr = m_fontList.erase(fitr);
-						isContinue = true;
-						break;
-					}
-					//同じ名前がすでに存在していたら。
-					if (fitr->nameFR->GetText().compare(iitr->first) == 0) {
-						break;
-					}
-					iitr++;
-				}
-				if (!isContinue) {
-					fitr++;
-				}
-			}
+			//所持数０のアイテムのフォントレンダラーを削除。
+			DeleteFontRendererOnZeroItem();
+			//削除したから表示を再ソートする。
 			SortingFontRnderPos();
 		}
 	}
@@ -63,14 +77,38 @@ void Menu::Update()
 	//スタートボタンを押したら。
 	if (g_pad[0].IsTrigger(enButtonStart))
 	{
-		m_sprite->ChangeActive();
-		//フォントを描画する。
-		for (auto& itemdata : m_fontList) {
-			itemdata.nameFR->ChangeActive();
-			itemdata.numFR->ChangeActive();
-		}
+		//アイテムリストの表示をアクティブにする。
+		ActivateDispItemList();
 	}
 
+	
+}
+void Menu::CreateItemListFontRenders(
+	std::unordered_map<
+	std::wstring,
+	int
+	>::iterator itemDataIt
+)
+{
+	//アイテムフォントデータの構築。
+	ItemFontData ifd;
+	//名前のフォントレンダー作成。
+	ifd.nameFR = NewGO<FontRender>(GOPrio_Sprite, "item");
+	ifd.nameFR->SetText(itemDataIt->first.c_str());
+	ifd.nameFR->ActiveMode(false);
+	//個数のフォントレンダー作成。
+	ifd.numFR = NewGO<FontRender>(GOPrio_Sprite, "item");
+	std::wstring num = std::to_wstring(itemDataIt->second);
+	ifd.numFR->SetText(num.c_str());
+	ifd.numFR->ActiveMode(false);
+	//登録。
+	m_fontList.emplace_back(ifd);
+}
+void Menu::CreateItemListFontRendersFirst()
+{
+	auto IDMap = Inv_GetItemDataMap();
+	auto itr = IDMap.begin();
+	CreateItemListFontRenders(itr);
 	
 }
 void Menu::FontRenderUpdate()
@@ -79,21 +117,8 @@ void Menu::FontRenderUpdate()
 	if (Inv_GetIsAddData() || Inv_GetIsAddNum()) {
 		//何も入っていなかったら。
 		if (m_fontList.begin() == m_fontList.end()) {
-			auto IDMap = Inv_GetItemDataMap();
-			auto itr = IDMap.begin();
-			//アイテムフォントデータの構築。
-			ItemFontData ifd;
-			//名前のフォントレンダー作成。
-			ifd.nameFR = NewGO<FontRender>(GOPrio_Sprite, "item");
-			ifd.nameFR->SetText(itr->first.c_str());
-			ifd.nameFR->ActiveMode(false);
-			//個数のフォントレンダー作成。
-			ifd.numFR = NewGO<FontRender>(GOPrio_Sprite, "item");
-			std::wstring num = std::to_wstring(itr->second);
-			ifd.numFR->SetText(num.c_str());
-			ifd.numFR->ActiveMode(false);
-			//登録。
-			m_fontList.emplace_back(ifd);
+			//アイテムの説明表示のためのフォントレンダラーを作成する。
+			CreateItemListFontRendersFirst();
 		}
 		else {
 			//アイテムデータの取得。
@@ -101,22 +126,10 @@ void Menu::FontRenderUpdate()
 			//アイテムデータマップのイテレータ。
 			for (auto IMitr = itemMap.begin(); IMitr != itemMap.end(); IMitr++) {
 				auto FLitr = m_fontList.begin();
-				while (1) {
+				while (true) {
 					//イテレータが最後まで到達したら。
 					if (FLitr == m_fontList.end()) {
-						//アイテムフォントデータの構築。
-						ItemFontData ifd;
-						//名前のフォントレンダー作成。
-						ifd.nameFR = NewGO<FontRender>(GOPrio_Sprite, "item");
-						ifd.nameFR->SetText(IMitr->first.c_str());
-						ifd.nameFR->ActiveMode(false);
-						//個数のフォントレンダー作成。
-						ifd.numFR = NewGO<FontRender>(GOPrio_Sprite, "item");
-						std::wstring num = std::to_wstring(IMitr->second);
-						ifd.numFR->SetText(num.c_str());
-						ifd.numFR->ActiveMode(false);
-						//登録。
-						m_fontList.emplace_back(ifd);
+						CreateItemListFontRenders(IMitr);
 						break;
 					}
 					//同じ名前がすでに存在していたら。

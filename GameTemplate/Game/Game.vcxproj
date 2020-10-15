@@ -107,6 +107,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="IGimmick.cpp" />
+    <ClCompile Include="IZombieComponent.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletStack.cpp" />
@@ -191,6 +192,10 @@
     </ClCompile>
     <ClCompile Include="system\system.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="ZombieDamage.cpp" />
+    <ClCompile Include="ZombieDeath.cpp" />
+    <ClCompile Include="ZombieMove.cpp" />
+    <ClCompile Include="ZombieStateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\shader\LightNumData.h" />
@@ -200,6 +205,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="IGimmick.h" />
+    <ClInclude Include="IZombieComponent.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletStack.h" />
@@ -281,6 +287,10 @@
     <ClInclude Include="SpriteRender.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="ZombieDamage.h" />
+    <ClInclude Include="ZombieDeath.h" />
+    <ClInclude Include="ZombieMove.h" />
+    <ClInclude Include="ZombieStateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG" />

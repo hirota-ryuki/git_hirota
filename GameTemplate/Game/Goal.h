@@ -14,7 +14,7 @@ public:
 	/// ゴールのポジションをセット。
 	/// </summary>
 	/// <param name="pos">座標。</param>
-	void SetPos(CVector3 pos)
+	void SetPos(const CVector3& pos)
 	{
 		m_position = pos;
 	}
@@ -22,15 +22,16 @@ public:
 	/// ゴールの回転をセット。
 	/// </summary>
 	/// <param name="pos">回転。</param>
-	void SetRot(CQuaternion rot)
+	void SetRot(const CQuaternion& rot)
 	{
 		m_rotation = rot;
 	}
 private:
-	SkinModelRender*	m_model;								//スキンモデル。
+	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
 	Game*				m_game = nullptr;						//Gameのポインタ。
 	Player*				m_player = nullptr;						//プレイヤークラスのポインタ。
+	const float			CLEAR_DISTANCE = 100.0f;				//近くに来たらクリアとする。
 };
 

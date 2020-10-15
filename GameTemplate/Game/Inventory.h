@@ -24,7 +24,7 @@ public:
 	/// </summary>
 	/// <param name="name">アイテムの名前。</param>
 	/// <param name="addnum">追加する関数。</param>
-	void AddItem(const wchar_t* name, int addnum);
+	void AddItem(const wchar_t* name, const int addnum);
 	/// <summary>
 	/// アイテムの個数を返してくる関数。
 	/// </summary>
@@ -45,21 +45,21 @@ public:
 	/// アイテムデータが追加されたどうかを返す関数。
 	/// </summary>
 	/// <returns>m_isAddData</returns>
-	bool GetIsAddData() const{
+	const bool GetIsAddData() const{
 		return m_isAddData;
 	}
 	/// <summary>
 	/// アイテムの個数が追加されたどうかを返す関数。
 	/// </summary>
 	/// <returns>m_isAddNum</returns>
-	bool GetIsAddNum() const{
+	const bool GetIsAddNum() const{
 		return m_isAddNum;
 	}
 	/// <summary>
 	/// アイテムの総数を返す関数。
 	/// </summary>
 	/// <returns>m_itemCount</returns>
-	int GetItemCount() const {
+	const int GetItemCount() const {
 		return m_itemDataMap.size();
 	}
 	/// <summary>
@@ -73,7 +73,7 @@ public:
 	/// 
 	/// </summary>
 	/// <returns></returns>
-	bool GetIsDeleteItem() {
+	const bool GetIsDeleteItem() {
 		return m_isDeleteItem;
 	}
 	/// <summary>

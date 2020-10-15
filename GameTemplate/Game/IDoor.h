@@ -16,7 +16,7 @@ public:
 	/// <param name="PSOmodel">ドアの当たり判定のモデルレンダー。</param>
 	/// <param name="pso">ドアのスタティックオブジェクト。</param>
 	/// <param name="rot">モデルの回転情報。</param>
-	void MoveDoor(const CVector3& diff, SkinModelRender* model, SkinModelRender* PSOmodel, PhysicsStaticObject& pso, CQuaternion rot);
+	void MoveDoor(const CVector3& diff, SkinModelRender* model, SkinModelRender* PSOmodel, PhysicsStaticObject& pso, CQuaternion& rot);
 	/// <summary>
 	/// 部屋の名前を設定。
 	/// </summary>

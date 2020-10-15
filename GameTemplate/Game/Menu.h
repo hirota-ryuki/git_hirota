@@ -37,7 +37,29 @@ public:
 	/// ResetIsAddData関数を呼ぶかどうかを判定している関数。
 	/// </summary>
 	void ResetIsAdd();
-
+private:
+	/// <summary>
+	/// 一個のアイテム説明のためのフォントレンダラーを作成。
+	/// </summary>
+	void CreateItemListFontRendersFirst();
+	/// <summary>
+	/// アイテムの説明のためのフォントレンダラーを作成。
+	/// </summary>
+	/// <param name="itemDataIt">作成するアイテムのデータ</param>
+	void CreateItemListFontRenders(
+		std::unordered_map<
+			std::wstring,
+			int
+		>::iterator itemDataIt
+	);
+	/// <summary>
+	/// 所持数0のアイテムのフォントレンダラーを削除する。
+	/// </summary>
+	void DeleteFontRendererOnZeroItem();
+	/// <summary>
+	/// アイテムリストの表示をアクティブにする。
+	/// </summary>
+	void ActivateDispItemList();
 private:
 	bool			m_isStart = false;			//スタート画面が表示されているかどうか。
 	FontRender*		m_itemNameFont = nullptr;	//アイテム名のフォント。

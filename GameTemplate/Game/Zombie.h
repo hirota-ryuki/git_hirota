@@ -2,16 +2,24 @@
 #include "character/CharacterController.h"
 #include "AStar.h"
 #include "Navimesh.h"
+
 //#define DEBUG_MODE
 const float NOT_ASTAR_DISTANCE = 200.0f;
-const float ATTACK_DISTANCE = 100.0f;
+const float NOT_ASTAR_DISTANCE_SQ = NOT_ASTAR_DISTANCE * NOT_ASTAR_DISTANCE;
 
 class Player;
 class Floor;
+class IZombieComponent;
+class ZombieDamage;
+class ZombieDeath;
+class ZombieStateMachine;
 
 class Zombie :
 	public IGameObject
 {
+	friend class ZombieDamage;
+	friend class ZombieDeath;
+	friend class ZombieStateMachine;
 public:
 	Zombie();
 	~Zombie();
@@ -50,14 +58,6 @@ public:
 	/// </summary>
 	void Attack();
 	/// <summary>
-	/// ダメージを受ける関数。
-	/// </summary>
-	void Damage();
-	/// <summary>
-	/// 死ぬ関数。
-	/// </summary>
-	void Death();
-	/// <summary>
 	/// 視野角を計算する関数。
 	/// </summary>
 	float CalcViewingAngleDeg(CVector3 v1, CVector3 v2);
@@ -79,6 +79,27 @@ public:
 		m_rotation = rot;
 	}
 private:
+	/// <summary>
+	/// プレイヤーに対してレイキャスト
+	/// </summary>
+	/// <returns>trueが返ってきたらレイが何かのコライダーと衝突しています。</returns>
+	template<class TCallback> 
+	bool RaycastToPlayer() const;
+	/// <summary>
+	/// A*を強制終了させる必要があるか判定。
+	/// </summary>
+	/// <remarks>
+	/// 最終地点よりプレイヤーが離れていたらA*強制終了になります。
+	/// </remarks>
+	/// <returns>trueが返ってきたら強制終了。</returns>
+	bool IsEndAStarForce() const;
+	/// <summary>
+	/// コンポーネントの初期化。
+	/// </summary>
+	void InitComponents();
+private:
+	std::list< IZombieComponent* > m_component;			//ゾンビのコンポーネントのリスト。
+
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
@@ -131,12 +152,21 @@ private:
 	bool			m_isFind = false;						//プレイヤーが見つかったかどうか。
 	int				m_aStarCount = 0;						//A*の無限計算ループの回避用のカウンタ。
 	const float		ARRIVAL_DISTANCE = 50.0f;				//到着したかどうか判定するための距離。
-	const float		END_ASTSR_OF_NEER_PLAYER = 200.0f;		//プレイヤーの近くに来たらA*を終了させる時の距離。
+	const float		END_ASTSR_OF_NEER_PLAYER_SQ = 200.0f * 200.0f;//プレイヤーの近くに来たらA*を終了させる時の距離の2乗。
+	const float		END_ASTSR_OF_LEAVE_FINALPOINT_SQ = 300.0f * 300.0f;	//経路の最終地点からプレイヤーが離れていたらA*を終了させる時の距離の2乗。
+
 	//攻撃関係。
 	int				m_atkTimer = 0;
-	bool			m_isAttack = false;//攻撃したかどうか。
-	const int		ATK_INTERVAL = 60;
+	bool			m_isAttack = false;						//攻撃したかどうか。
+	const int		ATK_INTERVAL = 60;						//攻撃を行う間隔。
+	const float		ATTACK_DISTANCE = 100.0f;
+	const float		ATTACK_DISTANCE_SQ = ATTACK_DISTANCE * ATTACK_DISTANCE;	//ATTACK_DISTANCEの2乗。
+	const float		FIND_DISTANCE = 1000.0f;				//プレイヤーに攻撃を行いだす距離。
+	const float		FIND_DISTANCE_SQ = FIND_DISTANCE * FIND_DISTANCE;	//FIND_DISTANCEの2乗。
+	const float		ATTACK_VIEWING_ANGLE = 45.0f;			//攻撃の視野角。
 	  
+	//ダメージ関係。
+	
 	//骨データ。
 	//ヘッドショットの判定と噛みつき攻撃の判定に使用する。	
 	CVector3		m_bonePos = CVector3::Zero();			//骨の座標。

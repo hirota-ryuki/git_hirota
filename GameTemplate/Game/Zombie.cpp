@@ -5,6 +5,10 @@
 #include "Navimesh.h"
 #include "Bullet.h"
 #include "physics/CollisionAttr.h"
+#include "ZombieMove.h"
+#include "ZombieStateMachine.h"
+#include "ZombieDamage.h"
+#include "ZombieDeath.h"
 
 #define PI 3.14f
 
@@ -79,6 +83,9 @@ bool Zombie::Start()
 
 	//コライダーの設定。
 	m_collider.Create(m_boxSize);
+
+	//コンポーネントを初期化。
+	InitComponents();
 	return true;
 }
 
@@ -88,89 +95,10 @@ void Zombie::Update()
 
 void Zombie::Update_NotPause()
 {
-	switch (m_state) {
-	case enState_idle:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_idle, 0.2f);
-
-		//攻撃後とノックバック後のクールタイム。
-		if (m_coolTimer > 0) {
-			m_coolTimer++;
-			if (m_coolTimer > 50) {
-				//タイマーのリセット。
-				m_coolTimer = 0;
-			}
-		}
-		else {
-			ChangeState();
-		}
-		break;
-	case enState_walk:
-		//アニメーションの再生。
-		if (m_aStarCount > 100) {
-			m_animation.Play(enAnimationClip_idle, 0.2f);
-		}
-		else {
-			m_animation.Play(enAnimationClip_walk, 0.2f);
-		}
-		Move();
-		ChangeState();
-		break;
-	case enState_attack:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_attack, 0.2f);
-		m_atkTimer++;
-		if (m_atkTimer >= ATK_INTERVAL && !m_isAttack) {
-			//攻撃。
-			Attack();
-			m_isAttack = true;
-		}
-		//アニメーションの再生中じゃなかったら。
-		if (!m_animation.IsPlaying()) {
-			//待機状態に遷移。
-			m_state = enState_idle;
-			m_coolTimer++;
-			m_atkTimer = 0;
-			m_isAttack = false;
-		}
-		break;
-	case enState_bite:
-		En_Bite();
-		break;
-	case enState_knockback:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_knockback, 0.1f);
-		//アニメーションの再生中じゃなかったら。
-		if (!m_animation.IsPlaying()) {
-			//待機状態に遷移。
-			m_state = enState_idle;
-			m_coolTimer++;
-		}
-		break;
-	case enState_death:
-		//アニメーションの再生。
-		m_animation.Play(enAnimationClip_death, 0.2f);
-		//アニメーションの再生中じゃなかったら。
-		if (!m_animation.IsPlaying())
-		{
-			//DeleteGO(this);
-			m_charaCon.RemoveRigidBoby();
-		}
-		break;
-	default:
-		break;
+	for (auto& component : m_component) {
+		component->Update();
 	}
-	//ダメージを受ける。
-	Damage();
-	//死ぬ判定。
-	Death();
-	//重力。
-	/*if (!m_isBite) {
-		m_moveSpeed.x = 0.0f;
-		m_moveSpeed.z = 0.0f;
-		m_moveSpeed.y -= 240.0f * 1.0f / 60.0f;
-		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
-	}*/
+	
 	//アニメーションの更新。
 	m_animation.Update(1.0f / 60.0f);
 	//座標の更新。
@@ -201,6 +129,7 @@ void Zombie::Update_NotPause()
 	pos.x += NOT_ASTAR_DISTANCE;
 	m_debugModel->SetPos(pos);
 #endif //DEBUG_MODE
+
 }
 
 void Zombie::En_Bite()
@@ -289,77 +218,86 @@ struct AstarCallBack : public btCollisionWorld::ConvexResultCallback
 		return 0;
 	}
 };
-
+template<class TCallback> 
+bool Zombie::RaycastToPlayer() const
+{
+	//コリジョンの移動の始点と終点の設定。
+	btTransform start, end;
+	{
+		//回転の設定。
+		start.setIdentity();
+		end.setIdentity();
+		start.setOrigin(btVector3(m_position.x, m_position.y + 20.f, m_position.z));
+		end.setOrigin(btVector3(m_player->GetPos().x, m_position.y + 20.f, m_player->GetPos().z));
+	}
+	TCallback callback;
+	//startからendまでコリジョンを移動させて当たり判定を取る。
+	g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
+	return callback.isHit;
+}
 void Zombie::ChangeState()
 {
 	//待機状態に遷移。
 	m_state = enState_idle;
 
-	CVector3 diff = m_player->GetPos() - m_position;	
+	float distSq = m_player->CalcDistanceSQFrom(m_position);
 	
 	//見つけたかどうかを判定。
 	//距離判定だが、壁越しに見つけないようにする。
 	if (!m_isFind) {
-		if (diff.Length() < 1000.0f) {
-			//コリジョンの移動の始点と終点の設定。
-			btTransform start, end;
-			{
-				//回転の設定。
-				start.setIdentity();
-				end.setIdentity();
-				start.setOrigin(btVector3(m_position.x, m_position.y + 20.f, m_position.z));
-				end.setOrigin(btVector3(m_player->GetPos().x, m_position.y + 20.f, m_player->GetPos().z));
-			}
-			FindCallBack callback;
-			//startからendまでコリジョンを移動させて当たり判定を取る。
-			g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
-			//コリジョンにヒットしなかったら。
-			if (callback.isHit == false) {
+		if (distSq < FIND_DISTANCE_SQ) {
+			//プレイヤーに対してレイキャスト。
+			if (RaycastToPlayer<FindCallBack>() == false) {
+				//プレイヤーに対してレイを飛ばして
+				//当たらなかったので遮蔽物はないので発見した。
 				m_isFind = true;
 			}
 		}
 	}
 	
-	if (diff.Length() < ATTACK_DISTANCE) {
-		//攻撃状態に遷移。
-		m_state = enState_attack;
-	}
-	else if (m_isFind) {
-		//歩行状態に遷移。
-		m_state = enState_walk;
+	if (m_isFind) {
+		if (distSq < ATTACK_DISTANCE_SQ) {
+			//攻撃状態に遷移。
+			m_state = enState_attack;
+		}
+		else {
+			//歩行状態に遷移。
+			m_state = enState_walk;
+		}
 	}
 }
 
+void Zombie::InitComponents()
+{
+	//移動コンポーネントを生成。
+	m_component.push_back(new ZombieMove);
+	//ステートマシンのコンポーネントを生成。
+	m_component.push_back(new ZombieStateMachine);
+	//ダメージ処理のコンポーネントを生成。
+	m_component.push_back(new ZombieDamage);
+	//死んだときの処理のコンポーネントを生成。
+	m_component.push_back(new ZombieDeath);
+	
+
+	//コンポーネントとゾンビを関連づける。
+	for (auto& component : m_component) {
+		component->BindZombie(this);
+	}
+}
 void Zombie::Move()
 {
 	//プレイヤーとの距離が近かったら。
 	//A*をしない。
-	CVector3 diff = m_player->GetPos() - m_position;
-	if (diff.Length() < NOT_ASTAR_DISTANCE){
+	float distSq = m_player->CalcDistanceSQFrom(m_position);
+	if (distSq < NOT_ASTAR_DISTANCE_SQ){
 		//コリジョンの移動の始点と終点の設定。
-		btTransform start, end;
-		{
-			//回転の設定。
-			start.setIdentity();
-			end.setIdentity();
-			start.setOrigin(btVector3(m_position.x, m_position.y + 20.f, m_position.z));
-			end.setOrigin(btVector3(m_player->GetPos().x, m_position.y + 20.f, m_player->GetPos().z));
-		}
-		AstarCallBack callback;
-		//startからendまでコリジョンを移動させて当たり判定を取る。
-		g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
-		//コリジョンにヒットしなかったら。
-		//A*をしない。
-		if (callback.isHit == false) {
-			CVector3 moveDirection = m_player->GetPos() - m_position;
-			moveDirection.y = 0.0f;
-			moveDirection.Normalize();
+		if (RaycastToPlayer<AstarCallBack>() == false){
+			//プレイヤーに対してレイキャストを行って、障害物にぶつからなかった。
+			CVector3 moveDirection = m_player->CalcDirectionXZFrom(m_position);
 			m_moveSpeed = moveDirection * WALK_SPEED;		//移動速度を加算。
 
 			//キャラクターコントローラーを使用して、座標を更新。
-			//m_position += m_moveSpeed * (1.0f / 60.0f);
 			m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
-
 			//回転。
 			Rotation();
 		}
@@ -373,7 +311,18 @@ void Zombie::Move()
 		Move_AStar();
 	}
 }
-
+bool Zombie::IsEndAStarForce() const
+{
+	float endDistSQ = m_player->CalcDistanceSQFrom(m_position);
+	//最終地点よりプレイヤーが離れていたらA*やり直し。
+	float endDistSQ2 = m_player->CalcDistanceSQFrom(m_endPos);
+	if (endDistSQ < END_ASTSR_OF_NEER_PLAYER_SQ
+		|| endDistSQ2 > END_ASTSR_OF_LEAVE_FINALPOINT_SQ) {
+		//強制終了。
+		return true;
+	}
+	return false;
+}
 void Zombie::Move_AStar()
 {
 	//A*を行っていなかったら。
@@ -408,13 +357,11 @@ void Zombie::Move_AStar()
 			if (diff.Length() < ARRIVAL_DISTANCE) { //todo バグの元
 				m_isPoint = true;
 			}
-			//プレイヤーの近くに来たらA*強制終了。
-			CVector3 endDiff = m_player->GetPos() - m_position;
-			//最終地点よりプレイヤーが離れていたらA*やり直し。
-			CVector3 endDiff2 = m_player->GetPos() - m_endPos;
-			if (endDiff.Length() < 200.0f || endDiff2.Length() > 300.0f) {
+			//A*強制終了する必要があるなら強制終了。
+			if (IsEndAStarForce()) {
 				m_isAstar = false;
 			}
+			
 			//n番目のパスに着いたら。
 			//n = m_moveListの要素の場所（今移動しようとしているパスの場所）。
 			if (m_isPoint)
@@ -499,7 +446,8 @@ void Zombie::Attack()
 	//プレイヤーへの攻撃判定。
 	//プレイヤーと敵の角度を求める。
 	CVector3 f;
-	f.Set(0.0f, 0.0f, 1.0f);
+	//f.Set(0.0f, 0.0f, 1.0f);
+	f.Set(CVector3::AxisZ());
 	f.Normalize();
 	m_rotation.Multiply(f);
 	CVector3 diff = m_player->GetPos() - m_position;
@@ -515,7 +463,7 @@ void Zombie::Attack()
 	if (diff.Length() < ATTACK_DISTANCE
 	//45度なら。
 	//内積に符号は無い。
-		&& degree < 45.0f) {
+		&& degree < ATTACK_VIEWING_ANGLE) {
 		//ダメージを与える。
 		m_player->Damage();
 	}
@@ -542,45 +490,9 @@ void Zombie::Attack()
 		//ゾンビの噛みつきフラグを有効にする。
 		m_isBite = true;
 	//}*/
+
+	//タイマーのリセット。
 	m_atkTimer = 0;
-}
-
-void Zombie::Damage()
-{
-	//頭との衝突判定を行う。
-	QueryGOs<Bullet>("bullet", [&](Bullet * bullet)->bool {
-		//頭の骨の読み込み。
-		auto& model = m_model->GetModel();
-		auto bone = model.FindBone(L"Head");
-		bone->CalcWorldTRS(m_bonePos, m_boneRot, m_boneScale);
-		//頭の判定。
-		CVector3 diff = bullet->GetPos() - m_bonePos;
-		if (diff.Length() < 20.0f) {
-			m_hp = m_hp - 5;
-			m_state = enState_knockback;
-			DeleteGO(bullet);
-		}
-		//体の判定。
-		else {
-			CVector3 pos = m_position;
-			pos.y += 70.0f;
-			CVector3 diff2 = bullet->GetPos() - pos;
-			if (diff2.Length() < 60.0f) {
-				m_hp--;
-				DeleteGO(bullet);
-			}
-		}
-		return true;
-		});
-}
-
-void Zombie::Death()
-{
-	//HPが0以下になったら
-	if (m_hp <= 0) {
-		//死ぬ。
-		m_state = enState_death;
-	}
 }
 
 float Zombie::CalcViewingAngleDeg(CVector3 v1, CVector3 v2)

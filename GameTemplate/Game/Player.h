@@ -97,6 +97,29 @@ public:
 		return m_position;
 	}
 	/// <summary>
+	/// 引数で渡された座標とプレイヤーの距離の2乗を計算します。
+	/// </summary>
+	/// <param name="pos">座標</param>
+	/// <returns>距離の2乗</returns>
+	float CalcDistanceSQFrom(const CVector3& pos) const
+	{
+		CVector3 diff = m_position - pos;
+		return diff.LengthSq();
+	}
+	/// <summary>
+	/// 引数で渡された座標からプレイヤーに向かって伸びる
+	/// XZ平面での向きベクトル(大きさ１)を計算。
+	/// </summary>
+	/// <param name="pos"></param>
+	/// <returns></returns>
+	CVector3 CalcDirectionXZFrom(const CVector3& pos) const
+	{
+		CVector3 moveDirection = m_position - pos;
+		moveDirection.y = 0.0f;
+		moveDirection.Normalize();
+		return moveDirection;
+	}
+	/// <summary>
 	/// プレイヤーのムーブスピードを取得。
 	/// </summary>
 	CVector3 GetMoveSpeed()
@@ -189,6 +212,23 @@ public:
 	const CVector3& GetShadowPos() const{
 		return m_shadowPos;
 	}
+private:
+	/// <summary>
+	/// アニメーションクリップを初期化。
+	/// </summary>
+	void InitAnimationClips();
+	/// <summary>
+	/// モデルを初期化。
+	/// </summary>
+	void InitModel();
+	/// <summary>
+	/// ダメージ表現の2Dを初期化
+	/// </summary>
+	void InitDamageSprite();
+	/// <summary>
+	/// 照準２Ｄを初期化。
+	/// </summary>
+	void InitAimSprite();
 private:
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。

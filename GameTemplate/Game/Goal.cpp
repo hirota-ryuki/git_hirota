@@ -33,7 +33,7 @@ bool Goal::Start()
 void Goal::Update()
 {
 	CVector3 diff = m_player->GetPos() - m_position;
-	if (diff.Length() < 100.0f) {
+	if (diff.Length() < CLEAR_DISTANCE) {
 		m_game->Clear();
 	}
 }

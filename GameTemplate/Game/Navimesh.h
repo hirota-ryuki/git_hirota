@@ -4,6 +4,8 @@
 #include "physics/BoxCollider.h"
 
 //これを定義するとナビメッシュのデータが再作成される。
+//背景データに変更が入ったときに有効にしてください。
+
 //#define REBUILD_NAVIMESH_DATA		
 
 //これを定義すると、ナビメッシュのデバッグ表示が有効になる。
@@ -58,6 +60,27 @@ private:
 	/// <param name="startCellNo">開始セルの番号。</param>
 	/// <param name="endCellNo">終了セルの番号。</param>
 	void BuildLinkCellInfo(int startCellNo, int endCellNo);
+	/// <summary>
+	/// モデルデータからナビメッシュ構築用の頂点バッファとインデックスバッファを構築する。
+	/// </summary>
+	/// <param name="model"></param>
+	void BuildVertexBufferAndIndexBufferFrom(const SkinModel& model);
+	/// <summary>
+	/// セルを構築する。
+	/// </summary>
+	void BuildCells();
+	/// <summary>
+	/// セルのリンク情報を構築。
+	/// </summary>
+	void BuildLinkCellInfo();
+	/// <summary>
+	/// ナビメッシュを外部データとして保存。
+	/// </summary>
+	void Save();
+	/// <summary>
+	/// 保存されたバイナリデータからナビメッシュを構築。
+	/// </summary>
+	void BuildNavimeshFromBinary();
 private:
 	//typedefは既存の型名に新しい名前を付ける。
 	typedef std::vector<CVector3>					VertexBuffer;	//頂点バッファ。
