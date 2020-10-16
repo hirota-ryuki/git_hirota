@@ -8,7 +8,7 @@
 #include "Goal.h"
 #include "Zombie.h"
 #include "Key.h"
-#include "RockDoor.h"
+#include "Door.h"
 #include "BulletStack.h"
 #include "Result.h"
 #include "Menu.h"
@@ -266,7 +266,7 @@ bool Game::Start()
 			name.append(L"В╠Мо");
 		}
 
-		m_rockdoor = NewGO<RockDoor>(GOPrio_Defalut, "door");
+		m_rockdoor = NewGO<Door>(GOPrio_Defalut, "door");
 		m_rockdoor->SetPos(objData.position);
 		m_rockdoor->SetRot(objData.rotation);
 		m_rockdoor->SetName(name);

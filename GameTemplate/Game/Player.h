@@ -226,7 +226,7 @@ private:
 	/// </summary>
 	void InitDamageSprite();
 	/// <summary>
-	/// 照準２Ｄを初期化。
+	/// 照準2Dを初期化。
 	/// </summary>
 	void InitAimSprite();
 private:
@@ -238,8 +238,8 @@ private:
 	Game*				m_game = nullptr;						//Gameのポインタ。
 	UI*					m_ui = nullptr;							//UIのポインタ。
 	SpotLight*			m_sl = nullptr;							//UIのポインタ。
-	float m_speed = 210.0f;			//キャラが歩くスピード。
-	float m_runSpeed = 280.0f;		//キャラが走るスピード。
+	float				m_speed = 210.0f;			//キャラが歩くスピード。
+	float				m_runSpeed = 280.0f;		//キャラが走るスピード。
 	
 	//アニメーション関係。
 	enum {

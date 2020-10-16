@@ -34,9 +34,6 @@
     <Filter Include="Engine\math">
       <UniqueIdentifier>{39e7f303-3dac-4bde-bedf-33a5497f262e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\LoadLevel">
-      <UniqueIdentifier>{8d26bc9f-47c1-4178-a3f4-a9b9588637dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Player">
       <UniqueIdentifier>{e6069f4e-0819-43e1-8657-55347c8ff83d}</UniqueIdentifier>
     </Filter>
@@ -163,11 +160,11 @@
     <Filter Include="Game\Light">
       <UniqueIdentifier>{5cd651ea-b0ed-401d-8865-446d8b9d4521}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Gimmick">
-      <UniqueIdentifier>{6e037a17-cacb-4bf5-b1b0-17fca3965772}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Enemy\PathFinding">
       <UniqueIdentifier>{af985657-d2a5-4e24-9379-74d768cfe6c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Gimmick">
+      <UniqueIdentifier>{6e037a17-cacb-4bf5-b1b0-17fca3965772}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -348,9 +345,6 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Game\Inventory</Filter>
     </ClCompile>
-    <ClCompile Include="IDoor.cpp">
-      <Filter>Game\Door</Filter>
-    </ClCompile>
     <ClCompile Include="Menu.cpp">
       <Filter>Game\Menu</Filter>
     </ClCompile>
@@ -374,9 +368,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Game\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="RockDoor.cpp">
-      <Filter>Game\Door</Filter>
     </ClCompile>
     <ClCompile Include="Navimesh.cpp">
       <Filter>Game\Enemy\PathFinding</Filter>
@@ -414,8 +405,15 @@
     <ClCompile Include="IZombieComponent.cpp">
       <Filter>Game\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="ZombieDeath.cpp" />
-    <ClCompile Include="ZombieStateMachine.cpp" />
+    <ClCompile Include="Door.cpp">
+      <Filter>Game\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieDeath.cpp">
+      <Filter>Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieStateMachine.cpp">
+      <Filter>Game\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -610,9 +608,6 @@
     <ClInclude Include="Inventory.h">
       <Filter>Game\Inventory</Filter>
     </ClInclude>
-    <ClInclude Include="IDoor.h">
-      <Filter>Game\Door</Filter>
-    </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>Game\Menu</Filter>
     </ClInclude>
@@ -645,9 +640,6 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Game\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="RockDoor.h">
-      <Filter>Game\Door</Filter>
     </ClInclude>
     <ClInclude Include="Navimesh.h">
       <Filter>Game\Enemy\PathFinding</Filter>
@@ -682,8 +674,15 @@
     <ClInclude Include="IZombieComponent.h">
       <Filter>Game\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="ZombieDeath.h" />
-    <ClInclude Include="ZombieStateMachine.h" />
+    <ClInclude Include="Door.h">
+      <Filter>Game\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieDeath.h">
+      <Filter>Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieStateMachine.h">
+      <Filter>Game\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\moca.PNG">

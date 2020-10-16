@@ -16,7 +16,7 @@ class Player;
 class Goal;
 class Zombie;
 class Key;
-class RockDoor;
+class Door;
 class BulletStack;
 class Result;
 class Menu;
@@ -121,7 +121,7 @@ private:
 	Goal*			m_goal = nullptr;		//Goalクラスのポインタ。
 	Zombie*			m_zombie = nullptr;		//Zombieクラスのポインタ。
 	Key*			m_key = nullptr;		//Ballクラスのポインタ。
-	RockDoor*		m_rockdoor = nullptr;	//RockDoorクラスのポインタ。
+	Door*		m_rockdoor = nullptr;	//RockDoorクラスのポインタ。
 	BulletStack*	m_bs = nullptr;			//BulletStackクラスのポインタ。
 	Menu*			m_menu = nullptr;		//Menuクラスのポインタ。
 	Opening*		m_op = nullptr;			//Openingクラスのポインタ。

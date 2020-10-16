@@ -124,7 +124,6 @@
     <ClCompile Include="graphics\posteffect\bloom\ConstantBufferGPU.cpp" />
     <ClCompile Include="graphics\posteffect\bloom\GaussianBlur.cpp" />
     <ClCompile Include="graphics\posteffect\PostEffect.cpp" />
-    <ClCompile Include="IDoor.cpp" />
     <ClCompile Include="IItem.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -137,7 +136,7 @@
     <ClCompile Include="physics\SphereCollider.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Result.cpp" />
-    <ClCompile Include="RockDoor.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="Serif.cpp" />
     <ClCompile Include="sound\SoundEngine.cpp" />
     <ClCompile Include="sound\SoundSource.cpp" />
@@ -221,7 +220,6 @@
     <ClInclude Include="graphics\posteffect\bloom\ConstantBufferGPU.h" />
     <ClInclude Include="graphics\posteffect\bloom\GaussianBlur.h" />
     <ClInclude Include="graphics\posteffect\PostEffect.h" />
-    <ClInclude Include="IDoor.h" />
     <ClInclude Include="IItem.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Light.h" />
@@ -236,7 +234,7 @@
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Result.h" />
-    <ClInclude Include="RockDoor.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="Serif.h" />
     <ClInclude Include="sound\SoundEngine.h" />
     <ClInclude Include="sound\SoundSource.h" />
