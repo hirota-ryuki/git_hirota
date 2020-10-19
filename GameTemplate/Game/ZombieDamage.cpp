@@ -11,12 +11,12 @@ void ZombieDamage::Update()
 		auto& model = m_zombie->m_model->GetModel();
 		auto bone = model.FindBone(L"Head");
 		bone->CalcWorldTRS(
-			m_zombie->m_bonePos, 
-			m_zombie->m_boneRot, 
-			m_zombie->m_boneScale
+			m_bonePos, 
+			m_boneRot, 
+			m_boneScale
 		);
 		//“ª‚Ì”»’èB
-		CVector3 diff = bullet->GetPos() - m_zombie->m_bonePos;
+		CVector3 diff = bullet->GetPos() - m_bonePos;
 		if (diff.Length() < RENGE_OF_HEAD_COLLISION) {
 			m_zombie->m_hp = m_zombie->m_hp - HEAD_SHOT_DAMAGE;
 			m_zombie->m_state = m_zombie->enState_knockback;
