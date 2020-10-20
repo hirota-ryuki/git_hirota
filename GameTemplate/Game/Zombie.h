@@ -51,11 +51,7 @@ private:
 	/// コンポーネントの初期化。
 	/// </summary>
 	void InitComponents();
-	/// <summary>
-	/// 噛みつき攻撃。
-	/// 使用していない関数。
-	/// </summary>
-	void En_Bite();
+	
 private:
 	std::list< IZombieComponent* > m_component;			//ゾンビのコンポーネントのリスト。
 
@@ -78,7 +74,6 @@ private:
 	bool			m_isMove = false;
 	CVector3		m_endPos = CVector3::Zero();//最終地点。
 	
-
 	//ステート関係。
 	enum State {
 		enState_idle,
@@ -90,8 +85,23 @@ private:
 		enState_num,
 	};
 	State			m_state = enState_idle;
+
 	int				m_coolTimer = 0;						//攻撃後のクールタイム。
 
+	//アニメーション関係。
+	enum {
+		enAnimationClip_idle,
+		enAnimationClip_walk,
+		enAnimationClip_attack,
+		enAnimationClip_bite,
+		enAnimationClip_knockback,
+		enAnimationClip_death,
+		enAnimationClip_num,
+	};
+	AnimationClip	m_animationClip[enAnimationClip_num];		//アニメーションクリップ。
+	Animation		m_animation;
+
+	//コライダー関係。
 	BoxCollider		m_collider;										//セル用のボックスコライダー。
 	const float		BOX_SIZE_DOUBLE = 30.0f;						//コライダーを拡大するための倍率。
 	CVector3		m_boxSize = CVector3::One() * BOX_SIZE_DOUBLE;	//コライダーのサイズ。

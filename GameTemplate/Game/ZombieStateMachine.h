@@ -46,6 +46,11 @@ private:
 	/// <returns>trueが返ってきたらレイが何かのコライダーと衝突しています。</returns>
 	template<class TCallback>
 	bool RaycastToPlayer() const;
+	/// <summary>
+	/// 噛みつき攻撃。
+	/// 使用していない関数。
+	/// </summary>
+	void En_Bite();
 private:
 	//ステート関係。
 	enum State {
@@ -57,6 +62,8 @@ private:
 		enState_death,
 		enState_num,
 	};
+	State			m_state = enState_idle;
+
 	//移動関係。
 	CVector3		m_moveSpeed = CVector3::Zero();			//移動速度。
 	const float		WALK_SPEED = 150.f;						//キャラが歩くスピード。
@@ -78,17 +85,5 @@ private:
 	const float		FIND_DISTANCE_SQ = FIND_DISTANCE * FIND_DISTANCE;	//FIND_DISTANCEの2乗。
 	const float		ATTACK_VIEWING_ANGLE = 45.0f;			//攻撃の視野角。
 
-	//アニメーション関係。
-	enum {
-		enAnimationClip_idle,
-		enAnimationClip_walk,
-		enAnimationClip_attack,
-		enAnimationClip_bite,
-		enAnimationClip_knockback,
-		enAnimationClip_death,
-		enAnimationClip_num,
-	};
-	AnimationClip	m_animationClip[enAnimationClip_num];		//アニメーションクリップ。
-	Animation		m_animation;
 };
 

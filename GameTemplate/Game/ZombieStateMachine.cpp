@@ -51,7 +51,7 @@ void ZombieStateMachine::Update()
 		}
 		break;
 	case enState_bite:
-		m_zombie->En_Bite();
+		En_Bite();
 		break;
 	case enState_knockback:
 		//アニメーションの再生。
@@ -77,12 +77,28 @@ void ZombieStateMachine::Update()
 		break;
 	}
 }
+
+struct FindCallBack : public btCollisionWorld::ConvexResultCallback
+{
+	//障害物があるかないか判定。
+	bool isHit = false;
+	//衝突したら勝手に呼んでくれる。
+	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+	{
+		if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Map) {
+			//当たった。
+			isHit = true;
+		}
+		return 0;
+	}
+};
+
 void ZombieStateMachine::ChangeState()
 {
 	//待機状態に遷移。
 	m_state = enState_idle;
 
-	float distSq = m_player->CalcDistanceSQFrom(m_position);
+	float distSq = m_zombie->m_player->CalcDistanceSQFrom(m_zombie->m_position);
 
 	//見つけたかどうかを判定。
 	//距離判定だが、壁越しに見つけないようにする。
@@ -109,20 +125,36 @@ void ZombieStateMachine::ChangeState()
 	}
 }
 
+struct AstarCallBack : public btCollisionWorld::ConvexResultCallback
+{
+	//障害物があるかないか判定。
+	bool isHit = false;
+	//衝突したら勝手に呼んでくれる。
+	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+	{
+		if (convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Map
+			|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_RigidBody) {
+			//当たった。
+			isHit = true;
+		}
+		return 0;
+	}
+};
+
 void ZombieStateMachine::Move()
 {
 	//プレイヤーとの距離が近かったら。
 	//A*をしない。
-	float distSq = m_player->CalcDistanceSQFrom(m_position);
+	float distSq = m_zombie->m_player->CalcDistanceSQFrom(m_position);
 	if (distSq < NOT_ASTAR_DISTANCE_SQ) {
 		//コリジョンの移動の始点と終点の設定。
 		if (RaycastToPlayer<AstarCallBack>() == false) {
 			//プレイヤーに対してレイキャストを行って、障害物にぶつからなかった。
-			CVector3 moveDirection = m_player->CalcDirectionXZFrom(m_position);
+			CVector3 moveDirection = m_zombie->m_player->CalcDirectionXZFrom(m_position);
 			m_moveSpeed = moveDirection * WALK_SPEED;		//移動速度を加算。
 
 			//キャラクターコントローラーを使用して、座標を更新。
-			m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+			m_position = m_zombie->m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 			//回転。
 			Rotation();
 		}
@@ -320,4 +352,78 @@ void ZombieStateMachine::Attack()
 
 	//タイマーのリセット。
 	m_atkTimer = 0;
+}
+
+void ZombieStateMachine::En_Bite()
+{
+	//ゾンビの向きをプレイヤーにあわせる。
+	{
+		//プレイヤーと敵の角度を求める。
+		CVector3 f = m_zombie->m_model->GetForward();
+		f.z *= -1;
+		CVector3 diff = m_zombie->m_player->GetPos() - m_position;
+		//視野角。
+		float degree = m_zombie->CalcViewingAngleDeg(f, diff);
+
+		//もし角度が10度以内ではなかったら。
+		if (degree > 10.0f) {
+			CVector3 cross;
+			//斜めに傾かないように0にしておく。
+			f.y = 0.0f;
+			diff.y = 0.0f;
+			cross.Cross(f, diff);
+			cross.Normalize();
+			CQuaternion qAddRot;
+			qAddRot.SetRotationDeg(cross, degree - 10.0f);
+			qAddRot.Multiply(m_zombie->m_rotation);
+			//いずれプレイヤークラスに処理を移す。
+			//プレイヤーと敵の角度を求める。
+			CVector3 f2 = m_zombie->m_player->GetSkinModelRender()->GetForward();
+			f2.z *= -1;
+			CVector3 diff2 = m_position - m_player->GetPos();
+			//視野角。
+			float degree2 = m_zombie->CalcViewingAngleDeg(f2, diff2);
+			CVector3 cross2;
+			f2.y = 0.0f;
+			diff2.y = 0.0f;
+			cross2.Cross(f2, diff2);
+			cross2.Normalize();
+			CQuaternion qAddRot2;
+			qAddRot2.SetRotationDeg(cross2, degree2 - 10.0f);
+			qAddRot2.Multiply(m_player->GetRot());
+		}
+	}
+	//ゾンビをプレイヤーの位置に移動させる。
+	auto pPos = m_zombie->m_player->GetPos();
+	pPos.x += 30.0f;
+	pPos.y += 30.0f;
+	m_zombie->m_position = pPos;
+	//アニメーションの再生。
+	m_zombie->m_animation.Play(m_zombie->enAnimationClip_bite, 0.1f);
+	//アニメーションの再生中じゃなかったら。
+	if (!m_animation.IsPlaying()) {
+		//待機状態に遷移。
+		m_state = enState_idle;
+		m_charaCon.ActiveMode(true);
+		m_isBite = false;
+		m_coolTimer++;
+	}
+}
+
+template<class TCallback>
+bool ZombieStateMachine::RaycastToPlayer() const
+{
+	//コリジョンの移動の始点と終点の設定。
+	btTransform start, end;
+	{
+		//回転の設定。
+		start.setIdentity();
+		end.setIdentity();
+		start.setOrigin(btVector3(m_position.x, m_position.y + 20.f, m_position.z));
+		end.setOrigin(btVector3(m_player->GetPos().x, m_position.y + 20.f, m_player->GetPos().z));
+	}
+	TCallback callback;
+	//startからendまでコリジョンを移動させて当たり判定を取る。
+	g_physics.ConvexSweepTest((btConvexShape*)m_collider.GetBody(), start, end, callback);
+	return callback.isHit;
 }
