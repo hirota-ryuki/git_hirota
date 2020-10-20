@@ -44,7 +44,7 @@ void ZombieStateMachine::Update()
 		//アニメーションの再生中じゃなかったら。
 		if (!m_zombie->m_animation.IsPlaying()) {
 			//待機状態に遷移。
-			m_zombie->m_state = m_zombie->enState_idle;
+			m_zombie->m_state = enState_idle;
 			m_zombie->m_coolTimer++;
 			m_atkTimer = 0;
 			m_isAttack = false;

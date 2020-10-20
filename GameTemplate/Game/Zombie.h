@@ -12,6 +12,17 @@ class ZombieDamage;
 class ZombieDeath;
 class ZombieStateMachine;
 
+//ステート関係。
+enum State {
+	enState_idle,
+	enState_walk,
+	enState_attack,
+	enState_bite,
+	enState_knockback,
+	enState_death,
+	enState_num,
+};
+
 class Zombie :
 	public IGameObject
 {
@@ -74,16 +85,6 @@ private:
 	bool			m_isMove = false;
 	CVector3		m_endPos = CVector3::Zero();//最終地点。
 	
-	//ステート関係。
-	enum State {
-		enState_idle,
-		enState_walk,
-		enState_attack,
-		enState_bite,
-		enState_knockback,
-		enState_death,
-		enState_num,
-	};
 	State			m_state = enState_idle;
 
 	int				m_coolTimer = 0;						//攻撃後のクールタイム。
