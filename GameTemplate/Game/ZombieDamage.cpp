@@ -19,7 +19,7 @@ void ZombieDamage::Update()
 		CVector3 diff = bullet->GetPos() - m_bonePos;
 		if (diff.Length() < RENGE_OF_HEAD_COLLISION) {
 			m_zombie->m_hp = m_zombie->m_hp - HEAD_SHOT_DAMAGE;
-			m_zombie->m_state = m_zombie->enState_knockback;
+			m_zombie->m_state = enState_knockback;
 			DeleteGO(bullet);
 		}
 		//‘Ì‚Ì”»’èB

@@ -9,7 +9,6 @@ public:
 	/// </summary>
 	void Update() override
 	{
-
 	}
 };
 

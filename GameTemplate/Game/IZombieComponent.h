@@ -15,6 +15,7 @@ public:
 		m_zombie = zombie;
 	}
 	virtual ~IZombieComponent(){}
+	virtual void Start() {}
 	virtual void Update() {}
 protected:
 	Zombie* m_zombie = nullptr;	//このコンポーネントの所有者のゾンビ。

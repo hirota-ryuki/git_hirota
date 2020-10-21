@@ -1,12 +1,8 @@
 #pragma once
 #include "character/CharacterController.h"
-#include "AStar.h"
-#include "Navimesh.h"
 
 //#define DEBUG_MODE
 
-class Player;
-class Floor;
 class IZombieComponent;
 class ZombieDamage;
 class ZombieDeath;
@@ -34,7 +30,7 @@ public:
 	~Zombie();
 	void OnDestroy() override;
 	bool Start() override;
-	void Update() override;
+	void Update() override {};
 	void Update_NotPause() override;
 	/// <summary>
 	/// 視野角を計算する関数。
@@ -57,37 +53,31 @@ public:
 	{
 		m_rotation = rot;
 	}
-private:	
+private:
+	/// <summary>
+	/// アニメーションクリップを初期化。
+	/// </summary>
+	void InitAnimationClips();
+	/// <summary>
+	/// モデルを初期化。
+	/// </summary>
+	void InitModel();
 	/// <summary>
 	/// コンポーネントの初期化。
 	/// </summary>
 	void InitComponents();
 	
 private:
-	std::list< IZombieComponent* > m_component;			//ゾンビのコンポーネントのリスト。
+	std::list< IZombieComponent* > m_component;					//ゾンビのコンポーネントのリスト。
 
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
 	CQuaternion			m_rotation = CQuaternion::Identity();	//回転。
 	CharacterController m_charaCon;								//キャラクターコントローラー。
-
-	//A*関係。
-	Game*			m_game = nullptr;			//ゲームクラスのポインタ。
-	Player*			m_player = nullptr;			//プレイヤークラスのポインタ。
-	Floor*			m_floor = nullptr;			//床クラスのポインタ。
-	AStar			m_aStar;					//A*クラスのインスタンス。
-	Navimesh*		m_nav = nullptr;			//ナビメッシュクラスのポインタ。
-	std::vector<CVector3>			m_moveList;	//A*後に算出されたゴールまでのルートリスト。
-	std::vector<CVector3>::iterator m_itr;		//m_moveListのイテレータ。
-	bool			m_isAstar = false;			//ゴールしているかどうか。
-	bool			m_isPoint = false;			//各*itrに到達したかどうか。
-	bool			m_isHit   = false;			//コリジョンにヒットしたかどうか。
-	bool			m_isMove = false;
-	CVector3		m_endPos = CVector3::Zero();//最終地点。
 	
 	State			m_state = enState_idle;
 
-	int				m_coolTimer = 0;						//攻撃後のクールタイム。
+	int				m_coolTimer = 0;							//攻撃後のクールタイム。
 
 	//アニメーション関係。
 	enum {
@@ -99,7 +89,7 @@ private:
 		enAnimationClip_death,
 		enAnimationClip_num,
 	};
-	AnimationClip	m_animationClip[enAnimationClip_num];		//アニメーションクリップ。
+	AnimationClip	m_animationClip[enAnimationClip_num];			//アニメーションクリップ。
 	Animation		m_animation;
 
 	//コライダー関係。

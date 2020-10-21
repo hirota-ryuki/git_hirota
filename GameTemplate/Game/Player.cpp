@@ -224,7 +224,7 @@ void Player::Update_NotPause()
 	//女優ライト。
 	ActressLight();
 	//懐中電灯。
-	SetLight();
+	LightUpdate();
 }
 void Player::Update()
 {	
@@ -497,7 +497,7 @@ void Player::ActressLight()
 	m_model->SetLight(0, dir,color);
 }
 
-void Player::SetLight()
+void Player::LightUpdate()
 { 
 	CVector3 color;
 	CVector3 dir;

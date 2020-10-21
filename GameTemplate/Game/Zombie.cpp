@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "Zombie.h"
-#include "Player.h"
-#include "floor.h"
-#include "Navimesh.h"
 #include "Bullet.h"
-#include "physics/CollisionAttr.h"
 #include "ZombieMove.h"
 #include "ZombieStateMachine.h"
 #include "ZombieDamage.h"
@@ -30,14 +26,6 @@ void Zombie::OnDestroy()
 
 bool Zombie::Start()
 {
-	//ゲームのインスタンスを取得。
-	m_game = GetGame();
-	//プレイヤーのインスタンスを取得。
-	m_player = m_game->GetPlayer();
-	//床のインスタンスを取得。
-	m_floor = m_game->GetFloor();
-	//ナビメッシュを取得。
-	m_nav = m_floor->GetNavimesh();
 
 	//キャラコンの初期化
 	m_charaCon.Init(
@@ -46,12 +34,9 @@ bool Zombie::Start()
 		m_position,
 		true
 	);
-	//cmoファイルの読み込み。
-	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
-	m_model->Init(L"modelData/zombie/zombie.cmo");
-	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
-	m_model->SetData(m_position, m_rotation);
-	m_model->SetShadowReciever(true);
+	
+	//モデルの初期化。
+	InitModel();
 	
 #ifdef DEBUG_MODE
 	//debug cmoファイルの読み込み。
@@ -63,34 +48,19 @@ bool Zombie::Start()
 	m_debugModel->SetData(pos, m_debugrotation);
 #endif //DEBUG_MODE
 
-	//アニメーション。
-	//アニメーションクリップのロード。
-	m_animationClip[enAnimationClip_idle].Load(L"animData/zombie/idle.tka");
-	m_animationClip[enAnimationClip_walk].Load(L"animData/zombie/walk.tka");
-	m_animationClip[enAnimationClip_attack].Load(L"animData/zombie/attack.tka");
-	m_animationClip[enAnimationClip_bite].Load(L"animData/zombie/bite.tka");
-	m_animationClip[enAnimationClip_knockback].Load(L"animData/zombie/knockback.tka");
-	m_animationClip[enAnimationClip_death].Load(L"animData/zombie/death.tka");
-	//ループフラグを設定する。
-	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
-	m_animationClip[enAnimationClip_walk].SetLoopFlag(true);
-	m_animationClip[enAnimationClip_attack].SetLoopFlag(false);
-	m_animationClip[enAnimationClip_bite].SetLoopFlag(false);
-	m_animationClip[enAnimationClip_knockback].SetLoopFlag(false);
-	m_animationClip[enAnimationClip_death].SetLoopFlag(false);
-	//アニメーション初期化。
-	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
+	//アニメーションの初期化。
+	InitAnimationClips();
 
 	//コライダーの設定。
 	m_collider.Create(m_boxSize);
 
 	//コンポーネントを初期化。
 	InitComponents();
-	return true;
-}
 
-void Zombie::Update()
-{		
+	for (auto& component : m_component) {
+		component->Start();
+	}
+	return true;
 }
 
 void Zombie::Update_NotPause()
@@ -104,12 +74,6 @@ void Zombie::Update_NotPause()
 	//座標の更新。
 	m_model->SetData(m_position, m_rotation);
 
-
-	//プレイヤーと敵の角度を求める。
-	/*CVector3 f = m_model->GetForward();
-	f.z *= -1;*/
-	//f.Normalize();
-	//CVector3 dir = CVector3::One();
 #ifdef DEBUG_MODE
 	CVector3 dir;
 	dir.Set(0.0f, 0.0f, -1.0f);
@@ -129,7 +93,36 @@ void Zombie::Update_NotPause()
 	pos.x += NOT_ASTAR_DISTANCE;
 	m_debugModel->SetPos(pos);
 #endif //DEBUG_MODE
+}
 
+void Zombie::InitAnimationClips()
+{
+	//アニメーションクリップのロード。
+	m_animationClip[enAnimationClip_idle].Load(L"animData/zombie/idle.tka");
+	m_animationClip[enAnimationClip_walk].Load(L"animData/zombie/walk.tka");
+	m_animationClip[enAnimationClip_attack].Load(L"animData/zombie/attack.tka");
+	m_animationClip[enAnimationClip_bite].Load(L"animData/zombie/bite.tka");
+	m_animationClip[enAnimationClip_knockback].Load(L"animData/zombie/knockback.tka");
+	m_animationClip[enAnimationClip_death].Load(L"animData/zombie/death.tka");
+	//ループフラグを設定する。
+	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
+	m_animationClip[enAnimationClip_walk].SetLoopFlag(true);
+	m_animationClip[enAnimationClip_attack].SetLoopFlag(false);
+	m_animationClip[enAnimationClip_bite].SetLoopFlag(false);
+	m_animationClip[enAnimationClip_knockback].SetLoopFlag(false);
+	m_animationClip[enAnimationClip_death].SetLoopFlag(false);
+	//アニメーション初期化。
+	m_animation.Init(m_model->GetModel(), m_animationClip, enAnimationClip_num);
+}
+
+void Zombie::InitModel()
+{
+	//cmoファイルの読み込み。
+	m_model = NewGO<SkinModelRender>(GOPrio_Defalut);
+	m_model->Init(L"modelData/zombie/zombie.cmo");
+	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.f);
+	m_model->SetData(m_position, m_rotation);
+	m_model->SetShadowReciever(true);
 }
 
 void Zombie::InitComponents()

@@ -1,6 +1,30 @@
 #include "stdafx.h"
 #include "ZombieStateMachine.h"
+#include "physics/CollisionAttr.h"
+#include "Player.h"
+#include "floor.h"
+#include "Navimesh.h"
 #include "Zombie.h"
+
+#define PI 3.14f
+
+void ZombieStateMachine::Start()
+{
+	//インスタンスの取得。
+	InitInstance();
+}
+
+void ZombieStateMachine::InitInstance()
+{
+	//ゲームのインスタンスを取得。
+	m_game = GetGame();
+	//プレイヤーのインスタンスを取得。
+	m_player = m_game->GetPlayer();
+	//床のインスタンスを取得。
+	m_floor = m_game->GetFloor();
+	//ナビメッシュを取得。
+	m_nav = m_floor->GetNavimesh();
+}
 
 void ZombieStateMachine::Update()
 {
@@ -59,7 +83,7 @@ void ZombieStateMachine::Update()
 		//アニメーションの再生中じゃなかったら。
 		if (!m_zombie->m_animation.IsPlaying()) {
 			//待機状態に遷移。
-			m_zombie->m_state = m_zombie->enState_idle;
+			m_zombie->m_state = enState_idle;
 			m_zombie->m_coolTimer++;
 		}
 		break;
@@ -96,9 +120,9 @@ struct FindCallBack : public btCollisionWorld::ConvexResultCallback
 void ZombieStateMachine::ChangeState()
 {
 	//待機状態に遷移。
-	m_state = enState_idle;
+	m_zombie->m_state = enState_idle;
 
-	float distSq = m_zombie->m_player->CalcDistanceSQFrom(m_zombie->m_position);
+	float distSq = m_player->CalcDistanceSQFrom(m_zombie->m_position);
 
 	//見つけたかどうかを判定。
 	//距離判定だが、壁越しに見つけないようにする。
@@ -116,11 +140,11 @@ void ZombieStateMachine::ChangeState()
 	if (m_isFind) {
 		if (distSq < ATTACK_DISTANCE_SQ) {
 			//攻撃状態に遷移。
-			m_state = enState_attack;
+			m_zombie->m_state = enState_attack;
 		}
 		else {
 			//歩行状態に遷移。
-			m_state = enState_walk;
+			m_zombie->m_state = enState_walk;
 		}
 	}
 }
@@ -145,16 +169,16 @@ void ZombieStateMachine::Move()
 {
 	//プレイヤーとの距離が近かったら。
 	//A*をしない。
-	float distSq = m_zombie->m_player->CalcDistanceSQFrom(m_position);
+	float distSq = m_player->CalcDistanceSQFrom(m_zombie->m_position);
 	if (distSq < NOT_ASTAR_DISTANCE_SQ) {
 		//コリジョンの移動の始点と終点の設定。
 		if (RaycastToPlayer<AstarCallBack>() == false) {
 			//プレイヤーに対してレイキャストを行って、障害物にぶつからなかった。
-			CVector3 moveDirection = m_zombie->m_player->CalcDirectionXZFrom(m_position);
+			CVector3 moveDirection = m_player->CalcDirectionXZFrom(m_zombie->m_position);
 			m_moveSpeed = moveDirection * WALK_SPEED;		//移動速度を加算。
 
 			//キャラクターコントローラーを使用して、座標を更新。
-			m_position = m_zombie->m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+			m_zombie->m_position = m_zombie->m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 			//回転。
 			Rotation();
 		}
@@ -171,7 +195,7 @@ void ZombieStateMachine::Move()
 
 bool ZombieStateMachine::IsEndAStarForce() const
 {
-	float endDistSQ = m_player->CalcDistanceSQFrom(m_position);
+	float endDistSQ = m_player->CalcDistanceSQFrom(m_zombie->m_position);
 	//最終地点よりプレイヤーが離れていたらA*やり直し。
 	float endDistSQ2 = m_player->CalcDistanceSQFrom(m_endPos);
 	if (endDistSQ < END_ASTSR_OF_NEER_PLAYER_SQ
@@ -202,17 +226,17 @@ void ZombieStateMachine::Move_AStar()
 			m_aStarCount = 0;
 			//パスに向かうまでじわじわと移動。
 			//移動する向き。
-			CVector3 moveDirection = *m_itr - m_position;
+			CVector3 moveDirection = *m_itr - m_zombie->m_position;
 			moveDirection.y = 0.0f;
 			moveDirection.Normalize();
 			m_moveSpeed = moveDirection * WALK_SPEED;		//移動速度を加算。
 
 			//キャラクターコントローラーを使用して、座標を更新。
-			m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+			m_zombie->m_position = m_zombie->m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 			//回転。
 			Rotation();
 
-			CVector3 diff = *m_itr - m_position;
+			CVector3 diff = *m_itr - m_zombie->m_position;
 			if (diff.Length() < ARRIVAL_DISTANCE) { //todo バグの元
 				m_isPoint = true;
 			}
@@ -245,7 +269,7 @@ void ZombieStateMachine::Astar()
 	auto allCell = m_nav->GetCell();
 	//enemyから一番近いセルとplayerから一番近いセルを求める。
 	//enemyの情報。
-	CVector3 enemyDiff = allCell[0]->centerPos - m_position;
+	CVector3 enemyDiff = allCell[0]->centerPos - m_zombie->m_position;
 	Cell* startCell = allCell[0];
 
 	//playerの情報。
@@ -256,7 +280,7 @@ void ZombieStateMachine::Astar()
 	for (auto &all : allCell)
 	{
 		//newEnemyDiffの更新
-		CVector3 newEnemyDiff = all->centerPos - m_position;
+		CVector3 newEnemyDiff = all->centerPos - m_zombie->m_position;
 
 		//enemyから一番近いセルを求める
 		//enemyDiffより距離が短いセルがあったら
@@ -279,8 +303,8 @@ void ZombieStateMachine::Astar()
 			endCell = all;
 		}
 	}
-	m_position = startCell->centerPos;
-	m_model->SetPos(m_position);
+	m_zombie->m_position = startCell->centerPos;
+	m_zombie->m_model->SetPos(m_zombie->m_position);
 	//m_charaCon.SetPosition(m_position);
 	m_endPos = endCell->centerPos;
 	//A*実施
@@ -296,7 +320,7 @@ void ZombieStateMachine::Rotation()
 	//だから、移動ベクトルが0の時を除外する。
 	if (m_moveSpeed.Length() > 0.1f) {
 		float angle = atan2(m_moveSpeed.x, m_moveSpeed.z);
-		m_rotation.SetRotation(CVector3::AxisY(), angle);
+		m_zombie->m_rotation.SetRotation(CVector3::AxisY(), angle);
 	}
 }
 
@@ -308,8 +332,8 @@ void ZombieStateMachine::Attack()
 	//f.Set(0.0f, 0.0f, 1.0f);
 	f.Set(CVector3::AxisZ());
 	f.Normalize();
-	m_rotation.Multiply(f);
-	CVector3 diff = m_player->GetPos() - m_position;
+	m_zombie->m_rotation.Multiply(f);
+	CVector3 diff = m_player->GetPos() - m_zombie->m_position;
 	diff.Normalize();
 	float dot = f.Dot(diff);
 	float angle = acos(dot);
@@ -361,7 +385,7 @@ void ZombieStateMachine::En_Bite()
 		//プレイヤーと敵の角度を求める。
 		CVector3 f = m_zombie->m_model->GetForward();
 		f.z *= -1;
-		CVector3 diff = m_zombie->m_player->GetPos() - m_position;
+		CVector3 diff = m_player->GetPos() - m_zombie->m_position;
 		//視野角。
 		float degree = m_zombie->CalcViewingAngleDeg(f, diff);
 
@@ -378,9 +402,9 @@ void ZombieStateMachine::En_Bite()
 			qAddRot.Multiply(m_zombie->m_rotation);
 			//いずれプレイヤークラスに処理を移す。
 			//プレイヤーと敵の角度を求める。
-			CVector3 f2 = m_zombie->m_player->GetSkinModelRender()->GetForward();
+			CVector3 f2 =m_player->GetSkinModelRender()->GetForward();
 			f2.z *= -1;
-			CVector3 diff2 = m_position - m_player->GetPos();
+			CVector3 diff2 = m_zombie->m_position - m_player->GetPos();
 			//視野角。
 			float degree2 = m_zombie->CalcViewingAngleDeg(f2, diff2);
 			CVector3 cross2;
@@ -394,19 +418,19 @@ void ZombieStateMachine::En_Bite()
 		}
 	}
 	//ゾンビをプレイヤーの位置に移動させる。
-	auto pPos = m_zombie->m_player->GetPos();
+	auto pPos = m_player->GetPos();
 	pPos.x += 30.0f;
 	pPos.y += 30.0f;
 	m_zombie->m_position = pPos;
 	//アニメーションの再生。
 	m_zombie->m_animation.Play(m_zombie->enAnimationClip_bite, 0.1f);
 	//アニメーションの再生中じゃなかったら。
-	if (!m_animation.IsPlaying()) {
+	if (!m_zombie->m_animation.IsPlaying()) {
 		//待機状態に遷移。
-		m_state = enState_idle;
-		m_charaCon.ActiveMode(true);
-		m_isBite = false;
-		m_coolTimer++;
+		m_zombie->m_state = enState_idle;
+		m_zombie->m_charaCon.ActiveMode(true);
+		m_zombie->m_isBite = false;
+		m_zombie->m_coolTimer++;
 	}
 }
 

@@ -1,11 +1,22 @@
 #pragma once
 #include "IZombieComponent.h"
+#include "AStar.h"
+#include "Navimesh.h"
+
+class Player;
+class Floor;
+
 class ZombieStateMachine :
 	public IZombieComponent
 {
 public:
+	void Start()override;
 	void Update()override;
 private:
+	/// <summary>
+	/// インスタンスを初期化。
+	/// </summary>
+	void InitInstance();
 	/// <summary>
 	/// ステートを変更する関数。
 	/// 特殊な場合を除く。
@@ -53,15 +64,29 @@ private:
 	void En_Bite();
 private:
 	//移動関係。
-	CVector3		m_moveSpeed = CVector3::Zero();							//移動速度。
-	const float		WALK_SPEED = 150.f;										//キャラが歩くスピード。
-	bool			m_isFind = false;										//プレイヤーが見つかったかどうか。
-	int				m_aStarCount = 0;										//A*の無限計算ループの回避用のカウンタ。
-	const float		NOT_ASTAR_DISTANCE = 200.0f;							//A*を行わない距離。	
+	CVector3		m_moveSpeed = CVector3::Zero();										//移動速度。
+	const float		WALK_SPEED = 150.f;													//キャラが歩くスピード。
+	bool			m_isFind = false;													//プレイヤーが見つかったかどうか。
+	int				m_aStarCount = 0;													//A*の無限計算ループの回避用のカウンタ。
+	const float		NOT_ASTAR_DISTANCE = 200.0f;										//A*を行わない距離。	
 	const float		NOT_ASTAR_DISTANCE_SQ = NOT_ASTAR_DISTANCE * NOT_ASTAR_DISTANCE;	//NOT_ASTAR_DISTANCEの2乗。
-	const float		ARRIVAL_DISTANCE = 50.0f;								//到着したかどうか判定するための距離。
-	const float		END_ASTSR_OF_NEER_PLAYER_SQ = 200.0f * 200.0f;			//プレイヤーの近くに来たらA*を終了させる時の距離の2乗。
-	const float		END_ASTSR_OF_LEAVE_FINALPOINT_SQ = 300.0f * 300.0f;		//経路の最終地点からプレイヤーが離れていたらA*を終了させる時の距離の2乗。
+	const float		ARRIVAL_DISTANCE = 50.0f;											//到着したかどうか判定するための距離。
+	const float		END_ASTSR_OF_NEER_PLAYER_SQ = 200.0f * 200.0f;						//プレイヤーの近くに来たらA*を終了させる時の距離の2乗。
+	const float		END_ASTSR_OF_LEAVE_FINALPOINT_SQ = 300.0f * 300.0f;					//経路の最終地点からプレイヤーが離れていたらA*を終了させる時の距離の2乗。
+	CVector3		m_endPos = CVector3::Zero();										//最終地点。
+
+	//A*関係。
+	Game*			m_game = nullptr;				//ゲームクラスのポインタ。
+	Player*			m_player = nullptr;				//プレイヤークラスのポインタ。
+	Floor*			m_floor = nullptr;				//床クラスのポインタ。
+	AStar			m_aStar;						//A*クラスのインスタンス。
+	Navimesh*		m_nav = nullptr;				//ナビメッシュクラスのポインタ。
+	std::vector<CVector3>			m_moveList;		//A*後に算出されたゴールまでのルートリスト。
+	std::vector<CVector3>::iterator m_itr;			//m_moveListのイテレータ。
+	bool			m_isAstar = false;				//ゴールしているかどうか。
+	bool			m_isPoint = false;				//各*itrに到達したかどうか。
+	bool			m_isHit = false;				//コリジョンにヒットしたかどうか。
+	bool			m_isMove = false;
 
 	//攻撃関係。
 	int				m_atkTimer = 0;

@@ -197,7 +197,7 @@ public:
 	/// <summary>
 	/// 懐中電灯。
 	/// </summary>
-	void SetLight();
+	void LightUpdate();
 	/// <summary>
 	/// モデルの前方向。
 	/// </summary>
