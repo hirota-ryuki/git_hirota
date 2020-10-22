@@ -51,9 +51,6 @@ bool Zombie::Start()
 	//アニメーションの初期化。
 	InitAnimationClips();
 
-	//コライダーの設定。
-	m_collider.Create(m_boxSize);
-
 	//コンポーネントを初期化。
 	InitComponents();
 

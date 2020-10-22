@@ -62,6 +62,11 @@ private:
 	/// 使用していない関数。
 	/// </summary>
 	void En_Bite();
+	/// <summary>
+	/// ゾンビに合わせてプレイヤーの角度を修正する関数。
+	/// 使用していない関数。
+	/// </summary>
+	void AngleCorrection();
 private:
 	//移動関係。
 	CVector3		m_moveSpeed = CVector3::Zero();										//移動速度。
@@ -98,5 +103,12 @@ private:
 	const float		FIND_DISTANCE_SQ = FIND_DISTANCE * FIND_DISTANCE;		//FIND_DISTANCEの2乗。
 	const float		ATTACK_VIEWING_ANGLE = 45.0f;							//攻撃の視野角。
 
+	//コライダー関係。
+	BoxCollider		m_collider;												//セル用のボックスコライダー。
+	const float		BOX_SIZE_DOUBLE = 30.0f;								//コライダーを拡大するための倍率。
+	CVector3		m_boxSize = CVector3::One() * BOX_SIZE_DOUBLE;			//コライダーのサイズ。
+
+	//噛みつき関係。
+	bool			m_isBite = false;
 };
 

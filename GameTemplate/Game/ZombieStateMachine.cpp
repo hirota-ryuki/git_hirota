@@ -12,6 +12,9 @@ void ZombieStateMachine::Start()
 {
 	//インスタンスの取得。
 	InitInstance();
+
+	//コライダーの設定。
+	m_collider.Create(m_boxSize);
 }
 
 void ZombieStateMachine::InitInstance()
@@ -381,42 +384,8 @@ void ZombieStateMachine::Attack()
 void ZombieStateMachine::En_Bite()
 {
 	//ゾンビの向きをプレイヤーにあわせる。
-	{
-		//プレイヤーと敵の角度を求める。
-		CVector3 f = m_zombie->m_model->GetForward();
-		f.z *= -1;
-		CVector3 diff = m_player->GetPos() - m_zombie->m_position;
-		//視野角。
-		float degree = m_zombie->CalcViewingAngleDeg(f, diff);
+	AngleCorrection();
 
-		//もし角度が10度以内ではなかったら。
-		if (degree > 10.0f) {
-			CVector3 cross;
-			//斜めに傾かないように0にしておく。
-			f.y = 0.0f;
-			diff.y = 0.0f;
-			cross.Cross(f, diff);
-			cross.Normalize();
-			CQuaternion qAddRot;
-			qAddRot.SetRotationDeg(cross, degree - 10.0f);
-			qAddRot.Multiply(m_zombie->m_rotation);
-			//いずれプレイヤークラスに処理を移す。
-			//プレイヤーと敵の角度を求める。
-			CVector3 f2 =m_player->GetSkinModelRender()->GetForward();
-			f2.z *= -1;
-			CVector3 diff2 = m_zombie->m_position - m_player->GetPos();
-			//視野角。
-			float degree2 = m_zombie->CalcViewingAngleDeg(f2, diff2);
-			CVector3 cross2;
-			f2.y = 0.0f;
-			diff2.y = 0.0f;
-			cross2.Cross(f2, diff2);
-			cross2.Normalize();
-			CQuaternion qAddRot2;
-			qAddRot2.SetRotationDeg(cross2, degree2 - 10.0f);
-			qAddRot2.Multiply(m_player->GetRot());
-		}
-	}
 	//ゾンビをプレイヤーの位置に移動させる。
 	auto pPos = m_player->GetPos();
 	pPos.x += 30.0f;
@@ -429,8 +398,45 @@ void ZombieStateMachine::En_Bite()
 		//待機状態に遷移。
 		m_zombie->m_state = enState_idle;
 		m_zombie->m_charaCon.ActiveMode(true);
-		m_zombie->m_isBite = false;
+		m_isBite = false;
 		m_zombie->m_coolTimer++;
+	}
+}
+
+void ZombieStateMachine::AngleCorrection()
+{
+	//プレイヤーと敵の角度を求める。
+	CVector3 zombieforword = m_zombie->m_model->GetForward();
+	zombieforword.z *= -1;
+	CVector3 playerfromzombie = m_player->GetPos() - m_zombie->m_position;
+	//視野角。
+	float angle = m_zombie->CalcViewingAngleDeg(zombieforword, playerfromzombie);
+	//もし角度が10度以内ではなかったら。
+	if (angle > 10.0f) {
+		CVector3 cross;
+		//斜めに傾かないように0にしておく。
+		zombieforword.y = 0.0f;
+		playerfromzombie.y = 0.0f;
+		cross.Cross(zombieforword, playerfromzombie);
+		cross.Normalize();
+		CQuaternion qAddRot;
+		qAddRot.SetRotationDeg(cross, angle - 10.0f);
+		qAddRot.Multiply(m_zombie->m_rotation);
+		//いずれプレイヤークラスに処理を移す。
+		//プレイヤーと敵の角度を求める。
+		CVector3 f2 = m_player->GetSkinModelRender()->GetForward();
+		f2.z *= -1;
+		CVector3 diff2 = m_zombie->m_position - m_player->GetPos();
+		//視野角。
+		float degree2 = m_zombie->CalcViewingAngleDeg(f2, diff2);
+		CVector3 cross2;
+		f2.y = 0.0f;
+		diff2.y = 0.0f;
+		cross2.Cross(f2, diff2);
+		cross2.Normalize();
+		CQuaternion qAddRot2;
+		qAddRot2.SetRotationDeg(cross2, degree2 - 10.0f);
+		qAddRot2.Multiply(m_player->GetRot());
 	}
 }
 
@@ -443,8 +449,8 @@ bool ZombieStateMachine::RaycastToPlayer() const
 		//回転の設定。
 		start.setIdentity();
 		end.setIdentity();
-		start.setOrigin(btVector3(m_position.x, m_position.y + 20.f, m_position.z));
-		end.setOrigin(btVector3(m_player->GetPos().x, m_position.y + 20.f, m_player->GetPos().z));
+		start.setOrigin(btVector3(m_zombie->m_position.x, m_zombie->m_position.y + 20.f, m_zombie->m_position.z));
+		end.setOrigin(btVector3(m_player->GetPos().x, m_zombie->m_position.y + 20.f, m_player->GetPos().z));
 	}
 	TCallback callback;
 	//startからendまでコリジョンを移動させて当たり判定を取る。

@@ -1,5 +1,6 @@
 #pragma once
 #include "character/CharacterController.h"
+#include "physics/BoxCollider.h"
 
 //#define DEBUG_MODE
 
@@ -91,15 +92,6 @@ private:
 	};
 	AnimationClip	m_animationClip[enAnimationClip_num];			//アニメーションクリップ。
 	Animation		m_animation;
-
-	//コライダー関係。
-	BoxCollider		m_collider;										//セル用のボックスコライダー。
-	const float		BOX_SIZE_DOUBLE = 30.0f;						//コライダーを拡大するための倍率。
-	CVector3		m_boxSize = CVector3::One() * BOX_SIZE_DOUBLE;	//コライダーのサイズ。
-	
-	
-	//噛みつき関係。
-	bool			m_isBite = false;
 
 	//ステータス関係。
 	int				m_hp = 10;		//HP。
