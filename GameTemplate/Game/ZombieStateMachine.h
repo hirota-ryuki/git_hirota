@@ -68,6 +68,9 @@ private:
 	/// </summary>
 	void AngleCorrection();
 private:
+	//アニメーション関係。
+	const float		m_comprementTime[6] = { 0.2f,0.2f,0.2f,0.2f,0.1f,0.2f };				//アニメーションの補完時間。アニメーションクリップの順番。
+
 	//移動関係。
 	CVector3		m_moveSpeed = CVector3::Zero();										//移動速度。
 	const float		WALK_SPEED = 150.f;													//キャラが歩くスピード。

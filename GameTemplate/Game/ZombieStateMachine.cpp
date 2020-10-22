@@ -34,7 +34,7 @@ void ZombieStateMachine::Update()
 	switch (m_zombie->m_state) {
 	case enState_idle:
 		//アニメーションの再生。
-		m_zombie->m_animation.Play(m_zombie->enAnimationClip_idle, 0.2f);
+		m_zombie->m_animation.Play(enAnimationClip_idle, m_comprementTime[enAnimationClip_idle]);
 
 		//攻撃後とノックバック後のクールタイム。
 		if (m_zombie->m_coolTimer > 0) {
@@ -51,17 +51,17 @@ void ZombieStateMachine::Update()
 	case enState_walk:
 		//アニメーションの再生。
 		if (m_aStarCount > 100) {
-			m_zombie->m_animation.Play(m_zombie->enAnimationClip_idle, 0.2f);
+			m_zombie->m_animation.Play(enAnimationClip_idle, m_comprementTime[enAnimationClip_idle]);
 		}
 		else {
-			m_zombie->m_animation.Play(m_zombie->enAnimationClip_walk, 0.2f);
+			m_zombie->m_animation.Play(enAnimationClip_walk, m_comprementTime[enAnimationClip_walk]);
 		}
 		Move();
 		ChangeState();
 		break;
 	case enState_attack:
 		//アニメーションの再生。
-		m_zombie->m_animation.Play(m_zombie->enAnimationClip_attack, 0.2f);
+		m_zombie->m_animation.Play(enAnimationClip_attack, m_comprementTime[enAnimationClip_attack]);
 		m_atkTimer++;
 		if (m_atkTimer >= ATK_INTERVAL && !m_isAttack) {
 			//攻撃。
@@ -82,7 +82,7 @@ void ZombieStateMachine::Update()
 		break;
 	case enState_knockback:
 		//アニメーションの再生。
-		m_zombie->m_animation.Play(m_zombie->enAnimationClip_knockback, 0.1f);
+		m_zombie->m_animation.Play(enAnimationClip_knockback, m_comprementTime[enAnimationClip_knockback]);
 		//アニメーションの再生中じゃなかったら。
 		if (!m_zombie->m_animation.IsPlaying()) {
 			//待機状態に遷移。
@@ -92,7 +92,7 @@ void ZombieStateMachine::Update()
 		break;
 	case enState_death:
 		//アニメーションの再生。
-		m_zombie->m_animation.Play(m_zombie->enAnimationClip_death, 0.2f);
+		m_zombie->m_animation.Play(enAnimationClip_death, m_comprementTime[enAnimationClip_death]);
 		//アニメーションの再生中じゃなかったら。
 		if (!m_zombie->m_animation.IsPlaying())
 		{
@@ -342,7 +342,6 @@ void ZombieStateMachine::Attack()
 	float angle = acos(dot);
 	float degree = angle * 180.0f / PI;
 
-
 	//視野角。
 	//float degree = CalcViewingAngleDeg(f, diff);
 	//距離が200以内かつ。
@@ -392,7 +391,7 @@ void ZombieStateMachine::En_Bite()
 	pPos.y += 30.0f;
 	m_zombie->m_position = pPos;
 	//アニメーションの再生。
-	m_zombie->m_animation.Play(m_zombie->enAnimationClip_bite, 0.1f);
+	m_zombie->m_animation.Play(enAnimationClip_bite, m_comprementTime[enAnimationClip_bite]);
 	//アニメーションの再生中じゃなかったら。
 	if (!m_zombie->m_animation.IsPlaying()) {
 		//待機状態に遷移。

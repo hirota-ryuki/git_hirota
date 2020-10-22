@@ -20,6 +20,16 @@ enum State {
 	enState_num,
 };
 
+enum Anim{
+	enAnimationClip_idle,
+	enAnimationClip_walk,
+	enAnimationClip_attack,
+	enAnimationClip_bite,
+	enAnimationClip_knockback,
+	enAnimationClip_death,
+	enAnimationClip_num,
+};
+
 class Zombie :
 	public IGameObject
 {
@@ -81,15 +91,6 @@ private:
 	int				m_coolTimer = 0;							//攻撃後のクールタイム。
 
 	//アニメーション関係。
-	enum {
-		enAnimationClip_idle,
-		enAnimationClip_walk,
-		enAnimationClip_attack,
-		enAnimationClip_bite,
-		enAnimationClip_knockback,
-		enAnimationClip_death,
-		enAnimationClip_num,
-	};
 	AnimationClip	m_animationClip[enAnimationClip_num];			//アニメーションクリップ。
 	Animation		m_animation;
 

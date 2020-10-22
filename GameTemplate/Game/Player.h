@@ -15,6 +15,152 @@ public:
 	bool Start() override;
 	void Update() override;
 	void Update_NotPause() override;
+	
+	/// <summary>
+	/// プレイヤーのポジションをセット。
+	/// </summary>
+	/// <param name="pos">座標</param>
+	void SetPos(const CVector3& pos)
+	{
+		m_position = pos;
+		m_charaCon.SetPosition(m_position);
+	}
+	/// <summary>
+	/// プレイヤーのポジションを取得。
+	/// </summary>
+	const CVector3& GetPos() const
+	{
+		return m_position;
+	}
+	/// <summary>
+	/// 引数で渡された座標とプレイヤーの距離の2乗を計算します。
+	/// </summary>
+	/// <param name="pos">座標</param>
+	/// <returns>距離の2乗</returns>
+	float CalcDistanceSQFrom(const CVector3& pos) const
+	{
+		CVector3 diff = m_position - pos;
+		return diff.LengthSq();
+	}
+	/// <summary>
+	/// 引数で渡された座標からプレイヤーに向かって伸びる
+	/// XZ平面での向きベクトル(大きさ１)を計算。
+	/// </summary>
+	/// <param name="pos"></param>
+	/// <returns></returns>
+	CVector3 CalcDirectionXZFrom(const CVector3& pos) const
+	{
+		CVector3 moveDirection = m_position - pos;
+		moveDirection.y = 0.0f;
+		moveDirection.Normalize();
+		return moveDirection;
+	}
+	/// <summary>
+	/// プレイヤーのムーブスピードを取得。
+	/// </summary>
+	const CVector3& GetMoveSpeed() const
+	{
+		return m_moveSpeed;
+	}
+	/// <summary>
+	/// プレイヤーの回転をセット。
+	/// </summary>
+	/// <param name="rot">回転。</param>
+	void SetRot(const CQuaternion& rot)
+	{
+		m_rotation = rot;
+	}
+	/// <summary>
+	/// プレイヤーの回転を取得。
+	/// </summary>
+	/// <returns>回転。</returns>
+	const CQuaternion& GetRot() const
+	{
+		return m_rotation;
+	}
+	/// <summary>
+	/// プレイヤーの残弾数を取得。
+	/// </summary>
+	const int GetCapacity() const
+	{
+		return m_capacity;
+	}
+	/// <summary>
+	/// プレイヤーの装弾数を取得。
+	/// </summary>
+	const int GetMaxCapacity() const
+	{
+		return m_maxCapacity;
+	}
+	/// <summary>
+	/// プレイヤーの手持ちの総弾数を取得。
+	/// </summary>
+	const int GetStack() const
+	{
+		return m_stack;
+	}
+	/// <summary>
+	/// プレイヤーの手持ちの総弾数を足す。
+	/// </summary>
+	void AddStack(const int bullet)
+	{
+		m_stack += bullet;
+	}
+	/// <summary>
+	/// プレイヤーの手持ちの総弾数を取得。
+	/// </summary>
+	const SkinModelRender* GetSkinModelRender() const
+	{
+		return m_model;
+	}
+	/// <summary>
+	/// 噛まれたかどうかをセット。
+	/// </summary>
+	/// <param name="flag">噛まれたかどうか。</param>
+	void SetIsBiteconst (bool flag) {
+		m_isBite = flag;
+	}
+	/// <summary>
+	/// キャラコンを返す関数。
+	/// </summary>
+	/// <returns>キャラコン。</returns>
+	const CharacterController* GetCharaCon()  const{
+		return &m_charaCon;
+	}
+	const CharacterController& GetCharaCon_Ghorst()  const{
+		return m_charaCon;
+	}
+	/// <summary>
+	/// モデルの前方向。
+	/// </summary>
+	/// <returns>モデルの前方向。</returns>
+	const CVector3& GetForward() const{
+		return m_forward;
+	}
+	/// <summary>
+	/// 影用の視点。
+	/// </summary>
+	/// <returns>影用の視点。</returns>
+	const CVector3& GetShadowPos() const{
+		return m_shadowPos;
+	}
+private:
+	/// <summary>
+	/// アニメーションクリップを初期化。
+	/// </summary>
+	void InitAnimationClips();
+	/// <summary>
+	/// モデルを初期化。
+	/// </summary>
+	void InitModel();
+	/// <summary>
+	/// ダメージ表現の2Dを初期化
+	/// </summary>
+	void InitDamageSprite();
+	/// <summary>
+	/// 照準2Dを初期化。
+	/// </summary>
+	void InitAimSprite();
 	/// <summary>
 	/// GameCameraのインスタンスを取得する関数。
 	/// </summary>
@@ -81,154 +227,9 @@ public:
 	/// </summary>
 	void ActressLight();
 	/// <summary>
-	/// プレイヤーのポジションをセット。
-	/// </summary>
-	/// <param name="pos">座標</param>
-	void SetPos(CVector3 pos)
-	{
-		m_position = pos;
-		m_charaCon.SetPosition(m_position);
-	}
-	/// <summary>
-	/// プレイヤーのポジションを取得。
-	/// </summary>
-	CVector3 GetPos()
-	{
-		return m_position;
-	}
-	/// <summary>
-	/// 引数で渡された座標とプレイヤーの距離の2乗を計算します。
-	/// </summary>
-	/// <param name="pos">座標</param>
-	/// <returns>距離の2乗</returns>
-	float CalcDistanceSQFrom(const CVector3& pos) const
-	{
-		CVector3 diff = m_position - pos;
-		return diff.LengthSq();
-	}
-	/// <summary>
-	/// 引数で渡された座標からプレイヤーに向かって伸びる
-	/// XZ平面での向きベクトル(大きさ１)を計算。
-	/// </summary>
-	/// <param name="pos"></param>
-	/// <returns></returns>
-	CVector3 CalcDirectionXZFrom(const CVector3& pos) const
-	{
-		CVector3 moveDirection = m_position - pos;
-		moveDirection.y = 0.0f;
-		moveDirection.Normalize();
-		return moveDirection;
-	}
-	/// <summary>
-	/// プレイヤーのムーブスピードを取得。
-	/// </summary>
-	CVector3 GetMoveSpeed()
-	{
-		return m_moveSpeed;
-	}
-	/// <summary>
-	/// プレイヤーの回転をセット。
-	/// </summary>
-	/// <param name="rot">回転。</param>
-	void SetRot(CQuaternion rot)
-	{
-		m_rotation = rot;
-	}
-	/// <summary>
-	/// プレイヤーの回転を取得。
-	/// </summary>
-	/// <returns>回転。</returns>
-	CQuaternion GetRot()
-	{
-		return m_rotation;
-	}
-	/// <summary>
-	/// プレイヤーの残弾数を取得。
-	/// </summary>
-	int GetCapacity()
-	{
-		return m_capacity;
-	}
-	/// <summary>
-	/// プレイヤーの装弾数を取得。
-	/// </summary>
-	int GetMaxCapacity()
-	{
-		return m_maxCapacity;
-	}
-	/// <summary>
-	/// プレイヤーの手持ちの総弾数を取得。
-	/// </summary>
-	int GetStack() const
-	{
-		return m_stack;
-	}
-	/// <summary>
-	/// プレイヤーの手持ちの総弾数を足す。
-	/// </summary>
-	void AddStack(const int bullet)
-	{
-		m_stack += bullet;
-	}
-	/// <summary>
-	/// プレイヤーの手持ちの総弾数を取得。
-	/// </summary>
-	SkinModelRender* GetSkinModelRender() const
-	{
-		return m_model;
-	}
-	/// <summary>
-	/// 噛まれたかどうかをセット。
-	/// </summary>
-	/// <param name="flag">噛まれたかどうか。</param>
-	void SetIsBite(bool flag) {
-		m_isBite = flag;
-	}
-	/// <summary>
-	/// キャラコンを返す関数。
-	/// </summary>
-	/// <returns>キャラコン。</returns>
-	CharacterController* GetCharaCon()  {
-		return &m_charaCon;
-	}
-	CharacterController& GetCharaCon_Ghorst()  {
-		return m_charaCon;
-	}
-	/// <summary>
 	/// 懐中電灯。
 	/// </summary>
 	void LightUpdate();
-	/// <summary>
-	/// モデルの前方向。
-	/// </summary>
-	/// <returns>モデルの前方向。</returns>
-	const CVector3& GetForward() const{
-		return m_forward;
-	}
-	/// <summary>
-	/// 影用の視点。
-	/// </summary>
-	/// <returns>影用の視点。</returns>
-	const CVector3& GetShadowPos() const{
-		return m_shadowPos;
-	}
-private:
-	/// <summary>
-	/// アニメーションクリップを初期化。
-	/// </summary>
-	void InitAnimationClips();
-	/// <summary>
-	/// モデルを初期化。
-	/// </summary>
-	void InitModel();
-	/// <summary>
-	/// ダメージ表現の2Dを初期化
-	/// </summary>
-	void InitDamageSprite();
-	/// <summary>
-	/// 照準2Dを初期化。
-	/// </summary>
-	void InitAimSprite();
 private:
 	SkinModelRender*	m_model = nullptr;						//スキンモデル。
 	CVector3			m_position = CVector3::Zero();			//座標。
