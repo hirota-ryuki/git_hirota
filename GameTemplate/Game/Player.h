@@ -15,7 +15,11 @@ public:
 	bool Start() override;
 	void Update() override;
 	void Update_NotPause() override;
-	
+	/// <summary>
+	/// ダメージを与える関数。
+	/// ゾンビからアクセスされている関数。
+	/// </summary>
+	void Damage();
 	/// <summary>
 	/// プレイヤーのポジションをセット。
 	/// </summary>
@@ -74,7 +78,7 @@ public:
 	/// プレイヤーの回転を取得。
 	/// </summary>
 	/// <returns>回転。</returns>
-	const CQuaternion& GetRot() const
+	CQuaternion& GetRot()
 	{
 		return m_rotation;
 	}
@@ -127,7 +131,7 @@ public:
 	const CharacterController* GetCharaCon()  const{
 		return &m_charaCon;
 	}
-	const CharacterController& GetCharaCon_Ghorst()  const{
+	CharacterController& GetCharaCon_Ghorst()  {
 		return m_charaCon;
 	}
 	/// <summary>
@@ -216,10 +220,6 @@ private:
 	/// 時間によって回復する関数。
 	/// </summary>
 	void Heal();
-	/// <summary>
-	/// ダメージを与える関数。
-	/// </summary>
-	void Damage();
 	/// 死ぬ関数。
 	/// </summary>
 	void Death();
