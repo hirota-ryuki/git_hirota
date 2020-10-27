@@ -1,12 +1,8 @@
 #pragma once
 #include "level/Level.h"
-//実装するときに不必要な手順を省略するためのモード。
-//TitleではなくGameを最初にNewGOする。
-//オープニングを省略する。
-//#define CREATE_MODE	
 //撮影を行うためのモード。
 //レベルを簡易的なものに変更する。
-#define MOVIE_MODE	
+//#define MOVIE_MODE	
 
 class GameCamera;
 class Floor;
