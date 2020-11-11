@@ -56,7 +56,7 @@ public:
 	/// </summary>
 	void RequestDelete()
 	{
-		isRequestDelete = true;
+		m_isRequestDelete = true;
 	}
 
 	/// <summary>
@@ -67,7 +67,7 @@ public:
 	/// </returns>
 	bool IsRequestDelete()
 	{
-		return isRequestDelete;
+		return m_isRequestDelete;
 	}
 	/// <summary>
 	/// 開始関数を呼んだか調べる。
@@ -119,10 +119,10 @@ public:
 	//friend宣言、フレンドクラスは指定されたクラスのprivateやprotectedメンバにアクセスすることができる。
 	friend class GameObjectManager;
 private:
-	bool isRequestDelete = false;		//削除フラグ。
-	bool m_isStart = false;				//開始関数が呼ばれたかどうか。
-	bool m_isDelete = false;			//消された状態かどうか。
-	unsigned int m_nameKey = 0;			//名前キー。
-	int prio;//優先順位。
+	bool			m_isRequestDelete = false;	//削除フラグ。
+	bool			m_isStart = false;			//開始関数が呼ばれたかどうか。
+	bool			m_isDelete = false;			//消された状態かどうか。
+	unsigned int	m_nameKey = 0;				//名前キー。
+	int				prio;						//優先順位。
 protected:
 };

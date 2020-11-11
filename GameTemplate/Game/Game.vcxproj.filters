@@ -222,9 +222,6 @@
     <ClCompile Include="SpriteRender.cpp">
       <Filter>Engine\sprite</Filter>
     </ClCompile>
-    <ClCompile Include="DebugWireframe.cpp">
-      <Filter>Engine\DebugWireframe</Filter>
-    </ClCompile>
     <ClCompile Include="Title.cpp">
       <Filter>Game\Title</Filter>
     </ClCompile>
@@ -475,9 +472,6 @@
     </ClInclude>
     <ClInclude Include="SpriteRender.h">
       <Filter>Engine\sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="DebugWireframe.h">
-      <Filter>Engine\DebugWireframe</Filter>
     </ClInclude>
     <ClInclude Include="Title.h">
       <Filter>Game\Title</Filter>

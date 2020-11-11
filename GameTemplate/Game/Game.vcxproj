@@ -116,7 +116,6 @@
     <ClCompile Include="character\CharacterController.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
     </ClCompile>
-    <ClCompile Include="DebugWireframe.cpp" />
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="graphics\font\Font.cpp" />
@@ -211,7 +210,6 @@
     <ClInclude Include="CameraCollisionSolver.h" />
     <ClInclude Include="Ceiling.h" />
     <ClInclude Include="character\CharacterController.h" />
-    <ClInclude Include="DebugWireframe.h" />
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Goal.h" />
