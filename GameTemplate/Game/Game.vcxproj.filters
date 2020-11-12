@@ -411,6 +411,9 @@
     <ClCompile Include="ZombieStateMachine.cpp">
       <Filter>Game\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="DebugWireframe.cpp">
+      <Filter>Engine\DebugWireframe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -676,6 +679,9 @@
     </ClInclude>
     <ClInclude Include="ZombieStateMachine.h">
       <Filter>Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugWireframe.h">
+      <Filter>Engine\DebugWireframe</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
